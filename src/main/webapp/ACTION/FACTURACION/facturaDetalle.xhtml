@@ -1,0 +1,285 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="/SAFC/BOOTSTRAP/bootstrap.css" />
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<script type="text/javascript">
+				function abrirPdf() {
+					var banderaFacturacion = document
+							.getElementsByClassName("banderaPdfFactura")[0].value;
+					if (banderaFacturacion.trim() == 'Ok') {
+						var idFact = document
+								.getElementsByClassName("idPdfAbrir")[0].value;
+						window.open(
+								"/NSIGEMCO/resources/images/facturas/factura_"
+										+ idFact + ".pdf", "_blank",
+								"resizable,scrollbars");
+					}
+				}
+				function muestraBotones(estado) {
+					if (estado == 'P') {
+						document.getElementsByClassName("RedButton")[0].style.display = 'none';
+						document.getElementsByClassName("BlueButton")[0].style.display = 'none';
+						document.getElementsByClassName("GreenButton")[0].style.display = 'none';
+						document.getElementsByClassName("GrayButton")[0].style.display = 'none';
+						document.getElementsByClassName("YellowButton")[0].style.display = 'none';
+					}
+					if (estado == 'S') {
+						document.getElementsByClassName("OrangeButton")[0].style.display = 'none';
+						document.getElementsByClassName("RedButton")[0].style.display = 'none';
+						document.getElementsByClassName("GrayButton")[0].style.display = 'none';
+						document.getElementsByClassName("YellowButton")[0].style.display = 'none';
+					}
+					if (estado == 'A') {
+						document.getElementsByClassName("OrangeButton")[0].style.display = 'none';
+						document.getElementsByClassName("RedButton")[0].style.display = 'none';
+						document.getElementsByClassName("BlueButton")[0].style.display = 'none';
+						document.getElementsByClassName("YellowButton")[0].style.display = 'none';
+					}
+					if (estado == 'R') {
+						document.getElementsByClassName("OrangeButton")[0].style.display = 'none';
+						document.getElementsByClassName("BlueButton")[0].style.display = 'none';
+						document.getElementsByClassName("GrayButton")[0].style.display = 'none';
+						document.getElementsByClassName("GreenButton")[0].style.display = 'none';
+					}
+					if (estado == 'C') {
+						document.getElementsByClassName("OrangeButton")[0].style.display = 'none';
+						document.getElementsByClassName("BlueButton")[0].style.display = 'none';
+						document.getElementsByClassName("RedButton")[0].style.display = 'none';
+						document.getElementsByClassName("GreenButton")[0].style.display = 'none';
+						document.getElementsByClassName("YellowButton")[0].style.display = 'none';
+						document.getElementsByClassName("GrayButton")[0].style.display = 'none';
+					}
+				}
+			</script>
+			<br></br>
+			<br></br>
+			<center>
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<div class="panel panel-heading" style="color: #337ab7; background: #eee">CONSULTA FACTURA ESPECIFICA</div>
+						<div class="panel panel-body" style="color: #337ab7;">
+							<h:form id="formFactura">
+								<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+								<p:panel header="Datos generales">
+									<p:panelGrid columns="8" id="panelDatosEspecifico">
+								id Factura:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.id}" />
+								 Nit cliente:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.cliente.cedula}" />
+								 Nombre cliente:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.cliente.nombres} #{consultaFacturacionBean.facturaEspecifico.cliente.apellidos}" />
+								 Fecha:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.fechaExacta.toGregorianCalendar().time}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm:SS" />
+										</p:outputLabel>
+								 Estado:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.estado}" />
+								 Valor:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.valor}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+								 Iva:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.vlrIva}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+								 Descuento:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.descuento}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+								 Total:<p:outputLabel value="#{consultaFacturacionBean.facturaEspecifico.valor+consultaFacturacionBean.facturaEspecifico.vlrIva-consultaFacturacionBean.facturaEspecifico.descuento}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+									</p:panelGrid>
+								</p:panel>
+								<p:panel header="Detalle productos">
+									<p:dataTable var="productos" value="#{consultaFacturacionBean.facturaEspecifico.detalleProductos}" id="tablaProductos" widgetVar="tproductos" paginator="true">
+										<p:column headerText="NOMBRE" width="40%">
+											<h:outputText value="#{productos.producto.descripcion}" />
+										</p:column>
+										<p:column headerText="CANTIDAD" width="15%">
+											<h:outputText value="#{productos.cantidad}" />
+										</p:column>
+										<p:column headerText="VALOR" width="40%">
+											<h:outputText value="#{productos.valorVentaTotal}">
+												<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+								<p:panel header="Detalle Recetas">
+									<p:dataTable var="recetas" value="#{consultaFacturacionBean.facturaEspecifico.detalleRecetas}" id="tablaRecetas" widgetVar="trecetas" paginator="true">
+										<p:column headerText="NOMBRE" width="40%">
+											<h:outputText value="#{recetas.receta.nombre}" />
+										</p:column>
+										<p:column headerText="CANTIDAD" width="15%">
+											<h:outputText value="#{recetas.cantidad}" />
+										</p:column>
+										<p:column headerText="VALOR" width="40%">
+											<h:outputText value="#{recetas.valorTotal}">
+												<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+								<p:panel header="IMAGENES FACTURA">
+									<p:dataTable id="tablaImagenes" var="imagen" value="#{consultaFacturacionBean.listaImagenes}" widgetVar="wtablaImagenes" rows="5" paginator="true" emptyMessage="No existen imagenes asociadas a la factura">
+										<p:column headerText="TIPO IMAGEN" priority="2">
+											<h:outputText value="#{imagen.tipoFactura}" />
+										</p:column>
+
+										<p:column headerText="ABRIR IMAGEN" priority="1" width="20%">
+											<p:commandLink ajax="false" actionListener="#{consultaFacturacionBean.prepDownload(imagen.rutaImagen)}">
+												<p:graphicImage name="/images/pdf.png" width="50" height="50" />
+												<p:fileDownload value="#{consultaFacturacionBean.download}" />
+											</p:commandLink>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+								<p:panel>
+									<p:commandButton id="solCancelacion" styleClass="OrangeButton" value="SOLICITAR CANC. FACTURA" onclick="PF('confirmaCancela').show()" actionListener="#{consultaFacturacionBean.resetMessage}" />
+									<p:commandButton styleClass="CyanButton" id="pdfFactura" value="FACTURA PDF" actionListener="#{consultaFacturacionBean.generaFacturacion}" update="banderaPdf,idPdfAbrir" oncomplete="abrirPdf()" />
+									<p:commandButton styleClass="PurpleButton" id="historial" value="VER HISTORIAL" onclick="PF('historialFactura').show()" />
+									<p:commandButton styleClass="RedButton" id="cancelar" value="CANCELAR FACTURA" onclick="PF('cNotaCredito').show();" />
+									<p:commandButton styleClass="BlueButton" id="autoriza" value="APROBACION CANC." onclick="PF('confirmaAprobacion').show()" />
+									<p:commandButton styleClass="GreenButton" id="devolver" value="RECHAZAR" onclick="PF('confirmaRechazo').show()" />
+									<p:commandButton styleClass="GrayButton" id="contabilizar" value="CONTABILIZAR" onclick="PF('contabilizar').show()" />
+									<p:commandButton styleClass="BlackButton" id="verMovicon" value="MOVIMIENTOS CONTABLES" onclick="PF('movicon').show()" actionListener="#{consultaFacturacionBean.muestraNotasDebito}" />
+									<p:commandButton styleClass="YellowButton" id="notaCredito" value="NOTA CREDITO" icon="ui-icon-arrowthick-1-s" actionListener="#{consultaFacturacionBean.descargarReporte}" ajax="false">
+										<p:fileDownload value="#{consultaFacturacionBean.download}" />
+									</p:commandButton>
+									<p:inputText styleClass="banderaPdfFactura" value="#{consultaFacturacionBean.bandera}" id="banderaPdf" style="display:none"></p:inputText>
+									<p:inputText styleClass="idPdfAbrir" value="#{consultaFacturacionBean.idFacturaAbrir}" id="idPdfAbrir" style="display:none"></p:inputText>
+								</p:panel>
+								<p:dialog modal="true" widgetVar="confirmaCancela" closeOnEscape="true" id="mConfirmaCancela">
+									<p:panel header="Confirma Solicitud Cancelación">
+										<p:panelGrid columns="1">
+												Motivo de cancelación:
+												<p:inputTextarea rows="10" cols="50" id="descripcionRechazo" value="#{consultaFacturacionBean.solicitudCanc}" queryDelay="750" minQueryLength="4" />
+											<p:commandButton styleClass="OrangeButton" value="SOLICITAR" action="#{consultaFacturacionBean.actualizaConsultaFactura('S')}" ajax="true" update=":formFactura" />
+										</p:panelGrid>
+									</p:panel>
+								</p:dialog>
+								<p:dialog modal="true" widgetVar="confirmaRechazo" closeOnEscape="true" id="mConfirmaRechazo">
+									<p:panel header="Confirma Rechazo de solicitud">
+										<p:panelGrid columns="1">
+												Motivo de rechazo:
+												<p:inputTextarea rows="10" cols="50" id="descripcionCancelacion" value="#{consultaFacturacionBean.rechazo}" queryDelay="750" minQueryLength="4" />
+											<p:commandButton styleClass="OrangeButton" value="RECHAZAR" action="#{consultaFacturacionBean.rechazaSolicitud}" ajax="true" update=":formFactura" />
+										</p:panelGrid>
+									</p:panel>
+								</p:dialog>
+								<p:dialog modal="true" widgetVar="confirmaAprobacion" closeOnEscape="true" id="mConfirmaAprobacion">
+									<p:panel header="Confirma Aprobaciòn">
+										<p:panelGrid columns="1">
+												Motivo de aprobaciòn:
+												<p:inputTextarea rows="10" cols="50" id="descripcionAprobacion" value="#{consultaFacturacionBean.solicitudAprobacion}" queryDelay="750" minQueryLength="4" />
+											<p:commandButton styleClass="OrangeButton" value="APROBAR" action="#{consultaFacturacionBean.actualizaConsultaFactura('A')}" ajax="true" update=":formFactura" />
+										</p:panelGrid>
+									</p:panel>
+								</p:dialog>
+								<p:dialog header="HISTORIAL FACTURA" modal="true" widgetVar="historialFactura" closeOnEscape="true" id="mhistorialFactura" width="500">
+									<p:dataTable value="#{consultaFacturacionBean.listaHistorial}" var="historial" paginator="true" rows="8">
+										<p:column headerText="Usuario">
+											<h:outputText value="#{historial.idUsuario.nombre} #{historial.idUsuario.apellido}" />
+										</p:column>
+										<p:column headerText="Fecha">
+											<h:outputText value="#{historial.fecha.toGregorianCalendar().time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Estado">
+											<h:outputText value="#{historial.estado}" />
+										</p:column>
+										<p:column headerText="Comentario">
+											<h:outputText value="#{historial.comentarios}" />
+										</p:column>
+									</p:dataTable>
+								</p:dialog>
+								<p:dialog header="CONTABILIZAR" modal="true" widgetVar="contabilizar" closeOnEscape="true" id="mcontabilizar" width="500">
+									<p:panelGrid columns="1">
+										<h:outputText
+											value="Recuerde, al contabilizar la factura le saldra una opción de descargar nota crédito, se debe descargar y firmar por las personas que se muestra en la nota crédito, luego de esto hay un boton de Cancelar Factura en el cual se debe adjuntar la nota Credito previmente firmada, de lo contrario no tendra validez legal alguna. " />
+										<p:inputTextarea rows="10" cols="80" id="descripcionContabilizar" value="#{consultaFacturacionBean.solicitudContabilizar}" queryDelay="750" minQueryLength="4" />
+										<p:commandButton styleClass="OrangeButton" value="CONTABILIZAR" action="#{consultaFacturacionBean.actualizaConsultaFactura('R')}" ajax="true" update=":formFactura" />
+									</p:panelGrid>
+								</p:dialog>
+								<p:dialog header="CARGUE DE NOTA CRÉDITO" modal="true" closeOnEscape="true" widgetVar="cNotaCredito">
+									<p:panel>
+										<p:row>
+											<p:outputLabel value="Recuerde cargar la nota correspondiente a la factura especifica y esta debe estar con sus respectivas firmas" />
+										</p:row>
+										<p:row>
+											<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(pdf)$/" previewWidth="100"
+												invalidFileMessage="Solo se puede subir archivos con extensión pdf" multiple="false" fileUploadListener="#{consultaFacturacionBean.cargaNotaCredito}" update=":formFactura" onstart="PF('cNotaCredito').show();"
+												oncomplete="PF('cNotaCredito').hide()" />
+										</p:row>
+									</p:panel>
+								</p:dialog>
+								<p:dialog header="ASIENTO CONTABLES" widgetVar="movicon" modal="true" responsive="true" closeOnEscape="true">
+									<p:scrollPanel style="width:1000px;height:250px">
+										<p:dataTable reflow="true" id="tablaFact" value="#{consultaFacturacionBean.listaMFact}" var="mfactura" rows="10" scrollable="true" scrollHeight="150" paginator="true">
+											<f:facet name="header">
+										        Asiento contable facturación
+										        <h:commandLink>
+													<p:graphicImage name="/images/pdf.png" width="40" height="40" />
+													<p:dataExporter type="pdf" target="tablaFact" fileName="asientoFacturacion" />
+												</h:commandLink>
+											</f:facet>
+											<p:column headerText="Subcuenta" priority="1">
+												<h:outputLabel value="#{mfactura.subcuenta.nombre} " />
+											</p:column>
+											<p:column headerText="Credito" priority="2">
+												<h:outputLabel value="#{mfactura.valor}" rendered="#{mfactura.naturaleza == 'CREDITO'}">
+													<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+												</h:outputLabel>
+												<h:outputText value="0" rendered="#{mfactura.naturaleza != 'CREDITO'}" />
+											</p:column>
+											<p:column headerText="Debito" priority="3">
+												<h:outputText value="#{mfactura.valor} " rendered="#{mfactura.naturaleza == 'DEBITO'}">
+													<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+												</h:outputText>
+												<h:outputText value="0" rendered="#{mfactura.naturaleza != 'DEBITO'}" />
+											</p:column>
+
+										</p:dataTable>
+									</p:scrollPanel>
+									<p:scrollPanel style="width:1000px;height:250px">
+										<p:dataTable reflow="true" value="#{consultaFacturacionBean.listaMndef}" id="tablaCred" var="mfactura" rows="10" scrollable="true" scrollHeight="150" paginator="true">
+											<f:facet name="header">
+										        Asiento contable Cancelación de factura
+										        <h:commandLink>
+													<p:graphicImage name="/images/pdf.png" width="40" height="40" />
+													<p:dataExporter type="pdf" target="tablaCred" fileName="asientoCancelacion" />
+												</h:commandLink>
+											</f:facet>
+											<p:column headerText="Subcuenta" priority="1">
+												<h:outputLabel value="#{mfactura.subcuenta.nombre} " />
+											</p:column>
+											<p:column headerText="Credito" priority="2">
+												<h:outputLabel value="#{mfactura.valor}" rendered="#{mfactura.naturaleza == 'CREDITO'}">
+													<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+												</h:outputLabel>
+												<h:outputText value="0" rendered="#{mfactura.naturaleza != 'CREDITO'}" />
+											</p:column>
+											<p:column headerText="Debito" priority="3">
+												<h:outputText value="#{mfactura.valor} " rendered="#{mfactura.naturaleza == 'DEBITO'}">
+													<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+												</h:outputText>
+												<h:outputText value="0" rendered="#{mfactura.naturaleza != 'DEBITO'}" />
+											</p:column>
+										</p:dataTable>
+									</p:scrollPanel>
+								</p:dialog>
+
+							</h:form>
+						</div>
+					</div>
+				</div>
+			</center>
+		</ui:define>
+	</ui:composition>
+</body>
+
+</html>

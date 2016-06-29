@@ -1,0 +1,134 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<p:growl id="messages" autoUpdate="true" life="30000" showDetail="true"></p:growl>
+			<br></br>
+			<h:form id="formConsulta">
+				<p:panel header="CONSULTA GENERAL DE RESOLUCIONES DE FACTURACION">
+					<p:dataTable paginator="true" reflow="true" editable="true" rows="5" id="tablaResolucion" value="#{resolucionFactBean.listaResoluciones}" widgetVar="tResolucion" var="resolucion">
+						<p:ajax event="rowEdit" listener="#{resolucionFactBean.actualizaFila}" update=":formConsulta:tablaResolucion"/>
+						<p:ajax event="rowEditCancel" listener="#{resolucionFactBean.cancelaActualizacionFila}" />
+
+						<p:column headerText="Id">
+							<p:outputLabel value="#{resolucion.id}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Fecha Ingreso.">
+							<p:outputLabel value="#{resolucion.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Fecha Resolucion">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{resolucion.fechaInicio}" converter="xmlDatetoDateConverter"></h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{resolucion.fechaInicio}" converter="datetoXmlDateConverter"></p:calendar>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Prefijo">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{resolucion.prefijo}"></p:outputLabel>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="prefRf" value="#{resolucion.prefijo}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Comentario">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{resolucion.comentario}"></p:outputLabel>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{resolucion.comentario}"></p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Inicio Secuencia">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{resolucion.iniConsecutivo}"></p:outputLabel>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="iniConRf" value="#{resolucion.iniConsecutivo}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="No. Resolucion DIAN">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{resolucion.noResolucion}"></p:outputLabel>
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="noResDIAN" value="#{resolucion.noResolucion}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Estado">
+							<h:outputText value="Activo" rendered="#{resolucion.estado == 'A'}" />
+							<h:outputText value="Inactivo" rendered="#{resolucion.estado != 'A'}" />
+						</p:column>
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:commandButton value="Insertar Resolucion" onclick="PF('modInserResFacturacion').show();" styleClass="CyanButton"></p:commandButton>
+				</p:panel>
+			</h:form>
+			<h:form id="formInsertResFact">
+				<p:dialog modal="true" id="modInserResFact" widgetVar="modInserResFacturacion" header="Insercion de Resolución" responsive="true" closeOnEscape="true">
+					<p:panelGrid>
+						<f:facet name="header">
+						Insercion de Resoluciones de Facturación
+						</f:facet>
+						<p:row>
+							<p:column>PREFIJO:</p:column>
+							<p:column>
+								<p:inputText id="prefRf" value="#{resolucionFactBean.resolucion.prefijo}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>No. Resolucion Dian:</p:column>
+							<p:column>
+								<p:inputText id="noResDIAN" value="#{resolucionFactBean.resolucion.noResolucion}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>Inicio Consecutivo:</p:column>
+							<p:column>
+								<p:inputText id="iniConRf" value="#{resolucionFactBean.resolucion.iniConsecutivo}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>Fecha Inicio:</p:column>
+							<p:column>
+								<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{resolucionFactBean.resolucion.fechaInicio}" converter="datetoXmlDateConverter"></p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>Comentario:</p:column>
+							<p:column>
+								<p:inputText value="#{resolucionFactBean.resolucion.comentario}"></p:inputText>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton value="INSERTAR" icon="fa-plus-circle" actionListener="#{resolucionFactBean.insertaResolucionFact}" styleClass="GreenButton" onsuccess="PF('modInserResFacturacion').hide();" update=":formInsertResFact,formConsulta" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

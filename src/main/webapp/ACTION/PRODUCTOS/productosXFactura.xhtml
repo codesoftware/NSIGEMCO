@@ -1,0 +1,545 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<script>
+				function ocultar(panel1, panel2) {
+					if (panel1 == 'S') {
+						$('.ocultarVaucher').show();
+					} else {
+						$('.ocultarVaucher').hide();
+					}
+					if (panel2 == 'S') {
+						$('.ocultarDias').show();
+					} else {
+						$('.ocultarDias').hide();
+					}
+				}
+
+				function ocultarPaneles() {
+					$('.ocultarVaucher').hide();
+					$('.ocultarDias').hide();
+				}
+
+				function cambiarCodigo() {
+					var codigoAux = document
+							.getElementById('productoInicial:codigoAuxiliar').value;
+					document.getElementById('productoInicial:codigoAuxiliar').value = codigoAux;
+					$('.codigoExterno').val(codigoAux);
+
+					document.getElementsByClassName("botonBuscarProd")[0]
+							.click();
+				}
+			</script>
+			<f:event listener="#{cargaListasMapBean.cargaListaReteFuente}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaTipoPago}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<br />
+			<center>
+				<p:accordionPanel multiple="true">
+					<div class="row">
+						<div class="col-md-2 col-sm-0 col-xs-0"></div>
+						<div class="col-md-8 col-sm-12 col-xs-12">
+							<p:tab title="DATOS BÁSICOS FACTURA DE COMPRA" titleStyle="color:#337ab7;background:#eee">
+
+								<div class="panel panel-default">
+									<div class="panel panel-info">
+										<div class="panel-body">
+											<h:form>
+												<p:remoteCommand name="remoteValor" update="fechaFact,fechaFactRec,numFactura,selectSede" actionListener="#{facturaCompraBean.ajaxOnBlurTabla}" />
+												<div class="ui-grid ui-grid-responsive">
+													<div class="ui-grid-row">
+
+														<div class="ui-grid-col-1">
+															<h:outputLabel style="color:black" value="fecha de factura" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:calendar label="factura Compra" pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraBean.fechaFactura}" id="fechaFact" navigator="true" style="width:100%;"
+																maxdate="#{facturaCompraBean.maxDate}">
+																<p:ajax event="dateSelect" listener="#{facturaCompraBean.ajaxCarga}" />
+															</p:calendar>
+														</div>
+														<div class="ui-grid-col-1">
+															<h:outputLabel style="color:black" value="Fecha Recepción:" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:calendar value="#{facturaCompraBean.fechaRecepcion}" id="fechaFactRec" navigator="true" maxdate="#{facturaCompraBean.maxDate}" style="width:100%;">
+																<p:ajax event="dateSelect" listener="#{facturaCompraBean.ajaxCarga}" />
+															</p:calendar>
+														</div>
+														<div class="ui-grid-col-1">
+															<h:outputLabel style="color:black" value="Número de factura:" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:inputText value="#{facturaCompraBean.facturaCompra.numeroFactura}" id="numFactura" style="width:100%;">
+																<p:ajax event="blur" listener="#{facturaCompraBean.ajaxCarga}" />
+															</p:inputText>
+														</div>
+														<div class="ui-grid-col-1">
+															<h:outputLabel style="color:black" value="Sede:" />
+														</div>
+														<div class="ui-grid-col-2">
+															<h:selectOneMenu value="#{facturaCompraBean.idSede}" styleClass="form-control" id="selectSede" onselect="remoteValor()">
+																<f:ajax listener="#{facturaCompraBean.muestraSede}" />
+																<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+																<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+															</h:selectOneMenu>
+														</div>
+													</div>
+												</div>
+											</h:form>
+
+										</div>
+
+									</div>
+								</div>
+							</p:tab>
+							<p:tab title="DATOS BASICOS PROVEEDOR" titleStyle="color:#337ab7;background:#eee">
+								<div class="panel panel-info">
+									<div class="panel-body">
+										<h:form>
+											<div class="ui-grid ui-grid-responsive">
+												<div class="ui-grid-row">
+													<div class="ui-grid-col-4">
+														<h:outputLabel style="color:black" value="Proveedor:" />
+													</div>
+													<div class="ui-grid-col-4">
+														<p:autoComplete id="inputAutCProv" value="#{facturaCompraBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+															converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+															<p:ajax listener="#{facturaCompraBean.seleccionaProveedor}" event="itemSelect" update="panelProveedor" />
+														</p:autoComplete>
+													</div>
+													<div class="ui-grid-col-4">
+														<p:commandButton value="Nuevo Proveedor" onclick="PF('addProv').show();" />
+													</div>
+												</div>
+											</div>
+											<p:spacer />
+											<div class="ui-grid ui-grid-responsive">
+												<div class="ui-grid-row">
+													<p:panel styleClass="table table-bordered" id="panelProveedor">
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="Nombre" style="color:black" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="#{facturaCompraBean.proveedor.nombre}" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="Nit" style="color:black" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="#{facturaCompraBean.proveedor.nit}" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="Dirección:" style="color:black" />
+														</div>
+														<div class="ui-grid-col-2">
+															<p:outputLabel value="#{facturaCompraBean.proveedor.direccion}" />
+														</div>
+													</p:panel>
+
+												</div>
+											</div>
+
+										</h:form>
+									</div>
+								</div>
+							</p:tab>
+							<p:tab title="DETALLE PAGO" titleStyle="color:#337ab7;background:#eee">
+								<div class="panel panel-warning">
+									<div class="panel-body">
+										<h:form>
+											<div class="ui-grid ui-grid-responsive">
+												<div class="ui-grid-row">
+													<div class="ui-grid-col-1">
+														<h:outputText value="Valor Pago:" style="color:black" />
+													</div>
+													<div class="ui-grid-col-3">
+														<pe:inputNumber id="valorPago" value="#{facturaCompraBean.pagos.valor}" decimalPlaces="5" symbol="$" style="width:100%" />
+
+													</div>
+													<div class="ui-grid-col-1">
+														<h:outputText value="Tipo pago:" style="color:black" />
+													</div>
+													<div class="ui-grid-col-3">
+														<h:selectOneMenu id="tipoPago" style="width:100%" value="#{facturaCompraBean.pagos.tipoPago}" required="false">
+															<f:ajax listener="#{facturaCompraBean.muestraPanel}" />
+															<f:selectItem itemLabel="Seleccione.." itemValue="" />
+															<f:selectItems value="#{cargaListasMapBean.listaTipoPago}" />
+														</h:selectOneMenu>
+													</div>
+													<div class="ui-grid-col-1">
+														<h:outputText value="SubCuenta:" style="color:black" />
+													</div>
+													<div class="ui-grid-col-3">
+														<p:autoComplete id="inputAutCSCtA" value="#{facturaCompraBean.subcuenta}" completeMethod="#{facturaCompraBean.completaSubCuentaFiltros}" var="item" itemLabel="#{item.nombre}"
+															itemValue="#{item}" converter="subCuentasConverter" placeholder="CONSULTAR SUBCUENTAS" style="width:100%">
+															<p:ajax event="itemSelect" update="codSubCuenta" listener="#{facturaCompraBean.consultaSubCuenta}" />
+														</p:autoComplete>
+													</div>
+												</div>
+											</div>
+											<div class="ui-grid ui-grid-responsive">
+												<div class="ui-grid-row">
+													<div class="ui-grid-col-1">
+														<h:outputText value="Id Vaucher" styleClass="ocultarVaucher" style="color:black" />
+													</div>
+													<div class="ui-grid-col-3">
+														<p:inputText value="#{facturaCompraBean.pagos.idVaucher}" id="idVaucher" styleClass="ocultarVaucher" />
+													</div>
+													<div class="ui-grid-col-3">
+														<h:outputText value="No de días:" styleClass="ocultarDias" style="color:black" />
+													</div>
+													<div class="ui-grid-col-1">
+														<p:inputText value="#{facturaCompraBean.pagos.diasPago}" id="diasPago" styleClass="ocultarDias" />
+													</div>
+													<div class="ui-grid-col-3">
+														<p:outputLabel value="Codigo:#{facturaCompraBean.subcuenta.codigo}" id="codSubCuenta" />
+													</div>
+												</div>
+											</div>
+											<div class="ui-grid ui-grid-responsive">
+												<div class="ui-grid-row">
+													<div class="ui-grid-col-12">
+														<p:commandButton value="Adicionar" actionListener="#{facturaCompraBean.adicionaPago}" update="tablaPagos,codSubCuenta,diasPago,idVaucher,valorPago,tipoPago,inputAutCSCtA,codSubCuenta"
+															oncomplete="ocultarPaneles();" />
+													</div>
+												</div>
+											</div>
+											<p:dataTable id="tablaPagos" widgetVar="tablaPagosVar" value="#{facturaCompraBean.listaPagos}" styleClass="table table-bordered" scrollable="true" scrollHeight="150" paginator="true"
+												rows="5" rowsPerPageTemplate="5,10,15" var="tipoPag">
+												<f:facet name="header">
+													<h:outputText value="Total: $" />
+													<h:outputText value="#{facturaCompraBean.totalPagos}">
+														<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+													</h:outputText>
+												</f:facet>
+												<p:column headerText="tipo pago">
+													<h:outputText value="#{tipoPag.tipoPago}" />
+												</p:column>
+												<p:column headerText="subcuenta">
+													<h:outputText value="#{tipoPag.idSubcuenta.nombre}" />
+												</p:column>
+												<p:column headerText="valor">
+													<h:outputText value="#{tipoPag.valor}">
+														<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+													</h:outputText>
+												</p:column>
+												<p:column headerText="Eliminar">
+													<p:commandButton icon="ui-icon-closethick" title="Borrar" ajax="true" update="tablaPagos" actionListener="#{facturaCompraBean.eliminaPago(tipoPag.idSubcuenta.id)}" />
+												</p:column>
+											</p:dataTable>
+										</h:form>
+									</div>
+								</div>
+
+							</p:tab>
+						</div>
+
+						<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					</div>
+					<p:tab title="BUSQUEDA DE PRODUCTOS" titleStyle="color:#337ab7;background:#eee">
+						<h:form id="busquedaProd">
+							<p:remoteCommand name="rc" update="tablaConsultaProdPrin" actionListener="#{facturaCompraBean.ajaxOnBlurTabla}" />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-3">
+										<p:outputLabel value="Codigo de Barras:" style="color:black" />
+									</div>
+									<div class="ui-grid-col-3">
+										<p:inputText id="codExtCons" value="#{facturaCompraBean.codConBarras}" style="width:100%;" onkeypress="if (event.keyCode == 13){ return false;}" />
+									</div>
+									<div class="ui-grid-col-3">
+										<p:outputLabel value="Codigo Externo:" style="color:black" />
+									</div>
+									<div class="ui-grid-col-3">
+										<p:inputText id="codAplicCons" value="#{facturaCompraBean.codConExterno}" style="width:100%;" styleClass="codigoExterno" onkeypress="if (event.keyCode == 13){ return false;}" />
+									</div>
+								</div>
+							</div>
+							<p:spacer />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12">
+										<p:commandButton value="BUSCAR PRODUCTOS" actionListener="#{facturaCompraBean.busquedaPincipalProductos}" update="tablaConsultaProdPrin" styleClass="botonBuscarProd" />
+										<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" update=":formTablaFiltros:tablaProductos" />
+									</div>
+								</div>
+							</div>
+							<p:spacer />
+							<p:dataTable id="tablaConsultaProdPrin" reflow="true" widgetVar="tablaConsultaPrinc" editable="true" editMode="cell" var="productosPrin" value="#{facturaCompraBean.listaProductos}"
+								styleClass="table table-bordered" scrollable="true" scrollHeight="250" paginator="true" rows="10" rowsPerPageTemplate="10,20,30" filteredValue="#{facturaCompraBean.filteredConsPrinc}">
+								<p:ajax event="cellEdit" listener="#{facturaCompraBean.editaCelda}" update="mensajes,tablaConsultaProdPrin" />
+								<f:facet name="header">
+									<p:outputLabel value="Consulta de productos" />
+									<p:inputText id="globalFilter" onkeyup="PF('tablaConsultaPrinc').filter()" />
+								</f:facet>
+								<f:facet name="footer">
+									<h:outputText style="color:black" value="Total: $" />
+									<h:outputText style="color:black" value="#{facturaCompraBean.totalSumaIvaPrecio}" id="totalPrecioMostrar">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+									<p:commandButton value="CALCULAR TOTAL" styleClass="BlueButton" actionListener="#{facturaCompraBean.actualizaTotales}" update="tablaConsultaProdPrin,totalPrecioMostrar" />
+								</f:facet>
+								<p:column headerText="CODIGO" style="width:10%" filterBy="#{productosPrin.codigoExterno}" filterMatchMode="contains">
+									<h:outputText value="#{productosPrin.codigoExterno}"></h:outputText>
+								</p:column>
+								<p:column headerText="NOMBRE">
+									<h:outputText value="#{productosPrin.nombre}"></h:outputText>
+								</p:column>
+								<p:column headerText="CANTIDAD">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{productosPrin.cantidad}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{productosPrin.cantidad}" style="width:96%" label="cantidad" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="VLR UNITARIO">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{productosPrin.subtotal}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{productosPrin.subtotal}" style="width:96%" label="subtotal" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="% IVA">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{productosPrin.porcentajeIva}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{productosPrin.porcentajeIva}" style="width:96%" label="iva" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="IVA" id="ivaPr">
+									<h:outputText value="#{productosPrin.iva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="TOTAL">
+									<h:outputText value="#{productosPrin.valorTotal}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column style="width:30%" styleClass="" headerText="Eliminar">
+									<p:commandButton actionListener="#{facturaCompraBean.eliminaProducto(productosPrin.id)}" icon="ui-icon-search" update="tablaConsultaProdPrin">
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+						</h:form>
+					</p:tab>
+				</p:accordionPanel>
+			</center>
+			<p:spacer />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12 text-center">
+					<h:form id="formFinal">
+						<p:commandButton value="Ingresar Factura" actionListener="#{facturaCompraBean.adicionaFactura}" update="idRete" />
+						<p:commandButton value="Ver Totales" actionListener="#{facturaCompraBean.consultaTotales}" update="consPagos" />
+					</h:form>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+			<!-- Dialogo para la insercion de un proveedor -->
+			<p:dialog header="Insercion de un Proveedor" widgetVar="addProv" minHeight="180" responsive="true" showEffect="fade" hideEffect="fade" modal="true">
+				<div class="panel panel-info">
+					<div class="panel-heading">DATOS BASICOS PROVEEDOR</div>
+					<div class="panel-body">
+						<h:form id="insertProv">
+							<p:panelGrid columns="2">
+									Nombre:
+									<p:inputText value="#{provedorBean.proveedor.nombre}" required="true"></p:inputText>
+									Nit:
+									<p:inputText value="#{provedorBean.proveedor.nit}" required="true"></p:inputText>
+									ReteFuente:
+									<h:selectOneMenu value="#{provedorBean.idRete}" styleClass="form-control">
+									<f:selectItem itemLabel="Seleccione ...." itemValue="-1" />
+									<f:selectItems value="#{cargaListasMapBean.listaReteFuente}" />
+								</h:selectOneMenu>
+								Gran contribuyente:
+								<h:selectOneMenu value="#{provedorBean.proveedor.granContribuyente}" styleClass="form-control">
+									<f:selectItem itemLabel="No" itemValue="N" />
+									<f:selectItem itemLabel="Si" itemValue="S" />
+								</h:selectOneMenu>
+									Razón Social:
+									<p:inputText value="#{provedorBean.proveedor.razonSocial}" required="true"></p:inputText>
+									Representante Legal:
+									<p:inputText value="#{provedorBean.proveedor.representante}"></p:inputText>
+									Telefono:
+									<p:inputText value="#{provedorBean.proveedor.telefono}"></p:inputText>
+									Dirección:
+									<p:inputText value="#{provedorBean.proveedor.direccion}"></p:inputText>
+									Celular:
+									<p:inputText value="#{provedorBean.proveedor.celular}"></p:inputText>
+									Correo Electronico:
+									<p:inputText value="#{provedorBean.proveedor.correo}"></p:inputText>
+							</p:panelGrid>
+							<p:commandButton value="Insertar" actionListener="#{provedorBean.adicionProveedor}" oncomplete="PF('addProv').hide();" />
+						</h:form>
+					</div>
+				</div>
+			</p:dialog>
+			<!-- Dialog para la consulta de productos -->
+			<p:dialog responsive="true" header="INFORMACION RETEFUENTE" id="idRete" widgetVar="consultaRete" width="50%" modal="true" closable="false">
+				<h:form id="formRete">
+
+					<div class="ui-grid ui-grid-responsive">
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3">
+								<h:outputText value="Proveedor" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.proveedor.nombre}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="Subtotal:" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.facturaCompra.valorFacura}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3">
+								<h:outputText value=" iva:" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.facturaCompra.valorIva}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="retefuente:" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.reteFuente}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+						</div>
+						<p:spacer></p:spacer>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-3">
+								<h:outputText value="Ajuste maximo al peso" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.ajustePeso}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="valor ajuste al peso" />
+							</div>
+							<div class="ui-grid-col-3">
+								<h:outputText value="#{facturaCompraBean.ajusteFactura}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+						</div>
+						<p:spacer></p:spacer>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6">
+								<h:outputText value="total real a pagar:" />
+							</div>
+							<div class="ui-grid-col-6">
+								<h:outputText value="#{facturaCompraBean.totalPagar}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</div>
+						</div>
+						<div class="ui-grid-row">
+							<div class="ui-grid-col-6">
+								<p:commandButton value="Aceptar" action="#{facturaCompraBean.ingresaFacturaFinal}" />
+							</div>
+							<div class="ui-grid-col-6">
+								<p:commandButton styleClass="RedButton" value="Cancelar" onclick="PF('consultaRete').hide();" />
+							</div>
+						</div>
+					</div>
+				</h:form>
+			</p:dialog>
+			<p:dialog responsive="true" header="CONSULTAR PAGOS" widgetVar="conPagos" id="consPagos" modal="true" closeOnEscape="true">
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6">
+							<h:outputText value="Iva:" />
+							<h:outputText value="#{facturaCompraBean.totalIva}">
+								<f:convertNumber pattern="#,##0.000000"></f:convertNumber>
+							</h:outputText>
+						</div>
+						<div class="ui-grid-col-6">
+							<h:outputText value="Subtotal:" />
+							<h:outputText value="#{facturaCompraBean.totalPrecioProd}">
+								<f:convertNumber pattern="#,##0.000000"></f:convertNumber>
+							</h:outputText>
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-12">
+							<h:outputText value="TOTAL:">
+							</h:outputText>
+							<h:outputText value="#{facturaCompraBean.totalSumaIvaPrecio}">
+								<f:convertNumber pattern="#,##0.000000"></f:convertNumber>
+							</h:outputText>
+						</div>
+					</div>
+				</div>
+			</p:dialog>
+			<p:dialog header="Consulta de productos" widgetVar="addProducto" minHeight="150" width="90%" modal="true" closeOnEscape="true">
+				<h:form id="formTablaFiltros">
+					<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{facturaCompraBean.productosConsulta}"
+						filteredValue="#{facturaCompraBean.productosConsultaFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+						<f:facet name="header">
+							<p:outputLabel value="CONSULTA GENERAL DE PRODUCTOS" />
+							<p:inputText id="globalFilter" onkeyup="PF('tablaProd').filter()" />
+						</f:facet>
+						<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigo}"></h:outputText>
+						</p:column>
+						<p:column headerText="CODIGO EXTERNO" filterBy="#{prod.codigoExt}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigoExt}"></h:outputText>
+						</p:column>
+						<p:column headerText="DESCRIPCION" filterBy="#{prod.descripcion}" filterMatchMode="contains">
+							<h:outputText value="#{prod.descripcion}"></h:outputText>
+						</p:column>
+						<p:column headerText="nombre" filterBy="#{prod.nombre}" filterMatchMode="contains">
+							<h:outputText value="#{prod.nombre}"></h:outputText>
+						</p:column>
+						<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
+							<h:outputText value="#{prod.ubicacion}"></h:outputText>
+						</p:column>
+						<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigoBarras}"></h:outputText>
+						</p:column>
+						<p:column headerText="ACCION">
+							<p:commandButton actionListener="#{facturaCompraBean.seleccionaProducto(prod)}" value="ADD" oncomplete="PF('addProducto').hide();cambiarCodigo();" update=":productoInicial:codigoAuxiliar"
+								onsuccess=""></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
+			<h:form id="productoInicial">
+				<p:inputText style="display:none" value="#{facturaCompraBean.codigoAuxiliar}" id="codigoAuxiliar"></p:inputText>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

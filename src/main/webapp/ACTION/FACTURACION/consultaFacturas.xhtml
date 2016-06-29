@@ -1,0 +1,104 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<br></br>
+			<br></br>
+			<center>
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<div class="panel panel-heading" style="color: #337ab7; background: #eee">CONSULTA FACTURACIÓN</div>
+						<h:form>
+							<p:panelGrid id="panelDatosGeneral">
+								<p:row>
+									<p:column>
+										Fecha Inicial:
+									</p:column>
+									<p:column>
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{consultaFacturacionBean.fechaInicial}" navigator="true" style="width:60%;" required="true" requiredMessage="Seleccione fecha Inicial">
+										</p:calendar>
+									</p:column>
+									<p:column>
+										Fecha Final:		
+									</p:column>
+									<p:column>
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{consultaFacturacionBean.fechaFinal}" navigator="true" style="width:60%;" required="true" requiredMessage="Seleccione fecha Final">
+										</p:calendar>
+									</p:column>
+									<p:column>
+										Sede:			
+									</p:column>
+									<p:column>
+										<h:selectOneMenu styleClass="form-control" id="selectSede" style="width:200px" required="true" requiredMessage="Seleccione una sede.." value="#{consultaFacturacionBean.idSede}">
+											<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+											<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+										</h:selectOneMenu>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="6">
+										<p:commandButton value="CONSULTAR" actionListener="#{consultaFacturacionBean.consultaFacturas}" update="tablaFacturas"></p:commandButton>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+							<br />
+							<br />
+							<p:dataTable id="tablaFacturas" widgetVar="tFacturas" paginator="true" var="factura" value="#{consultaFacturacionBean.listaFacturas}" rows="20" emptyMessage="No existe facturas" filteredValue="#{consultaFacturacionBean.listaFacturasFiltradas}">
+								<f:facet name="header">
+									<h:commandLink>
+										<p:graphicImage name="/images/excel.png" width="24" />
+										<p:dataExporter type="xls" target="tablaFacturas" fileName="tablaFacturas" />
+									</h:commandLink>
+								</f:facet>
+								<p:column filterMatchMode="contains" filterBy="#{factura.resolucion}" headerText="Resolucion" width="12%" priority="1">
+									<h:outputText value="#{factura.resolucion}" />
+								</p:column>
+								<p:column filterMatchMode="contains" filterBy="#{factura.consecutivo}" headerText="Consecutivo" width="13%" priority="1">
+									<h:outputText value="#{factura.consecutivo}" />
+								</p:column>
+								<p:column headerText="Cliente" width="35%" priority="5" filterMatchMode="contains" filterBy="#{factura.cliente.nombres}">
+									<h:outputText value="#{factura.cliente.apellidos}"></h:outputText>
+									<h:outputText value="&#160;" />
+									<h:outputText value="#{factura.cliente.nombres}"></h:outputText>
+								</p:column>
+								<p:column headerText="Fecha Facturacion" width="15%" priority="4" filterMatchMode="contains" filterBy="#{factura.fecha.toGregorianCalendar().time}">
+									<h:outputText value="#{factura.fecha.toGregorianCalendar().time}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Subtotal" width="20%">
+									<h:outputText value="#{factura.valor}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Iva" width="25%">
+									<h:outputText value="#{factura.vlrIva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="total" width="30%" priority="3">
+									<h:outputText value="#{factura.valor+factura.vlrIva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Detalle" width="10%" priority="2" exportable="false">
+									<p:commandButton icon="ui-icon-search" action="#{consultaFacturacionBean.consultaEspecifico(factura.id)}" />
+								</p:column>
+							</p:dataTable>
+						</h:form>
+					</div>
+				</div>
+			</center>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

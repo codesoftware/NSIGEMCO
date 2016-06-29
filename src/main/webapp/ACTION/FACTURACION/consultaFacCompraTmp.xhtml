@@ -1,0 +1,86 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<h:form id="consultaBorradores">
+				<center>
+					<br />
+					<p:panelGrid layout="grid" columns="4" style="width:80%">
+						<f:facet name="header">
+							<p:outputLabel value="CONSULTA DE FACTURAS DE COMPRA BORRADOR" />
+						</f:facet>
+						<p:column>
+					Fecha Inicial
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{consultaFacComTmpBean.fechaInicial}" id="fechaInicial" navigator="true" style="width:100%;"
+								maxdate="#{consultaFacComTmpBean.maxDate}">
+								<p:ajax event="dateSelect" listener="#{consultaFacComTmpBean.ajaxCarga}" />
+							</p:calendar>
+						</p:column>
+						<p:column>
+					Fecha Inicial
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{consultaFacComTmpBean.fechaFinal}" id="fechaFinal" navigator="true" style="width:100%;"
+								maxdate="#{consultaFacComTmpBean.maxDate}">
+								<p:ajax event="dateSelect" listener="#{consultaFacComTmpBean.ajaxCarga}" />
+							</p:calendar>
+						</p:column>
+						<p:column>
+						Sede:
+							<h:selectOneMenu value="#{consultaFacComTmpBean.idSede}" styleClass="form-control" id="selectSede">
+								<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="0"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+							</h:selectOneMenu>
+						</p:column>
+						<p:column>
+						Estado:
+							<h:selectOneMenu value="#{consultaFacComTmpBean.estado}" styleClass="form-control" id="selectEstado">
+								<f:selectItem itemLabel="SELECCIONE UNA ESTADO" itemValue=""></f:selectItem>
+								<f:selectItem itemLabel="BORRADOR" itemValue="B"></f:selectItem>
+							</h:selectOneMenu>
+						</p:column>
+						<p:column colspan="4">
+							<p:commandButton value="CONSULTAR" title="CONSULTAR" styleClass="OrangeButton" icon="fa fa-search" actionListener="#{consultaFacComTmpBean.consultaFacturasCriterio}" update="facturaBorrador,mensajes" />
+						</p:column>
+					</p:panelGrid>
+				</center>
+				<center>
+					<p:dataTable emptyMessage="No existe facturas con este criterio" filteredValue="#{consultaFacComTmpBean.listaFacturasFiltro}" id="facturaBorrador" paginator="true" reflow="true" rows="15"
+						value="#{consultaFacComTmpBean.listaFacturas}" var="factura" style="width:90%" widgetVar="tablaFacturaas">
+						<f:facet name="header">
+					FACTURAS DE COMPRA BORRADOR
+					</f:facet>
+						<p:column headerText="Id" filterMatchMode="contains" filterValue="#{factura.id}">
+							<p:outputLabel value="#{factura.id}" />
+						</p:column>
+						<p:column headerText="# de factura" filterMatchMode="contains" filterValue="#{factura.numeroFactura}">
+							<p:outputLabel value="#{factura.numeroFactura}" />
+						</p:column>
+						<p:column headerText="Nit Proveedor" filterMatchMode="contains" filterValue="#{factura.proveedor.nit}-#{factura.proveedor.dverificacion}">
+							<p:outputLabel value="#{factura.proveedor.nit}-#{factura.proveedor.dverificacion}" />
+						</p:column>
+						<p:column headerText="Sede" filterMatchMode="contains">
+							<p:outputLabel value="#{factura.sede.name}" />
+						</p:column>
+						<p:column headerText="Valor factura" filterMatchMode="contains" filterValue="#{factura.valorFacura}">
+							<p:outputLabel value="#{factura.valorFacura}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Detalle">
+							<p:commandButton value="VER" title="VER" styleClass="BlueButton" icon="fa fa-search" action="#{consultaFacComTmpBean.seleccionaFactura(factura.id)}"/>
+						</p:column>
+					</p:dataTable>
+
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

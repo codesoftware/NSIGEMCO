@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargueListasBean.cargaListaSedes}" type="preRenderView"></f:event>
+			<f:event listener="#{cargaListasMapBean.cargaListaCategorias}" type="preRenderView" />
+			<br />
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<h:form id="formCambioPrecioProd">
+						<p:panelGrid styleClass="table table-bordered" id="panelProductoGrid" >
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="4">Producto Seleccionado</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Codigo:" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{cambioPrecioProductoBean.producto.codigo}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="codigo Externo:" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{cambioPrecioProductoBean.producto.codigoExt}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Descripcion:" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{cambioPrecioProductoBean.producto.descripcion}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Sedes:"></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:autoComplete id="selectSede" value="#{cambioPrecioProductoBean.sedeSelect}" completeMethod="#{autoCompleteBean.completarSede}" var="item" itemLabel="#{item.name}" itemValue="#{item}" converter="sedesConverter" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="PRECIO" />
+								</p:column>
+								<p:column>
+									<pe:inputNumber id="precioParam" value="#{cambioPrecioProductoBean.precioProducto}" decimalPlaces="5" symbol="$" style="width:100%" styleClass="precioProducto" onfocus="this.value = '';" ></pe:inputNumber>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="PRECIO ESTATICO" />
+								</p:column>
+								<p:column>
+									<p:selectBooleanCheckbox value="#{cambioPrecioProductoBean.precioFijo}">
+										<p:ajax update=":formCambioPrecioProd:panelProductoGrid"></p:ajax>
+									</p:selectBooleanCheckbox>
+								</p:column>
+							</p:row>
+							<p:row rendered="#{cambioPrecioProductoBean.precioFijo}">
+								<p:column>
+									<p:outputLabel value="PRECIO UNIDAD" />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{cambioPrecioProductoBean.precioUni}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="PRECIO CENTENA" />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{cambioPrecioProductoBean.precioDec}" />
+								</p:column>
+							</p:row>
+							<p:row rendered="#{cambioPrecioProductoBean.precioFijo}">
+								<p:column>
+									<p:outputLabel value="PRECIO MILLAR" />
+								</p:column>
+								<p:column colspan="3">
+									<p:inputText value="#{cambioPrecioProductoBean.precioMil}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6">
+									<p:commandButton actionListener="#{cambioPrecioProductoBean.parametrizarPrecio}" styleClass="RedButton" value="PARAMETRIZAR" />
+									<p:commandButton value="VER HISTORICO"  actionListener="#{cambioPrecioProductoBean.buscaHistoricoProductos}" oncomplete="PF('histPrecios').show()" update=":tablaHist:tablaHisPrecios" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:form>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+			<br />
+			<br />
+			<h:form id="formPrecios">
+				<div class="row">
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
+					<div class="col-md-10 col-sm-12 col-xs-12">
+						<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+						<p:panelGrid styleClass="table table bordered">
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="6">Busqueda de producto</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="CATEGORIAS:" />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{cambioPrecioProductoBean.idCate}" styleClass="form-control" id="selectCate">
+										<p:ajax listener="#{cambioPrecioProductoBean.cambioSelectCate}" update=":formPrecios:messages,:formPrecios:selectSubCate"></p:ajax>
+										<f:selectItem itemLabel="SELECCIONE UNA CATEGORIA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapCategorias}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SUB CATEGORIAS:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="selectSubCate" value="#{cambioPrecioProductoBean.referenciaSelect}" completeMethod="#{cambioPrecioProductoBean.completaReferenciaXCat}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" converter="referenciaConverter" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="CODIGO EXTERNO:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="codigoExterno" value="#{cambioPrecioProductoBean.codigoExterno}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6">
+									<p:commandButton value="BUSCAR" actionListener="#{cambioPrecioProductoBean.buscarProductos}" update=":resultConsultaProd,:resultConsultaProd:tablaSecConsProd"></p:commandButton>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<h:form id="resultConsultaProd">
+						<p:remoteCommand  name="busca" actionListener="#{cambioPrecioProductoBean.buscarProductos}" update=":resultConsultaProd,:resultConsultaProd:tablaSecConsProd"/>
+						<p:dataTable id="tablaSecConsProd" var="productos" widgetVar="productosTable" value="#{cambioPrecioProductoBean.resultadoConsulta}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" scrollable="true" scrollHeight="220"
+							filteredValue="#{cambioPrecioProductoBean.filteredConsulta}" styleClass="table table-bordered" rendered="#{cambioPrecioProductoBean.resultConsulta}">
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Buscar entodos los campos" />
+									<p:inputText id="globalFilter" onkeyup="PF('productosTable').filter()" />
+								</p:outputPanel>
+							</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{productos.codigo}" style="width:10%">
+								<h:outputText value="#{productos.codigo}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO EXTERNO" filterBy="#{productos.codigoExt}" style="width:15%">
+								<h:outputText value="#{productos.codigoExt}"></h:outputText>
+							</p:column>
+							<p:column headerText="NOMBRE" filterBy="#{productos.descripcion}" filterMatchMode="contains">
+								<h:outputText value="#{productos.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="TIPO" filterBy="#{productos.marca.nombre}" style="width:10%">
+								<h:outputText value="#{productos.marca.nombre}" />
+							</p:column>
+							<p:column style="width:15%" headerText="Seleccionar">
+								<p:commandButton value="ADD" actionListener="#{cambioPrecioProductoBean.seleccionoProducto(productos)}" update=":formCambioPrecioProd:panelProductoGrid,:resultConsultaProd:tablaSecConsProd" />
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+			<p:dialog header="Historico precios" widgetVar="histPrecios" minHeight="150" modal="true" width="90%" closeOnEscape="true">
+				<h:form id="tablaHist">
+					<p:dataTable id="tablaHisPrecios" var="hisPrecio" value="#{cambioPrecioProductoBean.listaPrecios}" emptyMessage="No tiene historico de precios en la sede seleccionada" style="width:98%">
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="PRECIOS DE: #{cambioPrecioProductoBean.producto.descripcion} EN LA SEDE #{cambioPrecioProductoBean.sedeSelect.name}" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="FECHA">
+							<h:outputText value="#{hisPrecio.fecha}" converter="xmlDatetoDateConverter" />
+						</p:column>
+						<p:column headerText="PRECIO BASE">
+							<h:outputText value="#{hisPrecio.precio}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="PRECIO UNIDAD">
+							<h:outputText value="#{hisPrecio.precioUnidad}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="PRECION DOCENA">
+							<h:outputText value="#{hisPrecio.precioCentena}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="PRECIO MILLAR">
+							<h:outputText value="#{hisPrecio.precioMillar}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="ESTADO">
+							<h:outputText value="ACTIVO" rendered="#{hisPrecio.estado == 'A'}" />
+							<h:outputText value="INACTIVO" rendered="#{hisPrecio.estado != 'A'}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

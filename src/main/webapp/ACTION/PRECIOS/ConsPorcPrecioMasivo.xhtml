@@ -1,0 +1,41 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<h:form>
+				<p:dataTable widgetVar="tablePorc" emptyMessage="NO EXISTEN PORCENTAJES PARAMETRIZADOS" var="porcentaje" value="#{histPorcPrecioBean.listaPorc}" paginator="true" rows="20" filteredValue="#{histPorcPrecioBean.listaPorcFiltered}">
+					<p:column headerText="SEDE" filterBy="#{porcentaje.sede.name}">
+						<h:outputText value="#{porcentaje.sede.name}"></h:outputText>
+					</p:column>
+					<p:column headerText="CATEGORIA" filterBy="#{porcentaje.categoria.descripcion}">
+						<h:outputText value="#{porcentaje.categoria.descripcion}"></h:outputText>
+					</p:column>
+					<p:column headerText="SUB CATEGORIA" filterBy="#{porcentaje.referencia.descripcion}">
+						<h:outputText value="#{porcentaje.referencia.descripcion}"></h:outputText>
+					</p:column>
+					<p:column headerText="MARCA" filterBy="#{porcentaje.marca.descripcion}">
+						<h:outputText value="#{porcentaje.marca.descripcion}"></h:outputText>
+					</p:column>
+					<p:column headerText="PRECIO BASE">
+						<h:outputText value="#{porcentaje.porcBase}"></h:outputText>
+					</p:column>
+					<p:column headerText="PRECIO UNIDAD">
+						<h:outputText value="#{porcentaje.porcUni}"></h:outputText>
+					</p:column>
+					<p:column headerText="PRECIO DECENA">
+						<h:outputText value="#{porcentaje.porcDec}"></h:outputText>
+					</p:column>
+					<p:column headerText="PRECIO MILLAR">
+						<h:outputText value="#{porcentaje.porcMill}"></h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

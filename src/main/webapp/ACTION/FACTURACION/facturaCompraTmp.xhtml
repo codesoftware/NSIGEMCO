@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<h:form id="datosFactura">
+				<p:remoteCommand name="codExt" update="panelDetProducto" actionListener="#{facturaCompraTmpBean.busquedaProducto}" />
+				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" />
+				<p:commandButton value="GUARDAR" title="GUARDAR" icon="ui-icon-disk" id="tb" actionListener="#{facturaCompraTmpBean.autoGuardado}" update="fechaGuardado" />
+				<p:sticky target="tb" />
+				<center>
+					<p:outputLabel id="fechaGuardado" value="Autoguardado: #{facturaCompraTmpBean.fechaGuardado}" />
+					<br />
+					<p:panelGrid columns="5" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="DATOS FACTURA" style="color:black" />
+						</f:facet>
+						<p:column>
+					Fecha Factura
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaFact}" id="fechaFact" navigator="true" style="width:100%;"
+								maxdate="#{facturaCompraTmpBean.maxDate}">
+								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
+							</p:calendar>
+						</p:column>
+						<p:column>
+					Fecha Recepción
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaRec}" id="fechaRecep" navigator="true" style="width:100%;"
+								maxdate="#{facturaCompraTmpBean.maxDate}">
+								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
+							</p:calendar>
+
+						</p:column>
+						<p:column>
+					Numero de factura
+					<p:inputText value="#{facturaCompraTmpBean.facturaCompra.numeroFactura}"></p:inputText>
+						</p:column>
+						<p:column>
+					Valor Factura
+					<pe:inputNumber id="valorPago" value="#{facturaCompraTmpBean.facturaCompra.valorFacura}" decimalPlaces="2" symbol="$" style="width:100%" />
+						</p:column>
+						<p:column>
+							<h:selectOneMenu value="#{facturaCompraTmpBean.idSede}" styleClass="form-control" id="selectSede">
+								<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+							</h:selectOneMenu>
+						</p:column>
+					</p:panelGrid>
+					<br />
+					<p:panelGrid columns="5" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="DATOS PROVEEDOR" style="color:black" />
+						</f:facet>
+						<p:column>
+							<p:outputLabel value="Busqueda Proveedor" />
+							<p:autoComplete id="inputAutCProv" value="#{facturaCompraTmpBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+								converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+								<p:ajax listener="#{facturaCompraTmpBean.seleccionaProveedor}" event="itemSelect" update="panelProveedor" />
+							</p:autoComplete>
+						</p:column>
+						<p:column colspan="4">
+							<p:panelGrid id="panelProveedor" columns="5" layout="grid" style="width:100%">
+								<p:column>
+									<p:outputLabel value="Nombre:" style="color:black" />
+									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nombre}" style="width:100%" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="NIT:" style="color:black" />
+									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nit}-#{facturaCompraTmpBean.proveedor.dverificacion}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Ciudad:" style="color:black" />
+									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.ciudad.nombre}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Plazo pago:" style="color:black" />
+									<p:inputText value="#{facturaCompraTmpBean.proveedor.dcredito}" style="width:50%" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Porcentaje retefuente:" style="color:black" />
+									<p:inputText value="#{facturaCompraTmpBean.proveedor.porcRetencion}" style="width:50%">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:inputText>
+								</p:column>
+							</p:panelGrid>
+						</p:column>
+					</p:panelGrid>
+					<br />
+					<p:panelGrid columns="5" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="ADICIÓN DE  PRODUCTOS" style="color:black" />
+						</f:facet>
+						<p:column>
+							<p:outputLabel value="Cod. Ext:" style="color:black" />
+							<p:inputText id="codAplicCons" value="#{facturaCompraTmpBean.codConExterno}" onblur="codExt()" style="width:100%;" styleClass="codigoExterno"
+								onkeypress="if (event.keyCode == 13){ return false;}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Cantidad :" style="color:black" />
+							<pe:inputNumber id="cantidad" value="#{facturaCompraTmpBean.cantidad}" decimalPlaces="0" style="width:100%" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Porcentaje Iva :" style="color:black" />
+							<pe:inputNumber id="porIva" value="#{facturaCompraTmpBean.porcentajeIva}" style="width:100%" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Valor unidad :" style="color:black" />
+							<pe:inputNumber id="valorUnidad" value="#{facturaCompraTmpBean.valorProducto}" decimalPlaces="2" symbol="$" style="width:100%" onblur="adicionaProd()" />
+						</p:column>
+						<p:column>
+							<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" />
+						</p:column>
+						<p:column colspan="5">
+							<p:panel id="panelDetProducto">
+								<p:outputLabel value="Codigo Externo:#{facturaCompraTmpBean.productoBusqueda.producto.codigoExt}---Nombre :#{facturaCompraTmpBean.productoBusqueda.producto.descripcion}" />
+							</p:panel>
+						</p:column>
+
+					</p:panelGrid>
+					<p:dataTable id="tablaConsultaProdPrin" reflow="true" widgetVar="tablaConsultaPrinc" value="#{facturaCompraTmpBean.listaProductos}" var="producto" paginator="true" rows="10"
+						rowsPerPageTemplate="10,20,30" filteredValue="#{facturaCompraTmpBean.listaProductosFiltro}">
+						<f:facet name="header">
+							<p:outputLabel value="LISTA DE PRODUCTOS" />
+						</f:facet>
+						<p:column headerText="Codigo externo" filterBy="#{producto.producto.codigoExt}" filterMatchMode="contains">
+							<p:outputLabel value="#{producto.producto.codigoExt}" />
+						</p:column>
+						<p:column headerText="Nombre" filterBy="#{producto.producto.descripcion}" filterMatchMode="contains">
+							<p:outputLabel value="#{producto.producto.descripcion}" />
+						</p:column>
+						<p:column headerText="cantidad">
+							<p:outputLabel value="#{producto.cantidad}" />
+						</p:column>
+						<p:column headerText="porcentaje Iva">
+							<p:outputLabel value="#{producto.porcentajeIva}" />
+						</p:column>
+						<p:column headerText="Valor Producto">
+							<p:outputLabel value="#{producto.subtotal}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Total">
+							<p:outputLabel value="#{producto.total}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:commandButton value="DEL" title="BORRAR" icon="fa fa-eraser" styleClass="RedButton" actionListener="#{facturaCompraTmpBean.borraItem(producto.producto.id)}" update="tablaConsultaProdPrin" />
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:commandButton value="TERMINAR" title="TERMINAR" icon="fa fa-check-square-o" styleClass="BlueButton" onclick="PF('confirmacionTer').show()" update="tablaConsultaProdPrin" />
+					<p:commandButton value="VER DETALLE" title="VER DETALLE" icon="fa fa-eye" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.borraItem(producto.producto.id)}"
+						update="tablaConsultaProdPrin" />
+				</center>
+
+				<p:dialog header="Consulta de productos" widgetVar="addProducto" minHeight="150" width="90%" modal="true" closeOnEscape="true">
+					<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{facturaCompraTmpBean.productosConsulta}"
+						filteredValue="#{facturaCompraTmpBean.productosConsultaFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+						<f:facet name="header">
+							<p:outputLabel value="CONSULTA GENERAL DE PRODUCTOS" />
+							<p:inputText id="globalFilter" onkeyup="PF('tablaProd').filter()" />
+						</f:facet>
+						<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigo}"></h:outputText>
+						</p:column>
+						<p:column headerText="CODIGO EXTERNO" filterBy="#{prod.codigoExt}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigoExt}"></h:outputText>
+						</p:column>
+						<p:column headerText="DESCRIPCION" filterBy="#{prod.descripcion}" filterMatchMode="contains">
+							<h:outputText value="#{prod.descripcion}"></h:outputText>
+						</p:column>
+						<p:column headerText="NOMBRE" filterBy="#{prod.nombre}" filterMatchMode="contains">
+							<h:outputText value="#{prod.nombre}"></h:outputText>
+						</p:column>
+						<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
+							<h:outputText value="#{prod.ubicacion}"></h:outputText>
+						</p:column>
+						<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
+							<h:outputText value="#{prod.codigoBarras}"></h:outputText>
+						</p:column>
+						<p:column headerText="ACCION">
+							<p:commandButton actionListener="#{facturaCompraTmpBean.seleccionaProducto(prod)}" value="ADD" oncomplete="PF('addProducto').hide();" update=":datosFactura:codAplicCons"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+
+				<p:dialog responsive="true" modal="true" widgetVar="confirmacionTer">
+					<p:panelGrid columns="1" layout="grid" >
+						<p:column>
+							<p:outputLabel value="Seguro desea terminar el ingreso de la factura? recuerde que no podra hacer modificaciones posteriores." />
+						</p:column>
+						<p:column>
+							<center>
+								<p:commandButton value="ACEPTAR" styleClass="BlueButton" />
+								<p:commandButton value="CANCELAR" styleClass="RedButton" onclick="PF('confirmacionTer').hide()" />
+							</center>
+						</p:column>
+					</p:panelGrid>
+
+				</p:dialog>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaPerfiles}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+			<br />
+			<br />
+			<h:form id="formTable">
+				<p:dataTable var="usuario" widgetVar="tableUsuarios" value="#{usuarioBean.listaUsuarios}" reflow="true" paginator="true">
+					<p:column headerText="APELLIDOS">
+						<p:outputLabel value="#{usuario.persona.apellido}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="NOMBRE">
+						<p:outputLabel value="#{usuario.persona.nombre}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="CEDULA">
+						<p:outputLabel value="#{usuario.persona.cedula}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="USUARIO">
+						<p:outputLabel value="#{usuario.usuario}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="ESTADO">
+						<p:outputLabel value="ACTIVO" rendered="#{usuario.estado == 'A'}"></p:outputLabel>
+						<p:outputLabel value="INACTIVO" rendered="#{usuario.estado == 'I'}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="PERFIL">
+						<p:outputLabel value="#{usuario.perfil.nombre}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="PERFIL">
+						<p:outputLabel value="#{usuario.sede.name}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="ACCION">
+						<p:commandButton actionListener="#{usuarioBean.consultaActualiza(usuario.usuario)}" onsuccess="PF('dialogActualiza').show()" value="ACT." icon="fa fa-user-md" styleClass="GreenButton"
+							update=":formActualiza"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			<br />
+			<p:commandButton value="INSERTAR" onclick="PF('dialogInserta').show()" actionListener="#{usuarioBean.limpiaUsuarioSeleccionado}" update=":formInsertar"></p:commandButton>
+			<p:dialog header="Usuario a Actualizar" widgetVar="dialogActualiza" closeOnEscape="true" modal="true" responsive="true">
+				<h:form id="formActualiza">
+					<p:panel header="USUARIO">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="NOMBRES: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.nombre}"></p:inputText>
+							<p:outputLabel value="APELLIDOS: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.apellido}"></p:inputText>
+							<p:outputLabel value="CEDULA: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.cedula}"></p:inputText>
+							<p:outputLabel value="USUARIO: "></p:outputLabel>
+							<p:outputLabel value="#{usuarioBean.usuarioSelected.usuario}" />
+							<p:outputLabel value="CORREO: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.correo}"></p:inputText>
+							<p:outputLabel value="ESTADO: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.estado}" styleClass="form-control" id="selectEstadoAct">
+								<f:selectItem itemLabel="SELECCIONE UN ESTADO" itemValue="-1"></f:selectItem>
+								<f:selectItem itemLabel="ACTIVO" itemValue="A"></f:selectItem>
+								<f:selectItem itemLabel="INACTIVO" itemValue="I"></f:selectItem>
+							</h:selectOneMenu>
+							<p:outputLabel value="PERFILES: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.perfil.id}" styleClass="form-control" id="selectPerfilUpd">
+								<f:selectItem itemLabel="SELECCIONE UN PERFIL" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapPerfiles}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:outputLabel value="SEDES: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.sede.id}" styleClass="form-control" id="selectSedeUpd">
+								<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:commandButton value="ACTUALIZAR" icon="fa fa-check" actionListener="#{usuarioBean.actualizarUsuario}" styleClass="buttonBLue" onsuccess="PF('dialogActualiza').hide();" update=":formTable"></p:commandButton>
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+			<p:dialog header="Insertar Usuario" widgetVar="dialogInserta" closeOnEscape="true" modal="true" responsive="true">
+				<h:form id="formInsertar">
+					<p:panel header="USUARIO">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="NOMBRES: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.nombre}"></p:inputText>
+							<p:outputLabel value="APELLIDOS: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.apellido}"></p:inputText>
+							<p:outputLabel value="CEDULA: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.cedula}"></p:inputText>
+							<p:outputLabel value="USUARIO: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.usuario}" />
+							<p:outputLabel value="FECHA DE NACIMIENTO:"></p:outputLabel>
+							<p:calendar value="#{usuarioBean.usuarioSelected.persona.fechaNac}" navigator="true" maxdate="#{usuarioBean.fechaInicial}" pattern="dd/MM/yyyy" mask="true" showOn="button" converter="datetoXmlDateConverter"  yearRange="c-100:c+100"></p:calendar>
+							
+							
+							<p:outputLabel value="CORREO: "></p:outputLabel>
+							<p:inputText value="#{usuarioBean.usuarioSelected.persona.correo}"></p:inputText>
+							<p:outputLabel value="ESTADO: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.estado}" styleClass="form-control" id="selectEstadoInsert">
+								<f:selectItem itemLabel="SELECCIONE UN ESTADO" itemValue="-1"></f:selectItem>
+								<f:selectItem itemLabel="ACTIVO" itemValue="A"></f:selectItem>
+								<f:selectItem itemLabel="INACTIVO" itemValue="I"></f:selectItem>
+							</h:selectOneMenu>
+							<p:outputLabel value="PERFILES: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.perfil.id}" styleClass="form-control" id="selectPerfilInsert">
+								<f:selectItem itemLabel="SELECCIONE UN PERFIL" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapPerfiles}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:outputLabel value="SEDES: "></p:outputLabel>
+							<h:selectOneMenu value="#{usuarioBean.usuarioSelected.sede.id}" styleClass="form-control" id="selectSedeUInstert">
+								<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:commandButton value="INSERTAR" icon="fa fa-check" styleClass="buttonBLue" actionListener="#{usuarioBean.insertaUsuario}" onsuccess="PF('dialogInserta').hide()"></p:commandButton>
+						</p:panelGrid>
+					</p:panel>
+
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

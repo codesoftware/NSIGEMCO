@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<div class="row">
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+				<div class="col-md-6 col-xs-12 col-sm-12">
+					<div class="row ">
+						<div class="alert alert-info col-md-12 col-sm-12 col-xs-12">
+							<div class="form-group">
+								<h3>
+									CLASE:<br />
+									<p:commandLink value="#{cuentasBean.claseSelected.codigo}" action="/ACTION/CONTABILIDAD/CONSULTAS/consultaClase.jsf"></p:commandLink>
+									<p:outputLabel value="&nbsp;&nbsp;&nbsp;"></p:outputLabel>
+									<p:outputLabel value="#{cuentasBean.claseSelected.nombre}"></p:outputLabel>
+								</h3>
+							</div>
+							<div class="form-group">
+								<h3>
+									GRUPO:<br />
+									<p:outputLabel value="#{cuentasBean.grupoSelected.codigo}"></p:outputLabel>
+									<p:outputLabel value="&nbsp;&nbsp;&nbsp;"></p:outputLabel>
+									<p:outputLabel value="#{cuentasBean.grupoSelected.nombre}"></p:outputLabel>
+								</h3>
+							</div>
+						</div>
+						<div class="panel panel-success">
+							<div class="panel-body">
+								<p:outputLabel value="#{cuentasBean.claseSelected.descripcion}"></p:outputLabel>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+				<div class="col-md-6 col-xs-12 col-sm-12">
+					<div class="row">
+						<h3 class="alert alert-warning">Cuenta</h3>
+						<div class="panel panel-warning" style="max-height: 250px; overflow-y: scroll;">
+							<table class="table table-hover">
+								<tbody>
+									<ui:repeat var="item" value="#{cuentasBean.listaCuentas}">
+										<tr>
+											<td style="text-align: center;"><p:commandLink value="#{item.codigo}" action="#{cuentasBean.seleccionaCuenta(item)}"></p:commandLink></td>
+											<td style="text-align: center;"><p:outputLabel value="#{item.nombre}"></p:outputLabel></td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

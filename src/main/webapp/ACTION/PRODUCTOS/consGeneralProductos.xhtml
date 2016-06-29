@@ -1,0 +1,55 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<h:form id="formConsulta">
+						
+						<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{consGeneralProductosBean.listaProductos}" filteredValue="#{consGeneralProductosBean.filteredProductos}" rows="20"
+							rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+							<f:facet name="header">
+							CONSULTA GENERAL DE PRODUCTOS
+						</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigo}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO EXTERNO" filterBy="#{prod.codigoExt}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigoExt}"></h:outputText>
+							</p:column>
+							<p:column headerText="DESCRIPCION" filterBy="#{prod.descripcion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="nombre" filterBy="#{prod.nombre}" filterMatchMode="contains">
+								<h:outputText value="#{prod.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.ubicacion}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigoBarras}"></h:outputText>
+							</p:column>
+							<p:column headerText="ACCION">
+								<p:commandButton actionListener="#{consGeneralProductosBean.seleccionaProducto(prod)}" value="ADD" oncomplete="PF('dialogAccion').show();"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+			<p:dialog header="SELECCIONE UNA ACCION A EJECUTAR SOBRE EL PRODUCTO" widgetVar="dialogAccion" modal="true" closable="true">
+				<p:panelGrid columns="1" styleClass="table table-bordered">
+					<p:commandButton value="ACTUALIZAR" action="/ACTION/PRODUCTOS/actualizaProducto" ></p:commandButton>
+					<p:commandButton value="PROM. PONDERADO" action="/ACTION/PRODUCTOS/promedioPonderado"></p:commandButton>
+				</p:panelGrid>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

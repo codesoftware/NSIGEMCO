@@ -1,0 +1,72 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaResolucion}" type="preRenderView" />
+			<p:growl id="mensajes" autoUpdate="true" life="30000" showDetail="true"></p:growl>
+			<br />
+			<br />
+			<h:form id="formPrincipal">
+			<p:dataTable widgetVar="tablaSedes" emptyMessage="No existen sedes en el sistema por favor contacte el admin" id="tablaSedes" var="sede" paginator="true" value="#{sedesBean.sedes}" filteredValue="#{sedesBean.sedesFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50"
+				scrollable="true" scrollHeight="330" reflow="true">
+				<f:facet name="header">
+					CONSULTA GENERAL DE SEDES
+				</f:facet>
+				<p:column headerText="NOMBRE" filterBy="#{sede.name}">
+					<h:outputText value="#{sede.name}"></h:outputText>
+				</p:column>
+				<p:column headerText="DIRECCION" filterBy="#{sede.direccion}">
+					<h:outputText value="#{sede.direccion}"></h:outputText>
+				</p:column>
+				<p:column headerText="TELEFONO" filterBy="#{sede.telefono}">
+					<h:outputText value="#{sede.telefono}"></h:outputText>
+				</p:column>
+				<p:column headerText="Aplica Bodega" filterBy="#{sede.sedeBodega}">
+					<h:outputText value="PUNTO DE VENTA" rendered="#{sede.sedeBodega == 'N'}" />
+					<h:outputText value="BODEGA" rendered="#{sede.sedeBodega != 'N'}" />
+				</p:column>
+				<p:column headerText="RESOLUCION DE FACT." filterBy="#{sede.sedeBodega}">
+					<h:selectOneMenu value="#{sede.resolucion}" styleClass="form-control" id="selectResolucion">
+						<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
+						<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
+					</h:selectOneMenu>
+				</p:column>
+				<p:column headerText="ACCION">
+					<p:commandButton value="ACTUALIZAR" update=":formActualizar:panelActualizar" styleClass="GreenButton" onsuccess="PF('actSede').show();" actionListener="#{sedesBean.seleccionaSede(sede)}">
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			</h:form>
+			<p:dialog closeOnEscape="true" header="ACTUALIZAR PROCEDIMIENTO" widgetVar="actSede" responsive="true" modal="true">
+				<h:form id="formActualizar">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" id="panelActualizar">
+						<p:outputLabel value="Nombre:"></p:outputLabel>
+						<p:inputText value="#{sedesBean.sedeSelected.name}"></p:inputText>
+						<p:outputLabel value="Dirección:"></p:outputLabel>
+						<p:inputText value="#{sedesBean.sedeSelected.direccion}"></p:inputText>
+						<p:outputLabel value="Telefono:"></p:outputLabel>
+						<p:inputText value="#{sedesBean.sedeSelected.telefono}"></p:inputText>
+						<p:outputLabel value="Telefono:"></p:outputLabel>
+						<h:selectOneMenu value="#{sedesBean.sedeSelected.sedeBodega}" styleClass="form-control" id="selectBodega">
+							<f:selectItem itemLabel="BODEGA" itemValue="S"></f:selectItem>
+							<f:selectItem itemLabel="PUNTO DE VENTA" itemValue="N"></f:selectItem>
+						</h:selectOneMenu>
+						<p:outputLabel value="Resolución de facturación:"></p:outputLabel>
+						<h:selectOneMenu value="#{sedesBean.sedeSelected.resolucion}" styleClass="form-control" id="selectResolucionUpd">
+							<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
+							<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
+						</h:selectOneMenu>
+						<p:commandButton actionListener="#{sedesBean.actualizaSede}" value="ACTUALIZAR" onsuccess="PF('actSede').hide();" update=":formPrincipal"></p:commandButton>
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

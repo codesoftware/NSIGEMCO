@@ -1,0 +1,58 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<br> </br>
+			<center>
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<div class="panel panel-heading" style="color: #337ab7; background: #eee">REPORTES BÁSICOS</div>
+						<h:form>
+							<p:panelGrid columns="6" id="panelDatosGeneral">
+						 Tipo:<h:selectOneMenu styleClass="form-control" id="tipoReporte" style="width:200px" required="true" requiredMessage="Debe seleccionar un reporte..." value="#{reportesBean.tipoReporte}">
+									<f:selectItem itemLabel="Seleccione.." itemValue="" />
+									<f:selectItem itemLabel="Reporte de facturas" itemValue="1" />
+								</h:selectOneMenu>
+						 Fecha Inicial:
+						 <p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{reportesBean.fechaInicial}" navigator="true" style="width:60%;" required="true"
+									requiredMessage="Seleccione fecha Inicial">
+								</p:calendar>
+								 Fecha Final:
+						 <p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{reportesBean.fechaFinal}" navigator="true" style="width:60%;" required="true"
+									requiredMessage="Seleccione fecha Final">
+								</p:calendar>
+								Sede:
+							<h:selectOneMenu styleClass="form-control" id="selectSede" style="width:200px" required="true" requiredMessage="Seleccione una sede.." value="#{reportesBean.idSede}">
+									<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+								</h:selectOneMenu>
+							Formato:<h:selectOneMenu id="formatoReporte" styleClass="form-control" style="width:200px" required="true" value="#{reportesBean.formato}">
+									<f:selectItem itemLabel="pdf" itemValue="1" />
+									<f:selectItem itemLabel="Excel" itemValue="2" />
+								</h:selectOneMenu>
+								<p:spacer></p:spacer>
+								<p:commandButton ajax="false" icon="ui-icon-arrowthick-1-s" value="GENERAR" actionListener="#{reportesBean.descargarReporte}">
+									<p:fileDownload value="#{reportesBean.download}" />
+								</p:commandButton>
+							</p:panelGrid>
+						</h:form>
+
+					</div>
+				</div>
+			</center>
+
+		</ui:define>
+
+	</ui:composition>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<style>
+@media only screen and (min-width: 600px) {
+	.modalResponsive {
+		width: 50% !important;
+	}
+}
+
+@media only screen and (max-width: 601px) {
+	.modalResponsive {
+		width: 100% !important;
+	}
+}
+</style>
+			<!-- Dialogo en el cual se pregunta el pago de la factura  -->
+			<p:dialog widgetVar="dialogRegPag" closeOnEscape="true" header="Registro de Pagos" modal="true" styleClass="modalResponsive" responsive="true">
+				<p:panel header="Pago a Cancelar">
+					<h:form id="formEnviarPago">
+						<p:panelGrid layout="grid" columns="2">
+							<p:outputLabel value="Total Deuda:"></p:outputLabel>
+							<p:outputLabel value="#{pagosRemisionBean.factura.valorCobrar}" id="totalDeuda">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:panelGrid>
+						<p:panelGrid layout="grid" columns="4">
+							<p:outputLabel value="Valor a Pagar:" />
+							<pe:inputNumber id="totalPagoRemi" value="#{pagosRemisionBean.totalPago}" decimalPlaces="2" symbol="$"></pe:inputNumber>
+							<p:outputLabel value="Pago Total:" />
+							<p:selectBooleanCheckbox value="#{pagosRemisionBean.validaPagTot}">
+								<p:ajax update=":formEnviarPago:totalPagoRemi" listener="#{pagosRemisionBean.registroPagoTotal}"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:panelGrid>
+						<p:commandButton value="Registrar Pago" actionListener="#{pagosRemisionBean.registraPagoDeuda}" update=":formConsltaPrinc"/>
+					</h:form>
+				</p:panel>
+			</p:dialog>
+			<br />
+			<br />
+			<h:form id="formConsltaPrinc">
+				<div id="divInformacion" style="display: none;">
+					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						<p:panel header="Informacion Basica Factura">
+							<p:panelGrid id="panelFactura" layout="grid" columns="4">
+								<p:outputLabel value="Id" />
+								<p:outputLabel value="#{pagosRemisionBean.factura.id}" />
+								<p:outputLabel value="Cliente:" />
+								<p:outputLabel value="#{pagosRemisionBean.factura.cliente.nombres}" />
+								<p:outputLabel value="No. Resolucion" />
+								<p:outputLabel value="#{pagosRemisionBean.factura.resolucion}" />
+								<p:outputLabel value="Consecutivo" />
+								<p:outputLabel value="#{pagosRemisionBean.factura.consecutivo}" />
+								<p:outputLabel value="Valor Total Factura: " />
+								<p:outputLabel value="#{pagosRemisionBean.factura.valor + pagosRemisionBean.factura.vlrIva}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="Total a Deuda: " />
+								<p:outputLabel value="#{pagosRemisionBean.factura.valorCobrar}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+							</p:panelGrid>
+						</p:panel>
+						<br/>
+						<br/>
+						<p:panel header="Informacion Pago">
+							<p:panelGrid id="panelInformacionPago" columns="4" styleClass="table">
+								<p:outputLabel value="Id Pago:"></p:outputLabel>
+								<p:outputLabel value="#{pagosRemisionBean.pagoRemision.id}"></p:outputLabel>
+								<p:outputLabel value="Valor Deuda:"></p:outputLabel>
+								<p:outputLabel value="#{pagosRemisionBean.pagoRemision.valorDeuda}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="Estado del pago:"></p:outputLabel>
+								<h:outputText value="PAGO TOTAL" rendered="#{pagosRemisionBean.pagoRemision.estado == 'PT'}" />
+								<h:outputText value="PAGO PARCIAL" rendered="#{pagosRemisionBean.pagoRemision.estado  == 'PP'}" />
+							</p:panelGrid>
+							<p:dataTable var="pago" widgetVar="tablaPago" value="#{pagosRemisionBean.detallePagos}">
+								<f:facet name="header">
+									<p:outputLabel value="REGISTRO ESPECIFICO DE PAGOS"></p:outputLabel>
+								</f:facet>
+								<p:column filterMatchMode="contains" filterBy="#{pago.id}" headerText="Id" width="12%" priority="1">
+									<h:outputText value="#{pago.id}" />
+								</p:column>
+								<p:column filterMatchMode="contains" filterBy="#{pago.valor}" headerText="Valor" width="12%" priority="1">
+									<h:outputText value="#{pago.valor}" >
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column filterMatchMode="contains" filterBy="#{pago.vlrDeuda}" headerText="Deuda" width="12%" priority="1">
+									<h:outputText value="#{pago.vlrDeuda}" >
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column filterMatchMode="contains" filterBy="#{pago.fecha}" headerText="Fecha" width="12%" priority="1">
+									<h:outputText value="#{pago.fecha}" converter="xmlDatetoDateConverterHour" />
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+						<br />
+						<p:commandButton value="Registrar Pago" styleClass="CyanButton" onclick="PF('dialogRegPag').show()" update=":formEnviarPago"></p:commandButton>
+					</div>
+					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+				</div>
+			</h:form>
+			<h:form id="formBusquedaPopUp">
+				<p:commandButton styleClass="BlueButton" value="Registrar Pago Remision" onclick="PF('busqRemision').show()" id="btnBuscaRemi" />
+			</h:form>
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+			<!-- Dialogo para registrar el pago de una remision -->
+			<p:dialog header="Busqueda Remision" widgetVar="busqRemision" responsive="true" modal="true" closeOnEscape="true">
+				<h:form id="formBusqueda">
+					<p:panelGrid layout="grid" columns="2">
+						<f:facet name="header">
+							<p:outputLabel value="Paso 1: Buscar el documento al cual se le quiere realizar el pago"></p:outputLabel>
+						</f:facet>
+						<p:outputLabel value="Tipo Documento:" />
+						<h:selectOneMenu value="#{pagosRemisionBean.tipoDocumento}" styleClass="form-control" id="selectTipoDoc">
+							<f:selectItem itemLabel="FACTURA" itemValue="FA"></f:selectItem>
+							<f:selectItem itemLabel="REMISION" itemValue="RE"></f:selectItem>
+						</h:selectOneMenu>
+						<p:outputLabel value="Id documento:" />
+						<p:inputText value="#{pagosRemisionBean.idDocumento}"></p:inputText>
+						<p:commandButton value="BUSCAR" actionListener="#{pagosRemisionBean.buscarDocumento}"></p:commandButton>
+						<br />
+						<p:commandButton value="VER REMISION" id="btnRemision" style="display:none;" styleClass="GreenButton" actionListener="#{pagosRemisionBean.obtenerPdfRemision}" update=":formVisorRemi" />
+						<p:commandButton value="VER FACTURA" id="btnFactura" style="display:none;" styleClass="RedButton" />
+						<p:commandButton value="CONFIRMAR" id="btnConfirma" style="display:none;" styleClass="RedButton" actionListener="#{pagosRemisionBean.confirmaPagoRemision}" update=":formConsltaPrinc"
+							onsuccess="PF('busqRemision').hide()" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+			<h:form id="formVisorRemi">
+				<p:dialog widgetVar="dialogVisRem" responsive="true">
+					<pe:documentViewer id="VisorFactGen" width="400" height="600" url="#{pagosRemisionBean.rutaImagen}" />
+				</p:dialog>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

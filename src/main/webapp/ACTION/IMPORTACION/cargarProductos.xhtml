@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<script>
+				function pulsar(e) {
+					tecla = (document.all) ? e.keyCode : e.which;
+					return (tecla != 13);
+				}
+				function buscaProd(valor) {
+					$('.filteredCodigoExterno').val(valor);
+					PF('tablaImpoProd').filter();
+				}
+			</script>
+			<center>
+				<br /> <br />
+				<h:form id="formPrinc">
+					<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+
+					<p:panelGrid columns="4" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="INFORMACION DE LA IMPORTACION" />
+						</f:facet>
+						<p:outputLabel value="Nombre Importacion"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.nombre}"></p:outputLabel>
+						<p:outputLabel value="Fecha Creacion"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.fechaCrea}"></p:outputLabel>
+						<p:outputLabel value="Fecha Arrivo"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.fechaLleg}"></p:outputLabel>
+						<p:outputLabel value="Estado"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.estado}"></p:outputLabel>
+						<p:outputLabel value="TRM"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.trm}">
+							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+						</p:outputLabel>
+						<p:outputLabel value="Tasa Promedio"></p:outputLabel>
+						<p:outputLabel value="#{cargueProdImporBean.importacion.tazaPromedio}">
+							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+						</p:outputLabel>
+					</p:panelGrid>
+				</h:form>
+				<br />
+				<h:form id="addTrmTazaProm">
+					<p:panelGrid columns="4" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="Proceso Tasas de Conversion" />
+						</f:facet>
+						<p:outputLabel value="Valor TRM:"></p:outputLabel>
+						<p:inputText value="#{cargueProdImporBean.trm}"></p:inputText>
+						<p:outputLabel value="Valor Tasa Promedio:"></p:outputLabel>
+						<p:inputText value="#{cargueProdImporBean.tazaPromedio}"></p:inputText>
+						<f:facet name="footer">
+							<p:commandButton value="INSERTAR" actionListener="#{cargueProdImporBean.adicionaTazasDolar}" update=":formTablaProductos:tablaProductos,:formPrinc"></p:commandButton>
+						</f:facet>
+					</p:panelGrid>
+				</h:form>
+				<br /> <br />
+				<h:form id="formInsertarProd" onkeypress="return pulsar(event)">
+					<p:panelGrid columns="6" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="ADICION DE PRODUCTOS" />
+						</f:facet>
+						<p:outputLabel value="Codigo Externo:"></p:outputLabel>
+						<p:inputText value="#{cargueProdImporBean.codExterno}" onkeyup="buscaProd(this.value);"></p:inputText>
+						<p:outputLabel value="Cantidad:"></p:outputLabel>
+						<pe:inputNumber value="#{cargueProdImporBean.cantidad}" decimalPlaces="0"></pe:inputNumber>
+						<p:outputLabel value="Valor en Dolares:"></p:outputLabel>
+						<pe:inputNumber value="#{cargueProdImporBean.valorDolar}" decimalPlaces="6" symbol="$"></pe:inputNumber>
+						<f:facet name="footer">
+							<p:commandButton value="INSERTAR" actionListener="#{cargueProdImporBean.adicionaProducto}" update=":formTablaProductos:tablaProductos,:formInsertarProd"></p:commandButton>
+						</f:facet>
+					</p:panelGrid>
+				</h:form>
+				<br />
+				<h:form id="formUpload">
+					<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
+						<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+							invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{cargueProdImporBean.cargarExcelProductos}"
+							update=":formInexistentes:tablaProdInexistente,:formTablaProductos:tablaProductos" />
+					</p:panelGrid>
+				</h:form>
+				<p:commandButton value="Borrar productos" actionListener="#{cargueProdImporBean.eliminarProductos}" update=":formTablaProductos:tablaProductos,:formInsertarProd" styleClass="RedButton"></p:commandButton>
+				<p:commandButton value="Ordenar Lista" actionListener="#{cargueProdImporBean.reiniciarLista}" update=":formTablaProductos:tablaProductos,:formInsertarProd,:formInexistentes:tablaProdInexistente"></p:commandButton>
+				<h:form id="formTablaProductos">
+					<p:dataTable id="tablaProductos" widgetVar="tablaImpoProd" rows="20" paginator="true" reflow="true" value="#{cargueProdImporBean.productosImportacion}" var="prod"
+						filteredValue="#{cargueProdImporBean.filteredproductosImportacion}">
+						<f:facet name="header">
+							<h:commandLink>
+								<p:graphicImage name="/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
+							</h:commandLink>
+						</f:facet>
+						<p:column headerText="Codigo" filterBy="#{prod.producto.codigoExt}" filterMatchMode="contains" filterStyleClass="filteredCodigoExterno">
+							<p:outputLabel value="#{prod.producto.codigoExt}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Nombre">
+							<p:outputLabel value="#{prod.producto.descripcion}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Cantidad">
+							<p:outputLabel value="#{prod.cantidad}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Valor Dolar(Unitario)">
+							<p:outputLabel value="$ "></p:outputLabel>
+							<p:outputLabel value="#{prod.vlrDolar}">
+								<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Pesos TRM">
+							<p:outputLabel value="$ "></p:outputLabel>
+							<p:outputLabel value="#{prod.vlrPesTRM}">
+								<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Tasa Promedio">
+							<p:outputLabel value="$ "></p:outputLabel>
+							<p:outputLabel value="#{prod.vlrPesTRM}">
+								<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Selecciona">
+							<p:commandButton value="add." action="#{cargueProdImporBean.seleccionaProd(prod)}" update=":formInsertarProd"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<br/>
+				<p:commandButton value="Ejecutar Proceso Inexistentes" actionListener="#{cargueProdImporBean.correrProcesoInsexistente}"></p:commandButton>
+				<br/>
+				<h:form id="formInexistentes">
+					<p:dataTable id="tablaProdInexistente" widgetVar="tablaProdInexis" rows="10" paginator="true" reflow="true" value="#{cargueProdImporBean.listaInexistentes}" var="prod">
+						<p:column headerText="Codigo">
+							<p:outputLabel value="#{prod.codigoExterno}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Cantidad">
+							<p:outputLabel value="#{prod.cantidad}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Valor">
+							<p:outputLabel value="#{prod.valor}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Adicionar">
+							<p:commandButton value="ADICIONAR" onclick="PF('dialogInsProd').show()" actionListener="#{insertaProductoBean.insertaCodigoExterno(prod)}" ajax="true" update=":principalProducto"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</center>
+			<p:dialog modal="true" id="dialogInsert" responsive="true" widgetVar="dialogInsProd" closeOnEscape="true" header="INSERCION PRODUCTO" styleClass="modalResponsive">
+				<h:form id="principalProducto">
+					<br />
+					<div class="row">
+						<div class="col-md-2 col-sm-0 col-xs-0"></div>
+						<div class="col-md-8 col-sm-12 col-xs-12">
+							<p:messages id="mensajes" showDetail="true" autoUpdate="true" closable="true" />
+						</div>
+						<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					</div>
+					<div class="row" align="center">
+						<p:panel header="Insertar Productos" style="width: 50%">
+							<p:panelGrid columns="2" styleClass="table table-bordered">
+								<p:column>
+									<p:outputLabel value="Categoría" />
+								</p:column>
+								<p:autoComplete id="categoriasList" value="#{insertaProductoBean.categoria}" completeMethod="#{autoCompleteBean.completeTextCategoria}" var="item" itemLabel="#{item.descripcion}"
+									itemValue="#{item}" converter="categoriasConverter" placeholder="Consultar categoría" style="width:100%">
+								</p:autoComplete>
+								<p:outputLabel value="Sub-Categoría:" />
+								<p:autoComplete id="inputAutReferencia" value="#{insertaProductoBean.referencia}" completeMethod="#{autoCompleteBean.completarReferencia}" var="item" itemLabel="#{item.nombre}"
+									itemValue="#{item}" converter="referenciaConverter" placeholder="Consultar sub-categoría" style="width:100%">
+								</p:autoComplete>
+								<p:outputLabel value="Marcas:" />
+								<p:autoComplete id="inputAutMarca" value="#{insertaProductoBean.marca}" completeMethod="#{autoCompleteBean.completarMarca}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+									converter="marcasConverter" placeholder="Consultar Marcas" style="width:100%">
+								</p:autoComplete>
+								<p:outputLabel value="Nombre:" />
+								<p:inputText id="nombreProducto" value="#{insertaProductoBean.nombreProducto}" required="true" styleClass="form-control" />
+								<p:outputLabel value="Codigo Externo:" />
+								<p:inputText id="codigoExterno" value="#{insertaProductoBean.codigoExterno}" maxlength="15" required="true" styleClass="form-control" />
+								<p:outputLabel value="Ubicacion:" />
+								<p:inputText id="ubicacion" value="#{insertaProductoBean.ubicacion}" maxlength="100" required="true" styleClass="form-control" />
+								<p:outputLabel value="Codigo de Barras:" />
+								<p:inputText id="codBarras" value="#{insertaProductoBean.codigoBarras}" maxlength="100" required="true" styleClass="form-control"></p:inputText>								
+							</p:panelGrid>
+							<p:commandButton value="Insertar" actionListener="#{insertaProductoBean.insertaProducto}"
+								update=":principalProducto:codigoExterno,:principalProducto:ubicacion,:principalProducto:mensajes,:principalProducto:nombreProducto,:principalProducto:inputAutMarca,:principalProducto:inputAutReferencia,:principalProducto:categoriasList,:principalProducto:codBarras"></p:commandButton>
+						</p:panel>
+
+					</div>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

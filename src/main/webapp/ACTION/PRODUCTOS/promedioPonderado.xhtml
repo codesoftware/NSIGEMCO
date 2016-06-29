@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<br />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<h:form id="consultaPromPond">
+						<p:growl id="messages" autoUpdate="true" life="30000" showDetail="true"></p:growl>
+						<br />
+						<br />
+						<p:panelGrid styleClass="table table-bordered" headerClass="alert alert-info">
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="4">
+									PRODUCTO A CONSULTAR
+								</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									CODIGO EXTERNO:
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{promPonderadoBean.producto.codigoExt}"></p:outputLabel>
+								</p:column>
+								<p:column>
+									NOMBRE: 
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{promPonderadoBean.producto.descripcion}"></p:outputLabel>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									Ubicación:
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{promPonderadoBean.producto.ubicacion}"></p:outputLabel>
+								</p:column>
+								<p:column>
+									Sede:
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{promPonderadoBean.idSede}" styleClass="form-control" id="selectSede">
+										<p:ajax event="change" listener="#{promPonderadoBean.consultaExistenciasSede}" update=":consultaPromPond:existSede"></p:ajax>
+										<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									EXISTENCIAS TOTALES
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{promPonderadoBean.existenciasTotales}"></p:outputLabel>
+								</p:column>
+								<p:column>
+									EXISTENCIAS SEDE
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{promPonderadoBean.existenciasSede}" id="existSede"></p:outputLabel>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									Fecha Inicial:
+								</p:column>
+								<p:column>
+									<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{promPonderadoBean.fechaIni}"/>
+								</p:column>
+								<p:column>
+									Fecha Final:
+								</p:column>
+								<p:column>
+									<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{promPonderadoBean.fechaFin}"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="4">
+									<p:commandButton value="CONSULTAR" actionListener="#{promPonderadoBean.consultaPromedioPonderadoProducto}" update=":formListKardex"></p:commandButton>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:form>
+					<br />
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<h:form id="formListKardex">
+						<p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+						<p:columnToggler datasource="kardex" trigger="toggler"  />
+						<br />
+						<br />
+						<p:dataTable id="kardex" value="#{promPonderadoBean.listaKardex}" var="kardex"  reflow="true">
+							<p:column headerText="SEDE" visible="false">
+								<p:outputLabel value="#{kardex.sede.name}" />
+							</p:column>
+							<p:column headerText="USUARIO" visible="false">
+								<p:outputLabel value="#{kardex.usuario.persona.nombre}" />
+							</p:column>
+							<p:column headerText="CONS." visible="false">
+								<p:outputLabel value="#{kardex.idConsProd}" />
+							</p:column>
+							<p:column headerText="FECHA" visible="false">
+								<p:outputLabel value="#{kardex.fecha}" converter="xmlDatetoDateConverterHour">
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="MOV. INV.">
+								<p:outputLabel value="#{kardex.movInv.descripcion}" />
+							</p:column>
+							<p:column headerText="(ENTRADA) CANTIDAD">
+								<p:outputLabel value="#{kardex.cantMvto}" rendered="#{kardex.movInv.naturaleza == 'I'}">
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza != 'I'}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="(ENTRADA) COSTO UNIDAD">
+								<p:outputLabel value="#{kardex.costoMvtoUni}" rendered="#{kardex.movInv.naturaleza == 'I'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza != 'I'}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="(ENTRADA) COSTO TOTAL">
+								<p:outputLabel value="#{kardex.costoMvtoTot}" rendered="#{kardex.movInv.naturaleza == 'I'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza != 'I'}"></p:outputLabel>
+							</p:column>
+
+							<p:column headerText="(SALIDA) CANTIDAD">
+								<p:outputLabel value="#{kardex.cantMvto}" rendered="#{kardex.movInv.naturaleza != 'I'}">
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza == 'I'}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="(SALIDA) COSTO UNIDAD">
+								<p:outputLabel value="#{kardex.costoMvtoUni}" rendered="#{kardex.movInv.naturaleza != 'I'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza == 'I'}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="(SALIDA) COSTO TOTAL">
+								<p:outputLabel value="#{kardex.costoMvtoTot}" rendered="#{kardex.movInv.naturaleza != 'I'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value="0" rendered="#{kardex.movInv.naturaleza == 'I'}"></p:outputLabel>
+							</p:column>
+
+
+							<p:column headerText="(TOTAL) CANTIDADES">
+								<p:outputLabel value="#{kardex.cantidadTot}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="(TOTAL) COSTO UNIDAD">
+								<p:outputLabel value="#{kardex.costoSaldoUni}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="(TOTAL) COSTO TOTAL">
+								<p:outputLabel value="#{kardex.costoSaldoTot}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

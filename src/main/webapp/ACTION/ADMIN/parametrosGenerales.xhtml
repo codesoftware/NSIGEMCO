@@ -1,0 +1,62 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<p:growl id="messages" autoUpdate="true" life="30000" showDetail="true"></p:growl>
+			<f:event listener="#{cargaListasMapBean.cargaListaDepartamento}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaCiudades}" type="preRenderView" />
+			<br></br>
+
+			<h:form id="formPrincipal">
+				<div class="row">
+					<div class="col-md-3 col-sm-0 col-xs-0"></div>
+					<div class="col-md-6 col-sm-12 col-xs-12">
+						<h:panelGrid headerClass="alert alert-info" styleClass="table table-bordered" columns="2">
+							<f:facet name="header">
+								<p:outputLabel value="PARAMETROS GENERALES"></p:outputLabel>
+							</f:facet>
+
+							<p:outputLabel value="Nombre:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.nombre}"></p:inputText>
+
+							<p:outputLabel value="Direccion:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.direccion}"></p:inputText>
+							<p:outputLabel value="Nit:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.nit}"></p:inputText>
+							<p:outputLabel value="Telefono:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.telefono}"></p:inputText>
+							<p:outputLabel value="Departamento:" />
+							<h:selectOneMenu value="#{parametrosGeneralesBean.parametros.departamento}" styleClass="form-control" id="selectDepartamento">
+								<f:selectItem itemLabel="SELECCIONE UN DEPARTAMENTO" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapDepartamentos}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:outputLabel value="Ciudad:" />
+							<h:selectOneMenu value="#{parametrosGeneralesBean.parametros.ciudad}" styleClass="form-control" id="selectCiudad">
+								<f:selectItem itemLabel="SELECCIONE UNA CIUDAD" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaMapCiudades}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:outputLabel value="Actividad Economica:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.actividadEconomica}"></p:inputText>
+							<p:outputLabel value="Correo Electronico:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.correoElectronico}"></p:inputText>
+							<p:outputLabel value="Regimen Contribuyente:" />
+							<h:selectOneMenu value="#{parametrosGeneralesBean.parametros.tipoRegimen}" styleClass="form-control" id="selectRegimen">
+								<f:selectItem itemLabel="REGIMEN COMUN" itemValue="CO"></f:selectItem>
+								<f:selectItem itemLabel="REGIMEN SIMPLIFICADO" itemValue="SI"></f:selectItem>
+							</h:selectOneMenu>
+						</h:panelGrid>
+						<p:commandButton value="Modificacion Datos" actionListener="#{parametrosGeneralesBean.modificaParametrosEmpresa}"></p:commandButton>
+					</div>
+					<div class="col-md-3 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

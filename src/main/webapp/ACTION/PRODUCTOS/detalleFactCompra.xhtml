@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<h:form id="formulario">
+				<p:growl id="mensajesCarga" showDetail="true" autoUpdate="true"></p:growl>
+				<p:spacer></p:spacer>
+				<center>
+					<p:panel header="DETALLE FACTURA COMPRA" style="width: 80%">
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Id: " style="font-weight:bold" />
+									<h:outputLabel value="#{consultaFacCompraBean.factura.id}" />
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Factura No: " style="font-weight:bold" />
+									<h:outputLabel value="#{consultaFacCompraBean.factura.numeroFactura}" />
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Fecha Factura: " style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.fechaFacCompra.toGregorianCalendar().time}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:outputLabel>
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Fecha Recepción: " style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.fechaRecepcion.toGregorianCalendar().time}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:outputLabel>
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="SubTotal: $" style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.valorFacura}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Iva: $" style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.valorIva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Retención: $" style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.valorRetencion}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+								</div>
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Total: $" style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.valorFacura+consultaFacCompraBean.factura.valorIva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-3">
+									<h:outputLabel value="Proveedor:" style="font-weight:bold" />
+									<p:outputLabel value="#{consultaFacCompraBean.factura.proveedor.nombre}--Nit:#{consultaFacCompraBean.factura.proveedor.nit}" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+					<p:panel header="DETALLE DE PRODUCTOS" style="width: 80%">
+						<p:dataTable id="tablaProd" widgetVar="varProd" paginator="true" rows="15" value="#{consultaFacCompraBean.productos}" var="producto">
+							<p:column headerText="Codigo Producto" style="width:10%" priority="1">
+								<h:outputText value="#{producto.producto.codigoExt}"></h:outputText>
+							</p:column>
+							<p:column headerText="Descripción" style="width:10%" priority="2">
+								<h:outputText value="#{producto.producto.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="Cantidad" style="width:10%" priority="3">
+								<h:outputText value="#{producto.cantidad}"></h:outputText>
+							</p:column>
+							<p:column headerText="valor Unidad" style="width:10%" priority="4">
+								<h:outputText value="#{producto.subtotal}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="% Iva" style="width:10%" priority="5">
+								<h:outputText value="#{producto.porcentajeIva}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Iva Unidad" style="width:10%" priority="6">
+								<h:outputText value="#{producto.iva}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Total" style="width:10%" priority="7">
+								<h:outputText value="#{producto.total}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+					<p:panel header="DETALLE DE PAGOS" style="width: 80%">
+						<p:dataTable id="tablaPagos" widgetVar="varPag" paginator="true" rows="15" value="#{consultaFacCompraBean.pagos}" var="pago">
+							<p:column headerText="Tipo pago" priority="1">
+								<h:outputText value="#{pago.tipoPago}"></h:outputText>
+							</p:column>
+							<p:column headerText="SubCuenta" priority="2">
+								<h:outputText value="#{pago.idSubcuenta.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="Valor" priority="3">
+								<h:outputText value="#{pago.valor}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+					<p:panel header="IMAGENES" style="width: 80%">
+						<p:dataTable id="tablaImagenes" widgetVar="varImg" paginator="true" rows="15" value="#{consultaFacCompraBean.imagenes}" var="imagen">
+							<p:column headerText="Nombre Imagen" style="width:10%">
+								<h:outputText value="#{imagen.nombreImagen}"></h:outputText>
+							</p:column>
+							<p:column headerText="Ubicación" style="width:10%">
+								<h:outputText value="#{imagen.ubicacion}"></h:outputText>
+							</p:column>
+							<p:column headerText="Imagen" style="width:10%">
+								<p:commandButton ajax="false" icon="fa fa-file-pdf-o" styleClass="GreenButton" actionListener="#{consultaFacCompraBean.prepDownload(imagen.rutaImagen)}">
+									<p:fileDownload value="#{consultaFacCompraBean.download}" />
+								</p:commandButton>
+								<p:commandButton ajax="true" icon="fa fa-eye" styleClass="GreenButton" actionListener="#{consultaFacCompraBean.openPDF(imagen.rutaImagen)}" onclick="PF('openFile').show()" update=":modal:objetoPDF" />
+							</p:column>
+						</p:dataTable>
+						<p:spacer></p:spacer>
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-12">
+									<p:commandButton value="ADJUNTAR ARCHIVOS" icon="fa fa-plus" styleClass="BlueButton" onclick="PF('dialogCargaPDF').show()" />
+									<p:commandButton value="MOVIMIENTOS CONTABLES" icon="fa fa-calculator" styleClass="OrangeButton" onclick="PF('movimientosContables').show()" />
+								</div>
+							</div>
+						</div>
+					</p:panel>
+
+				</center>
+			</h:form>
+			<h:form id="modal">
+				<p:dialog responsive="true" modal="true" id="openPDF" widgetVar="openFile" closeOnEscape="true" width="900" height="500">
+					<p:panel id="objetoPDF">
+						<pe:documentViewer width="850" height="500" url="#{consultaFacCompraBean.rutaImagen}" />
+					</p:panel>
+				</p:dialog>
+				<p:dialog header="CARGAR DOCUMENTOS" widgetVar="dialogCargaPDF" modal="true" responsive="true">
+					<div class="alert alert-info">
+						<h3>RECOMENDACIONES</h3>
+						<br />
+						<p>La ubicación de estos archivos es la fisica es decir en cual AZ se encuentra.</p>
+					</div>
+					<p:panelGrid columns="2">
+									Tipo Documento:<h:selectOneMenu id="idTipoDoc" value="#{consultaFacCompraBean.idTipoImagen}" styleClass="form-control">
+							<f:ajax listener="#{consultaFacCompraBean.cambiaCombo}" />
+							<f:selectItem itemLabel="Seleccione" itemValue="0" />
+							<f:selectItem itemLabel="Factura" itemValue="1" />
+							<f:selectItem itemLabel="Comprobante de pago" itemValue="2" />
+							<f:selectItem itemLabel="Otro" itemValue="3" />
+						</h:selectOneMenu>
+									Ubicación:<p:inputText value="#{consultaFacCompraBean.ubicacion}" id="ubicacion">
+							<p:ajax event="blur" listener="#{consultaFacCompraBean.cambiaCombo}" />
+						</p:inputText>
+					</p:panelGrid>
+					<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(pdf)$/" previewWidth="100"
+						invalidFileMessage="Solo se puede subir archivos con extensión pdf" multiple="false" fileUploadListener="#{consultaFacCompraBean.validaCargueArchivos}" onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide()"
+						update=":formulario:mensajesCarga,:formulario:tablaImagenes" />
+
+				</p:dialog>
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			REALIZANDO CARGUE DE DOCUMENTOS POR FAVOR ESPERE
+				<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+				</p:dialog>
+				<p:dialog widgetVar="movimientosContables" modal="true" id="moviContable" closeOnEscape="true" responsive="true">
+
+					<p:dataTable reflow="true" value="#{consultaFacCompraBean.listaMovimientos}" id="tablaCred" var="mfactura" rows="10" scrollable="true" scrollHeight="150" paginator="true">
+						<f:facet name="header">
+										        Asiento contable Factura de Compra
+										        <h:commandLink>
+								<p:graphicImage name="/images/pdf.png" width="40" height="40" />
+								<p:dataExporter type="pdf" target="tablaCred" fileName="asientoFacturaCompra" />
+							</h:commandLink>
+							<h:commandLink>
+								<p:graphicImage name="/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tablaCred" fileName="asientoFacturaCompra" />
+							</h:commandLink>
+						</f:facet>
+						<p:column headerText="Subcuenta" priority="1">
+							<h:outputLabel value="#{mfactura.subcuenta.nombre} " />
+						</p:column>
+						<p:column headerText="Credito" priority="2">
+							<h:outputText value="#{mfactura.valor}" rendered="#{mfactura.naturaleza == 'CREDITO'}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+							<h:outputText value="0" rendered="#{mfactura.naturaleza != 'CREDITO'}" />
+						</p:column>
+						<p:column headerText="Debito" priority="3">
+							<h:outputText value="#{mfactura.valor}" rendered="#{mfactura.naturaleza == 'DEBITO'}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+							<h:outputText value="0" rendered="#{mfactura.naturaleza != 'DEBITO'}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

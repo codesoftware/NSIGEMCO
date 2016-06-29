@@ -1,0 +1,68 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<center>
+			<br/>
+				<h:form id="consultaImportaciones">
+					<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+					<p:panelGrid columns="5">
+						<f:facet name="header">
+							<p:outputLabel value="CONSULTA DE IMPORTACIONES" />
+						</f:facet>
+						<p:outputLabel value="fechaInicial" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{consultaImportacionBean.fechaInicial}" navigator="true" style="width:60%;">
+						</p:calendar>
+						<p:outputLabel value="fechaFinal" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{consultaImportacionBean.fechaFinal}" navigator="true" style="width:60%;">
+						</p:calendar>
+						<p:commandButton value="CONSULTAR" styleClass="OrangeButton" actionListener="#{consultaImportacionBean.consultaImportaciones}" update="tablaImportaciones"/>
+					</p:panelGrid>
+					<br/>
+					<br/>
+					<p:dataTable id="tablaImportaciones" widgetVar="wtablaImportaciones" value="#{consultaImportacionBean.listaImportacion}" var="importacion" paginator="true" rows="15" reflow="true">
+						<p:column headerText="ID">
+							<p:outputLabel value="#{importacion.id}" />
+						</p:column>
+						<p:column headerText="Nombre">
+							<p:outputLabel value="" />
+							<p:commandLink value="#{importacion.nombre}" action="#{consultaImportacionBean.seleccionaEnvioProc(importacion)}"></p:commandLink>
+						</p:column>
+						<p:column headerText="Fecha Creacion">
+							<p:outputLabel value="#{importacion.fechaCrea}" converter="xmlDatetoDateConverterHour" />
+						</p:column>
+						<p:column headerText="Fecha LLegada">
+							<p:outputLabel value="#{importacion.fechaLleg}" converter="xmlDatetoDateConverterHour" />
+						</p:column>
+						<p:column headerText="Valor Total">
+							<p:outputLabel value="#{importacion.vlrTotal}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Valor Impuestos">
+							<p:outputLabel value="#{importacion.vlrImpuestos}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Estado">
+							<p:outputLabel value="#{importacion.estado}" />
+						</p:column>
+						<p:column headerText="Agregar Productos">
+							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacion(importacion)}"></p:commandButton>							
+						</p:column>
+						<p:column headerText="Agregar Gastos">
+							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacionGastos(importacion)}" ></p:commandButton>							
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</center>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

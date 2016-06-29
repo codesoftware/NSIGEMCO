@@ -1,0 +1,105 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<script>
+				function insertoCategoria() {
+					cargaListaMarcas();
+				}
+			</script>
+			<h:form id="principalProducto">
+				<br />
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:messages id="mensajes" showDetail="true" autoUpdate="true" closable="true" />
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+				<div class="row" align="center">
+					<p:panel header="Insertar Productos" style="width: 50%">
+						<p:panelGrid columns="3" styleClass="table table-bordered">
+							<p:column>
+								<p:outputLabel value="Categoría" />
+							</p:column>
+							<p:autoComplete id="categoriasList" value="#{insertaProductoBean.categoria}" completeMethod="#{autoCompleteBean.completeTextCategoria}" var="item" itemLabel="#{item.descripcion}"
+								itemValue="#{item}" converter="categoriasConverter" placeholder="Consultar categoría" style="width:100%">
+							</p:autoComplete>
+							<p:spacer></p:spacer>
+							<p:outputLabel value="Sub-Categoría:" />
+							<p:autoComplete id="inputAutReferencia" value="#{insertaProductoBean.referencia}" completeMethod="#{autoCompleteBean.completarReferencia}" var="item" itemLabel="#{item.nombre}"
+								itemValue="#{item}" converter="referenciaConverter" placeholder="Consultar sub-categoría" style="width:100%">
+							</p:autoComplete>
+							<p:commandButton onclick="PF('addCate').show();" value="+" styleClass="CyanButton" />
+							<p:outputLabel value="Marcas:" />
+							<p:autoComplete id="inputAutMarca" value="#{insertaProductoBean.marca}" completeMethod="#{autoCompleteBean.completarMarca}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+								converter="marcasConverter" placeholder="Consultar Marcas" style="width:100%">
+							</p:autoComplete>
+							<p:commandButton styleClass="CyanButton" onclick="PF('addMarca').show();" value="+" />
+							<p:outputLabel value="Nombre:" />
+							<p:inputText id="nombreProducto" value="#{insertaProductoBean.nombreProducto}" required="true" styleClass="form-control" />
+							<p:spacer></p:spacer>
+							<p:outputLabel value="Codigo Externo:" />
+							<p:inputText id="codigoExterno" value="#{insertaProductoBean.codigoExterno}" maxlength="15" required="true" styleClass="form-control" />
+							<p:spacer></p:spacer>
+							<p:outputLabel value="Ubicacion:" />
+							<p:inputText id="ubicacion" value="#{insertaProductoBean.ubicacion}" maxlength="100" required="true" styleClass="form-control" />
+							<p:spacer></p:spacer>
+							<p:outputLabel value="Codigo de Barras:" />
+							<p:inputText id="codBarras" value="#{insertaProductoBean.codigoBarras}" maxlength="100" required="true" styleClass="form-control" ></p:inputText>
+							<p:spacer></p:spacer>
+						</p:panelGrid>
+						<p:commandButton value="Insertar" actionListener="#{insertaProductoBean.insertaProducto}"
+							update=":principalProducto:codigoExterno,:principalProducto:ubicacion,:principalProducto:mensajes,:principalProducto:nombreProducto,:principalProducto:inputAutMarca,:principalProducto:inputAutReferencia,:principalProducto:categoriasList,:principalProducto:codBarras"></p:commandButton>
+					</p:panel>
+
+				</div>
+			</h:form>
+			<!-- Dialogo para la insercion de uns subcategoria -->
+			<p:confirmDialog header="Insercion de Sub-Categoría" widgetVar="addCate" global="true" showEffect="fade" hideEffect="fade">
+				<h:form id="insertsubCate">
+					<p:panel header="Datos Sub-categoría">
+						<p:panelGrid columns="2">
+							<h:outputLabel value="Nombre:*"></h:outputLabel>
+							<p:inputText value="#{referenciaBean.referencia.nombre}" required="true"></p:inputText>
+
+							<h:outputLabel value="Descripcion:*"></h:outputLabel>
+							<p:inputText value="#{referenciaBean.referencia.descripcion}" required="true"></p:inputText>
+
+							<h:outputLabel value="Caracteristica adicional:"></h:outputLabel>
+							<p:inputText value="#{referenciaBean.referencia.caracteristica1}"></p:inputText>
+
+							<h:outputLabel value="Caracteristica adicional:"></h:outputLabel>
+							<p:inputText value="#{referenciaBean.referencia.caracteristica2}"></p:inputText>
+
+							<h:outputLabel value="Caracteristica adicional:"></h:outputLabel>
+							<p:inputText value="#{referenciaBean.referencia.caracteristica3}"></p:inputText>
+						</p:panelGrid>
+						<p:commandButton value="Insertar" actionListener="#{referenciaBean.adicionaReferencia}" update=":principalProducto:mensajes" oncomplete="PF('addCate').hide();"></p:commandButton>
+					</p:panel>
+				</h:form>
+			</p:confirmDialog>
+			<!-- Modal de inserción de marcas -->
+			<p:confirmDialog header="Insercion de marcas" widgetVar="addMarca" global="true" showEffect="fade" hideEffect="fade">
+				<h:form id="insertMarca">
+					<p:panel header="Datos Marcas">
+						<p:panelGrid columns="2">
+							<h:outputLabel value="Nombre:*"></h:outputLabel>
+							<p:inputText value="#{marcaBean.marca.nombre}" required="true"></p:inputText>
+							<h:outputLabel value="Descripcion:*"></h:outputLabel>
+							<p:inputText value="#{marcaBean.marca.descripcion}" required="true"></p:inputText>
+						</p:panelGrid>
+						<p:commandButton value="Insertar" actionListener="#{marcaBean.adicionaMarca}" update=":principalProducto:mensajes" oncomplete="PF('addMarca').hide();insertoCategoria();"></p:commandButton>
+					</p:panel>
+				</h:form>
+			</p:confirmDialog>
+		</ui:define>
+	</ui:composition>
+
+
+</body>
+</html>

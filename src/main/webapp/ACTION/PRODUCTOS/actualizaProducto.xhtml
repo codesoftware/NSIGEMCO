@@ -1,0 +1,107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaCategorias}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaMarcas}" type="preRenderView" />
+			<br />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<h:form>
+						<p:growl id="mensajes" autoUpdate="true" showDetail="true"></p:growl>
+						<p:panelGrid styleClass="table table-bordered" headerClass="alert alert-info">
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="4">
+										PRODUCTO A ACTUALIZAR
+									</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="CODIGO EXTERNO: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{actualizaProductoBean.producto.codigoExt}"  />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="CODIGO DE BARRAS: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{actualizaProductoBean.producto.codigoBarras}"  />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="DESCRIPCIÓN: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{actualizaProductoBean.producto.descripcion}"  />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="UBICACION: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{actualizaProductoBean.producto.ubicacion}"  />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="CATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{actualizaProductoBean.producto.categoria}" styleClass="form-control" disabled="true" title="Categoria imposible modificar ya que con la misma esta atado la contabilidad">
+										<p:ajax listener="#{actualizaProductoBean.buscaSubCategorias}" update="selectReferencia" />
+										<f:selectItems value="#{cargaListasMapBean.listaMapCategorias}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SUBCATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{actualizaProductoBean.producto.referencia}" styleClass="form-control" id="selectReferencia">
+										<f:selectItems value="#{actualizaProductoBean.listaMapSubCate}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="MARCA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{actualizaProductoBean.producto.marca}" styleClass="form-control">
+										<f:selectItems value="#{cargaListasMapBean.listaMapMarca}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="DEF. CONTEO."/>
+								</p:column>
+								<p:column>
+									<h:selectOneMenu styleClass="form-control" value="#{actualizaProductoBean.producto.iniciaConteo}">
+										<f:selectItem itemLabel="SI" itemValue="S"></f:selectItem>
+										<f:selectItem itemLabel="NO" itemValue="N"></f:selectItem>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<f:facet name="footer">
+								<p:row>
+									<p:column colspan="4" style="text-align:rigth;">
+										<p:commandButton value="ACTUALIZAR" actionListener="#{actualizaProductoBean.actualizaProducto}"  />
+									</p:column>
+								</p:row>
+
+							</f:facet>
+						</p:panelGrid>
+					</h:form>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

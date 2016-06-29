@@ -1,0 +1,28 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script>
+		$(function() {
+			inicioFormulario();
+			function inicioFormulario() {
+				var usuario = $('.usuarioSigemco').val();
+				if (usuario == '') {
+				} else {
+					$('.usuarioBean').val(usuario);
+					inicio();
+				}
+
+			}
+		});
+	</script>
+</h:head>
+<body>
+	<h:form>
+		<input type="hidden" value="#{request.getParameter('usuario')}" class="usuarioSigemco" />
+		 <p:inputText value="#{loginBean.usuario}" styleClass="usuarioBean" style="display:none"></p:inputText>
+		<p:remoteCommand name="inicio" action="#{loginBean.loginUsuario}" ></p:remoteCommand>
+	</h:form>
+</body>
+</html>

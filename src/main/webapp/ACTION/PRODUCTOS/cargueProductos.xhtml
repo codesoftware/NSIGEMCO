@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br>
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<div class="alert alert-info">
+							<h3>RECOMENDACIONES</h3>
+							<br />
+							<p>Debe Recordar que si su sistema se encuentra sin parametros iniciales y los va ha subr desde esta opcion el cargue se debe hacer una vez, parametrizar los porcentajes para los precios y
+								luego de esto volver a cargar los precios.</p>
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div> </br>
+			<h:form id="principalCargueProducto" enctype="multipart/form-data">
+				<p:growl id="messagesGrowl" showDetail="true" />
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+						<p:panel header="Cargar Excel de productos" styleClass="table table-bordered">
+							<p:column colspan="2">
+								<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
+									<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+										invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{cargueProductoBean.validaCargueExcel}"
+										update=":principalCargueProducto:messages,:principalCargueProducto:productos" onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide()" />
+								</p:panelGrid>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Tambien puede arrastrar su archivo aqui.." />
+							</p:column>
+						</p:panel>
+						<p:dataTable var="productos" id="productos" value="#{cargueProductoBean.listaProductos}" rows="10" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
+							<p:column headerText="Codigo Externo">
+								<h:outputText value="#{productos.codigoExterno}" />
+							</p:column>
+
+							<p:column headerText="Ubicación">
+								<h:outputText value="#{productos.ubicacion}" />
+							</p:column>
+
+							<p:column headerText="Descripción">
+								<h:outputText value="#{productos.descripcion}" />
+							</p:column>
+
+							<p:column headerText="Categoría">
+								<h:outputText value="#{productos.categoria}" />
+							</p:column>
+							<p:column headerText="SubCategoría">
+								<h:outputText value="#{productos.subcategoria}" />
+							</p:column>
+							<p:column headerText="Tipo">
+								<h:outputText value="#{productos.tipo}" />
+							</p:column>
+							<p:column headerText="Existencia">
+								<h:outputText value="#{productos.existencias}" />
+							</p:column>
+							<p:column headerText="Costo">
+								<h:outputText value="#{productos.costo}" />
+							</p:column>
+							<p:column headerText="Codigo de barras">
+								<h:outputText value="#{productos.codigoBarras}" />
+							</p:column>
+						</p:dataTable>
+						<p:commandButton value="Insertar" actionListener="#{cargueProductoBean.insertaParametrizacion}" update=":principalCargueProducto:messages,:principalCargueProducto:productos" ajax="true"
+							onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide()" />
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			REALIZANDO CARGUE MASIVO DE PRODUCTOS POR FAVOR ESPERE
+				<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+			</p:dialog>
+
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

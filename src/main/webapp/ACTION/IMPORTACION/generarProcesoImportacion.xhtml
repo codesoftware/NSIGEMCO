@@ -1,0 +1,131 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<h:form id="formPrinc">
+				<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+
+				<p:panelGrid columns="4" layout="grid">
+					<f:facet name="header">
+						<p:outputLabel value="INFORMACION DE LA IMPORTACION" />
+					</f:facet>
+					<p:outputLabel value="Nombre Importacion"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.nombre}"></p:outputLabel>
+					<p:outputLabel value="Fecha Creacion"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.fechaCrea}"></p:outputLabel>
+					<p:outputLabel value="Fecha Arrivo"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.fechaLleg}"></p:outputLabel>
+					<p:outputLabel value="Estado"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.estado}"></p:outputLabel>
+					<p:outputLabel value="TRM"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.trm}">
+						<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+					</p:outputLabel>
+					<p:outputLabel value="Taza Promedio"></p:outputLabel>
+					<p:outputLabel value="#{generarProcImportacionBean.importacion.tazaPromedio}">
+						<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+					</p:outputLabel>
+				</p:panelGrid>
+			</h:form>
+			<br />
+			<h:form id="formTablaProductos">
+				<p:dataTable id="tablaProductos" widgetVar="tablaImpoProd" rows="20" paginator="true" reflow="true" value="#{generarProcImportacionBean.productosImportacion}" var="prod"
+					filteredValue="#{generarProcImportacionBean.filteredproductosImportacion}">
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage name="/images/excel.png" width="24" />
+							<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
+						</h:commandLink>
+					</f:facet>
+					<p:column headerText="Codigo" filterBy="#{prod.producto.codigoExt}" filterMatchMode="contains" filterStyleClass="filteredCodigoExterno">
+						<p:outputLabel value="#{prod.producto.codigoExt}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Nombre">
+						<p:outputLabel value="#{prod.producto.descripcion}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Cantidad">
+						<p:outputLabel value="#{prod.cantidad}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Valor Dolar">
+						<p:outputLabel value="$ "></p:outputLabel>
+						<p:outputLabel value="#{prod.vlrDolar}">
+							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Pesos TRM">
+						<p:outputLabel value="$ "></p:outputLabel>
+						<p:outputLabel value="#{prod.vlrPesTRM}">
+							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Tasa Promedio">
+						<p:outputLabel value="$ "></p:outputLabel>
+						<p:outputLabel value="#{prod.vlrPesTRM}">
+							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+						</p:outputLabel>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			<br/>
+			<p:dataTable value="#{generarProcImportacionBean.listaGastos}" var="item" >
+					<f:facet name="header">
+						Registro de Gastos
+					</f:facet>
+					<p:column headerText="ID ">
+						<p:outputLabel value="#{item.id}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="DESCRIPCION">
+						<p:outputLabel value="#{item.descrip}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="VALOR">
+						<p:outputLabel value="$&nbsp;&nbsp;&nbsp;"/>
+						<p:outputLabel value="#{item.valorGasto}">
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="FECHA">
+						<p:outputLabel value="#{item.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Ver"> 
+						<p:commandButton value="Ver." actionListener="#{generarProcImportacionBean.seleccionaAuxContable(item.idAuxi)}" onsuccess="PF('dialogAuxiliarCont').show()" update=":formAuxiliar"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:dialog widgetVar="dialogAuxiliarCont" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
+					<h:form id="formAuxiliar">
+						<p:panelGrid styleClass="table" columns="2">
+							<f:facet name="header">
+								AUXILIAR CONTABLE
+							</f:facet>
+							<p:outputLabel value="CODIGO AUXILIAR:"></p:outputLabel>
+							<p:outputLabel value="#{generarProcImportacionBean.auxConta.codigo}"></p:outputLabel>
+							<p:outputLabel value="NOMBRE:"></p:outputLabel>
+							<p:outputLabel value="#{generarProcImportacionBean.auxConta.nombre}"></p:outputLabel>
+							<p:outputLabel value="DESCRIPCIÓN:"></p:outputLabel>
+							<p:outputLabel value="#{generarProcImportacionBean.auxConta.descripcion}"></p:outputLabel>
+						</p:panelGrid>
+					</h:form>
+				</p:dialog>
+				<br/>
+				<p:commandButton value="Generar Importación" styleClass="RedButton" onclick="PF('dialogConfirmacion').show()"></p:commandButton>
+				
+				<p:dialog widgetVar="dialogConfirmacion" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Confirmacion Realizacion Proceso de Importacion">
+					<p>Recuerde que al Confirmar esta operacion realizara todo el proceso de importacion
+					de los productos, contabilización e ingreso de productos al inventario.</p>
+					<p>Si desea confirmar los cambios por favor de click sobre confirmar de lo contrario
+					de click en cancelar.</p>
+					<p:commandButton value="CANCELAR" onclick="PF('dialogConfirmacion').hide()"></p:commandButton>
+					<p:spacer height="15"></p:spacer>
+					<p:commandButton value="CONFIRMAR"></p:commandButton>
+				</p:dialog>
+				
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,133 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaCategorias}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<br />
+			<h:form>
+				<p:growl id="mensajes" autoUpdate="true" showDetail="true"></p:growl>
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:panelGrid styleClass="table table-bordered" headerClass="alert alert-info">
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="4">
+										PARAMETRIZACION DE PARAMETROS PARA LOS PRECIOS 
+									</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="CATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idCate}" styleClass="form-control">
+										<p:ajax listener="#{precioMasivoBean.buscaSubCategorias}" update="selectReferencia,selectMarca,:formCnfirma:btnEjecuta" />
+										<f:selectItem itemLabel="SELECCIONE UNA CATEGORIA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapCategorias}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SUBCATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idRefe}" styleClass="form-control" id="selectReferencia">
+										<f:selectItem itemLabel="SELECCIONE UNA SUBCATEGORIA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{precioMasivoBean.listaMapSubCate}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="MARCA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idMarca}" styleClass="form-control" id="selectMarca">
+										<f:selectItem itemLabel="SELECCIONE UNA MARCA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{precioMasivoBean.listaMapMarca}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SEDE: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idSede}" styleClass="form-control" id="selectSede">
+										<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="4" style="text-align:center;">
+									<p:commandButton value="BUSCA PRODUCTOS A CAMBIAR PRECIO" styleClass="btn" actionListener="#{precioMasivoBean.buscaHistoricoParametros}" update=":formConsulta:tableconsulta,formCnfirma" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<h:form id="formConsulta">
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:dataTable id="tableconsulta" widgetVar="tablePorc" emptyMessage="NO EXISTEN PORCENTAJES PARAMETRIZADOS" var="porcentaje" value="#{precioMasivoBean.listaPorc}" paginator="true" rows="20" filteredValue="#{histPorcPrecioBean.listaPorcFiltered}">
+							<p:column headerText="SEDE" filterBy="#{porcentaje.sede.nombre}">
+								<h:outputText value="#{porcentaje.sede.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="CATEGORIA" filterBy="#{porcentaje.categoria.descripcion}">
+								<h:outputText value="#{porcentaje.categoria.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="SUB CATEGORIA" filterBy="#{porcentaje.referencia.descripcion}">
+								<h:outputText value="#{porcentaje.referencia.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="MARCA" filterBy="#{porcentaje.marca.descripcion}">
+								<h:outputText value="#{porcentaje.marca.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="PRECIO BASE">
+								<h:outputText value="#{porcentaje.porcBase}"></h:outputText>
+							</p:column>
+							<p:column headerText="PRECIO UNIDAD">
+								<h:outputText value="#{porcentaje.porcUni}"></h:outputText>
+							</p:column>
+							<p:column headerText="PRECIO DECENA">
+								<h:outputText value="#{porcentaje.porcDec}"></h:outputText>
+							</p:column>
+							<p:column headerText="PRECIO MILLAR">
+								<h:outputText value="#{porcentaje.porcMill}"></h:outputText>
+							</p:column>
+						</p:dataTable>
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<h:form id="formCnfirma">
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:panelGrid styleClass="table">
+							<p:row>
+								<p:column>
+									<p:commandButton value="EJECUTAR PROCESO" styleClass="btn" actionListener="#{precioMasivoBean.ejecutaProcesoPrecios}" id="btnEjecuta" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			Ejecutando Proceso
+			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+	</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

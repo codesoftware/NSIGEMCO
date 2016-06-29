@@ -1,0 +1,133 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<f:event listener="#{provedorBean.consultaProveedores}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaDepartamento}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaReteFuente}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="proveedor" widgetVar="wproveedor" id="tablaProveedores" value="#{provedorBean.listaProveedores}" paginator="true" filteredValue="#{provedorBean.listaProveedoresFiltro}"
+							emptyMessage="No existen proveedores parametrizados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE PROVEEDORES
+							</f:facet>
+							<p:column headerText="NIT" filterBy="#{proveedor.nit}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{proveedor.nit}-#{proveedor.dverificacion}"></h:outputText>
+							</p:column>
+							<p:column headerText="NOMBRE" filterBy="#{proveedor.nombre}" priority="2" filterMatchMode="contains">
+								<h:outputText value="#{proveedor.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="CIUDAD" filterBy="#{proveedor.ciudad.nombre}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{proveedor.ciudad.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{provedorBean.consultaProveedor(proveedor)}" update=":formTable:panelProveedor"
+									oncomplete="PF('datosProveedor').show()" />
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelProveedor" action="#{provedorBean.limpiaPanel}" oncomplete="PF('datosProveedor').show()" />
+					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosProveedor" modal="true" header="DATOS PROVEEDOR" closeOnEscape="true">
+						<p:panelGrid columns="2" id="panelProveedor" style="width:80%">
+							<p:column>
+							Nombre:
+									<p:inputText value="#{provedorBean.proveedor.nombre}" style="width:100%">
+									<p:ajax event="blur" update="razonSocial" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+									Nit:
+									<p:inputText value="#{provedorBean.proveedor.nit}" style="width:60%">
+									<p:ajax event="blur" update="digitoVer" listener="#{provedorBean.muestraDigito}" />
+								</p:inputText>
+
+								<p:inputText value="#{provedorBean.proveedor.dverificacion}" id="digitoVer" style="width:20%"></p:inputText>
+
+							</p:column>
+							<p:column>
+								Departamento
+							<h:selectOneMenu value="#{provedorBean.idMuni}" styleClass="form-control" id="selectDepartamento">
+									<f:selectItem itemLabel="SELECCIONE UN DEPARTAMENTO" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaMapDepartamentos}"></f:selectItems>
+									<p:ajax update="selectCiudad" listener="#{provedorBean.consultaCiudades}"></p:ajax>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>
+							Ciudad
+							<h:selectOneMenu value="#{provedorBean.idCiu}" styleClass="form-control" id="selectCiudad">
+									<f:selectItem itemLabel="SELECCIONE UNA CIUDAD" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{provedorBean.listaMapCiudades}"></f:selectItems>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>	
+									ReteFuente:
+									<h:selectOneMenu value="#{provedorBean.idRete}" styleClass="form-control">
+									<f:selectItem itemLabel="Seleccione ...." itemValue="-1" />
+									<f:selectItems value="#{cargaListasMapBean.listaReteFuente}" />
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>	
+								Porcentaje reteFuente
+								<p:inputText value="#{provedorBean.proveedor.porcRetencion}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+								Gran contribuyente:
+								<h:selectOneMenu value="#{provedorBean.proveedor.granContribuyente}" styleClass="form-control">
+									<f:selectItem itemLabel="No" itemValue="N" />
+									<f:selectItem itemLabel="Si" itemValue="S" />
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>
+									Razón Social:
+									<p:inputText id="razonSocial" value="#{provedorBean.proveedor.nombre}" style="width:100%" readonly="true"></p:inputText>
+							</p:column>
+							<p:column>
+									Representante Legal:
+									<p:inputText value="#{provedorBean.proveedor.representante}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+									Telefono:
+									<p:inputText value="#{provedorBean.proveedor.telefono}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+									Dirección:
+									<p:inputText value="#{provedorBean.proveedor.direccion}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+									Celular:
+									<p:inputText value="#{provedorBean.proveedor.celular}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+									Correo Electronico:
+									<p:inputText value="#{provedorBean.proveedor.correo}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+									Plazo cŕedito:
+									<p:inputText value="#{provedorBean.proveedor.dcredito}" style="width:100%"></p:inputText>
+							</p:column>
+							<p:column>
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{provedorBean.banderaboton=='I'}" actionListener="#{provedorBean.insertaProveedor}" update="tablaProveedores" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{provedorBean.banderaboton=='U'}" actionListener="#{provedorBean.actualizaProveedor}" update="tablaProveedores" />
+								<p:commandButton value="ELIMINAR" styleClass="RedButton" rendered="#{provedorBean.banderaboton=='U'}" />
+							</p:column>
+						</p:panelGrid>
+
+					</p:dialog>
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

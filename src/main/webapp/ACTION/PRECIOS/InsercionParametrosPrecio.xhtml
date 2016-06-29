@@ -1,0 +1,125 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaCategorias}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<br />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<div class="alert alert-info">
+						<h3>RECOMENDACIONES</h3>
+						<br />
+						<p>Tener en cuenta que si no selecciona ningun parametro los parametros se veran afectados en todos los productos de la aplicacion cuando se realice una parametrizacion masiva.</p>
+						<p>Para no presentar inconvenientes procure ser lo mas especifico posible.</p>
+					</div>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<h:form id="formInserPara">
+						<p:growl id="mensajes" autoUpdate="true" showDetail="true"></p:growl>
+						<p:panelGrid styleClass="table table-bordered" headerClass="alert alert-info">
+							<f:facet name="header">
+								<p:row>
+									<p:column colspan="4">
+										PARAMETRIZACION DE PARAMETROS PARA LOS PRECIOS 
+									</p:column>
+								</p:row>
+							</f:facet>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="CATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idCate}" styleClass="form-control">
+										<p:ajax listener="#{precioMasivoBean.buscaSubCategorias}" update="selectReferencia,selectMarca" />
+										<f:selectItem itemLabel="SELECCIONE UNA CATEGORIA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapCategorias}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SUBCATEGORIA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idRefe}" styleClass="form-control" id="selectReferencia">
+										<f:selectItem itemLabel="SELECCIONE UNA SUBCATEGORIA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{precioMasivoBean.listaMapSubCate}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="MARCA: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idMarca}" styleClass="form-control" id="selectMarca">
+										<f:selectItem itemLabel="SELECCIONE UNA MARCA" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{precioMasivoBean.listaMapMarca}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="SEDE: " />
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{precioMasivoBean.idSede}" styleClass="form-control" id="selectSede">
+										<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="PORC. BASE." />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{precioMasivoBean.porcBase}" required="true" requiredMessage="PORCENTAJE BASE ES UN CAMPO OBLIGATORIO" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="PORC. UNID." />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{precioMasivoBean.porcUni}" required="true" requiredMessage="PORCENTAJE POR UNIDAD ES UN CAMPO OBLIGATORIO" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="PORC. DEC." />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{precioMasivoBean.porcDec}" required="true" requiredMessage="PORCENTAJE POR DECENA  ES UN CAMPO OBLIGATORIO"></p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="PORC. MILLAR." />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{precioMasivoBean.porcMil}" required="true" requiredMessage="PORCENTAJE POR MILLAR ES UN CAMPO OBLIGATORIO" />
+								</p:column>
+
+							</p:row>
+							<p:row>
+								<p:column colspan="4" style="text-align:center;">
+									<p:commandButton value="PARAMETRIZAR" styleClass="btn" actionListener="#{precioMasivoBean.enviaParametrizacion}" ajax="true" onstart="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide()" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</h:form>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			REALIZANDO PROCESO PARA LA PARAMETRIZACION DE PORCENTAJES DE PRECIOS
+				<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

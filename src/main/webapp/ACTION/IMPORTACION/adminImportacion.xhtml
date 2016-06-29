@@ -1,0 +1,90 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<style>
+@media only screen and (min-width: 600px) {
+	.modalResponsive {
+		width: 50% !important;
+	}
+	.columnaPequena {
+		width: 8%;
+	}
+}
+
+@media only screen and (max-width: 601px) {
+	.modalResponsive {
+		width: 100% !important;
+	}
+	.columnaPequena {
+		width: 50%;
+	}
+}
+</style>
+			<br />
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+			<h:form id="insertImport">
+				<p:panel header="Inserción Importación">
+					<p:panelGrid layout="grid" columns="4">
+						<p:outputLabel value="Nombre Importacion:"></p:outputLabel>
+						<p:inputText value="#{adminImportacionBean.importacion.nombre}"></p:inputText>
+						<p:outputLabel value="Importador:"></p:outputLabel>
+						<p:outputLabel value="#{adminImportacionBean.proveedorSelect.nombre}" id="nombreImportador"></p:outputLabel>
+						<p:outputLabel value="Fecha Arrivo:"></p:outputLabel>
+						<p:calendar value="#{adminImportacionBean.importacion.fechaLleg}" navigator="true" pattern="dd/MM/yyyy" mask="true" showOn="button" converter="datetoXmlDateConverter" yearRange="c-2:c+100"></p:calendar>
+						<p:commandButton value="Proveedor Internacional" icon="fa fa-group" onclick="PF('dialogProvInt').show()" update=":formConsultaProv:tableProvInt"
+				actionListener="#{proveedorInternBean.consultaGeneralProveedor}"></p:commandButton>
+						<p:commandButton value="INSERTA IMPORTACION" styleClass="OrangeButton" actionListener="#{adminImportacionBean.insertarImportacion}" update=":insertImport"></p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+			<p:dialog widgetVar="dialogProvInt" closeOnEscape="true" header="CONSULTA PROVEEDORES" modal="true">
+				<h:form id="formConsultaProv">
+					<p:commandButton value="Insertar Proveedor" onclick="PF('dialogProvInt').hide();PF('dialogInsertProv').show()"></p:commandButton>
+					<p:dataTable var="item" widgetVar="tableProv" value="#{proveedorInternBean.listaProveedores}" id="tableProvInt" reflow="true">
+						<p:column headerText="Id Proveedor" styleClass="columnaPequena">
+							<p:outputLabel value="#{item.idProv}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Nombres">
+							<p:outputLabel value="#{item.nombre}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Contacto">
+							<p:outputLabel value="#{item.contacto}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Ubicación">
+							<p:outputLabel value="#{item.ubicacion}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Seleccionar" styleClass="columnaPequena">
+							<p:commandButton value="Add." update=":insertImport:nombreImportador" actionListener="#{adminImportacionBean.seleccionaProveedor(item)}" onsuccess="PF('dialogProvInt').hide();"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
+			<p:dialog closeOnEscape="true" widgetVar="dialogInsertProv" header="Insertar Proveedor Internacional" modal="true" responsive="true" styleClass="modalResponsive">
+				<h:form id="InsertProv">
+					<p:panel header="INSERCION PROVEEDOR INTERNACIONAL">
+						<p:panelGrid layout="grid" columns="2">
+
+							<p:outputLabel value="Identificacion: "></p:outputLabel>
+							<p:inputText value="#{proveedorInternBean.proveedor.idProv}"></p:inputText>
+							<p:outputLabel value="Nombres:"></p:outputLabel>
+							<p:inputText value="#{proveedorInternBean.proveedor.nombre}"></p:inputText>
+							<p:outputLabel value="Contacto:"></p:outputLabel>
+							<p:inputText value="#{proveedorInternBean.proveedor.contacto}"></p:inputText>
+							<p:outputLabel value="Ubicacion:"></p:outputLabel>
+							<p:inputText value="#{proveedorInternBean.proveedor.ubicacion}"></p:inputText>
+						</p:panelGrid>
+						<p:commandButton value="INSERTAR" actionListener="#{proveedorInternBean.insertarProveedor}"></p:commandButton>
+					</p:panel>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

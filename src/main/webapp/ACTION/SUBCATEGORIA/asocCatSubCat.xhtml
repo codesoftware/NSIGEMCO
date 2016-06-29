@@ -1,0 +1,33 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<h:form>
+				<div class="row">
+					<div class="col-md-4 col-sm-0 col-xs-0"></div>
+					<div class="col-md-4 col-sm-12 col-xs-12">
+						<p:growl id="mensajes" autoUpdate="true" showDetail="true"></p:growl>
+						<h:panelGrid columns="2" styleClass="table table-bordered" headerClass="alert alert-info">
+							<f:facet name="header">
+								<p:outputLabel value="Asociacion de Categorias y Subcategorias" />
+							</f:facet>
+							<p:outputLabel value="CATEGORIA" />
+							<p:autoComplete value="#{asocCateSubCate.categoria}" completeMethod="#{asocCateSubCate.obtieneListaCategoria}" converter="categoriasConverter" var="item" itemValue="#{item}"
+								itemLabel="#{item.descripcion}" />
+							<p:outputLabel value="SUBCATEGORIA" />
+							<p:autoComplete value="#{asocCateSubCate.referencia}" completeMethod="#{asocCateSubCate.obtieneListaReferencia}" converter="referenciaConverter" var="item" itemValue="#{item}" itemLabel="#{item.nombre}" />
+						</h:panelGrid>
+						<p:commandButton value="ASOCIAR" actionListener="#{asocCateSubCate.asociaCatConSubCat()}" />
+					</div>
+					<div class="col-md-4 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

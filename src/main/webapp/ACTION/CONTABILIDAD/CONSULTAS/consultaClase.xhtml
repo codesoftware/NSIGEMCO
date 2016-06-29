@@ -1,0 +1,41 @@
+	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+		<br/>
+		<br/>	
+			<div class="row">
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+				<div class="col-md-6 col-xs-12 col-sm-12">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<td colspan="2" style="text-align: center;" class="alert alert-info text-center"><h3>CLASES</h3></td>
+							</tr>
+							<tr>
+								<td class="alert alert-info text-center" style="width: 30%">Codigo</td>
+								<td class="alert alert-info text-center" style="width: 70%">Nombre</td>
+							</tr>
+						</thead>
+						<tbody>
+							<ui:repeat var="item" value="#{claseBean.listaClase}">
+								<tr>
+									<td style="text-align: center;"><p:commandLink value="#{item.codigo}" action="#{claseBean.seleccionaClase(item)}" ></p:commandLink></td>
+									<td style="text-align: center;"><p:outputLabel value="#{item.descripcion}"></p:outputLabel></td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-3 col-xs-0 col-sm-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

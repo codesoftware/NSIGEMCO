@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<body>
+		<ui:composition template="/TEMPLATE/template.xhtml">
+			<ui:define name="content">
+				<h:form>
+					<p:spacer></p:spacer>
+					<center>
+						<p:panel header="CONSULTA FACTURAS DE COMPRA" style="width:80%">
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-2">
+										<h:outputLabel value="Fecha Inicial:" />
+									</div>
+									<div class="ui-grid-col-2">
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" value="#{consultaFacCompraBean.fechaInicial}" readonlyInput="true" id="fechaInicial" navigator="true" style="width:30%;"
+											maxdate="#{consultaFacCompraBean.fechaMax}" />
+									</div>
+									<div class="ui-grid-col-2">
+										<h:outputLabel value="Fecha Final:" />
+									</div>
+									<div class="ui-grid-col-2">
+										<p:calendar label="factura Compra" pattern="dd/MM/yyyy" locale="es_ES" value="#{consultaFacCompraBean.fechaFinal}" readonlyInput="true" id="fechaFinal" navigator="true" style="width:30%;"
+											mindate="#{consultaFacCompraBean.fechaInicial}" />
+									</div>
+									<div class="ui-grid-col-2">
+										<h:outputLabel value="Digitalizado:" />
+									</div>
+									<div class="ui-grid-col-2">
+										<h:selectOneMenu value="#{consultaFacCompraBean.digitalizado}" styleClass="form-control" id="selectDigitaliza">
+											<f:selectItem itemLabel="DIGITALIZADO?" itemValue="-1"></f:selectItem>
+											<f:selectItem itemLabel="Si" itemValue="S"></f:selectItem>
+											<f:selectItem itemLabel="No" itemValue="N"></f:selectItem>
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<p:spacer></p:spacer>
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12">
+										<p:commandButton value="Consultar" actionListener="#{consultaFacCompraBean.consultaFacturas}" ajax="true" update="tablaFactCompra" />
+									</div>
+								</div>
+							</div>
+						</p:panel>
+						<p:dataTable id="tablaFactCompra" var="factura" widgetVar="factCompraTable" value="#{consultaFacCompraBean.listaFacturas}" paginator="true" rows="15" rowsPerPageTemplate="15,20,25"
+							styleClass="table table-bordered" filteredValue="#{consultaFacCompraBean.listaFacturasFiltro}">
+							<p:column headerText="Id Factura" priority="1" filterBy="#{factura.id}">
+								<h:outputText value="#{factura.id}"></h:outputText>
+							</p:column>
+							<p:column headerText="No Factura" priority="7" filterBy="#{factura.numeroFactura}">
+								<h:outputText value="#{factura.numeroFactura}"></h:outputText>
+							</p:column>
+							<p:column headerText="Proveedor" priority="6" filterBy="#{factura.proveedor.nombre}">
+								<h:outputText value="#{factura.proveedor.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="Fecha" priority="5">
+								<h:outputText value="#{factura.fechaFacCompra.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Valor Factura" priority="4">
+								<h:outputText value="#{factura.valorFacura-factura.valorRetencion+factura.valorIva}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Estado" priority="3" filterBy="#{factura.estado}">
+								<h:outputText value="#{factura.estado}"></h:outputText>
+							</p:column>
+							<p:column headerText="Detalle" priority="2">
+								<p:commandButton icon="ui-icon-folder-open" title="Detalle" action="#{consultaFacCompraBean.seteaIdFactura(factura.id)}">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</center>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</body>
+
+</h:head>
+</html>

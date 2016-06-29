@@ -1,0 +1,301 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<script>
+				function muestraInformacion() {
+					var estado = document
+							.getElementById('detalleRemisionForm:pruebaRendered').value;
+					if (estado == 'FA') {
+						document
+								.getElementById('detalleRemisionForm:botonFacturar').style.display = 'none';
+						document
+								.getElementById('detalleRemisionForm:btnFacturaGenerica').style.display = '';
+						document
+								.getElementById('detalleRemisionForm:selectResoluciones').style.display = 'none';
+					} else {
+						document
+								.getElementById('detalleRemisionForm:btnFacturaGenerica').style.display = 'none';
+						document
+								.getElementById('detalleRemisionForm:botonFacturar').style.display = '';
+						document
+								.getElementById('detalleRemisionForm:selectResoluciones').style.display = '';
+					}
+				}
+			</script>
+			<f:event listener="#{cargaListasMapBean.cargaListaResolucion}" type="preRenderView" />
+			<p:growl id="mensajes" autoUpdate="true" life="30000" showDetail="true"></p:growl>
+			<h:form id="formConsulta">
+				<br />
+				<br />
+				<div class="row">
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<p:panel header="Consulta de Remisiones">
+							<p:panelGrid style="width:100%">
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Fecha Inicial: " />
+									</p:column>
+									<p:column>
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{remisionFacturaBean.fechaIni}"></p:calendar>
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Fecha Final:" />
+									</p:column>
+									<p:column>
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{remisionFacturaBean.fechaFin}"></p:calendar>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="3">
+										<p:commandLink value="Clientes" onclick="PF('searchCl').show();" onsuccess="" actionListener="#{clienteBean.buscaClientes}" onstart="PF('clienteTable').clearFilters()"></p:commandLink>
+										<p:outputLabel value="#{remisionFacturaBean.clienteSelected.nombres}" id="clienteSeleccionado"></p:outputLabel>
+									</p:column>
+									<p:column>
+										<p:commandButton value="CONSULTAR" styleClass="GreenButton" actionListener="#{remisionFacturaBean.consultarRemisiones}" update=":formResultCons:tablaRemisones" icon="fa fa-database"></p:commandButton>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+						<br />
+					</div>
+					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				</div>
+			</h:form>
+			<h:form id="formResultCons">
+				<p:dataTable id="tablaRemisones" var="tRemisiones" value="#{remisionFacturaBean.remisiones}" reflow="true" paginator="true" rows="5">
+					<f:facet name="header">
+						<p:outputLabel value="CONSULTA DE REMISIONES"></p:outputLabel>
+					</f:facet>
+					<p:column headerText="Id" width="5%">
+						<p:outputLabel value="#{tRemisiones.id}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Cliente">
+						<p:outputLabel value="#{tRemisiones.cliente.apellidos}"></p:outputLabel>
+						<p:outputLabel value=" "></p:outputLabel>
+						<p:outputLabel value="#{tRemisiones.cliente.nombres}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Dias Plazo" width="5%">
+						<p:outputLabel value="#{tRemisiones.diasPlazo}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="ESTADO" width="7%">
+						<h:outputText value="REMISIONADO" rendered="#{tRemisiones.estado == 'RE'}" />
+						<h:outputText value="FACTURADO" rendered="#{tRemisiones.estado  == 'FA'}" />
+					</p:column>
+					<p:column headerText="Fecha Creación" width="8%">
+						<p:outputLabel value="#{tRemisiones.fechaCreacion.toGregorianCalendar().time}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Fecha Vencimiento" width="10%">
+						<p:outputLabel value="#{tRemisiones.fechaVenPlazo.toGregorianCalendar().time}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Valor" width="10%">
+						<p:outputLabel value="$ " />
+						<p:outputLabel value="#{tRemisiones.valorTotal}">
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Ver detalle" width="8%">
+						<p:commandButton value="Detalle" icon="fa fa-fw fa-files-o" actionListener="#{remisionFacturaBean.verDetalleRemision(tRemisiones)}" onsuccess="PF('detalleRemision').show();"
+							oncomplete="muestraInformacion();"
+							update=":detalleRemisionForm:infoGeneral,:detalleRemisionForm:infoCliente,:detalleRemisionForm:prodRemision,:detalleRemisionForm:pruebaRendered,:detalleRemisionForm:botonFacturar">
+						</p:commandButton>
+					</p:column>
+					<p:column width="8%" headerText="Remisión">
+						<p:commandButton value="GENERAR REMISION" styleClass="BlueButton" actionListener="#{remisionFacturaBean.obtenerPdfRemision(tRemisiones)}" onsuccess="PF('abrirVisor').show()"
+							update=":detalleRemisionForm:Visor"></p:commandButton>
+					</p:column>
+					<p:column width="8%" headerText="Factura">
+						<p:commandButton value="GENERAR FACTURA" styleClass="RedButton" actionListener="#{remisionFacturaBean.obtenerPdfFactura(tRemisiones)}" update=":detalleRemisionForm:Visor"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			<h:form id="searchClients">
+				<p:dialog header="Consulta de clientes" widgetVar="searchCl" modal="true" position="center" closeOnEscape="true">
+					<p:dataTable var="listClient" value="#{clienteBean.clientes}" reflow="true" rows="5" widgetVar="clienteTable" paginator="true" emptyMessage="No hay clientes que coincidan con la busqueda"
+						filteredValue="#{clienteBean.clientesFilter}" id="tablaClientes">
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Busqueda de clientes:" />
+								<p:inputText id="globalFilter" onkeyup="PF('clienteTable').filter()" style="width:150px" placeholder="Ingrese palabra" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column headerText="Cedula" style="text-align: center" filterBy="#{listClient.cedula}">
+							<p:outputLabel value="#{listClient.cedula}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Nombres" filterBy="#{listClient.nombres}">
+							<h:outputText value="#{listClient.nombres}" />
+						</p:column>
+						<p:column headerText="Dirección" filterBy="#{listClient.direccion}">
+							<h:outputText value="#{listClient.direccion}" />
+						</p:column>
+						<p:column headerText="Telefono" filterBy="#{listClient.telefono}">
+							<h:outputText value="#{listClient.telefono}" />
+						</p:column>
+						<p:column headerText="Adicionar" style="width:100px;text-align: center">
+							<p:commandButton icon="ui-icon-search" title="Seleccion" ajax="true" oncomplete="PF('searchCl').hide()" actionListener="#{remisionFacturaBean.seleccionaCliente(listClient)}"
+								update=":formConsulta:clienteSeleccionado">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</h:form>
+			<h:form id="detalleRemisionForm">
+				<p:dialog id="detRemision" widgetVar="detalleRemision" closeOnEscape="true" modal="true" header="Detalle remision" responsive="true">
+					<div style="width: 100%; height: 350px; overflow: auto;">
+						<p:panelGrid layout="grid" columns="4">
+							<p:outputLabel value="RESOLUCION:" />
+							<h:selectOneMenu value="#{remisionFacturaBean.idResolucion}" styleClass="form-control" id="selectResoluciones">
+								<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
+								<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
+							</h:selectOneMenu>
+							<p:outputLabel value="DIAS PAGO:" />
+							<p:inputText value="#{remisionFacturaBean.diasPago}" />
+						</p:panelGrid>
+
+						<p:panel header="Informacion General">
+							<p:panelGrid id="infoGeneral" style="width:100%">
+								<p:row>
+									<p:column>Identificador: </p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.id}"></p:outputLabel>
+									</p:column>
+									<p:column>Fecha de Creacion: </p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.fechaCreacion}" converter="xmlDatetoDateConverterHour">
+										</p:outputLabel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+									Remision Vencida:
+								</p:column>
+									<p:column>
+										<p:outputLabel value="Si" rendered="#{remisionFacturaBean.remisionSeleccionada.vencida == 'S'}" />
+										<p:outputLabel value="No" rendered="#{remisionFacturaBean.remisionSeleccionada.vencida == 'N'}" />
+									</p:column>
+									<p:column>
+									Usuario Creador:
+								</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.usuario.persona.apellido}"></p:outputLabel>
+										<p:spacer width="10"></p:spacer>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.usuario.persona.nombre}"></p:outputLabel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+									Dias de plazo:
+								</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.diasPlazo}">
+										</p:outputLabel>
+									</p:column>
+									<p:column>
+									Fecha Vencimiento:
+								</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.fechaVenPlazo}" converter="xmlDatetoDateConverterHour">
+										</p:outputLabel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+									Valor Remision:
+									</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.valorTotal}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+									</p:column>
+									<p:column>
+										Id Factura: 
+									</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.idFactura}"></p:outputLabel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+						<br />
+						<p:panel header="Informacion cliente">
+							<p:panelGrid id="infoCliente" style="width:100%">
+								<p:row>
+									<p:column>
+									Nombre / Razon Social: 
+								</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.cliente.apellidos}"></p:outputLabel>
+										<p:spacer width="10"></p:spacer>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.cliente.nombres}"></p:outputLabel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+									Cedula / Nit: 
+								</p:column>
+									<p:column>
+										<p:outputLabel value="#{remisionFacturaBean.remisionSeleccionada.cliente.cedula}" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+						<p:dataTable id="prodRemision" var="prod" value="#{remisionFacturaBean.detalleRemisionSele}" paginator="true" emptyMessage="No hay productos asociados" reflow="true">
+							<f:facet name="header">
+							Detalle de Productos
+						</f:facet>
+							<p:column headerText="Codigo">
+								<p:outputLabel value="#{prod.codigoExterno}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Cantidad">
+								<p:outputLabel value="#{prod.cantidad}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Precio">
+								<p:outputLabel value="#{prod.precio}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="Descripción">
+								<p:outputLabel value="#{prod.producto.descripcion}"></p:outputLabel>
+							</p:column>
+						</p:dataTable>
+					</div>
+					<br />
+					<p:inputText style="display:none" value="#{remisionFacturaBean.remisionSeleccionada.estado}" id="pruebaRendered"></p:inputText>
+					<p:commandButton value="FACTURAR" styleClass="GreenButton" actionListener="#{remisionFacturaBean.generaRemision}" onsuccess="PF('detalleRemision').hide()" update=":formResultCons:tablaRemisones"
+						id="botonFacturar"></p:commandButton>
+					<p:commandButton value="FACTURA GENERICA" actionListener="#{remisionFacturaBean.generaFacturaGenerica}" id="btnFacturaGenerica" update=":formFacturaGenerica:VisorFactGen"></p:commandButton>
+				</p:dialog>
+				<p:dialog id="visorPdf" widgetVar="abrirVisor" modal="true" closeOnEscape="true">
+					<pe:documentViewer id="Visor" width="850" height="500" url="#{remisionFacturaBean.rutaImagen}" />
+				</p:dialog>
+			</h:form>
+			<h:form id="formFacturaGenerica">
+				<p:dialog id="visorPdfGenrico" widgetVar="facturaGenericaDialog" modal="true" closeOnEscape="true" header="Factura Generica">
+					<pe:documentViewer id="VisorFactGen" width="400" height="600" url="#{remisionFacturaBean.rutaImagen}" />
+				</p:dialog>
+			</h:form>
+			<h:form id="formReteFuente">
+				<p:dialog id="preguntaRetefuente" widgetVar="dialogoReteFuente" modal="true" closeOnEscape="true" header="Retencion en la Fuente">
+					Desea Realizarle Retencion en la Fuente a esta Factura?
+					<h:selectOneMenu value="#{remisionFacturaBean.reteFuente}" styleClass="form-control" id="selectRetefuente">
+						<f:selectItem itemLabel="Desea retener en la fuente" itemValue="-1"></f:selectItem>
+						<f:selectItem itemLabel="SI" itemValue="S"></f:selectItem>
+						<f:selectItem itemLabel="NO" itemValue="N"></f:selectItem>
+					</h:selectOneMenu>
+					<p:commandButton value="Aceptar" actionListener="#{remisionFacturaBean.realizaProcesoFacturacion}"></p:commandButton>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
