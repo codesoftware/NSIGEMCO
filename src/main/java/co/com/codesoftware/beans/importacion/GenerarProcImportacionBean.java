@@ -48,7 +48,6 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 		}
 	}
 
-
 	public void messageBean(String message) {
 		switch (this.enumer) {
 		case ERROR:
@@ -65,13 +64,32 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			break;
 		}
 	}
+
 	/**
 	 * Funcion con la cual selecciono un auxiliar contable
 	 */
-	public void seleccionaAuxContable(Integer idAux){
+	public void seleccionaAuxContable(Integer idAux) {
 		try {
 			ContabilidadLogic objLogic = new ContabilidadLogic();
 			auxConta = objLogic.obtenerAuxiliarContableXId(idAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Funcion desde la cual se genera la importacion con la cual se realizara
+	 * la importacion en el sistema
+	 */
+	public void generaImportacion() {
+		try {
+			ImportacionLogica objLogica = new ImportacionLogica();
+			String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(),this.objetoSesion.getId());
+			if(valida.toUpperCase().contains("OK")){
+				messageBean("Importacion realizada Correctamente", ErrorEnum.SUCCESS);
+			}else{
+				messageBean(valida, ErrorEnum.ERROR);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

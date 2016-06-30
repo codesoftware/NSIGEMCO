@@ -122,7 +122,7 @@
 					de click en cancelar.</p>
 					<p:commandButton value="CANCELAR" onclick="PF('dialogConfirmacion').hide()"></p:commandButton>
 					<p:spacer height="15"></p:spacer>
-					<p:commandButton value="CONFIRMAR"></p:commandButton>
+					<p:commandButton value="CONFIRMAR" actionListener="#{generarProcImportacionBean.generaImportacion}"></p:commandButton>
 				</p:dialog>
 				
 		</ui:define>

@@ -29,6 +29,36 @@ public interface ImportacionWS {
 
     /**
      * 
+     * @param provInter
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "insertarProveedorInternacional", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarProveedorInternacional")
+    @ResponseWrapper(localName = "insertarProveedorInternacionalResponse", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarProveedorInternacionalResponse")
+    @Action(input = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarProveedorInternacionalRequest", output = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarProveedorInternacionalResponse")
+    public String insertarProveedorInternacional(
+        @WebParam(name = "provInter", targetNamespace = "")
+        ProveedorInterEntity provInter);
+
+    /**
+     * 
+     * @param detalle
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "insertarDetalleGasto", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarDetalleGasto")
+    @ResponseWrapper(localName = "insertarDetalleGastoResponse", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarDetalleGastoResponse")
+    @Action(input = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarDetalleGastoRequest", output = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarDetalleGastoResponse")
+    public String insertarDetalleGasto(
+        @WebParam(name = "detalle", targetNamespace = "")
+        DetalleGastoEntity detalle);
+
+    /**
+     * 
      * @param idImpo
      * @return
      *     returns java.lang.String
@@ -179,18 +209,21 @@ public interface ImportacionWS {
 
     /**
      * 
-     * @param provInter
+     * @param idtius
+     * @param idImpo
      * @return
      *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "insertarProveedorInternacional", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarProveedorInternacional")
-    @ResponseWrapper(localName = "insertarProveedorInternacionalResponse", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarProveedorInternacionalResponse")
-    @Action(input = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarProveedorInternacionalRequest", output = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarProveedorInternacionalResponse")
-    public String insertarProveedorInternacional(
-        @WebParam(name = "provInter", targetNamespace = "")
-        ProveedorInterEntity provInter);
+    @RequestWrapper(localName = "ejecutaProcesoImportacion", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.EjecutaProcesoImportacion")
+    @ResponseWrapper(localName = "ejecutaProcesoImportacionResponse", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.EjecutaProcesoImportacionResponse")
+    @Action(input = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/ejecutaProcesoImportacionRequest", output = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/ejecutaProcesoImportacionResponse")
+    public String ejecutaProcesoImportacion(
+        @WebParam(name = "idtius", targetNamespace = "")
+        Integer idtius,
+        @WebParam(name = "idImpo", targetNamespace = "")
+        Integer idImpo);
 
     /**
      * 
@@ -206,20 +239,5 @@ public interface ImportacionWS {
     public List<DetalleGastoEntity> obtenerDetalleGasto(
         @WebParam(name = "idGasto", targetNamespace = "")
         Integer idGasto);
-
-    /**
-     * 
-     * @param detalle
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "insertarDetalleGasto", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarDetalleGasto")
-    @ResponseWrapper(localName = "insertarDetalleGastoResponse", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.importacion.InsertarDetalleGastoResponse")
-    @Action(input = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarDetalleGastoRequest", output = "http://importacion.servicio.codesoftware.com.co/ImportacionWS/insertarDetalleGastoResponse")
-    public String insertarDetalleGasto(
-        @WebParam(name = "detalle", targetNamespace = "")
-        DetalleGastoEntity detalle);
 
 }

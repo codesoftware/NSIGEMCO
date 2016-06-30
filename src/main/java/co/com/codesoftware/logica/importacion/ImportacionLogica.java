@@ -352,4 +352,20 @@ public class ImportacionLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	
+	/**
+	 * Funcion con la cual llamo el webservice que ejecuta el proceso de importacion
+	 * @param idImpo
+	 * @param idTius
+	 * @return
+	 */
+	public String ejecutarProcesoImportacion(Integer idImpo, Integer idTius){
+		String rta = "";
+		try {
+			rta = conexionWSImportacion().getPortImportacion().ejecutaProcesoImportacion(idTius, idImpo);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 }

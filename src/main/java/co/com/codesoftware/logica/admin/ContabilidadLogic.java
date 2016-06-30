@@ -121,5 +121,4 @@ public class ContabilidadLogic implements WSGeneralInterface {
 		}
 		return aux;
 	}
-
 }
