@@ -16,6 +16,7 @@ import org.primefaces.context.RequestContext;
 
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.logica.importacion.ImportacionLogica;
+import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
 import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
 import co.com.codesoftware.servicio.importacion.DetalleGastoEntity;
 import co.com.codesoftware.servicio.importacion.GastoImpoEntity;
@@ -46,6 +47,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	private AuxContableEntity detAuxContable;
 	private GastoImpoEntity gastoSelected;
 	private List<DetalleGastoEntity> listaDetalleGasto;
+	private ProveedoresEntity proveedor;
 
 	/**
 	 * Funcion con la cual registro un gasto
@@ -118,7 +120,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 		} else if (this.detAuxContable == null) {
 			this.setEnumer(ErrorEnum.ERROR);
 			this.messageBean("El campo auxiliar contable no puede ser vacio ");
-		} else {
+		} else if( this.proveedor == null ){
+			messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);
+		}else {
 			DetalleGastoEntity objEntity = new DetalleGastoEntity();
 			objEntity.setDescr(this.detDescripGasto);
 			XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(detFechaGasto);
@@ -204,11 +208,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		try {
-			this.importacion = (ImportacionEntity) FacesContext.getCurrentInstance().getExternalContext()
-					.getSessionMap().get("importacionSelected");
+			this.importacion = (ImportacionEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("importacionSelected");
 			ImportacionLogica objLogica = new ImportacionLogica();
 			this.listaGastos = objLogica.obtenerGastosImportacion(this.importacion.getId());
 		} catch (Exception e) {
@@ -219,16 +221,13 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	public void messageBean(String message) {
 		switch (this.enumer) {
 		case ERROR:
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
 			break;
 		case FATAL:
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Error de sistema"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Error de sistema"));
 			break;
 		case SUCCESS:
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok!", message));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok!", message));
 			break;
 
 		default:
@@ -324,4 +323,11 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 		this.listaDetalleGasto = listaDetalleGasto;
 	}
 
+	public ProveedoresEntity getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(ProveedoresEntity proveedor) {
+		this.proveedor = proveedor;
+	}
 }

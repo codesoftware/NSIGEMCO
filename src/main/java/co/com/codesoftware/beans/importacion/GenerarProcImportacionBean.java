@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.logica.importacion.ImportacionLogica;
+import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
 import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
 import co.com.codesoftware.servicio.importacion.GastoImpoEntity;
 import co.com.codesoftware.servicio.importacion.ImportacionEntity;
@@ -34,6 +35,7 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 	private List<ProductoImportacionEntity> filteredproductosImportacion;
 	private List<GastoImpoEntity> listaGastos;
 	private AuxContableEntity auxConta;
+	private ProveedoresEntity proveedor;
 
 	@PostConstruct
 	public void init() {
@@ -84,10 +86,10 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 	public void generaImportacion() {
 		try {
 			ImportacionLogica objLogica = new ImportacionLogica();
-			String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(),this.objetoSesion.getId());
-			if(valida.toUpperCase().contains("OK")){
+			String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(), this.objetoSesion.getId());
+			if (valida.toUpperCase().contains("OK")) {
 				messageBean("Importacion realizada Correctamente", ErrorEnum.SUCCESS);
-			}else{
+			} else {
 				messageBean(valida, ErrorEnum.ERROR);
 			}
 		} catch (Exception e) {
@@ -149,6 +151,14 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 
 	public void setAuxConta(AuxContableEntity auxConta) {
 		this.auxConta = auxConta;
+	}
+
+	public ProveedoresEntity getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(ProveedoresEntity proveedor) {
+		this.proveedor = proveedor;
 	}
 
 }

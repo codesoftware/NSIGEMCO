@@ -107,6 +107,10 @@
 								<h:outputText value="#{item.nombre}" />
 							</p:column>
 						</p:autoComplete>
+						<p:outputLabel value="Proveedor"></p:outputLabel>
+						<p:autoComplete id="inputAutCProv" value="#{generarProcImportacionBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+						</p:autoComplete>
 						<f:facet name="footer">
 							<p:commandButton value="INGRESAR DETALLE GASTO" actionListener="#{registroGastosBean.insertarDetalleGasto}" update=":tablaGastos"></p:commandButton>
 						</f:facet>
@@ -141,23 +145,13 @@
 						</tr>
 						<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
 							<tr>
-								<td>
-									<p:outputLabel value="#{item.descr}"></p:outputLabel>
-								</td>
-								<td>
-									<p:outputLabel value="#{item.valor}">
+								<td><p:outputLabel value="#{item.descr}"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.valor}">
 										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-									</p:outputLabel>
-								</td>
-								<td>
-									<p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel>
-								</td>
-								<td>
-									<p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel>
-								</td>
-								<td>
-									<p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel>
-								</td>
+									</p:outputLabel></td>
+								<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
 							</tr>
 						</ui:repeat>
 					</table>
