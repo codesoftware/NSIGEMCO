@@ -27,12 +27,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="numeroFactura" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="plazo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="porcRetencion" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="proveedor" type="{http://facturacion.servicio.codesoftware.com.co/}proveedoresEntity" minOccurs="0"/>
  *         &lt;element name="rutaImagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="sede" type="{http://facturacion.servicio.codesoftware.com.co/}sedeEntity" minOccurs="0"/>
  *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="valorFacura" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorIva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="valorProductos" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorRetencion" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
@@ -52,12 +54,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "id",
     "numeroFactura",
     "plazo",
+    "porcRetencion",
     "proveedor",
     "rutaImagen",
     "sede",
     "usuario",
     "valorFacura",
     "valorIva",
+    "valorProductos",
     "valorRetencion"
 })
 public class FacturaCompraTmpEntity
@@ -75,12 +79,14 @@ public class FacturaCompraTmpEntity
     protected Integer id;
     protected String numeroFactura;
     protected Integer plazo;
+    protected BigDecimal porcRetencion;
     protected ProveedoresEntity proveedor;
     protected String rutaImagen;
     protected SedeEntity sede;
     protected Integer usuario;
     protected BigDecimal valorFacura;
     protected BigDecimal valorIva;
+    protected BigDecimal valorProductos;
     protected BigDecimal valorRetencion;
 
     /**
@@ -276,6 +282,30 @@ public class FacturaCompraTmpEntity
     }
 
     /**
+     * Obtiene el valor de la propiedad porcRetencion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getPorcRetencion() {
+        return porcRetencion;
+    }
+
+    /**
+     * Define el valor de la propiedad porcRetencion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setPorcRetencion(BigDecimal value) {
+        this.porcRetencion = value;
+    }
+
+    /**
      * Obtiene el valor de la propiedad proveedor.
      * 
      * @return
@@ -417,6 +447,30 @@ public class FacturaCompraTmpEntity
      */
     public void setValorIva(BigDecimal value) {
         this.valorIva = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad valorProductos.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getValorProductos() {
+        return valorProductos;
+    }
+
+    /**
+     * Define el valor de la propiedad valorProductos.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setValorProductos(BigDecimal value) {
+        this.valorProductos = value;
     }
 
     /**

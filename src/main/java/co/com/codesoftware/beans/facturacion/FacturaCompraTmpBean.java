@@ -157,6 +157,12 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			sede.setId(this.idSede);
 			this.facturaCompra.setSede(sede);
 		}
+		if (proveedor.getDcredito() != null) {
+			this.facturaCompra.setPlazo(proveedor.getDcredito());
+		}
+		if (proveedor.getPorcRetencion() != null) {
+			this.facturaCompra.setPorcRetencion(proveedor.getPorcRetencion());
+		}
 	}
 
 	/**
@@ -223,6 +229,11 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void ajaxCarga() {
 	}
 
+	/**
+	 * Mmetodo que setea el proveedor de una entidad a otra
+	 * 
+	 * @param objeto
+	 */
 	public void seteaProveedor(co.com.codesoftware.servicio.facturacion.ProveedoresEntity objeto) {
 		try {
 			this.proveedor = new ProveedoresEntity();
@@ -242,6 +253,65 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * metodo que llama al procedimiento almacenado de factura de compra
+	 */
+	public void terminaTransaccion() {
+		if (validaDatos()) {
+			String mensaje = logica.ejecutaProcedimientoFactCompra(this.facturaCompra.getId());
+			if(mensaje.startsWith("Error")){
+				messageBean(mensaje, ErrorEnum.ERROR);
+			}else{
+				messageBean(mensaje, ErrorEnum.SUCCESS);
+			}
+		}
+
+	}
+
+	/**
+	 * metodo que valida obligatoriedad de los datos
+	 * 
+	 * @return
+	 */
+	public boolean validaDatos() {
+		autoGuardado();
+		if (this.fechaFact == null) {
+			messageBean("Fecha de factura no puede ir vacio", ErrorEnum.ERROR);
+			return false;
+
+		}
+		if (this.fechaRec == null) {
+			messageBean("Fecha de recepción no puede ir vacio", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.proveedor.getDcredito() == null || this.proveedor.getDcredito() == 0) {
+			messageBean("Plazo no puede ir vacio ni puede ser 0 ", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.proveedor.getPorcRetencion() == null) {
+			messageBean("Porcentaje retención no puede ir nulo ", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.listaProductos == null || this.listaProductos.size() < 1) {
+			messageBean("debe añadir por lo menos un producto ", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.facturaCompra.getNumeroFactura() == null
+				|| "".equalsIgnoreCase(this.facturaCompra.getNumeroFactura())) {
+			messageBean("debe ingresar el número de factura ", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.facturaCompra.getValorFacura() == null || this.facturaCompra.getValorFacura() == new BigDecimal(0)) {
+			messageBean("debe ingresar el valor de factura ", ErrorEnum.ERROR);
+			return false;
+		}
+		if (this.facturaCompra.getSede() == null) {
+			messageBean("debe ingresar la sede ", ErrorEnum.ERROR);
+			return false;
+		}
+		return true;
 	}
 
 	@Override

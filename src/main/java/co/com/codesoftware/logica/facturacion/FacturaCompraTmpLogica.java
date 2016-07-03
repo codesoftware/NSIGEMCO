@@ -46,14 +46,16 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
-	
+
 	/**
 	 * metodo que inserta los productos de facturas de compra
+	 * 
 	 * @param productos
 	 * @param idFactura
 	 * @return
 	 */
-	public List<ProdFacCompraTmpEntity> insertaProductosFactCompra(List<ProdFacCompraTmpEntity> productos,Integer idFactura){
+	public List<ProdFacCompraTmpEntity> insertaProductosFactCompra(List<ProdFacCompraTmpEntity> productos,
+			Integer idFactura) {
 		List<ProdFacCompraTmpEntity> rta = null;
 		try {
 			rta = conexionWSFacturacion().getPortFact().insertarProdFacturasCompraTmp(productos, idFactura);
@@ -103,7 +105,7 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 			ProdFacCompraTmpEntity idProducto, Integer cantidad, BigDecimal porcentajeIva, BigDecimal precioUnidad) {
 		List<ProdFacCompraTmpEntity> respuesta = new ArrayList<>();
 		try {
-			if (idProducto != null && idProducto.getProducto()!= null) {
+			if (idProducto != null && idProducto.getProducto() != null) {
 				for (int i = 0; i < lista.size(); i++) {
 					if (lista.get(i).getProducto().getCodigoExt()
 							.equalsIgnoreCase(idProducto.getProducto().getCodigoExt())) {
@@ -127,46 +129,52 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 		return respuesta;
 
 	}
+
 	/**
 	 * metodo que consulta los productos simple
+	 * 
 	 * @return
 	 */
-	public List<ProductoSimpleEntity> consultaProductos(){
-		List<ProductoSimpleEntity>  respuesta = null;
+	public List<ProductoSimpleEntity> consultaProductos() {
+		List<ProductoSimpleEntity> respuesta = null;
 		try {
 			ProductosLogica objLogica = new ProductosLogica();
-			respuesta  = objLogica.consultaProdSimple();
-			
+			respuesta = objLogica.consultaProdSimple();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return respuesta;
 	}
-	
+
 	/**
 	 * metodo que consulta las facturas de compra por criteriosS
+	 * 
 	 * @param estado
 	 * @param idSede
 	 * @param fechaInicial
 	 * @param fechaFinal
 	 * @return
 	 */
-	public List<FacturaCompraTmpEntity> consultaFacturasXCriterio(String estado,Integer idSede,Date fechaInicial, Date fechaFinal){
+	public List<FacturaCompraTmpEntity> consultaFacturasXCriterio(String estado, Integer idSede, Date fechaInicial,
+			Date fechaFinal) {
 		List<FacturaCompraTmpEntity> respuesta = null;
 		try {
-			respuesta = conexionWSFacturacion().getPortFact().obtenerFacturasCompraTmp(estado, Utilitites.dateToXMLGC(fechaInicial), Utilitites.dateToXMLGC(fechaFinal), idSede);	
+			respuesta = conexionWSFacturacion().getPortFact().obtenerFacturasCompraTmp(estado,
+					Utilitites.dateToXMLGC(fechaInicial), Utilitites.dateToXMLGC(fechaFinal), idSede);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return respuesta;
 	}
-	
+
 	/**
-	 * metodo que consulta la factura de compra 
+	 * metodo que consulta la factura de compra
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public FacturaCompraTmpEntity consultaFacturaID(Integer id){
+	public FacturaCompraTmpEntity consultaFacturaID(Integer id) {
 		FacturaCompraTmpEntity entidad = new FacturaCompraTmpEntity();
 		try {
 			entidad = conexionWSFacturacion().getPortFact().obtenerFactTempCompraXId(id);
@@ -175,18 +183,34 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 		}
 		return entidad;
 	}
-	
+
 	/**
 	 * consulta productos de facura de compra temporal
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public List<ProdFacCompraTmpEntity> consultaProductosFacturaId(Integer id){
+	public List<ProdFacCompraTmpEntity> consultaProductosFacturaId(Integer id) {
 		List<ProdFacCompraTmpEntity> respuesta = new ArrayList<>();
 		try {
 			respuesta = conexionWSFacturacion().getPortFact().obtenerProdFacturasCompraTmp(id);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return respuesta;
+	}
+
+	/**
+	 * metodo que llama el procedimiento almacenado de facturacion de compra temporal
+	 * @return
+	 */
+	public String ejecutaProcedimientoFactCompra(Integer factFact){
+		String respuesta = "OK";
+		try {
+			respuesta= conexionWSFacturacion().getPortFact().llamaProcedimientoFacturaTMP(factFact);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
 		}
 		return respuesta;
 	}
