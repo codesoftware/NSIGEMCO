@@ -108,8 +108,14 @@
 							</p:column>
 						</p:autoComplete>
 						<p:outputLabel value="Proveedor"></p:outputLabel>
-						<p:autoComplete id="inputAutCProv" value="#{generarProcImportacionBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
 							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+							<p:column>
+								<h:outputText value="#{item.nit}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{item.nombre}" />
+							</p:column>
 						</p:autoComplete>
 						<f:facet name="footer">
 							<p:commandButton value="INGRESAR DETALLE GASTO" actionListener="#{registroGastosBean.insertarDetalleGasto}" update=":tablaGastos"></p:commandButton>

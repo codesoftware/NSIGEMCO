@@ -130,6 +130,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			objEntity.setIdGasto(this.gastoSelected.getId());
 			objEntity.setIdTius(objetoSesion.getId());
 			objEntity.setValor(detValorGasto);
+			objEntity.setIdProveedor(this.proveedor.getId());
 			
 			co.com.codesoftware.servicio.importacion.AuxContableEntity aux = objEntity.getIdAuxconta();
 			if(aux == null){
