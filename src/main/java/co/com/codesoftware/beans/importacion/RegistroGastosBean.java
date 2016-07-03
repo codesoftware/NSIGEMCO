@@ -64,10 +64,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			} else if (this.valorGasto == null || this.valorGasto.compareTo(new BigDecimal(0)) <= 0) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("El valor del gasto debe ser mayor a cero");
-			} else if (this.auxContable == null) {
-				this.setEnumer(ErrorEnum.ERROR);
-				this.messageBean("El campo auxiliar contable no puede ser vacio ");
-			} else {
+			}  else {
 				GastoImpoEntity objEntity = new GastoImpoEntity();
 				objEntity.setDescrip(descripGasto);
 				XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(fechaGasto);

@@ -52,9 +52,9 @@
 							<p:outputLabel value="Proceso Tasas de Conversion" />
 						</f:facet>
 						<p:outputLabel value="Valor TRM:"></p:outputLabel>
-						<p:inputText value="#{cargueProdImporBean.trm}"></p:inputText>
+						<pe:inputNumber value="#{cargueProdImporBean.trm}" symbol="$" decimalPlaces="2"></pe:inputNumber>
 						<p:outputLabel value="Valor Tasa Promedio:"></p:outputLabel>
-						<p:inputText value="#{cargueProdImporBean.tazaPromedio}"></p:inputText>
+						<pe:inputNumber value="#{cargueProdImporBean.tazaPromedio}" symbol="$" decimalPlaces="2"></pe:inputNumber>
 						<f:facet name="footer">
 							<p:commandButton value="INSERTAR" actionListener="#{cargueProdImporBean.adicionaTazasDolar}" update=":formTablaProductos:tablaProductos,:formPrinc"></p:commandButton>
 						</f:facet>
@@ -123,7 +123,7 @@
 								<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
 							</p:outputLabel>
 						</p:column>
-						<p:column headerText="Selecciona">
+						<p:column headerText="Selecciona" exportable="false">
 							<p:commandButton value="add." action="#{cargueProdImporBean.seleccionaProd(prod)}" update=":formInsertarProd"></p:commandButton>
 						</p:column>
 					</p:dataTable>

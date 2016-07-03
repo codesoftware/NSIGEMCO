@@ -77,8 +77,6 @@
 						<p:inputText value="#{registroGastosBean.descripGasto}"></p:inputText>
 						<p:outputLabel value="Valor Gasto (Pesos):"></p:outputLabel>
 						<pe:inputNumber value="#{registroGastosBean.valorGasto}" symbol="$" decimalPlaces="2"></pe:inputNumber>
-						<p:outputLabel value="Cuenta:"></p:outputLabel>
-
 						<f:facet name="footer">
 							<p:commandButton value="INGRESAR GASTO" actionListener="#{registroGastosBean.insertarGasto}" update=":tablaGastos"></p:commandButton>
 						</f:facet>
