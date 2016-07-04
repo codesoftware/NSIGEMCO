@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fechaRegistro" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idProveedor" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="valorGasto" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
@@ -41,6 +42,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "fechaRegistro",
     "id",
     "idImpo",
+    "idProveedor",
     "idTius",
     "valorGasto"
 })
@@ -53,6 +55,7 @@ public class GastoImpoEntity {
     protected XMLGregorianCalendar fechaRegistro;
     protected Integer id;
     protected Integer idImpo;
+    protected Integer idProveedor;
     protected Integer idTius;
     protected BigDecimal valorGasto;
 
@@ -174,6 +177,30 @@ public class GastoImpoEntity {
      */
     public void setIdImpo(Integer value) {
         this.idImpo = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idProveedor.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdProveedor() {
+        return idProveedor;
+    }
+
+    /**
+     * Define el valor de la propiedad idProveedor.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdProveedor(Integer value) {
+        this.idProveedor = value;
     }
 
     /**

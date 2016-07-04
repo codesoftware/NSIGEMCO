@@ -16,6 +16,10 @@
 							rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
 							<f:facet name="header">
 							CONSULTA GENERAL DE PRODUCTOS
+							<h:commandLink>
+								<p:graphicImage name="/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
+							</h:commandLink>
 						</f:facet>
 							<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
 								<h:outputText value="#{prod.codigo}"></h:outputText>
@@ -35,7 +39,7 @@
 							<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
 								<h:outputText value="#{prod.codigoBarras}"></h:outputText>
 							</p:column>
-							<p:column headerText="ACCION">
+							<p:column headerText="ACCION" exportable="false">
 								<p:commandButton actionListener="#{consGeneralProductosBean.seleccionaProducto(prod)}" value="ADD" oncomplete="PF('dialogAccion').show();"></p:commandButton>
 							</p:column>
 						</p:dataTable>

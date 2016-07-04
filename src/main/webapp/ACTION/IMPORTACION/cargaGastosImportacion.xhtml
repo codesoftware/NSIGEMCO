@@ -77,6 +77,16 @@
 						<p:inputText value="#{registroGastosBean.descripGasto}"></p:inputText>
 						<p:outputLabel value="Valor Gasto (Pesos):"></p:outputLabel>
 						<pe:inputNumber value="#{registroGastosBean.valorGasto}" symbol="$" decimalPlaces="2"></pe:inputNumber>
+						<p:outputLabel value="Proveedor"></p:outputLabel>
+						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+							<p:column>
+								<h:outputText value="#{item.nit}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{item.nombre}" />
+							</p:column>
+						</p:autoComplete>
 						<f:facet name="footer">
 							<p:commandButton value="INGRESAR GASTO" actionListener="#{registroGastosBean.insertarGasto}" update=":tablaGastos"></p:commandButton>
 						</f:facet>
@@ -100,16 +110,6 @@
 							completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
 							<p:column>
 								<h:outputText value="#{item.codigo}" />
-							</p:column>
-							<p:column>
-								<h:outputText value="#{item.nombre}" />
-							</p:column>
-						</p:autoComplete>
-						<p:outputLabel value="Proveedor"></p:outputLabel>
-						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
-							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
-							<p:column>
-								<h:outputText value="#{item.nit}" />
 							</p:column>
 							<p:column>
 								<h:outputText value="#{item.nombre}" />

@@ -64,7 +64,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			} else if (this.valorGasto == null || this.valorGasto.compareTo(new BigDecimal(0)) <= 0) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("El valor del gasto debe ser mayor a cero");
-			}  else {
+			} else if( this.proveedor == null ){
+				messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);				
+			}else {
 				GastoImpoEntity objEntity = new GastoImpoEntity();
 				objEntity.setDescrip(descripGasto);
 				XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(fechaGasto);
@@ -72,6 +74,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 				objEntity.setIdImpo(this.importacion.getId());
 				objEntity.setIdTius(objetoSesion.getId());
 				objEntity.setValorGasto(valorGasto);
+				objEntity.setIdProveedor(this.proveedor.getId());
 				String valida = objLogica.insertaGastoImportacion(objEntity);
 				if (valida.toUpperCase().contains("OK")) {
 					this.setEnumer(ErrorEnum.SUCCESS);
@@ -127,7 +130,6 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			objEntity.setIdGasto(this.gastoSelected.getId());
 			objEntity.setIdTius(objetoSesion.getId());
 			objEntity.setValor(detValorGasto);
-			objEntity.setIdProveedor(this.proveedor.getId());
 			
 			co.com.codesoftware.servicio.importacion.AuxContableEntity aux = objEntity.getIdAuxconta();
 			if(aux == null){
