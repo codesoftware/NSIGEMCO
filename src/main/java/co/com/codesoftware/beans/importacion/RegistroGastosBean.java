@@ -61,10 +61,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			} else if (this.fechaGasto == null) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("La fecha en la cual realizo el gasto no puede ser nula");
-			} else if (this.valorGasto == null || this.valorGasto.compareTo(new BigDecimal(0)) <= 0) {
-				this.setEnumer(ErrorEnum.ERROR);
-				this.messageBean("El valor del gasto debe ser mayor a cero");
-			} else if( this.proveedor == null ){
+			}  else if( this.proveedor == null ){
 				messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);				
 			}else {
 				GastoImpoEntity objEntity = new GastoImpoEntity();
@@ -73,7 +70,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 				objEntity.setFecha(fecha);
 				objEntity.setIdImpo(this.importacion.getId());
 				objEntity.setIdTius(objetoSesion.getId());
-				objEntity.setValorGasto(valorGasto);
+				objEntity.setValorGasto(new BigDecimal(0));
 				co.com.codesoftware.servicio.importacion.ProveedoresEntity auxProv = new co.com.codesoftware.servicio.importacion.ProveedoresEntity();
 				auxProv.setId(this.proveedor.getId());
 				objEntity.setProveedor(auxProv); 
@@ -122,9 +119,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 		} else if (this.detAuxContable == null) {
 			this.setEnumer(ErrorEnum.ERROR);
 			this.messageBean("El campo auxiliar contable no puede ser vacio ");
-		} else if( this.proveedor == null ){
-			messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);
-		}else {
+		} else {
 			DetalleGastoEntity objEntity = new DetalleGastoEntity();
 			objEntity.setDescr(this.detDescripGasto);
 			XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(detFechaGasto);

@@ -24,11 +24,13 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ObtenerAsientoContable_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerAsientoContable");
     private final static QName _ObtenerAuxContableXIdResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerAuxContableXIdResponse");
     private final static QName _ObtenerSubCuentaXCuenta_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerSubCuentaXCuenta");
     private final static QName _ObtenerAuxContableXCritResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerAuxContableXCritResponse");
     private final static QName _ObtenerGruposXClaseResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerGruposXClaseResponse");
     private final static QName _InsertaAuxiliarCont_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "insertaAuxiliarCont");
+    private final static QName _ObtenerAsientoContableResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerAsientoContableResponse");
     private final static QName _ObtenerSubCuentaXCuentaResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerSubCuentaXCuentaResponse");
     private final static QName _ObtenerGruposXClase_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerGruposXClase");
     private final static QName _ObtenerClasesResponse_QNAME = new QName("http://contabilidad.servicio.codesoftware.com.co/", "obtenerClasesResponse");
@@ -137,6 +139,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerAsientoContableResponse }
+     * 
+     */
+    public ObtenerAsientoContableResponse createObtenerAsientoContableResponse() {
+        return new ObtenerAsientoContableResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerSubCuentaXCuentaResponse }
      * 
      */
@@ -150,6 +160,14 @@ public class ObjectFactory {
      */
     public ObtenerAuxContableXIdResponse createObtenerAuxContableXIdResponse() {
         return new ObtenerAuxContableXIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerAsientoContable }
+     * 
+     */
+    public ObtenerAsientoContable createObtenerAsientoContable() {
+        return new ObtenerAsientoContable();
     }
 
     /**
@@ -193,6 +211,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MoviContableEntity }
+     * 
+     */
+    public MoviContableEntity createMoviContableEntity() {
+        return new MoviContableEntity();
+    }
+
+    /**
+     * Create an instance of {@link TipoDocumentoEntity }
+     * 
+     */
+    public TipoDocumentoEntity createTipoDocumentoEntity() {
+        return new TipoDocumentoEntity();
+    }
+
+    /**
      * Create an instance of {@link CuentaEntity }
      * 
      */
@@ -214,6 +248,15 @@ public class ObjectFactory {
      */
     public ClaseEntity createClaseEntity() {
         return new ClaseEntity();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerAsientoContable }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://contabilidad.servicio.codesoftware.com.co/", name = "obtenerAsientoContable")
+    public JAXBElement<ObtenerAsientoContable> createObtenerAsientoContable(ObtenerAsientoContable value) {
+        return new JAXBElement<ObtenerAsientoContable>(_ObtenerAsientoContable_QNAME, ObtenerAsientoContable.class, null, value);
     }
 
     /**
@@ -259,6 +302,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://contabilidad.servicio.codesoftware.com.co/", name = "insertaAuxiliarCont")
     public JAXBElement<InsertaAuxiliarCont> createInsertaAuxiliarCont(InsertaAuxiliarCont value) {
         return new JAXBElement<InsertaAuxiliarCont>(_InsertaAuxiliarCont_QNAME, InsertaAuxiliarCont.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerAsientoContableResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://contabilidad.servicio.codesoftware.com.co/", name = "obtenerAsientoContableResponse")
+    public JAXBElement<ObtenerAsientoContableResponse> createObtenerAsientoContableResponse(ObtenerAsientoContableResponse value) {
+        return new JAXBElement<ObtenerAsientoContableResponse>(_ObtenerAsientoContableResponse_QNAME, ObtenerAsientoContableResponse.class, null, value);
     }
 
     /**

@@ -75,8 +75,7 @@
 						<p:calendar value="#{registroGastosBean.fechaGasto}" navigator="true" pattern="dd/MM/yyyy" mask="true" showOn="button" yearRange="c-100:c+100"></p:calendar>
 						<p:outputLabel value="Descripcion Gasto"></p:outputLabel>
 						<p:inputText value="#{registroGastosBean.descripGasto}"></p:inputText>
-						<p:outputLabel value="Valor Gasto (Pesos):"></p:outputLabel>
-						<pe:inputNumber value="#{registroGastosBean.valorGasto}" symbol="$" decimalPlaces="2"></pe:inputNumber>
+						
 						<p:outputLabel value="Proveedor"></p:outputLabel>
 						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
 							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">

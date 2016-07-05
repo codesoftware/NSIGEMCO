@@ -6,6 +6,7 @@ import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
 import co.com.codesoftware.servicio.contabilidad.ClaseEntity;
 import co.com.codesoftware.servicio.contabilidad.CuentaEntity;
 import co.com.codesoftware.servicio.contabilidad.GrupoEntity;
+import co.com.codesoftware.servicio.contabilidad.MoviContableEntity;
 import co.com.codesoftware.servicio.contabilidad.SubCuentaEntity;
 import co.com.codesoftware.utilities.WSGeneralInterface;
 
@@ -120,5 +121,18 @@ public class ContabilidadLogic implements WSGeneralInterface {
 			e.printStackTrace();
 		}
 		return aux;
+	}
+	/**
+	 * Funcion con la cual obtengo el asiento contable de una transacion 
+	 * @return
+	 */
+	public List<MoviContableEntity> obtenerAsientoContable(Integer idTrans){
+		List<MoviContableEntity> rta = null;
+		try {
+			rta = conexionWSContabilidad().getPortContabilidad().obtenerAsientoContable(idTrans);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
 	}
 }

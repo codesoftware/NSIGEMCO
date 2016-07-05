@@ -15,6 +15,7 @@ import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.logica.importacion.ImportacionLogica;
 import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
 import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
+import co.com.codesoftware.servicio.contabilidad.MoviContableEntity;
 import co.com.codesoftware.servicio.importacion.GastoImpoEntity;
 import co.com.codesoftware.servicio.importacion.ImportacionEntity;
 import co.com.codesoftware.servicio.importacion.ProductoImportacionEntity;
@@ -38,21 +39,25 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 	private List<GastoImpoEntity> listaGastos;
 	private AuxContableEntity auxConta;
 	private ProveedoresEntity proveedor;
+	private List<MoviContableEntity> listaMovi;
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		try {
-			this.importacion = (ImportacionEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("importacionSelected");
+			this.importacion = (ImportacionEntity) FacesContext.getCurrentInstance().getExternalContext()
+					.getSessionMap().get("importacionSelected");
 			buscaImportacionXId(this.importacion.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * FUncion con la cual se busca una importacion por su Id
 	 */
-	public void buscaImportacionXId(Integer idImpo){
+	public void buscaImportacionXId(Integer idImpo) {
 		try {
 			ImportacionLogica objLogica = new ImportacionLogica();
 			this.importacion = objLogica.obtenerImportacionXId(idImpo);
@@ -62,7 +67,6 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Funcion con la cual selecciono un auxiliar contable
@@ -92,6 +96,32 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			} else {
 				messageBean(valida, ErrorEnum.ERROR);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Funcion con la cual busco el asiento contable que genero el movimiento de
+	 * inventario
+	 */
+	public void buscarAsientoProductos() {
+		try {
+			ContabilidadLogic objLogic = new ContabilidadLogic();
+			this.listaMovi = objLogic.obtenerAsientoContable(this.importacion.getIdTranCont());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Funcion con la cual busco el asiento contable que genero el movimiento de
+	 * inventario
+	 */
+	public void buscarAsientoGastos(Integer idTrans) {
+		try {
+			ContabilidadLogic objLogic = new ContabilidadLogic();
+			this.listaMovi = objLogic.obtenerAsientoContable(idTrans);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,6 +189,14 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 
 	public void setProveedor(ProveedoresEntity proveedor) {
 		this.proveedor = proveedor;
+	}
+
+	public List<MoviContableEntity> getListaMovi() {
+		return listaMovi;
+	}
+
+	public void setListaMovi(List<MoviContableEntity> listaMovi) {
+		this.listaMovi = listaMovi;
 	}
 
 }

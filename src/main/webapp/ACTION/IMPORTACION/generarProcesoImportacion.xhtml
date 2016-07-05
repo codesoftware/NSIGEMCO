@@ -44,6 +44,8 @@
 							<p:graphicImage name="/images/excel.png" width="24" />
 							<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
 						</h:commandLink>
+						<p:outputLabel value="&nbsp;&nbsp;"></p:outputLabel>
+						<p:commandButton value="ASIENTO" actionListener="#{generarProcImportacionBean.buscarAsientoProductos}" rendered="#{generarProcImportacionBean.importacion.estado == 'X'}" update=":formAsiento" onsuccess="PF('dialogAsiento').show()"></p:commandButton>
 					</f:facet>
 					<p:column headerText="Codigo" filterBy="#{prod.producto.codigoExt}" filterMatchMode="contains" filterStyleClass="filteredCodigoExterno">
 						<p:outputLabel value="#{prod.producto.codigoExt}"></p:outputLabel>
@@ -100,7 +102,8 @@
 						<p:outputLabel value="#{item.proveedor.nit}" ></p:outputLabel>
 					</p:column>
 					<p:column headerText="Ver"> 
-						<p:commandButton value="Ver." actionListener="#{generarProcImportacionBean.seleccionaAuxContable(item.idAuxi)}" onsuccess="PF('dialogAuxiliarCont').show()" update=":formAuxiliar"></p:commandButton>
+						<p:commandButton value="Detalle" actionListener="#{registroGastosBean.buscaDetallesGasto(item.id)}" onsuccess="PF('dialogDetGastos').show()" update=":formTablaDetGastos"></p:commandButton>
+						<p:commandButton value="ASIENTO" actionListener="#{generarProcImportacionBean.buscarAsientoGastos()}" rendered="#{generarProcImportacionBean.importacion.estado == 'X'}" update=":formAsiento" onsuccess="PF('dialogAsiento').show()"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 				<p:dialog widgetVar="dialogAuxiliarCont" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
@@ -130,7 +133,54 @@
 					<p:spacer height="15"></p:spacer>
 					<p:commandButton value="CONFIRMAR" actionListener="#{generarProcImportacionBean.generaImportacion}"></p:commandButton>
 				</p:dialog>
-				
+				<p:dialog widgetVar="dialogDetGastos" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
+				<h:form id="formTablaDetGastos">
+					<table class="table table-bordered">
+						<tr>
+							<td class="alert alert-warning">Descripción</td>
+							<td class="alert alert-warning">Valor</td>
+							<td class="alert alert-warning">Fecha</td>
+							<td class="alert alert-warning">Cod. Cuenta.</td>
+							<td class="alert alert-warning">Cuenta</td>
+						</tr>
+						<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
+							<tr>
+								<td><p:outputLabel value="#{item.descr}"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.valor}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel></td>
+								<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
+								<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
+							</tr>
+						</ui:repeat>
+					</table>
+				</h:form>
+			</p:dialog>
+			<p:dialog widgetVar="dialogAsiento" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Asiento Contable">
+				<h:form id="formAsiento">
+					<p:dataTable value="#{generarProcImportacionBean.listaMovi}" var="item" rows="5" paginator="true" reflow="true">
+						<p:column headerText="CUENTA">
+							<p:outputLabel value="#{item.auxiliar.codigo}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="NOMBRE">
+							<p:outputLabel value="#{item.auxiliar.nombre}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="DEBITO">
+							<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'DEBITO'}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+							<p:outputLabel value="0" rendered="#{item.naturaleza != 'DEBITO'}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="CREDITO">
+							<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'CREDITO'}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+							<p:outputLabel value="0" rendered="#{item.naturaleza != 'CREDITO'}"></p:outputLabel>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>

@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fechaLleg" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idProv" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idTranCont" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idtius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="tazaPromedio" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
@@ -45,6 +46,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "fechaLleg",
     "id",
     "idProv",
+    "idTranCont",
     "idtius",
     "nombre",
     "tazaPromedio",
@@ -61,6 +63,7 @@ public class ImportacionEntity {
     protected XMLGregorianCalendar fechaLleg;
     protected Integer id;
     protected Integer idProv;
+    protected Integer idTranCont;
     protected Integer idtius;
     protected String nombre;
     protected BigDecimal tazaPromedio;
@@ -186,6 +189,30 @@ public class ImportacionEntity {
      */
     public void setIdProv(Integer value) {
         this.idProv = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idTranCont.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdTranCont() {
+        return idTranCont;
+    }
+
+    /**
+     * Define el valor de la propiedad idTranCont.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdTranCont(Integer value) {
+        this.idTranCont = value;
     }
 
     /**
