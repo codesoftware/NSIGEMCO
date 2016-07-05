@@ -89,6 +89,20 @@ public class ImportacionLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
+	/**
+	 * Funcion con la cual obtengo una importacion por medio de su id
+	 * @param idImpo
+	 * @return
+	 */
+	public ImportacionEntity obtenerImportacionXId(Integer idImpo){
+		ImportacionEntity objEntity = null;
+		try {
+			objEntity = conexionWSImportacion().getPortImportacion().obtenerImportacion(idImpo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return objEntity;
+	}
 
 	/**
 	 * Funcion con la cual cargo los productos de la importacion por medio de un

@@ -74,7 +74,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 				objEntity.setIdImpo(this.importacion.getId());
 				objEntity.setIdTius(objetoSesion.getId());
 				objEntity.setValorGasto(valorGasto);
-				objEntity.setIdProveedor(this.proveedor.getId());
+				co.com.codesoftware.servicio.importacion.ProveedoresEntity auxProv = new co.com.codesoftware.servicio.importacion.ProveedoresEntity();
+				auxProv.setId(this.proveedor.getId());
+				objEntity.setProveedor(auxProv); 
 				String valida = objLogica.insertaGastoImportacion(objEntity);
 				if (valida.toUpperCase().contains("OK")) {
 					this.setEnumer(ErrorEnum.SUCCESS);

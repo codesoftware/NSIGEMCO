@@ -51,13 +51,14 @@
 							</p:outputLabel>
 						</p:column>
 						<p:column headerText="Estado">
-							<p:outputLabel value="#{importacion.estado}" />
+							<p:outputLabel value="Cerrado" rendered="#{importacion.estado == 'X'}"/>
+							<p:outputLabel value="Activo" rendered="#{importacion.estado != 'X'}"/>
 						</p:column>
 						<p:column headerText="Agregar Productos">
-							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacion(importacion)}"></p:commandButton>							
+							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacion(importacion)}" rendered="#{importacion.estado != 'X'}"></p:commandButton>							
 						</p:column>
 						<p:column headerText="Agregar Gastos">
-							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacionGastos(importacion)}" ></p:commandButton>							
+							<p:commandButton value="add" action="#{consultaImportacionBean.seleccionaImportacionGastos(importacion)}" rendered="#{importacion.estado != 'X'}"></p:commandButton>							
 						</p:column>
 					</p:dataTable>
 				</h:form>

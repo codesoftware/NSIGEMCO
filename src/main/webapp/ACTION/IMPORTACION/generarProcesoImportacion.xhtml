@@ -23,7 +23,8 @@
 					<p:outputLabel value="Fecha Arrivo"></p:outputLabel>
 					<p:outputLabel value="#{generarProcImportacionBean.importacion.fechaLleg}"></p:outputLabel>
 					<p:outputLabel value="Estado"></p:outputLabel>
-					<p:outputLabel value="#{generarProcImportacionBean.importacion.estado}"></p:outputLabel>
+					<p:outputLabel value="Cerrado" rendered="#{generarProcImportacionBean.importacion.estado == 'X'}"></p:outputLabel>
+					<p:outputLabel value="Abierto" rendered="#{generarProcImportacionBean.importacion.estado != 'X'}"></p:outputLabel>
 					<p:outputLabel value="TRM"></p:outputLabel>
 					<p:outputLabel value="#{generarProcImportacionBean.importacion.trm}">
 						<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
@@ -93,6 +94,11 @@
 					<p:column headerText="FECHA">
 						<p:outputLabel value="#{item.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
 					</p:column>
+					<p:column headerText="PROVEEDOR">
+						<p:outputLabel value="#{item.proveedor.nombre}" ></p:outputLabel>
+						<p:outputLabel value="&nbsp;&nbsp;" ></p:outputLabel>
+						<p:outputLabel value="#{item.proveedor.nit}" ></p:outputLabel>
+					</p:column>
 					<p:column headerText="Ver"> 
 						<p:commandButton value="Ver." actionListener="#{generarProcImportacionBean.seleccionaAuxContable(item.idAuxi)}" onsuccess="PF('dialogAuxiliarCont').show()" update=":formAuxiliar"></p:commandButton>
 					</p:column>
@@ -113,7 +119,7 @@
 					</h:form>
 				</p:dialog>
 				<br/>
-				<p:commandButton value="Generar Importación" styleClass="RedButton" onclick="PF('dialogConfirmacion').show()"></p:commandButton>
+				<p:commandButton value="Generar Importación" styleClass="RedButton" onclick="PF('dialogConfirmacion').show()" rendered="#{generarProcImportacionBean.importacion.estado != 'X'}"></p:commandButton>
 				
 				<p:dialog widgetVar="dialogConfirmacion" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Confirmacion Realizacion Proceso de Importacion">
 					<p>Recuerde que al Confirmar esta operacion realizara todo el proceso de importacion

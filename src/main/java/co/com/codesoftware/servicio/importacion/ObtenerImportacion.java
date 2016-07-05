@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para respuesta complex type.
+ * <p>Clase Java para obtenerImportacion complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="respuesta">
+ * &lt;complexType name="obtenerImportacion">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="provInter" type="{http://importacion.servicio.codesoftware.com.co/}proveedorInterEntity" minOccurs="0"/>
+ *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "respuesta", propOrder = {
-    "provInter"
+@XmlType(name = "obtenerImportacion", propOrder = {
+    "idImpo"
 })
-public class Respuesta {
+public class ObtenerImportacion {
 
-    protected ProveedorInterEntity provInter;
+    protected Integer idImpo;
 
     /**
-     * Obtiene el valor de la propiedad provInter.
+     * Obtiene el valor de la propiedad idImpo.
      * 
      * @return
      *     possible object is
-     *     {@link ProveedorInterEntity }
+     *     {@link Integer }
      *     
      */
-    public ProveedorInterEntity getProvInter() {
-        return provInter;
+    public Integer getIdImpo() {
+        return idImpo;
     }
 
     /**
-     * Define el valor de la propiedad provInter.
+     * Define el valor de la propiedad idImpo.
      * 
      * @param value
      *     allowed object is
-     *     {@link ProveedorInterEntity }
+     *     {@link Integer }
      *     
      */
-    public void setProvInter(ProveedorInterEntity value) {
-        this.provInter = value;
+    public void setIdImpo(Integer value) {
+        this.idImpo = value;
     }
 
 }

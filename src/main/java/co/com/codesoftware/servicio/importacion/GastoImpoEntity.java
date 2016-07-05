@@ -24,8 +24,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fechaRegistro" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="idProveedor" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="proveedor" type="{http://importacion.servicio.codesoftware.com.co/}proveedoresEntity" minOccurs="0"/>
  *         &lt;element name="valorGasto" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -42,8 +42,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "fechaRegistro",
     "id",
     "idImpo",
-    "idProveedor",
     "idTius",
+    "proveedor",
     "valorGasto"
 })
 public class GastoImpoEntity {
@@ -55,8 +55,8 @@ public class GastoImpoEntity {
     protected XMLGregorianCalendar fechaRegistro;
     protected Integer id;
     protected Integer idImpo;
-    protected Integer idProveedor;
     protected Integer idTius;
+    protected ProveedoresEntity proveedor;
     protected BigDecimal valorGasto;
 
     /**
@@ -180,30 +180,6 @@ public class GastoImpoEntity {
     }
 
     /**
-     * Obtiene el valor de la propiedad idProveedor.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getIdProveedor() {
-        return idProveedor;
-    }
-
-    /**
-     * Define el valor de la propiedad idProveedor.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setIdProveedor(Integer value) {
-        this.idProveedor = value;
-    }
-
-    /**
      * Obtiene el valor de la propiedad idTius.
      * 
      * @return
@@ -225,6 +201,30 @@ public class GastoImpoEntity {
      */
     public void setIdTius(Integer value) {
         this.idTius = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad proveedor.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ProveedoresEntity }
+     *     
+     */
+    public ProveedoresEntity getProveedor() {
+        return proveedor;
+    }
+
+    /**
+     * Define el valor de la propiedad proveedor.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ProveedoresEntity }
+     *     
+     */
+    public void setProveedor(ProveedoresEntity value) {
+        this.proveedor = value;
     }
 
     /**

@@ -9,6 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
+
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.logica.importacion.ImportacionLogica;
 import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
@@ -42,7 +44,18 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		try {
 			this.importacion = (ImportacionEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("importacionSelected");
+			buscaImportacionXId(this.importacion.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * FUncion con la cual se busca una importacion por su Id
+	 */
+	public void buscaImportacionXId(Integer idImpo){
+		try {
 			ImportacionLogica objLogica = new ImportacionLogica();
+			this.importacion = objLogica.obtenerImportacionXId(idImpo);
 			this.productosImportacion = objLogica.obtieneProductosImportacion(this.importacion.getId());
 			this.listaGastos = objLogica.obtenerGastosImportacion(this.importacion.getId());
 		} catch (Exception e) {
@@ -50,22 +63,6 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 		}
 	}
 
-	public void messageBean(String message) {
-		switch (this.enumer) {
-		case ERROR:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
-			break;
-		case FATAL:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Error de sistema"));
-			break;
-		case SUCCESS:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok!", message));
-			break;
-
-		default:
-			break;
-		}
-	}
 
 	/**
 	 * Funcion con la cual selecciono un auxiliar contable
@@ -89,6 +86,9 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(), this.objetoSesion.getId());
 			if (valida.toUpperCase().contains("OK")) {
 				messageBean("Importacion realizada Correctamente", ErrorEnum.SUCCESS);
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('dialogConfirmacion').hide()");
+				this.buscaImportacionXId(this.importacion.getId());
 			} else {
 				messageBean(valida, ErrorEnum.ERROR);
 			}

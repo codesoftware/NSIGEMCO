@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para respuestaResponse complex type.
+ * <p>Clase Java para obtenerImportacionResponse complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="respuestaResponse">
+ * &lt;complexType name="obtenerImportacionResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://importacion.servicio.codesoftware.com.co/}importacionEntity" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,23 +27,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "respuestaResponse", propOrder = {
+@XmlType(name = "obtenerImportacionResponse", propOrder = {
     "_return"
 })
-public class RespuestaResponse {
+public class ObtenerImportacionResponse {
 
     @XmlElement(name = "return")
-    protected String _return;
+    protected ImportacionEntity _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link ImportacionEntity }
      *     
      */
-    public String getReturn() {
+    public ImportacionEntity getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class RespuestaResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link ImportacionEntity }
      *     
      */
-    public void setReturn(String value) {
+    public void setReturn(ImportacionEntity value) {
         this._return = value;
     }
 
