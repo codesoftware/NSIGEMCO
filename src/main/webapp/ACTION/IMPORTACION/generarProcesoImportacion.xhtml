@@ -8,6 +8,7 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<br />
 			<h:form id="formPrinc">
 				<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
@@ -106,7 +107,8 @@
 					</p:column>
 					<p:column headerText="Ver">
 						<p:commandButton value="Detalle" actionListener="#{registroGastosBean.buscaDetallesGasto(item.id)}" onsuccess="PF('dialogDetGastos').show()" update=":formTablaDetGastos"></p:commandButton>
-						<p:commandButton value="ASIENTO DET." actionListener="#{generarProcImportacionBean.buscarAsientoGastos(item.idTransCo)}" rendered="#{generarProcImportacionBean.importacion.estado == 'X'}" update=":formAsiento" onsuccess="PF('dialogAsiento').show()"></p:commandButton>
+						<p:commandButton value="ASIENTO DET." actionListener="#{generarProcImportacionBean.buscarAsientoGastos(item.idTransCo)}" rendered="#{generarProcImportacionBean.importacion.estado == 'X'}" update=":formAsiento"
+							onsuccess="PF('dialogAsiento').show()"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</h:form>
@@ -129,11 +131,20 @@
 			<p:commandButton value="Generar Importación" styleClass="RedButton" onclick="PF('dialogConfirmacion').show()" rendered="#{generarProcImportacionBean.importacion.estado != 'X'}"></p:commandButton>
 
 			<p:dialog widgetVar="dialogConfirmacion" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Confirmacion Realizacion Proceso de Importacion">
-				<p>Recuerde que al Confirmar esta operacion realizara todo el proceso de importacion de los productos, contabilización e ingreso de productos al inventario.</p>
-				<p>Si desea confirmar los cambios por favor de click sobre confirmar de lo contrario de click en cancelar.</p>
-				<p:commandButton value="CANCELAR" onclick="PF('dialogConfirmacion').hide()"></p:commandButton>
-				<p:spacer height="15"></p:spacer>
-				<p:commandButton value="CONFIRMAR" actionListener="#{generarProcImportacionBean.generaImportacion}"></p:commandButton>
+				<h:form id="formConfirma">
+					<p>Recuerde que al Confirmar esta operacion realizara todo el proceso de importacion de los productos, contabilización e ingreso de productos al inventario.</p>
+					<p>Si desea confirmar los cambios por favor de click sobre confirmar de lo contrario de click en cancelar.</p>
+					<p>Por favor seleccione la sede a la cual ingresara la mercancia de la importacion.</p>
+					<p>
+						<h:selectOneMenu value="#{generarProcImportacionBean.idSedeImpo}" styleClass="form-control" id="selectSede">
+							<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+							<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+						</h:selectOneMenu>
+					</p>
+					<p:commandButton value="CANCELAR" onclick="PF('dialogConfirmacion').hide()"></p:commandButton>
+					<p:spacer height="15"></p:spacer>
+					<p:commandButton value="CONFIRMAR" actionListener="#{generarProcImportacionBean.generaImportacion}"></p:commandButton>
+				</h:form>
 			</p:dialog>
 			<p:dialog widgetVar="dialogDetGastos" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
 				<h:form id="formTablaDetGastos">

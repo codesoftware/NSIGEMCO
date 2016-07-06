@@ -39,6 +39,7 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 	private AuxContableEntity auxConta;
 	private ProveedoresEntity proveedor;
 	private List<MoviContableEntity> listaMovi;
+	private Integer idSedeImpo;
 
 	@PostConstruct
 	public void init() {
@@ -85,31 +86,38 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 	 */
 	public void generaImportacion() {
 		try {
-			ImportacionLogica objLogica = new ImportacionLogica();
-			String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(), this.objetoSesion.getId());
-			if (valida.toUpperCase().contains("OK")) {
-				messageBean("Importacion realizada Correctamente", ErrorEnum.SUCCESS);
-				RequestContext requestContext = RequestContext.getCurrentInstance();
-				requestContext.execute("PF('dialogConfirmacion').hide()");
-				this.buscaImportacionXId(this.importacion.getId());
-			} else {
-				messageBean(valida, ErrorEnum.ERROR);
+			System.out.println("Esta es la sede "+ this.idSedeImpo);
+			if(this.idSedeImpo == null || this.idSedeImpo == -1){
+				messageBean("Por favor seleccione una sede", ErrorEnum.ERROR);
+			}else{
+				ImportacionLogica objLogica = new ImportacionLogica();
+				String valida = objLogica.ejecutarProcesoImportacion(this.importacion.getId(), this.objetoSesion.getId(), this.idSedeImpo);
+				if (valida.toUpperCase().contains("OK")) {
+					messageBean("Importacion realizada Correctamente", ErrorEnum.SUCCESS);
+					RequestContext requestContext = RequestContext.getCurrentInstance();
+					requestContext.execute("PF('dialogConfirmacion').hide()");
+					this.buscaImportacionXId(this.importacion.getId());
+				} else {
+					messageBean(valida, ErrorEnum.ERROR);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Funcion con la cual selecciono y envio a un producto a revisar su kardex
+	 * 
 	 * @param idDska
 	 */
-	public String seleccionaProdInventario(Integer idDska){
+	public String seleccionaProdInventario(Integer idDska) {
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idProdSelect", idDska);
 			return "/ACTION/PRODUCTOS/promedioPonderado";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null; 
+			return null;
 		}
 	}
 
@@ -125,7 +133,7 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Funcion con la cual busco el asiento contable que genero el movimiento de
 	 * inventario
@@ -209,6 +217,14 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 
 	public void setListaMovi(List<MoviContableEntity> listaMovi) {
 		this.listaMovi = listaMovi;
+	}
+
+	public Integer getIdSedeImpo() {
+		return idSedeImpo;
+	}
+
+	public void setIdSedeImpo(Integer idSedeImpo) {
+		this.idSedeImpo = idSedeImpo;
 	}
 
 }

@@ -240,6 +240,7 @@ public interface ImportacionWS {
     /**
      * 
      * @param idtius
+     * @param idSede
      * @param idImpo
      * @return
      *     returns java.lang.String
@@ -253,6 +254,8 @@ public interface ImportacionWS {
         @WebParam(name = "idtius", targetNamespace = "")
         Integer idtius,
         @WebParam(name = "idImpo", targetNamespace = "")
-        Integer idImpo);
+        Integer idImpo,
+        @WebParam(name = "idSede", targetNamespace = "")
+        Integer idSede);
 
 }

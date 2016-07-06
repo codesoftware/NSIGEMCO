@@ -373,10 +373,10 @@ public class ImportacionLogica implements WSGeneralInterface {
 	 * @param idTius
 	 * @return
 	 */
-	public String ejecutarProcesoImportacion(Integer idImpo, Integer idTius){
+	public String ejecutarProcesoImportacion(Integer idImpo, Integer idTius, Integer idSede){
 		String rta = "";
 		try {
-			rta = conexionWSImportacion().getPortImportacion().ejecutaProcesoImportacion(idTius, idImpo);			
+			rta = conexionWSImportacion().getPortImportacion().ejecutaProcesoImportacion(idTius, idImpo, idSede);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

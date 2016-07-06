@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="idtius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idSede" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,12 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ejecutaProcesoImportacion", propOrder = {
     "idtius",
-    "idImpo"
+    "idImpo",
+    "idSede"
 })
 public class EjecutaProcesoImportacion {
 
     protected Integer idtius;
     protected Integer idImpo;
+    protected Integer idSede;
 
     /**
      * Obtiene el valor de la propiedad idtius.
@@ -82,6 +85,30 @@ public class EjecutaProcesoImportacion {
      */
     public void setIdImpo(Integer value) {
         this.idImpo = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idSede.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdSede() {
+        return idSede;
+    }
+
+    /**
+     * Define el valor de la propiedad idSede.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdSede(Integer value) {
+        this.idSede = value;
     }
 
 }

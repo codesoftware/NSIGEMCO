@@ -33,6 +33,7 @@ public class PromPonderadoBean implements Serializable, GeneralBean {
 	private Date fechaIni;
 	private Date fechaFin;
 	private List<KardexProductoEntity> listaKardex;
+	private List<KardexProductoEntity> listaKardexFiltered;
 	// Existencias totales del producto
 	private Integer existenciasTotales;
 	// Existencias de la sede seleccionada por el usuario
@@ -68,15 +69,16 @@ public class PromPonderadoBean implements Serializable, GeneralBean {
 	 */
 	public void consultaPromedioPonderadoProducto() {
 		try {
-			if(fechaFin == null){
+			if (fechaFin == null) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("Error por favor seleccione una fecha final");
-			}else if(fechaIni == null){
+			} else if (fechaIni == null) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("Error por favor seleccione una fecha Inicial");
-			}else{
+			} else {
 				ProductosLogica objLogica = new ProductosLogica();
-				this.listaKardex = objLogica.buscaKardexProductoXSede(this.producto.getId(), idSede, fechaIni, fechaFin);
+				this.listaKardex = objLogica.buscaKardexProductoXSede(this.producto.getId(), idSede, fechaIni,
+						fechaFin);
 				if (this.listaKardex == null || this.listaKardex.size() == 0) {
 					this.setEnumer(ErrorEnum.ERROR);
 					this.messageBean("La consulta no arrojo ningun resultado");
@@ -196,6 +198,14 @@ public class PromPonderadoBean implements Serializable, GeneralBean {
 
 	public void setIdDska(Integer idDska) {
 		this.idDska = idDska;
+	}
+
+	public List<KardexProductoEntity> getListaKardexFiltered() {
+		return listaKardexFiltered;
+	}
+
+	public void setListaKardexFiltered(List<KardexProductoEntity> listaKardexFiltered) {
+		this.listaKardexFiltered = listaKardexFiltered;
 	}
 
 }

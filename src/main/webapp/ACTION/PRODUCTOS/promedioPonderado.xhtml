@@ -106,7 +106,7 @@
 							<p:column headerText="SEDE" visible="false">
 								<p:outputLabel value="#{kardex.sede.name}" />
 							</p:column>
-							<p:column headerText="USUARIO" visible="false">
+							<p:column headerText="USUARIO" visible="false" filterBy="#{kardex.usuario.persona.nombre}" filterMatchMode="contains">
 								<p:outputLabel value="#{kardex.usuario.persona.nombre}" />
 							</p:column>
 							<p:column headerText="CONS." visible="false">
@@ -116,7 +116,7 @@
 								<p:outputLabel value="#{kardex.fecha}" converter="xmlDatetoDateConverterHour">
 								</p:outputLabel>
 							</p:column>
-							<p:column headerText="MOV. INV.">
+							<p:column headerText="MOV. INV." filterBy="#{kardex.movInv.descripcion}" filterMatchMode="contains">
 								<p:outputLabel value="#{kardex.movInv.descripcion}" />
 							</p:column>
 							<p:column headerText="(ENTRADA) CANTIDAD">
