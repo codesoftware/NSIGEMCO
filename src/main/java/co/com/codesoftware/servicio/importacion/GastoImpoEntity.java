@@ -25,6 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idTransCo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="proveedor" type="{http://importacion.servicio.codesoftware.com.co/}proveedoresEntity" minOccurs="0"/>
  *         &lt;element name="valorGasto" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
@@ -43,6 +44,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "id",
     "idImpo",
     "idTius",
+    "idTransCo",
     "proveedor",
     "valorGasto"
 })
@@ -56,6 +58,7 @@ public class GastoImpoEntity {
     protected Integer id;
     protected Integer idImpo;
     protected Integer idTius;
+    protected Integer idTransCo;
     protected ProveedoresEntity proveedor;
     protected BigDecimal valorGasto;
 
@@ -201,6 +204,30 @@ public class GastoImpoEntity {
      */
     public void setIdTius(Integer value) {
         this.idTius = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idTransCo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdTransCo() {
+        return idTransCo;
+    }
+
+    /**
+     * Define el valor de la propiedad idTransCo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdTransCo(Integer value) {
+        this.idTransCo = value;
     }
 
     /**

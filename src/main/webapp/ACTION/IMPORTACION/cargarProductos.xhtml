@@ -82,7 +82,7 @@
 					<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
 						<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
 							invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{cargueProdImporBean.cargarExcelProductos}"
-							update=":formInexistentes:tablaProdInexistente,:formTablaProductos:tablaProductos" />
+							update=":formInexistentes:tablaProdInexistente,:formTablaProductos:tablaProductos" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
 					</p:panelGrid>
 				</h:form>
 				<p:commandButton value="Borrar productos" actionListener="#{cargueProdImporBean.eliminarProductos}" update=":formTablaProductos:tablaProductos,:formInsertarProd" styleClass="RedButton"></p:commandButton>
@@ -190,6 +190,11 @@
 
 					</div>
 				</h:form>
+			</p:dialog>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+					Realizacion de proceso:
+					<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
 			</p:dialog>
 		</ui:define>
 	</ui:composition>

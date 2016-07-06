@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import co.com.codesoftware.logica.importacion.ImportacionLogica;
 import co.com.codesoftware.servicio.importacion.ImportacionEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
+import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
 
 @ManagedBean
@@ -32,6 +33,9 @@ public class ConsultaImportacionBean implements Serializable, GeneralBean {
 	 */
 	public void consultaImportaciones() {
 		this.listaImportacion = logica.consultaImportacion(this.fechaInicial, this.fechaFinal);
+		if(this.listaImportacion == null || this.listaImportacion.size() == 0){
+			messageBean("La consulta no arrojo ningún resultado", ErrorEnum.ERROR);
+		}
 	}
 
 	/**

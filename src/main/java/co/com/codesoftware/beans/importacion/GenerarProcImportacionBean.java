@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -98,6 +97,19 @@ public class GenerarProcImportacionBean implements Serializable, GeneralBean {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	/**
+	 * Funcion con la cual selecciono y envio a un producto a revisar su kardex
+	 * @param idDska
+	 */
+	public String seleccionaProdInventario(Integer idDska){
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idProdSelect", idDska);
+			return "/ACTION/PRODUCTOS/promedioPonderado";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null; 
 		}
 	}
 
