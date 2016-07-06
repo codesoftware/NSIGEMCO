@@ -348,4 +348,19 @@ public interface FacturacionWS {
         @WebParam(name = "DatosCancelacion", targetNamespace = "")
         CancelaFacturaWrapRequest datosCancelacion);
 
+    /**
+     * 
+     * @param idFacturaCompra
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "llamaProcedimientoValoresFacturaTMP", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMP")
+    @ResponseWrapper(localName = "llamaProcedimientoValoresFacturaTMPResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMPResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPResponse")
+    public String llamaProcedimientoValoresFacturaTMP(
+        @WebParam(name = "idFacturaCompra", targetNamespace = "")
+        Integer idFacturaCompra);
+
 }

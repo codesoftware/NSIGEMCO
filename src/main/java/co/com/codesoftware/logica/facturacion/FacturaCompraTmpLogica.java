@@ -214,4 +214,20 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
+	
+	/**
+	 * metodo que se utiliza para llamar em procedimiento almacenado que muestra los datos de pagos
+	 * @param factFact
+	 * @return
+	 */
+	public String ejecutaProcedimientoVerTotal(Integer factFact){
+		String respuesta = "OK";
+		try {
+			respuesta= conexionWSFacturacion().getPortFact().llamaProcedimientoValoresFacturaTMP(factFact);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return respuesta;
+	}
 }

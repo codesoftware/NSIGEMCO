@@ -32,10 +32,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="rutaImagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="sede" type="{http://facturacion.servicio.codesoftware.com.co/}sedeEntity" minOccurs="0"/>
  *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="valorAjuste" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorFacura" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorIva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorProductos" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorRetencion" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="valorTotalPagar" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -59,10 +61,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "rutaImagen",
     "sede",
     "usuario",
+    "valorAjuste",
     "valorFacura",
     "valorIva",
     "valorProductos",
-    "valorRetencion"
+    "valorRetencion",
+    "valorTotalPagar"
 })
 public class FacturaCompraTmpEntity
     extends RespuestaEntity
@@ -84,10 +88,12 @@ public class FacturaCompraTmpEntity
     protected String rutaImagen;
     protected SedeEntity sede;
     protected Integer usuario;
+    protected BigDecimal valorAjuste;
     protected BigDecimal valorFacura;
     protected BigDecimal valorIva;
     protected BigDecimal valorProductos;
     protected BigDecimal valorRetencion;
+    protected BigDecimal valorTotalPagar;
 
     /**
      * Obtiene el valor de la propiedad ajusteFactura.
@@ -402,6 +408,30 @@ public class FacturaCompraTmpEntity
     }
 
     /**
+     * Obtiene el valor de la propiedad valorAjuste.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getValorAjuste() {
+        return valorAjuste;
+    }
+
+    /**
+     * Define el valor de la propiedad valorAjuste.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setValorAjuste(BigDecimal value) {
+        this.valorAjuste = value;
+    }
+
+    /**
      * Obtiene el valor de la propiedad valorFacura.
      * 
      * @return
@@ -495,6 +525,30 @@ public class FacturaCompraTmpEntity
      */
     public void setValorRetencion(BigDecimal value) {
         this.valorRetencion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad valorTotalPagar.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getValorTotalPagar() {
+        return valorTotalPagar;
+    }
+
+    /**
+     * Define el valor de la propiedad valorTotalPagar.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setValorTotalPagar(BigDecimal value) {
+        this.valorTotalPagar = value;
     }
 
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -31,6 +30,7 @@ import co.com.codesoftware.utilities.Utilitites;
 public class FacturaCompraTmpBean implements GeneralBean {
 
 	private FacturaCompraTmpEntity facturaCompra;
+	private FacturaCompraTmpEntity facturaCompraTmp;
 	private FacturaCompraTmpLogica logica;
 	private ProveedoresEntity proveedor;
 	private ProdFacCompraTmpEntity productoBusqueda;
@@ -55,6 +55,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void init() {
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
+		facturaCompraTmp = new FacturaCompraTmpEntity();
 		this.logica = new FacturaCompraTmpLogica();
 		this.productosConsulta = logica.consultaProductos();
 		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -269,6 +270,20 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		}
 
 	}
+	
+	/**
+	 * metodo que actualiza los datos de pago y luego los consulta
+	 */
+	public void consultaPagos(){
+		String mensaje = logica.ejecutaProcedimientoVerTotal(this.facturaCompra.getId());
+		if(mensaje.startsWith("Error")){
+			messageBean(mensaje, ErrorEnum.ERROR);
+		}else{
+			this.facturaCompraTmp = logica.consultaFacturaID(this.facturaCompra.getId());
+			RequestContext requestContext = RequestContext.getCurrentInstance();
+			requestContext.execute("PF('datosPago').show();");
+		}
+	}
 
 	/**
 	 * metodo que valida obligatoriedad de los datos
@@ -454,5 +469,15 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void setProductosConsultaFiltered(List<ProductoSimpleEntity> productosConsultaFiltered) {
 		this.productosConsultaFiltered = productosConsultaFiltered;
 	}
+
+	public FacturaCompraTmpEntity getFacturaCompraTmp() {
+		return facturaCompraTmp;
+	}
+
+	public void setFacturaCompraTmp(FacturaCompraTmpEntity facturaCompraTmp) {
+		this.facturaCompraTmp = facturaCompraTmp;
+	}
+	
+	
 
 }

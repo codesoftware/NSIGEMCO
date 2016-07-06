@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="auxiliar" type="{http://facturacion.servicio.codesoftware.com.co/}auxContableEntity" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idLlave" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idMovimiento" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "moviContableEntity", propOrder = {
+    "auxiliar",
     "id",
     "idLlave",
     "idMovimiento",
@@ -46,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class MoviContableEntity {
 
+    protected AuxContableEntity auxiliar;
     protected Integer id;
     protected Integer idLlave;
     protected Integer idMovimiento;
@@ -54,6 +57,30 @@ public class MoviContableEntity {
     protected SubCuentaEntity subcuenta;
     protected TipoDocumentoEntity tipoDocumento;
     protected BigDecimal valor;
+
+    /**
+     * Obtiene el valor de la propiedad auxiliar.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AuxContableEntity }
+     *     
+     */
+    public AuxContableEntity getAuxiliar() {
+        return auxiliar;
+    }
+
+    /**
+     * Define el valor de la propiedad auxiliar.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AuxContableEntity }
+     *     
+     */
+    public void setAuxiliar(AuxContableEntity value) {
+        this.auxiliar = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad id.
