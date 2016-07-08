@@ -49,10 +49,13 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	private BigDecimal porcentajeIva;
 	private BigDecimal valorProducto;
 	private Integer idFacturaConsulta;
+	private UsuarioEntity objetoSesion;
 
-	@Override
 	@PostConstruct
 	public void init() {
+
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		System.out.println("Id" + objetoSesion.getId());
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
 		facturaCompraTmp = new FacturaCompraTmpEntity();
@@ -164,6 +167,10 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		if (proveedor.getPorcRetencion() != null) {
 			this.facturaCompra.setPorcRetencion(proveedor.getPorcRetencion());
 		}
+		if(this.objetoSesion!=null){
+			this.facturaCompra.setUsuario(objetoSesion.getId());
+		}
+		
 	}
 
 	/**
@@ -477,6 +484,12 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void setFacturaCompraTmp(FacturaCompraTmpEntity facturaCompraTmp) {
 		this.facturaCompraTmp = facturaCompraTmp;
 	}
+
+	public UsuarioEntity getObjetoSesion() {
+		return objetoSesion;
+	}
+	
+	
 	
 	
 

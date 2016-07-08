@@ -20,6 +20,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;extension base="{http://facturacion.servicio.codesoftware.com.co/}respuestaEntity">
  *       &lt;sequence>
  *         &lt;element name="ajusteFactura" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="cobraRete" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fechaCreacion" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="fechaFacCompra" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -49,6 +50,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "facturaCompraTmpEntity", propOrder = {
     "ajusteFactura",
+    "cobraRete",
     "estado",
     "fechaCreacion",
     "fechaFacCompra",
@@ -73,6 +75,7 @@ public class FacturaCompraTmpEntity
 {
 
     protected String ajusteFactura;
+    protected String cobraRete;
     protected String estado;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fechaCreacion;
@@ -117,6 +120,30 @@ public class FacturaCompraTmpEntity
      */
     public void setAjusteFactura(String value) {
         this.ajusteFactura = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad cobraRete.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCobraRete() {
+        return cobraRete;
+    }
+
+    /**
+     * Define el valor de la propiedad cobraRete.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCobraRete(String value) {
+        this.cobraRete = value;
     }
 
     /**

@@ -29,6 +29,81 @@ public interface FacturacionWS {
 
     /**
      * 
+     * @param idFacturaCompra
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "llamaProcedimientoValoresFacturaTMP", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMP")
+    @ResponseWrapper(localName = "llamaProcedimientoValoresFacturaTMPResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMPResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPResponse")
+    public String llamaProcedimientoValoresFacturaTMP(
+        @WebParam(name = "idFacturaCompra", targetNamespace = "")
+        Integer idFacturaCompra);
+
+    /**
+     * 
+     * @param sede
+     * @return
+     *     returns java.math.BigDecimal
+     */
+    @WebMethod
+    @WebResult(name = "cantidad", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerValorCaja", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.ObtenerValorCaja")
+    @ResponseWrapper(localName = "obtenerValorCajaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.ObtenerValorCajaResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/obtenerValorCajaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/obtenerValorCajaResponse")
+    public BigDecimal obtenerValorCaja(
+        @WebParam(name = "sede", targetNamespace = "")
+        int sede);
+
+    /**
+     * 
+     * @param facturacion
+     * @return
+     *     returns co.com.codesoftware.servicio.facturacion.RespuestaFacturacion
+     */
+    @WebMethod
+    @WebResult(name = "respuestaFacturacion", targetNamespace = "")
+    @RequestWrapper(localName = "facturar", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.Facturar")
+    @ResponseWrapper(localName = "facturarResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarResponse")
+    public RespuestaFacturacion facturar(
+        @WebParam(name = "facturacion", targetNamespace = "")
+        FacturacionGenEntity facturacion);
+
+    /**
+     * 
+     * @param facturacion
+     * @return
+     *     returns co.com.codesoftware.servicio.facturacion.RespuestaFacturacion
+     */
+    @WebMethod
+    @WebResult(name = "respuestaFacturacion", targetNamespace = "")
+    @RequestWrapper(localName = "facturarAvanzada", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarAvanzada")
+    @ResponseWrapper(localName = "facturarAvanzadaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarAvanzadaResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarAvanzadaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarAvanzadaResponse")
+    public RespuestaFacturacion facturarAvanzada(
+        @WebParam(name = "Facturacion", targetNamespace = "")
+        FacturacionGenEntity facturacion);
+
+    /**
+     * 
+     * @param datosCancelacion
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "cancelaFactura", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.CancelaFactura")
+    @ResponseWrapper(localName = "cancelaFacturaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.CancelaFacturaResponse")
+    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/cancelaFacturaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/cancelaFacturaResponse")
+    public String cancelaFactura(
+        @WebParam(name = "DatosCancelacion", targetNamespace = "")
+        CancelaFacturaWrapRequest datosCancelacion);
+
+    /**
+     * 
      * @param idCliente
      * @param fInicial
      * @param idFactura
@@ -285,81 +360,6 @@ public interface FacturacionWS {
     @ResponseWrapper(localName = "llamaProcedimientoFacturaTMPResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoFacturaTMPResponse")
     @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoFacturaTMPRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoFacturaTMPResponse")
     public String llamaProcedimientoFacturaTMP(
-        @WebParam(name = "idFacturaCompra", targetNamespace = "")
-        Integer idFacturaCompra);
-
-    /**
-     * 
-     * @param sede
-     * @return
-     *     returns java.math.BigDecimal
-     */
-    @WebMethod
-    @WebResult(name = "cantidad", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerValorCaja", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.ObtenerValorCaja")
-    @ResponseWrapper(localName = "obtenerValorCajaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.ObtenerValorCajaResponse")
-    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/obtenerValorCajaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/obtenerValorCajaResponse")
-    public BigDecimal obtenerValorCaja(
-        @WebParam(name = "sede", targetNamespace = "")
-        int sede);
-
-    /**
-     * 
-     * @param facturacion
-     * @return
-     *     returns co.com.codesoftware.servicio.facturacion.RespuestaFacturacion
-     */
-    @WebMethod
-    @WebResult(name = "respuestaFacturacion", targetNamespace = "")
-    @RequestWrapper(localName = "facturar", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.Facturar")
-    @ResponseWrapper(localName = "facturarResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarResponse")
-    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarResponse")
-    public RespuestaFacturacion facturar(
-        @WebParam(name = "facturacion", targetNamespace = "")
-        FacturacionGenEntity facturacion);
-
-    /**
-     * 
-     * @param facturacion
-     * @return
-     *     returns co.com.codesoftware.servicio.facturacion.RespuestaFacturacion
-     */
-    @WebMethod
-    @WebResult(name = "respuestaFacturacion", targetNamespace = "")
-    @RequestWrapper(localName = "facturarAvanzada", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarAvanzada")
-    @ResponseWrapper(localName = "facturarAvanzadaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.FacturarAvanzadaResponse")
-    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarAvanzadaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/facturarAvanzadaResponse")
-    public RespuestaFacturacion facturarAvanzada(
-        @WebParam(name = "Facturacion", targetNamespace = "")
-        FacturacionGenEntity facturacion);
-
-    /**
-     * 
-     * @param datosCancelacion
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "cancelaFactura", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.CancelaFactura")
-    @ResponseWrapper(localName = "cancelaFacturaResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.CancelaFacturaResponse")
-    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/cancelaFacturaRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/cancelaFacturaResponse")
-    public String cancelaFactura(
-        @WebParam(name = "DatosCancelacion", targetNamespace = "")
-        CancelaFacturaWrapRequest datosCancelacion);
-
-    /**
-     * 
-     * @param idFacturaCompra
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "llamaProcedimientoValoresFacturaTMP", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMP")
-    @ResponseWrapper(localName = "llamaProcedimientoValoresFacturaTMPResponse", targetNamespace = "http://facturacion.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.facturacion.LlamaProcedimientoValoresFacturaTMPResponse")
-    @Action(input = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPRequest", output = "http://facturacion.servicio.codesoftware.com.co/FacturacionWS/llamaProcedimientoValoresFacturaTMPResponse")
-    public String llamaProcedimientoValoresFacturaTMP(
         @WebParam(name = "idFacturaCompra", targetNamespace = "")
         Integer idFacturaCompra);
 
