@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "ImportacionWS", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", wsdlLocation = "http://localhost:8084/SIGEMCOWS/ImportacionWS?wsdl")
+@WebServiceClient(name = "ImportacionWS", targetNamespace = "http://importacion.servicio.codesoftware.com.co/", wsdlLocation = "http://localhost:8777/SIGEMCOWS/ImportacionWS?wsdl")
 public class ImportacionWS_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class ImportacionWS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8084/SIGEMCOWS/ImportacionWS?wsdl");
+            url = new URL("http://localhost:8777/SIGEMCOWS/ImportacionWS?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

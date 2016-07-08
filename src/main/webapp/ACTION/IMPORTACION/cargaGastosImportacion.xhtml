@@ -114,6 +114,11 @@
 								<h:outputText value="#{item.nombre}" />
 							</p:column>
 						</p:autoComplete>
+						<p:outputLabel value="NATURALEZA:"></p:outputLabel>
+						<h:selectOneMenu value="#{registroGastosBean.naturaleza}" styleClass="form-control" id="selectSede">
+							<f:selectItem itemLabel="DEBITO" itemValue="D"></f:selectItem>
+							<f:selectItem itemLabel="CREDITO" itemValue="C"></f:selectItem>
+						</h:selectOneMenu>
 						<f:facet name="footer">
 							<p:commandButton value="INGRESAR DETALLE GASTO" actionListener="#{registroGastosBean.insertarDetalleGasto}" update=":tablaGastos"></p:commandButton>
 						</f:facet>

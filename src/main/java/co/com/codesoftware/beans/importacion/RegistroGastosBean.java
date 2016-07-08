@@ -45,6 +45,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	private String detDescripGasto;
 	private BigDecimal detValorGasto;
 	private AuxContableEntity detAuxContable;
+	private String naturaleza;
 	private GastoImpoEntity gastoSelected;
 	private List<DetalleGastoEntity> listaDetalleGasto;
 	private ProveedoresEntity proveedor;
@@ -61,9 +62,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			} else if (this.fechaGasto == null) {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("La fecha en la cual realizo el gasto no puede ser nula");
-			}  else if( this.proveedor == null ){
-				messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);				
-			}else {
+			} else if (this.proveedor == null) {
+				messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);
+			} else {
 				GastoImpoEntity objEntity = new GastoImpoEntity();
 				objEntity.setDescrip(descripGasto);
 				XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(fechaGasto);
@@ -73,7 +74,7 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 				objEntity.setValorGasto(new BigDecimal(0));
 				co.com.codesoftware.servicio.importacion.ProveedoresEntity auxProv = new co.com.codesoftware.servicio.importacion.ProveedoresEntity();
 				auxProv.setId(this.proveedor.getId());
-				objEntity.setProveedor(auxProv); 
+				objEntity.setProveedor(auxProv);
 				String valida = objLogica.insertaGastoImportacion(objEntity);
 				if (valida.toUpperCase().contains("OK")) {
 					this.setEnumer(ErrorEnum.SUCCESS);
@@ -127,13 +128,14 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			objEntity.setIdGasto(this.gastoSelected.getId());
 			objEntity.setIdTius(objetoSesion.getId());
 			objEntity.setValor(detValorGasto);
-			
+
 			co.com.codesoftware.servicio.importacion.AuxContableEntity aux = objEntity.getIdAuxconta();
-			if(aux == null){
+			if (aux == null) {
 				aux = new co.com.codesoftware.servicio.importacion.AuxContableEntity();
 				aux.setId(this.detAuxContable.getId());
 			}
 			objEntity.setIdAuxconta(aux);
+			objEntity.setNaturaleza(this.naturaleza);
 			String valida = objLogica.insertaDetalleGasto(objEntity);
 			if (valida.toUpperCase().contains("OK")) {
 				this.setEnumer(ErrorEnum.SUCCESS);
@@ -327,4 +329,13 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	public void setProveedor(ProveedoresEntity proveedor) {
 		this.proveedor = proveedor;
 	}
+
+	public String getNaturaleza() {
+		return naturaleza;
+	}
+
+	public void setNaturaleza(String naturaleza) {
+		this.naturaleza = naturaleza;
+	}
+
 }

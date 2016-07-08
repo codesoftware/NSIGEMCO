@@ -25,6 +25,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="idAuxconta" type="{http://importacion.servicio.codesoftware.com.co/}auxContableEntity" minOccurs="0"/>
  *         &lt;element name="idGasto" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="naturaleza" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -42,6 +43,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "idAuxconta",
     "idGasto",
     "idTius",
+    "naturaleza",
     "valor"
 })
 public class DetalleGastoEntity {
@@ -53,6 +55,7 @@ public class DetalleGastoEntity {
     protected AuxContableEntity idAuxconta;
     protected Integer idGasto;
     protected Integer idTius;
+    protected String naturaleza;
     protected BigDecimal valor;
 
     /**
@@ -197,6 +200,30 @@ public class DetalleGastoEntity {
      */
     public void setIdTius(Integer value) {
         this.idTius = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad naturaleza.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNaturaleza() {
+        return naturaleza;
+    }
+
+    /**
+     * Define el valor de la propiedad naturaleza.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNaturaleza(String value) {
+        this.naturaleza = value;
     }
 
     /**
