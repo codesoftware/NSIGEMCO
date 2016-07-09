@@ -7,6 +7,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Action;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
@@ -27,21 +28,6 @@ public interface ContabilidadWS {
 
     /**
      * 
-     * @param idTransCont
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.MoviContableEntity>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAsientoContable", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAsientoContable")
-    @ResponseWrapper(localName = "obtenerAsientoContableResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAsientoContableResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAsientoContableRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAsientoContableResponse")
-    public List<MoviContableEntity> obtenerAsientoContable(
-        @WebParam(name = "idTransCont", targetNamespace = "")
-        int idTransCont);
-
-    /**
-     * 
      * @return
      *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.ClaseEntity>
      */
@@ -54,63 +40,24 @@ public interface ContabilidadWS {
 
     /**
      * 
-     * @param arg0
+     * @param fechaFi
+     * @param tipoDoc
+     * @param fechaIn
      * @return
-     *     returns co.com.codesoftware.servicio.contabilidad.AuxContableEntity
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.MoviContableEntity>
      */
     @WebMethod
-    @WebResult(name = "auxiliarContable", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAuxContableXId", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXId")
-    @ResponseWrapper(localName = "obtenerAuxContableXIdResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXIdResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXIdRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXIdResponse")
-    public AuxContableEntity obtenerAuxContableXId(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.SubCuentaEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaSubCuentas", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerSubCuentaXCuenta", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerSubCuentaXCuenta")
-    @ResponseWrapper(localName = "obtenerSubCuentaXCuentaResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerSubCuentaXCuentaResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerSubCuentaXCuentaRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerSubCuentaXCuentaResponse")
-    public List<SubCuentaEntity> obtenerSubCuentaXCuenta(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.AuxContableEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaAuxConta", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAuxContableXSubCuenta", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXSubCuenta")
-    @ResponseWrapper(localName = "obtenerAuxContableXSubCuentaResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXSubCuentaResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXSubCuentaRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXSubCuentaResponse")
-    public List<AuxContableEntity> obtenerAuxContableXSubCuenta(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.AuxContableEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaAuxConta", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAuxContableXCrit", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXCrit")
-    @ResponseWrapper(localName = "obtenerAuxContableXCritResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXCritResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXCritRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXCritResponse")
-    public List<AuxContableEntity> obtenerAuxContableXCrit(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+    @WebResult(name = "listaMovimientos", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerMovimientosContables", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerMovimientosContables")
+    @ResponseWrapper(localName = "obtenerMovimientosContablesResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerMovimientosContablesResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerMovimientosContablesRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerMovimientosContablesResponse")
+    public List<MoviContableEntity> obtenerMovimientosContables(
+        @WebParam(name = "fechaIn", targetNamespace = "")
+        XMLGregorianCalendar fechaIn,
+        @WebParam(name = "fechaFi", targetNamespace = "")
+        XMLGregorianCalendar fechaFi,
+        @WebParam(name = "tipoDoc", targetNamespace = "")
+        String tipoDoc);
 
     /**
      * 
@@ -146,6 +93,21 @@ public interface ContabilidadWS {
      * 
      * @param arg0
      * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.SubCuentaEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaSubCuentas", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerSubCuentaXCuenta", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerSubCuentaXCuenta")
+    @ResponseWrapper(localName = "obtenerSubCuentaXCuentaResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerSubCuentaXCuentaResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerSubCuentaXCuentaRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerSubCuentaXCuentaResponse")
+    public List<SubCuentaEntity> obtenerSubCuentaXCuenta(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
      *     returns java.lang.String
      */
     @WebMethod
@@ -156,5 +118,65 @@ public interface ContabilidadWS {
     public String insertaAuxiliarCont(
         @WebParam(name = "arg0", targetNamespace = "")
         AuxContableEntity arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.AuxContableEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaAuxConta", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAuxContableXSubCuenta", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXSubCuenta")
+    @ResponseWrapper(localName = "obtenerAuxContableXSubCuentaResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXSubCuentaResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXSubCuentaRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXSubCuentaResponse")
+    public List<AuxContableEntity> obtenerAuxContableXSubCuenta(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.AuxContableEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaAuxConta", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAuxContableXCrit", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXCrit")
+    @ResponseWrapper(localName = "obtenerAuxContableXCritResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXCritResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXCritRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXCritResponse")
+    public List<AuxContableEntity> obtenerAuxContableXCrit(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns co.com.codesoftware.servicio.contabilidad.AuxContableEntity
+     */
+    @WebMethod
+    @WebResult(name = "auxiliarContable", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAuxContableXId", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXId")
+    @ResponseWrapper(localName = "obtenerAuxContableXIdResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAuxContableXIdResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXIdRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAuxContableXIdResponse")
+    public AuxContableEntity obtenerAuxContableXId(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0);
+
+    /**
+     * 
+     * @param idTransCont
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.MoviContableEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAsientoContable", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAsientoContable")
+    @ResponseWrapper(localName = "obtenerAsientoContableResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerAsientoContableResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAsientoContableRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerAsientoContableResponse")
+    public List<MoviContableEntity> obtenerAsientoContable(
+        @WebParam(name = "idTransCont", targetNamespace = "")
+        int idTransCont);
 
 }

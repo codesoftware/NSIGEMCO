@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -11,26 +11,84 @@
 			<br />
 			<br />
 			<br />
-			<p:panelGrid>
-				<p:panelGrid columns="6">
-					<f:facet name="header">
-					CONSULTA DE MOVIMIENTOS CONTABLES POR TIPO DE DOCUMENTO
-					</f:facet>
-					<p:outputLabel value="FECHA INICIAL: " />
-					<p:inputText value="#{consTipoDocumentoBean.fechaInicial}"></p:inputText>
-					<p:outputLabel value="FECHA FINAL: " />
-					<p:inputText value="#{consTipoDocumentoBean.fechaFinal}"></p:inputText>
-					<p:outputLabel value="TIPO DOCUMENTO: "></p:outputLabel>
-					<h:selectOneMenu value="#{consTipoDocumentoBean.tipoDocumento}" styleClass="form-control" id="selectTipoDoc">
-						<f:selectItem itemLabel="FACTURA DE VENTA" itemValue="fact"></f:selectItem>
-						<f:selectItem itemLabel="FACTURA DE COMPRA" itemValue="fctc"></f:selectItem>
-						<f:selectItem itemLabel="PAGO REMISION" itemValue="pgrm"></f:selectItem>
-						<f:selectItem itemLabel="IMPORTACION" itemValue="impo"></f:selectItem>
-						<f:selectItem itemLabel="GASTO IMPORTACION" itemValue="gaim"></f:selectItem>
-					</h:selectOneMenu>
-					<p:commandButton value="CONSULTAR" styleClass="OrangeButton"></p:commandButton>
-				</p:panelGrid>
-			</p:panelGrid>
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<p:panelGrid>
+						<p:panelGrid styleClass="table table-bordered">
+							<p:row styleClass="alert alert-success" style="text-align: center;">
+								<p:column colspan="6">CONSULTA DE MOVIMIENTOS CONTABLES POR TIPO DE DOCUMENTO</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="FECHA INICIAL: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{consTipoDocumentoBean.fechaInicial}"></p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="FECHA FINAL: " />
+								</p:column>
+								<p:column>
+									<p:inputText value="#{consTipoDocumentoBean.fechaFinal}"></p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="TIPO DOCUMENTO: "></p:outputLabel>
+								</p:column>
+								<p:column>
+									<h:selectOneMenu value="#{consTipoDocumentoBean.tipoDocumento}" styleClass="form-control" id="selectTipoDoc">
+										<f:selectItem itemLabel="FACTURA DE VENTA" itemValue="fact"></f:selectItem>
+										<f:selectItem itemLabel="FACTURA DE COMPRA" itemValue="fctc"></f:selectItem>
+										<f:selectItem itemLabel="PAGO REMISION" itemValue="pgrm"></f:selectItem>
+										<f:selectItem itemLabel="IMPORTACION" itemValue="impo"></f:selectItem>
+										<f:selectItem itemLabel="GASTO IMPORTACION" itemValue="gaim"></f:selectItem>
+									</h:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="6" style="text-align: right;">
+									<p:commandButton actionListener="#{consTipoDocumentoBean.obtenerMovimientosContables}" value="CONSULTAR" styleClass="OrangeButton" update=":formTabla:tableDatos"></p:commandButton>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panelGrid>
+					<br /> <br />
+					<h:form id="formTabla">
+						<p:dataTable value="#{consTipoDocumentoBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20">
+							<f:facet name="header">
+								<h:commandLink>
+									<p:graphicImage name="/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tableDatos" fileName="tablaProductos" />
+								</h:commandLink>
+								<p:outputLabel value="LISTA DE MOVIMIENTOS" />
+							</f:facet>
+							<p:column>
+								<p:outputLabel value="#{item.idMovimiento}"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{item.subcuenta.codigo}"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{item.subcuenta.nombre}"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="IMPORTACION" rendered="#{item.llave == 'impo'}"></p:outputLabel>
+								<p:outputLabel value="GASTO IMPORTACION" rendered="#{item.llave == 'gaim'}"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{item.naturaleza}"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="$ "></p:outputLabel>
+								<p:outputLabel value="#{item.valor}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </body>

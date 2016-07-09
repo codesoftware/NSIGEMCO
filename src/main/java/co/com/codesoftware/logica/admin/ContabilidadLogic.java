@@ -1,6 +1,9 @@
 package co.com.codesoftware.logica.admin;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
 import co.com.codesoftware.servicio.contabilidad.ClaseEntity;
@@ -8,6 +11,7 @@ import co.com.codesoftware.servicio.contabilidad.CuentaEntity;
 import co.com.codesoftware.servicio.contabilidad.GrupoEntity;
 import co.com.codesoftware.servicio.contabilidad.MoviContableEntity;
 import co.com.codesoftware.servicio.contabilidad.SubCuentaEntity;
+import co.com.codesoftware.utilities.Utilitites;
 import co.com.codesoftware.utilities.WSGeneralInterface;
 
 public class ContabilidadLogic implements WSGeneralInterface {
@@ -130,6 +134,24 @@ public class ContabilidadLogic implements WSGeneralInterface {
 		List<MoviContableEntity> rta = null;
 		try {
 			rta = conexionWSContabilidad().getPortContabilidad().obtenerAsientoContable(idTrans);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
+	 * Funcion con el cual se obtienen los movimientos contalbes por medio de parametros
+	 * @param fechaIni
+	 * @param fechaFin
+	 * @param tipoDoc
+	 * @return
+	 */
+	public List<MoviContableEntity> obtenerMovimientosContable(Date fechaIni, Date fechaFin, String tipoDoc){
+		List<MoviContableEntity> rta = null;
+		try {
+			XMLGregorianCalendar fechaI = Utilitites.dateToXMLGC(fechaIni);
+			XMLGregorianCalendar fechaF = Utilitites.dateToXMLGC(fechaFin);
+			rta = conexionWSContabilidad().getPortContabilidad().obtenerMovimientosContables(fechaI, fechaF, tipoDoc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
