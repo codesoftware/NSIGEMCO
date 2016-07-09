@@ -1,0 +1,37 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<br />
+			<br />
+			<p:panelGrid>
+				<p:panelGrid columns="6">
+					<f:facet name="header">
+					CONSULTA DE MOVIMIENTOS CONTABLES POR TIPO DE DOCUMENTO
+					</f:facet>
+					<p:outputLabel value="FECHA INICIAL: " />
+					<p:inputText value="#{consTipoDocumentoBean.fechaInicial}"></p:inputText>
+					<p:outputLabel value="FECHA FINAL: " />
+					<p:inputText value="#{consTipoDocumentoBean.fechaFinal}"></p:inputText>
+					<p:outputLabel value="TIPO DOCUMENTO: "></p:outputLabel>
+					<h:selectOneMenu value="#{consTipoDocumentoBean.tipoDocumento}" styleClass="form-control" id="selectTipoDoc">
+						<f:selectItem itemLabel="FACTURA DE VENTA" itemValue="fact"></f:selectItem>
+						<f:selectItem itemLabel="FACTURA DE COMPRA" itemValue="fctc"></f:selectItem>
+						<f:selectItem itemLabel="PAGO REMISION" itemValue="pgrm"></f:selectItem>
+						<f:selectItem itemLabel="IMPORTACION" itemValue="impo"></f:selectItem>
+						<f:selectItem itemLabel="GASTO IMPORTACION" itemValue="gaim"></f:selectItem>
+					</h:selectOneMenu>
+					<p:commandButton value="CONSULTAR" styleClass="OrangeButton"></p:commandButton>
+				</p:panelGrid>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -250,10 +250,17 @@ public class MenuBean implements Serializable {
 			DefaultMenuItem tercerNivelConsulta = new DefaultMenuItem("Consulta Gral");
 			//tercerNivelConsulta.setCommand("/ACTION/IMPORTACION/adminImportacion.jsf");
 			tercerNivelConsulta.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaClase.jsf");
-
+			
+			DefaultSubMenu segundoNivelDos = new DefaultSubMenu("CONSULTA MV.");
+			DefaultMenuItem tercerNivelConsultaDos = new DefaultMenuItem("POR TIPO DOCUMENTO");
+			tercerNivelConsultaDos.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaMoviContable.jsf");
+			
 			//Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			segundoNivel.addElement(tercerNivelConsulta);
+			
+			segundoNivelDos.addElement(tercerNivelConsultaDos);
+			menuPrincipal.addElement(segundoNivelDos);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
