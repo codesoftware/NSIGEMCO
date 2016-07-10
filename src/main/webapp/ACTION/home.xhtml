@@ -1,13 +1,15 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
 <h:head>
 </h:head>
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
-		<ui:define name="content"> 		
-		Este es el contenido del homeaacccc
+		<ui:define name="content">
+			<br/>
+			<p:growl id="growl" showDetail="true" />
+			<p:chart type="pie" model="#{homeBean.pieModel}" style="width:400px;height:300px" />
+			
 		</ui:define>
 	</ui:composition>
 </body>

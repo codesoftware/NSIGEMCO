@@ -157,4 +157,17 @@ public class ContabilidadLogic implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con la cual inserto una subcuenta en el sistema
+	 * @return
+	 */
+	public String insertaSubCuenta(SubCuentaEntity objEntity){
+		String rta = "";
+		try {
+			rta = conexionWSContabilidad().getPortContabilidad().insertaSubCuenta(objEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 }

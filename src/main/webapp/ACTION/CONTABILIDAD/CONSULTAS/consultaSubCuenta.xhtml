@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -9,6 +9,7 @@
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
 			<br />
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
 			<div class="row">
 				<div class="col-md-3 col-xs-0 col-sm-0"></div>
 				<div class="col-md-6 col-xs-12 col-sm-12">
@@ -51,8 +52,12 @@
 			<div class="row">
 				<div class="col-md-3 col-xs-0 col-sm-0"></div>
 				<div class="col-md-6 col-xs-12 col-sm-12">
+					<h:form id="formTablaSubCuenta">
 					<div class="row">
-						<h3 class="alert alert-warning">Subcuenta</h3>
+						<h3 class="alert alert-warning">
+							Subcuenta
+							<p:commandButton value="Insertar SubCuenta" onclick="PF('dialogInsSbcu').show()" styleClass="OrangeButton"></p:commandButton>
+						</h3>
 						<div class="panel panel-warning" style="max-height: 250px; overflow-y: scroll;">
 							<table class="table table-hover">
 								<tbody>
@@ -66,9 +71,26 @@
 							</table>
 						</div>
 					</div>
+					</h:form>
 				</div>
 				<div class="col-md-3 col-xs-0 col-sm-0"></div>
 			</div>
+			<p:dialog widgetVar="dialogInsSbcu" closeOnEscape="true" header="INSERTAR AUXILIAR" styleClass="modalResponsive" modal="true" responsive="true">
+				<h:form id="formSubCuenta">
+					<p:panelGrid columns="2" styleClass="table">
+						<f:facet name="header">
+							INSERTAR SUBCUENTA
+						</f:facet>
+						<p:outputLabel value="NOMBRE: "></p:outputLabel>
+						<p:inputText value="#{subCuentaBean.subCuenta.nombre}"></p:inputText>
+						<p:outputLabel value="Descripcion: "></p:outputLabel>
+						<p:inputText value="#{subCuentaBean.subCuenta.descripcion}"></p:inputText>
+						<p:outputLabel value="Codigo: "></p:outputLabel>
+						<p:inputText value="#{subCuentaBean.subCuenta.codigo}" maxlength="2"></p:inputText>
+						<p:commandButton value="INSERTAR" actionListener="#{subCuentaBean.insertaSubCuenta}" update=":formTablaSubCuenta" onsuccess="PF('dialogInsSbcu').hide()"></p:commandButton>
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>
