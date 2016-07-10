@@ -382,4 +382,34 @@ public class ImportacionLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con la cual borro un detalle de un gasto
+	 * @param idGasto
+	 * @return
+	 */
+	public String borrarDetalleGasto(Integer idDetGasto){
+		String rta = "";
+		try {
+			rta = conexionWSImportacion().getPortImportacion().eliminarDetalleGasto(idDetGasto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
+	 * Funcion con la cual elimino un gasto de una importacion
+	 * @param idGast
+	 * @return
+	 */
+	public String borrarGasto(Integer idGast){
+		String rta = "";
+		try {
+			rta = conexionWSImportacion().getPortImportacion().eliminarGastoImportacion(idGast);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	
+	
 }

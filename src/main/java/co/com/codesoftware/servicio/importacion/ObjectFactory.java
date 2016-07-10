@@ -27,6 +27,7 @@ public class ObjectFactory {
     private final static QName _InsertarProveedorInternacionalResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertarProveedorInternacionalResponse");
     private final static QName _ObtenerImportacionesResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerImportacionesResponse");
     private final static QName _BorrarProductosImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "borrarProductosImportacion");
+    private final static QName _EliminarGastoImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "eliminarGastoImportacion");
     private final static QName _InsertaImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertaImportacionResponse");
     private final static QName _BorrarProductosImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "borrarProductosImportacionResponse");
     private final static QName _ObtenerDetalleGasto_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerDetalleGasto");
@@ -36,14 +37,17 @@ public class ObjectFactory {
     private final static QName _ObtenerGastosImpo_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerGastosImpo");
     private final static QName _ObtenerImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerImportacion");
     private final static QName _InsertaImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertaImportacion");
+    private final static QName _EliminarDetalleGasto_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "eliminarDetalleGasto");
     private final static QName _InsertarProductoImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertarProductoImportacionResponse");
     private final static QName _ObtenerProveedoresInterResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerProveedoresInterResponse");
     private final static QName _ObtenerDetalleGastoResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerDetalleGastoResponse");
     private final static QName _ObtenerProductosImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerProductosImportacion");
     private final static QName _ObtenerProveedoresInter_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerProveedoresInter");
+    private final static QName _EliminarGastoImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "eliminarGastoImportacionResponse");
     private final static QName _ObtenerProductosImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerProductosImportacionResponse");
     private final static QName _InsertaValorDolaresProdResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertaValorDolaresProdResponse");
     private final static QName _EjecutaProcesoImportacionResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "ejecutaProcesoImportacionResponse");
+    private final static QName _EliminarDetalleGastoResponse_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "eliminarDetalleGastoResponse");
     private final static QName _InsertaGastoImportacion_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertaGastoImportacion");
     private final static QName _InsertarDetalleGasto_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "insertarDetalleGasto");
     private final static QName _ObtenerImportaciones_QNAME = new QName("http://importacion.servicio.codesoftware.com.co/", "obtenerImportaciones");
@@ -82,6 +86,14 @@ public class ObjectFactory {
      */
     public ObtenerProveedoresInterResponse createObtenerProveedoresInterResponse() {
         return new ObtenerProveedoresInterResponse();
+    }
+
+    /**
+     * Create an instance of {@link EliminarDetalleGasto }
+     * 
+     */
+    public EliminarDetalleGasto createEliminarDetalleGasto() {
+        return new EliminarDetalleGasto();
     }
 
     /**
@@ -154,6 +166,14 @@ public class ObjectFactory {
      */
     public BorrarProductosImportacion createBorrarProductosImportacion() {
         return new BorrarProductosImportacion();
+    }
+
+    /**
+     * Create an instance of {@link EliminarGastoImportacion }
+     * 
+     */
+    public EliminarGastoImportacion createEliminarGastoImportacion() {
+        return new EliminarGastoImportacion();
     }
 
     /**
@@ -253,6 +273,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EliminarDetalleGastoResponse }
+     * 
+     */
+    public EliminarDetalleGastoResponse createEliminarDetalleGastoResponse() {
+        return new EliminarDetalleGastoResponse();
+    }
+
+    /**
      * Create an instance of {@link InsertaGastoImportacion }
      * 
      */
@@ -266,6 +294,14 @@ public class ObjectFactory {
      */
     public InsertaValorDolaresProdResponse createInsertaValorDolaresProdResponse() {
         return new InsertaValorDolaresProdResponse();
+    }
+
+    /**
+     * Create an instance of {@link EliminarGastoImportacionResponse }
+     * 
+     */
+    public EliminarGastoImportacionResponse createEliminarGastoImportacionResponse() {
+        return new EliminarGastoImportacionResponse();
     }
 
     /**
@@ -400,6 +436,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarGastoImportacion }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://importacion.servicio.codesoftware.com.co/", name = "eliminarGastoImportacion")
+    public JAXBElement<EliminarGastoImportacion> createEliminarGastoImportacion(EliminarGastoImportacion value) {
+        return new JAXBElement<EliminarGastoImportacion>(_EliminarGastoImportacion_QNAME, EliminarGastoImportacion.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertaImportacionResponse }{@code >}}
      * 
      */
@@ -481,6 +526,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarDetalleGasto }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://importacion.servicio.codesoftware.com.co/", name = "eliminarDetalleGasto")
+    public JAXBElement<EliminarDetalleGasto> createEliminarDetalleGasto(EliminarDetalleGasto value) {
+        return new JAXBElement<EliminarDetalleGasto>(_EliminarDetalleGasto_QNAME, EliminarDetalleGasto.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertarProductoImportacionResponse }{@code >}}
      * 
      */
@@ -526,6 +580,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarGastoImportacionResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://importacion.servicio.codesoftware.com.co/", name = "eliminarGastoImportacionResponse")
+    public JAXBElement<EliminarGastoImportacionResponse> createEliminarGastoImportacionResponse(EliminarGastoImportacionResponse value) {
+        return new JAXBElement<EliminarGastoImportacionResponse>(_EliminarGastoImportacionResponse_QNAME, EliminarGastoImportacionResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosImportacionResponse }{@code >}}
      * 
      */
@@ -550,6 +613,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://importacion.servicio.codesoftware.com.co/", name = "ejecutaProcesoImportacionResponse")
     public JAXBElement<EjecutaProcesoImportacionResponse> createEjecutaProcesoImportacionResponse(EjecutaProcesoImportacionResponse value) {
         return new JAXBElement<EjecutaProcesoImportacionResponse>(_EjecutaProcesoImportacionResponse_QNAME, EjecutaProcesoImportacionResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminarDetalleGastoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://importacion.servicio.codesoftware.com.co/", name = "eliminarDetalleGastoResponse")
+    public JAXBElement<EliminarDetalleGastoResponse> createEliminarDetalleGastoResponse(EliminarDetalleGastoResponse value) {
+        return new JAXBElement<EliminarDetalleGastoResponse>(_EliminarDetalleGastoResponse_QNAME, EliminarDetalleGastoResponse.class, null, value);
     }
 
     /**

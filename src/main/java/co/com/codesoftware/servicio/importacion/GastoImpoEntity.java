@@ -19,6 +19,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="consecutivo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="descrip" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="fechaRegistro" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -38,6 +39,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "gastoImpoEntity", propOrder = {
+    "consecutivo",
     "descrip",
     "fecha",
     "fechaRegistro",
@@ -50,6 +52,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class GastoImpoEntity {
 
+    protected Integer consecutivo;
     protected String descrip;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fecha;
@@ -61,6 +64,30 @@ public class GastoImpoEntity {
     protected Integer idTransCo;
     protected ProveedoresEntity proveedor;
     protected BigDecimal valorGasto;
+
+    /**
+     * Obtiene el valor de la propiedad consecutivo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * Define el valor de la propiedad consecutivo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setConsecutivo(Integer value) {
+        this.consecutivo = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad descrip.

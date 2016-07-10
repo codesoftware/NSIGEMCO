@@ -31,7 +31,7 @@ import co.com.codesoftware.utilities.Utilitites;
 public class RegistroGastosBean implements Serializable, GeneralBean {
 
 	private static final long serialVersionUID = 1L;
-	private UsuarioEntity objetoSesion;
+	private UsuarioEntity objetoSesion;	
 	private ErrorEnum enumer;
 	private ImportacionEntity importacion;
 	private List<GastoImpoEntity> listaGastos;
@@ -49,7 +49,37 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	private GastoImpoEntity gastoSelected;
 	private List<DetalleGastoEntity> listaDetalleGasto;
 	private ProveedoresEntity proveedor;
-
+	
+	/**
+	 * Funcion con la cual limpio el formulario 
+	 */
+	public void limpiaFormularioGasto(){
+		try {
+			this.fechaGasto = null;
+			this.descripGasto = "";
+			this.proveedor = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * FUncion con la cual se borra un gasto
+	 */
+	public void borrarGasto(Integer idGasto){
+		try {
+			ImportacionLogica objLogica = new ImportacionLogica();
+			String valida = objLogica.borrarGasto(idGasto);
+			if("Ok".equalsIgnoreCase(valida)){
+				this.messageBean("Gasto eliminado correctamente", ErrorEnum.SUCCESS);
+				this.listaGastos = objLogica.obtenerGastosImportacion(this.importacion.getId());
+			}else{
+				this.messageBean("Error " + valida + " Recuerde que para eliminar el gasto debe eliminar sus detalles primero", ErrorEnum.ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Funcion con la cual registro un gasto
 	 */
@@ -57,11 +87,9 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 		try {
 			ImportacionLogica objLogica = new ImportacionLogica();
 			if (this.descripGasto == null || "".equalsIgnoreCase(this.descripGasto)) {
-				this.setEnumer(ErrorEnum.ERROR);
-				this.messageBean("El campo descripcion no puede ser vacio");
+				this.messageBean("El campo descripcion no puede ser vacio",ErrorEnum.ERROR);
 			} else if (this.fechaGasto == null) {
-				this.setEnumer(ErrorEnum.ERROR);
-				this.messageBean("La fecha en la cual realizo el gasto no puede ser nula");
+				this.messageBean("La fecha en la cual realizo el gasto no puede ser nula",ErrorEnum.ERROR);
 			} else if (this.proveedor == null) {
 				messageBean("Por Favor Seleccione un Proveedor", ErrorEnum.ERROR);
 			} else {
@@ -77,14 +105,12 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 				objEntity.setProveedor(auxProv);
 				String valida = objLogica.insertaGastoImportacion(objEntity);
 				if (valida.toUpperCase().contains("OK")) {
-					this.setEnumer(ErrorEnum.SUCCESS);
-					this.messageBean(valida);
+					this.messageBean(valida,ErrorEnum.SUCCESS);
 					RequestContext requestContext = RequestContext.getCurrentInstance();
 					requestContext.execute("PF('dialogInsGasto').hide();");
 					this.listaGastos = objLogica.obtenerGastosImportacion(this.importacion.getId());
 				} else {
-					this.setEnumer(ErrorEnum.ERROR);
-					this.messageBean(valida);
+					this.messageBean(valida,ErrorEnum.ERROR);					
 				}
 			}
 		} catch (Exception e) {
@@ -99,6 +125,10 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	 */
 	public void visualizaInsertDetalle(GastoImpoEntity obj) {
 		this.gastoSelected = obj;
+		this.detDescripGasto = "";
+		this.detValorGasto = null;
+		this.detAuxContable = null;
+		this.naturaleza = "D";
 	}
 
 	/**
@@ -109,20 +139,15 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 	public void insertarDetalleGasto() {
 		ImportacionLogica objLogica = new ImportacionLogica();
 		if (this.detDescripGasto == null || "".equalsIgnoreCase(this.detDescripGasto)) {
-			this.setEnumer(ErrorEnum.ERROR);
-			this.messageBean("El campo descripcion no puede ser vacio");
-		} else if (this.detFechaGasto == null) {
-			this.setEnumer(ErrorEnum.ERROR);
-			this.messageBean("La fecha en la cual realizo el gasto no puede ser nula");
-		} else if (this.detValorGasto == null || this.detValorGasto.compareTo(new BigDecimal(0)) <= 0) {
-			this.setEnumer(ErrorEnum.ERROR);
-			this.messageBean("El valor del gasto debe ser mayor a cero");
+			this.messageBean("El campo descripcion no puede ser vacio",ErrorEnum.ERROR);
+		}  else if (this.detValorGasto == null || this.detValorGasto.compareTo(new BigDecimal(0)) <= 0) {
+			this.messageBean("El valor del gasto debe ser mayor a cero",ErrorEnum.ERROR);
 		} else if (this.detAuxContable == null) {
-			this.setEnumer(ErrorEnum.ERROR);
-			this.messageBean("El campo auxiliar contable no puede ser vacio ");
+			this.messageBean("El campo auxiliar contable no puede ser vacio ",ErrorEnum.ERROR);
 		} else {
 			DetalleGastoEntity objEntity = new DetalleGastoEntity();
 			objEntity.setDescr(this.detDescripGasto);
+			this.detFechaGasto = new Date();
 			XMLGregorianCalendar fecha = Utilitites.dateToXMLGC(detFechaGasto);
 			objEntity.setFechaRegi(fecha);
 			objEntity.setIdGasto(this.gastoSelected.getId());
@@ -138,14 +163,12 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			objEntity.setNaturaleza(this.naturaleza);
 			String valida = objLogica.insertaDetalleGasto(objEntity);
 			if (valida.toUpperCase().contains("OK")) {
-				this.setEnumer(ErrorEnum.SUCCESS);
-				this.messageBean(valida);
+				this.messageBean(valida,ErrorEnum.SUCCESS);
 				RequestContext requestContext = RequestContext.getCurrentInstance();
 				requestContext.execute("PF('dialogInsDetGasto').hide();");
 				this.listaGastos = objLogica.obtenerGastosImportacion(this.importacion.getId());
 			} else {
-				this.setEnumer(ErrorEnum.ERROR);
-				this.messageBean(valida);
+				this.messageBean(valida,ErrorEnum.ERROR);
 			}
 		}
 
@@ -216,23 +239,23 @@ public class RegistroGastosBean implements Serializable, GeneralBean {
 			e.printStackTrace();
 		}
 	}
-
-	public void messageBean(String message) {
-		switch (this.enumer) {
-		case ERROR:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
-			break;
-		case FATAL:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Error de sistema"));
-			break;
-		case SUCCESS:
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Ok!", message));
-			break;
-
-		default:
-			break;
+	/**
+	 * Metodo con el cual elimino un detalle de un gasto
+	 */
+	public void eliminaDetalleGasto(Integer idDetG){
+		try {
+			ImportacionLogica objLogica = new ImportacionLogica();
+			String valida = objLogica.borrarDetalleGasto(idDetG);
+			if("Ok".equalsIgnoreCase(valida)){
+				messageBean("Detalle eliminado correctamente", ErrorEnum.SUCCESS);
+			}else{
+				messageBean("Error "+ valida, ErrorEnum.ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+
 
 	public Date getFechaGasto() {
 		return fechaGasto;

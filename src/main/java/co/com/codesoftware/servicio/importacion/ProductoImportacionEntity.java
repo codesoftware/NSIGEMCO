@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="cantidad" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="consecutivo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idImpo" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="producto" type="{http://importacion.servicio.codesoftware.com.co/}productoSimpleEntity" minOccurs="0"/>
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "productoImportacionEntity", propOrder = {
     "cantidad",
+    "consecutivo",
     "id",
     "idImpo",
     "producto",
@@ -45,6 +47,7 @@ import javax.xml.bind.annotation.XmlType;
 public class ProductoImportacionEntity {
 
     protected Integer cantidad;
+    protected Integer consecutivo;
     protected Integer id;
     protected Integer idImpo;
     protected ProductoSimpleEntity producto;
@@ -74,6 +77,30 @@ public class ProductoImportacionEntity {
      */
     public void setCantidad(Integer value) {
         this.cantidad = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad consecutivo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * Define el valor de la propiedad consecutivo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setConsecutivo(Integer value) {
+        this.consecutivo = value;
     }
 
     /**

@@ -96,8 +96,8 @@
 								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
 							</h:commandLink>
 						</f:facet>
-						<p:column>
-							<p:outputLabel value="#{prod.id-425}"></p:outputLabel>
+						<p:column headerText="Cons.">
+							<p:outputLabel value="#{prod.consecutivo}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="Codigo" filterBy="#{prod.producto.codigoExt}" filterMatchMode="contains" filterStyleClass="filteredCodigoExterno">
 							<p:outputLabel value="#{prod.producto.codigoExt}"></p:outputLabel>

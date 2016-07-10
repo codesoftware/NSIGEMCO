@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -24,16 +24,17 @@
 						<p:outputLabel value="Fecha Arrivo"></p:outputLabel>
 						<p:outputLabel value="#{registroGastosBean.importacion.fechaLleg}"></p:outputLabel>
 						<p:outputLabel value="Estado"></p:outputLabel>
-						<p:outputLabel value="#{registroGastosBean.importacion.estado}"></p:outputLabel>
+						<p:outputLabel value="CREADO" rendered="#{registroGastosBean.importacion.estado =='C'}"></p:outputLabel>
+						<p:outputLabel value="CERRADO" rendered="#{registroGastosBean.importacion.estado =='X'}"></p:outputLabel>
 						<p:outputLabel value="TRM"></p:outputLabel>
 						<p:outputLabel value="#{registroGastosBean.importacion.trm}">
-							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 						</p:outputLabel>
 						<p:outputLabel value="Taza Promedio"></p:outputLabel>
 						<p:outputLabel value="#{registroGastosBean.importacion.tazaPromedio}">
-							<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 						</p:outputLabel>
-						<p:commandButton value="INSERTAR GASTO" onclick="PF('dialogInsGasto').show()"></p:commandButton>
+						<p:commandButton value="INSERTAR GASTO" onclick="PF('dialogInsGasto').show()" action="#{registroGastosBean.limpiaFormularioGasto}" update=":formRegGasto"></p:commandButton>
 					</p:panelGrid>
 				</h:form>
 				<h:form id="tablaGastos">
@@ -42,7 +43,7 @@
 						Registro de Gastos
 					</f:facet>
 						<p:column headerText="ID ">
-							<p:outputLabel value="#{item.id}"></p:outputLabel>
+							<p:outputLabel value="#{item.consecutivo}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="DESCRIPCION">
 							<p:outputLabel value="#{item.descrip}"></p:outputLabel>
@@ -56,10 +57,11 @@
 						<p:column headerText="FECHA">
 							<p:outputLabel value="#{item.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
 						</p:column>
-						<p:column headerText="Add Detalle">
-							<p:commandButton value="Add." onclick="PF('dialogInsDetGasto').show()" actionListener="#{registroGastosBean.visualizaInsertDetalle(item)}"></p:commandButton>
+						<p:column headerText="Eliminar">
+							<p:commandButton value="Borrar." actionListener="#{registroGastosBean.borrarGasto(item.id)}" styleClass="RedButton" update=":tablaGastos"></p:commandButton>
 						</p:column>
 						<p:column headerText="Ver">
+							<p:commandButton value="Add." onclick="PF('dialogInsDetGasto').show()" actionListener="#{registroGastosBean.visualizaInsertDetalle(item)}" update=":formInsertDetGast"></p:commandButton>
 							<p:commandButton value="Ver." actionListener="#{registroGastosBean.buscaDetallesGasto(item.id)}" onsuccess="PF('dialogDetGastos').show()" update=":formTablaDetGastos"></p:commandButton>
 						</p:column>
 					</p:dataTable>
@@ -75,10 +77,9 @@
 						<p:calendar value="#{registroGastosBean.fechaGasto}" navigator="true" pattern="dd/MM/yyyy" mask="true" showOn="button" yearRange="c-100:c+100"></p:calendar>
 						<p:outputLabel value="Descripcion Gasto"></p:outputLabel>
 						<p:inputText value="#{registroGastosBean.descripGasto}"></p:inputText>
-						
+
 						<p:outputLabel value="Proveedor"></p:outputLabel>
-						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
-							converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
+						<p:autoComplete id="inputAutCProv" value="#{registroGastosBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" converter="proveedoresConverter" placeholder="CONSULTAR PROVEEDOR" style="width:100%">
 							<p:column>
 								<h:outputText value="#{item.nit}" />
 							</p:column>
@@ -98,15 +99,12 @@
 						<f:facet name="header">
 							<p:outputLabel value="Registro" />
 						</f:facet>
-						<p:outputLabel value="Fecha Gasto"></p:outputLabel>
-						<p:calendar value="#{registroGastosBean.detFechaGasto}" navigator="true" pattern="dd/MM/yyyy" mask="true" showOn="button" yearRange="c-100:c+100"></p:calendar>
 						<p:outputLabel value="Descripcion Gasto"></p:outputLabel>
 						<p:inputText value="#{registroGastosBean.detDescripGasto}"></p:inputText>
 						<p:outputLabel value="Valor Gasto (Pesos):"></p:outputLabel>
 						<pe:inputNumber value="#{registroGastosBean.detValorGasto}" symbol="$" decimalPlaces="2"></pe:inputNumber>
 						<p:outputLabel value="Cuenta:"></p:outputLabel>
-						<p:autoComplete id="autoAuxiliarCont" value="#{registroGastosBean.detAuxContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
-							completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
+						<p:autoComplete id="autoAuxiliarCont" value="#{registroGastosBean.detAuxContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
 							<p:column>
 								<h:outputText value="#{item.codigo}" />
 							</p:column>
@@ -143,28 +141,30 @@
 			</p:dialog>
 			<p:dialog widgetVar="dialogDetGastos" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
 				<h:form id="formTablaDetGastos">
-					<table class="table table-bordered">
-						<tr>
-							<td class="alert alert-warning">Descripción</td>
-							<td class="alert alert-warning">Valor</td>
-							<td class="alert alert-warning">Fecha</td>
-							<td class="alert alert-warning">Cod. Cuenta.</td>
-							<td class="alert alert-warning">Cuenta</td>
-							<td class="alert alert-warning">Borrar</td>
-						</tr>
-						<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
+					<div style="height: 350px; overflow: scroll;">
+						<table class="table table-bordered">
 							<tr>
-								<td><p:outputLabel value="#{item.descr}"></p:outputLabel></td>
-								<td><p:outputLabel value="#{item.valor}">
-										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-									</p:outputLabel></td>
-								<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
-								<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
-								<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
-								<td><p:commandButton value="BORRAR" styleClass="RedButon"/></td>
+								<td class="alert alert-warning">Descripción</td>
+								<td class="alert alert-warning">Valor</td>
+								<td class="alert alert-warning">Fecha</td>
+								<td class="alert alert-warning">Cod. Cuenta.</td>
+								<td class="alert alert-warning">Cuenta</td>
+								<td class="alert alert-warning">Borrar</td>
 							</tr>
-						</ui:repeat>
-					</table>
+							<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
+								<tr>
+									<td><p:outputLabel value="#{item.descr}"></p:outputLabel></td>
+									<td><p:outputLabel value="#{item.valor}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel></td>
+									<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
+									<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
+									<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
+									<td><p:commandButton value="BORRAR" styleClass="RedButton" actionListener="#{registroGastosBean.eliminaDetalleGasto(item.id)}" oncomplete="PF('dialogDetGastos').hide()" /></td>
+								</tr>
+							</ui:repeat>
+						</table>
+					</div>
 				</h:form>
 			</p:dialog>
 		</ui:define>
