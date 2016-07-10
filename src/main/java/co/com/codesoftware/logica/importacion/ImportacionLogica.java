@@ -142,7 +142,7 @@ public class ImportacionLogica implements WSGeneralInterface {
 						} catch (IllegalStateException e) {
 							// TODO: handle exception
 							Double cantidad1 = cell.getNumericCellValue();
-							cantidad1 = cantidad1 * 1000;
+							cantidad1 = cantidad1;
 							cantidad = "" + cantidad1.intValue();
 						}
 						cell = cellIterator.next();

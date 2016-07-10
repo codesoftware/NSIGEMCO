@@ -150,6 +150,7 @@
 							<td class="alert alert-warning">Fecha</td>
 							<td class="alert alert-warning">Cod. Cuenta.</td>
 							<td class="alert alert-warning">Cuenta</td>
+							<td class="alert alert-warning">Borrar</td>
 						</tr>
 						<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
 							<tr>
@@ -160,6 +161,7 @@
 								<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
 								<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
 								<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
+								<td><p:commandButton value="BORRAR" styleClass="RedButon"/></td>
 							</tr>
 						</ui:repeat>
 					</table>

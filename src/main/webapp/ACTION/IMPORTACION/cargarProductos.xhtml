@@ -96,6 +96,9 @@
 								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
 							</h:commandLink>
 						</f:facet>
+						<p:column>
+							<p:outputLabel value="#{prod.id-425}"></p:outputLabel>
+						</p:column>
 						<p:column headerText="Codigo" filterBy="#{prod.producto.codigoExt}" filterMatchMode="contains" filterStyleClass="filteredCodigoExterno">
 							<p:outputLabel value="#{prod.producto.codigoExt}"></p:outputLabel>
 						</p:column>
@@ -119,7 +122,7 @@
 						</p:column>
 						<p:column headerText="Tasa Promedio">
 							<p:outputLabel value="$ "></p:outputLabel>
-							<p:outputLabel value="#{prod.vlrPesTRM}">
+							<p:outputLabel value="#{prod.vlrPesTzProm}">
 								<f:convertNumber pattern="#,##0.00000"></f:convertNumber>
 							</p:outputLabel>
 						</p:column>
