@@ -38,7 +38,7 @@
 					</p:panelGrid>
 				</h:form>
 				<h:form id="tablaGastos">
-					<p:dataTable value="#{registroGastosBean.listaGastos}" var="item">
+					<p:dataTable value="#{registroGastosBean.listaGastos}" var="item" rows="5" paginator="true">
 						<f:facet name="header">
 						Registro de Gastos
 					</f:facet>
@@ -56,6 +56,9 @@
 						</p:column>
 						<p:column headerText="FECHA">
 							<p:outputLabel value="#{item.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
+						</p:column>
+						<p:column headerText="PROVEEDOR">
+							<p:outputLabel value="#{item.proveedor.nombre}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="Eliminar">
 							<p:commandButton value="Borrar." actionListener="#{registroGastosBean.borrarGasto(item.id)}" styleClass="RedButton" update=":tablaGastos"></p:commandButton>
@@ -141,7 +144,7 @@
 			</p:dialog>
 			<p:dialog widgetVar="dialogDetGastos" modal="true" closeOnEscape="true" responsive="true" styleClass="modalResponsive" header="Cuenta Del Gasto">
 				<h:form id="formTablaDetGastos">
-					<div style="height: 350px; overflow: scroll;">
+					<div style="overflow-y: scroll;max-height: 350px; ">
 						<table class="table table-bordered">
 							<tr>
 								<td class="alert alert-warning">Descripción</td>
@@ -149,6 +152,7 @@
 								<td class="alert alert-warning">Fecha</td>
 								<td class="alert alert-warning">Cod. Cuenta.</td>
 								<td class="alert alert-warning">Cuenta</td>
+								<td class="alert alert-warning">Naturaleza</td>
 								<td class="alert alert-warning">Borrar</td>
 							</tr>
 							<ui:repeat var="item" value="#{registroGastosBean.listaDetalleGasto}">
@@ -160,6 +164,10 @@
 									<td><p:outputLabel value="#{item.fechaRegi}" converter="xmlDatetoDateConverter"></p:outputLabel></td>
 									<td><p:outputLabel value="#{item.idAuxconta.codigo}"></p:outputLabel></td>
 									<td><p:outputLabel value="#{item.idAuxconta.nombre}"></p:outputLabel></td>
+									<td>
+										<p:outputLabel value="CREDITOS" rendered="#{item.naturaleza == 'C'}"></p:outputLabel>
+										<p:outputLabel value="DEBITOS" rendered="#{item.naturaleza == 'D'}"></p:outputLabel>
+									</td>
 									<td><p:commandButton value="BORRAR" styleClass="RedButton" actionListener="#{registroGastosBean.eliminaDetalleGasto(item.id)}" oncomplete="PF('dialogDetGastos').hide()" /></td>
 								</tr>
 							</ui:repeat>
