@@ -178,6 +178,7 @@ public class ProvedorBean {
 
 	/**
 	 * metodo para validar obligotariedad de datos
+	 * 
 	 * @return
 	 */
 	public boolean validaDatos() {
@@ -235,8 +236,20 @@ public class ProvedorBean {
 	 */
 	public void consultaProveedor(ProveedoresEntity proveedorSel) {
 		this.proveedor = proveedorSel;
+		if (proveedorSel.getMunicipio() == null) {
+			DepartamentoEntity mpioAux = proveedorSel.getMunicipio();
+			mpioAux = new DepartamentoEntity();
+			mpioAux.setId(-1);
+			proveedorSel.setMunicipio(mpioAux);
+		}
 		this.idMuni = proveedorSel.getMunicipio().getId();
 		consultaCiudades();
+		if (proveedorSel.getCiudad() == null) {
+			co.com.codesoftware.server.nsigemco.CiudadEntity ciudAux = proveedorSel.getCiudad();
+			ciudAux = new co.com.codesoftware.server.nsigemco.CiudadEntity();
+			ciudAux.setId(-1);
+			proveedorSel.setCiudad(ciudAux);
+		}
 		this.idCiu = proveedorSel.getCiudad().getId();
 		this.idRete = proveedorSel.getRetenciones().getId();
 		this.banderaboton = "U";
