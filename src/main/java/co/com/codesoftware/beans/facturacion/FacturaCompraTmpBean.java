@@ -54,7 +54,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	@PostConstruct
 	public void init() {
 
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		System.out.println("Id" + objetoSesion.getId());
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
@@ -70,7 +71,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			this.fechaRec = this.facturaCompra.getFechaRecepcion().toGregorianCalendar().getTime();
 			this.idSede = this.facturaCompra.getSede().getId();
 			this.listaProductos = logica.consultaProductosFacturaId(this.facturaCompra.getId());
-
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("facturaCompra", null);
 		}
 
 	}
@@ -167,10 +168,10 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		if (proveedor.getPorcRetencion() != null) {
 			this.facturaCompra.setPorcRetencion(proveedor.getPorcRetencion());
 		}
-		if(this.objetoSesion!=null){
+		if (this.objetoSesion != null) {
 			this.facturaCompra.setUsuario(objetoSesion.getId());
 		}
-		
+
 	}
 
 	/**
@@ -266,26 +267,29 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	/**
 	 * metodo que llama al procedimiento almacenado de factura de compra
 	 */
-	public void terminaTransaccion() {
+	public String terminaTransaccion() {
+		String rta="";
 		if (validaDatos()) {
 			String mensaje = logica.ejecutaProcedimientoFactCompra(this.facturaCompra.getId());
-			if(mensaje.startsWith("Error")){
+			if (mensaje.startsWith("Error")) {
 				messageBean(mensaje, ErrorEnum.ERROR);
-			}else{
+			} else {
 				messageBean(mensaje, ErrorEnum.SUCCESS);
+				rta = "consultaFacturaCompras?faces-redirect=false";
 			}
 		}
+		return rta;
 
 	}
-	
+
 	/**
 	 * metodo que actualiza los datos de pago y luego los consulta
 	 */
-	public void consultaPagos(){
+	public void consultaPagos() {
 		String mensaje = logica.ejecutaProcedimientoVerTotal(this.facturaCompra.getId());
-		if(mensaje.startsWith("Error")){
+		if (mensaje.startsWith("Error")) {
 			messageBean(mensaje, ErrorEnum.ERROR);
-		}else{
+		} else {
 			this.facturaCompraTmp = logica.consultaFacturaID(this.facturaCompra.getId());
 			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('datosPago').show();");
@@ -488,9 +492,5 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
 	}
-	
-	
-	
-	
 
 }
