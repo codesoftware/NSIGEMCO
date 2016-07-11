@@ -46,6 +46,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorCobrar" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="vlrIva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="vlrReteFu" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -79,7 +80,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "tipoPago",
     "valor",
     "valorCobrar",
-    "vlrIva"
+    "vlrIva",
+    "vlrReteFu"
 })
 public class FacturaEntity {
 
@@ -111,6 +113,7 @@ public class FacturaEntity {
     protected BigDecimal valor;
     protected BigDecimal valorCobrar;
     protected BigDecimal vlrIva;
+    protected BigDecimal vlrReteFu;
 
     /**
      * Obtiene el valor de la propiedad cliente.
@@ -696,6 +699,30 @@ public class FacturaEntity {
      */
     public void setVlrIva(BigDecimal value) {
         this.vlrIva = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad vlrReteFu.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getVlrReteFu() {
+        return vlrReteFu;
+    }
+
+    /**
+     * Define el valor de la propiedad vlrReteFu.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setVlrReteFu(BigDecimal value) {
+        this.vlrReteFu = value;
     }
 
 }

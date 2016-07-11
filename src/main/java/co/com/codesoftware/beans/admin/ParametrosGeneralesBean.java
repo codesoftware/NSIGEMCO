@@ -23,8 +23,6 @@ public class ParametrosGeneralesBean implements GeneralBean {
 	private ErrorEnum enumer;
 	private ParametrosGeneralesEntity parametros;
 
-
-
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
 	}
@@ -43,7 +41,8 @@ public class ParametrosGeneralesBean implements GeneralBean {
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		try {
 			if (this.parametros == null) {
 				this.parametros = new ParametrosGeneralesEntity();
@@ -54,39 +53,56 @@ public class ParametrosGeneralesBean implements GeneralBean {
 				if ("NOMBREEMPRESA".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setNombre(item.getValor());
 				}
-				if("DIRECCION".equalsIgnoreCase(item.getClave())){
+				if ("DIRECCION".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setDireccion(item.getValor());
 				}
-				if("NIT".equalsIgnoreCase(item.getClave())){
+				if ("NIT".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setNit(item.getValor());
 				}
-				if("TELEFONOS".equalsIgnoreCase(item.getClave())){
+				if ("TELEFONOS".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setTelefono(item.getValor());
 				}
-				if("DEPEMPRESA".equalsIgnoreCase(item.getClave())){
+				if ("DEPEMPRESA".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setDepartamento(item.getValor());
 				}
-				if("CIUDAD".equalsIgnoreCase(item.getClave())){
+				if ("CIUDAD".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setCiudad(item.getValor());
-				} 
-				if("ACTECONO".equalsIgnoreCase(item.getClave())){
+				}
+				if ("ACTECONO".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setActividadEconomica(item.getValor());
 				}
-				if("CORREOFACT".equalsIgnoreCase(item.getClave())){
+				if ("CORREOFACT".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setCorreoElectronico(item.getValor());
 				}
-				if("TIPOREGIMEN".equalsIgnoreCase(item.getClave())){
+				if ("TIPOREGIMEN".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setTipoRegimen(item.getValor());
 				}
+				if ("CORREOENVIO".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setCorreoEnvio(item.getValor());
+				}
+				if ("PUERTOENV".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setPuertoEnvio(item.getValor());
+				}
+				if ("CLAVECORRENV".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setPassEnvio(item.getValor());
+				}
+				if ("SERVSMTP".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setServerEnvio(item.getValor());
+				}
+				if ("VALORAJUSTEPESO".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setAjustePeso(item.getValor());
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Funcion con la cual modifico los parametros de la empresa
 	 */
-	public void modificaParametrosEmpresa(){
+	public void modificaParametrosEmpresa() {
 		try {
 			ParametrosLogica objLogica = new ParametrosLogica();
 			objLogica.actualizaParametroEmpresarial("NOMBREEMPRESA", this.parametros.getNombre());
@@ -98,7 +114,12 @@ public class ParametrosGeneralesBean implements GeneralBean {
 			objLogica.actualizaParametroEmpresarial("ACTECONO", this.parametros.getActividadEconomica());
 			objLogica.actualizaParametroEmpresarial("CORREOFACT", this.parametros.getCorreoElectronico());
 			objLogica.actualizaParametroEmpresarial("TIPOREGIMEN", this.parametros.getTipoRegimen());
-			this.messageBean("Parametros actualizados correctamente",ErrorEnum.SUCCESS);
+			objLogica.actualizaParametroEmpresarial("CORREOENVIO", this.parametros.getCorreoEnvio());
+			objLogica.actualizaParametroEmpresarial("PUERTOENV", this.parametros.getPuertoEnvio());
+			objLogica.actualizaParametroEmpresarial("CLAVECORRENV", this.parametros.getPassEnvio());
+			objLogica.actualizaParametroEmpresarial("SERVSMTP", this.parametros.getServerEnvio());
+			objLogica.actualizaParametroEmpresarial("VALORAJUSTEPESO", this.parametros.getAjustePeso());
+			this.messageBean("Parametros actualizados correctamente", ErrorEnum.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();
 

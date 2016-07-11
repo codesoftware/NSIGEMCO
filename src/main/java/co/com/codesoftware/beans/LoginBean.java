@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 
 import co.com.codesoftware.logica.UsuarioLogic;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
+import co.com.codesoftware.utilities.EnviaCorreosLogica;
 import co.com.codesoftware.utilities.ErrorEnum;
 
 @ManagedBean
@@ -32,6 +33,8 @@ public class LoginBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		EnviaCorreosLogica logica = new EnviaCorreosLogica();
+		logica.enviaCorreosFacturaCompra();
 		bandera = true;
 		try {
 			this.usuario = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()

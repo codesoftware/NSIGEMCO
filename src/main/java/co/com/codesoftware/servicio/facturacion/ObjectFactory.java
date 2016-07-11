@@ -27,6 +27,7 @@ public class ObjectFactory {
     private final static QName _InsertaImagenCancelacion_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertaImagenCancelacion");
     private final static QName _InsertarProdFacturasCompraTmp_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertarProdFacturasCompraTmp");
     private final static QName _ObtenerFacturaXId_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturaXId");
+    private final static QName _ConsultaFacturasVencidasResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "consultaFacturasVencidasResponse");
     private final static QName _ConsutaImagenFacturas_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "consutaImagenFacturas");
     private final static QName _FacturarAvanzadaResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "facturarAvanzadaResponse");
     private final static QName _LlamaProcedimientoValoresFacturaTMPResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "llamaProcedimientoValoresFacturaTMPResponse");
@@ -55,6 +56,7 @@ public class ObjectFactory {
     private final static QName _ObtenerFacturasSede_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturasSede");
     private final static QName _ObtenerValorCaja_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerValorCaja");
     private final static QName _ObtenerFacturasSedeResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturasSedeResponse");
+    private final static QName _ConsultaFacturasVencidas_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "consultaFacturasVencidas");
     private final static QName _ObtenerImagenXIdFactura_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerImagenXIdFactura");
     private final static QName _ObtenerValorCajaResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerValorCajaResponse");
     private final static QName _ObtenerFacturasCompraTmp_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturasCompraTmp");
@@ -126,6 +128,14 @@ public class ObjectFactory {
      */
     public ObtenerProdFacturasCompraTmpResponse createObtenerProdFacturasCompraTmpResponse() {
         return new ObtenerProdFacturasCompraTmpResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConsultaFacturasVencidas }
+     * 
+     */
+    public ConsultaFacturasVencidas createConsultaFacturasVencidas() {
+        return new ConsultaFacturasVencidas();
     }
 
     /**
@@ -369,6 +379,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConsultaFacturasVencidasResponse }
+     * 
+     */
+    public ConsultaFacturasVencidasResponse createConsultaFacturasVencidasResponse() {
+        return new ConsultaFacturasVencidasResponse();
+    }
+
+    /**
      * Create an instance of {@link ConsutaImagenFacturas }
      * 
      */
@@ -446,6 +464,14 @@ public class ObjectFactory {
      */
     public FacturaCompraTmpEntity createFacturaCompraTmpEntity() {
         return new FacturaCompraTmpEntity();
+    }
+
+    /**
+     * Create an instance of {@link FacturaCompraEntity }
+     * 
+     */
+    public FacturaCompraEntity createFacturaCompraEntity() {
+        return new FacturaCompraEntity();
     }
 
     /**
@@ -649,6 +675,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "obtenerFacturaXId")
     public JAXBElement<ObtenerFacturaXId> createObtenerFacturaXId(ObtenerFacturaXId value) {
         return new JAXBElement<ObtenerFacturaXId>(_ObtenerFacturaXId_QNAME, ObtenerFacturaXId.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaFacturasVencidasResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "consultaFacturasVencidasResponse")
+    public JAXBElement<ConsultaFacturasVencidasResponse> createConsultaFacturasVencidasResponse(ConsultaFacturasVencidasResponse value) {
+        return new JAXBElement<ConsultaFacturasVencidasResponse>(_ConsultaFacturasVencidasResponse_QNAME, ConsultaFacturasVencidasResponse.class, null, value);
     }
 
     /**
@@ -901,6 +936,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "obtenerFacturasSedeResponse")
     public JAXBElement<ObtenerFacturasSedeResponse> createObtenerFacturasSedeResponse(ObtenerFacturasSedeResponse value) {
         return new JAXBElement<ObtenerFacturasSedeResponse>(_ObtenerFacturasSedeResponse_QNAME, ObtenerFacturasSedeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaFacturasVencidas }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "consultaFacturasVencidas")
+    public JAXBElement<ConsultaFacturasVencidas> createConsultaFacturasVencidas(ConsultaFacturasVencidas value) {
+        return new JAXBElement<ConsultaFacturasVencidas>(_ConsultaFacturasVencidas_QNAME, ConsultaFacturasVencidas.class, null, value);
     }
 
     /**

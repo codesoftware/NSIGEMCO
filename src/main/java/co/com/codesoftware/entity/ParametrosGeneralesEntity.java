@@ -11,6 +11,12 @@ public class ParametrosGeneralesEntity {
 	private String actividadEconomica;
 	private String correoElectronico;
 	private String tipoRegimen;
+	private String correoEnvio;
+	private String puertoEnvio;
+	private String passEnvio;
+	private String serverEnvio;
+	private String ajustePeso;
+	
 
 	public String getNombre() {
 		return nombre;
@@ -83,5 +89,48 @@ public class ParametrosGeneralesEntity {
 	public void setTipoRegimen(String tipoRegimen) {
 		this.tipoRegimen = tipoRegimen;
 	}
+
+	public String getCorreoEnvio() {
+		return correoEnvio;
+	}
+
+	public void setCorreoEnvio(String correoEnvio) {
+		this.correoEnvio = correoEnvio;
+	}
+
+	public String getPuertoEnvio() {
+		return puertoEnvio;
+	}
+
+	public void setPuertoEnvio(String puertoEnvio) {
+		this.puertoEnvio = puertoEnvio;
+	}
+
+	public String getPassEnvio() {
+		return passEnvio;
+	}
+
+	public void setPassEnvio(String passEnvio) {
+		this.passEnvio = passEnvio;
+	}
+
+	public String getServerEnvio() {
+		return serverEnvio;
+	}
+
+	public void setServerEnvio(String serverEnvio) {
+		this.serverEnvio = serverEnvio;
+	}
+
+	public String getAjustePeso() {
+		return ajustePeso;
+	}
+
+	public void setAjustePeso(String ajustePeso) {
+		this.ajustePeso = ajustePeso;
+	}
+	
+	
+	
 
 }

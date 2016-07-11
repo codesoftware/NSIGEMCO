@@ -50,6 +50,16 @@
 								<f:selectItem itemLabel="REGIMEN COMUN" itemValue="CO"></f:selectItem>
 								<f:selectItem itemLabel="REGIMEN SIMPLIFICADO" itemValue="SI"></f:selectItem>
 							</h:selectOneMenu>
+							<p:outputLabel value="Correo Electronico Envio:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.correoEnvio}"></p:inputText>
+							<p:outputLabel value="Password Correo Envio:" />
+							<p:password value="#{parametrosGeneralesBean.parametros.passEnvio}"></p:password>
+							<p:outputLabel value="Servidor smtp:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.serverEnvio}"></p:inputText>
+							<p:outputLabel value="Puerto Envio:" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.puertoEnvio}"></p:inputText>
+							<p:outputLabel value="Ajuste al peso" />
+							<p:inputText value="#{parametrosGeneralesBean.parametros.ajustePeso}"></p:inputText>
 						</h:panelGrid>
 						<p:commandButton value="Modificacion Datos" actionListener="#{parametrosGeneralesBean.modificaParametrosEmpresa}"></p:commandButton>
 					</div>

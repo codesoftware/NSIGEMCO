@@ -29,6 +29,81 @@ public interface GeneralWS {
 
     /**
      * 
+     * @param clave
+     * @param nuevoValor
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(name = "listaCiudades", targetNamespace = "")
+    @RequestWrapper(localName = "actualizaParametro", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaParametro")
+    @ResponseWrapper(localName = "actualizaParametroResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaParametroResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaParametroRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaParametroResponse")
+    public String actualizaParametro(
+        @WebParam(name = "clave", targetNamespace = "")
+        String clave,
+        @WebParam(name = "nuevoValor", targetNamespace = "")
+        String nuevoValor);
+
+    /**
+     * 
+     * @param idPago
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.DetallePagoRemision>
+     */
+    @WebMethod
+    @WebResult(name = "detallePago", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerDetallePagos", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetallePagos")
+    @ResponseWrapper(localName = "obtenerDetallePagosResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetallePagosResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetallePagosRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetallePagosResponse")
+    public List<DetallePagoRemision> obtenerDetallePagos(
+        @WebParam(name = "idPago", targetNamespace = "")
+        int idPago);
+
+    /**
+     * 
+     * @param objEntity
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(name = "respuesta", targetNamespace = "")
+    @RequestWrapper(localName = "actualizaResolucion", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaResolucion")
+    @ResponseWrapper(localName = "actualizaResolucionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaResolucionResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaResolucionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaResolucionResponse")
+    public String actualizaResolucion(
+        @WebParam(name = "objEntity", targetNamespace = "")
+        ResolucionFactEntity objEntity);
+
+    /**
+     * 
+     * @param objEntity
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(name = "respuesta", targetNamespace = "")
+    @RequestWrapper(localName = "insertarResolucion", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.InsertarResolucion")
+    @ResponseWrapper(localName = "insertarResolucionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.InsertarResolucionResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/insertarResolucionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/insertarResolucionResponse")
+    public String insertarResolucion(
+        @WebParam(name = "objEntity", targetNamespace = "")
+        ResolucionFactEntity objEntity);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.ParametrosEmpresaEntity>
+     */
+    @WebMethod
+    @WebResult(name = "parametros", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerParametrosEmpresa", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerParametrosEmpresa")
+    @ResponseWrapper(localName = "obtenerParametrosEmpresaResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerParametrosEmpresaResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerParametrosEmpresaRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerParametrosEmpresaResponse")
+    public List<ParametrosEmpresaEntity> obtenerParametrosEmpresa();
+
+    /**
+     * 
      * @param idDepto
      * @return
      *     returns java.util.List<co.com.codesoftware.servicio.general.CiudadEntity>
@@ -45,14 +120,14 @@ public interface GeneralWS {
     /**
      * 
      * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.SedeEntity>
+     *     returns java.util.List<co.com.codesoftware.servicio.general.DepartamentoEntity>
      */
     @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerSedes", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerSedes")
-    @ResponseWrapper(localName = "obtenerSedesResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerSedesResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerSedesRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerSedesResponse")
-    public List<SedeEntity> obtenerSedes();
+    @WebResult(name = "listaDepartamentos", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerDepartamentos", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDepartamentos")
+    @ResponseWrapper(localName = "obtenerDepartamentosResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDepartamentosResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDepartamentosRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDepartamentosResponse")
+    public List<DepartamentoEntity> obtenerDepartamentos();
 
     /**
      * 
@@ -83,153 +158,21 @@ public interface GeneralWS {
 
     /**
      * 
+     * @param idDocumento
+     * @param tipoDoc
      * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.DepartamentoEntity>
+     *     returns co.com.codesoftware.servicio.general.RelFacRemiGenEntity
      */
     @WebMethod
-    @WebResult(name = "listaDepartamentos", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerDepartamentos", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDepartamentos")
-    @ResponseWrapper(localName = "obtenerDepartamentosResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDepartamentosResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDepartamentosRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDepartamentosResponse")
-    public List<DepartamentoEntity> obtenerDepartamentos();
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.CiudadEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaCiudades", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerCiudades", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerCiudades")
-    @ResponseWrapper(localName = "obtenerCiudadesResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerCiudadesResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerCiudadesRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerCiudadesResponse")
-    public List<CiudadEntity> obtenerCiudades();
-
-    /**
-     * 
-     * @param clave
-     * @param nuevoValor
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(name = "listaCiudades", targetNamespace = "")
-    @RequestWrapper(localName = "actualizaParametro", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaParametro")
-    @ResponseWrapper(localName = "actualizaParametroResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaParametroResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaParametroRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaParametroResponse")
-    public String actualizaParametro(
-        @WebParam(name = "clave", targetNamespace = "")
-        String clave,
-        @WebParam(name = "nuevoValor", targetNamespace = "")
-        String nuevoValor);
-
-    /**
-     * 
-     * @param idRemision
-     * @param idFactura
-     * @return
-     *     returns co.com.codesoftware.servicio.general.PagoRemisionEntity
-     */
-    @WebMethod
-    @WebResult(name = "pagoRemision", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerPrincPago", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerPrincPago")
-    @ResponseWrapper(localName = "obtenerPrincPagoResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerPrincPagoResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerPrincPagoRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerPrincPagoResponse")
-    public PagoRemisionEntity obtenerPrincPago(
-        @WebParam(name = "idRemision", targetNamespace = "")
-        int idRemision,
-        @WebParam(name = "idFactura", targetNamespace = "")
-        int idFactura);
-
-    /**
-     * 
-     * @param idPago
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.DetallePagoRemision>
-     */
-    @WebMethod
-    @WebResult(name = "detallePago", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerDetallePagos", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetallePagos")
-    @ResponseWrapper(localName = "obtenerDetallePagosResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetallePagosResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetallePagosRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetallePagosResponse")
-    public List<DetallePagoRemision> obtenerDetallePagos(
-        @WebParam(name = "idPago", targetNamespace = "")
-        int idPago);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.ParametrosEmpresaEntity>
-     */
-    @WebMethod
-    @WebResult(name = "parametros", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerParametrosEmpresa", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerParametrosEmpresa")
-    @ResponseWrapper(localName = "obtenerParametrosEmpresaResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerParametrosEmpresaResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerParametrosEmpresaRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerParametrosEmpresaResponse")
-    public List<ParametrosEmpresaEntity> obtenerParametrosEmpresa();
-
-    /**
-     * 
-     * @param objEntity
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(name = "respuesta", targetNamespace = "")
-    @RequestWrapper(localName = "insertarResolucion", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.InsertarResolucion")
-    @ResponseWrapper(localName = "insertarResolucionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.InsertarResolucionResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/insertarResolucionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/insertarResolucionResponse")
-    public String insertarResolucion(
-        @WebParam(name = "objEntity", targetNamespace = "")
-        ResolucionFactEntity objEntity);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.ResolucionFactEntity>
-     */
-    @WebMethod
-    @WebResult(name = "resoluciones", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerResolucionesFact", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerResolucionesFact")
-    @ResponseWrapper(localName = "obtenerResolucionesFactResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerResolucionesFactResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerResolucionesFactRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerResolucionesFactResponse")
-    public List<ResolucionFactEntity> obtenerResolucionesFact();
-
-    /**
-     * 
-     * @param idCliente
-     * @param fechaIni
-     * @param fechafin
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.RemisionEntity>
-     */
-    @WebMethod
-    @WebResult(name = "remisiones", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerRemisionesXCliente", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerRemisionesXCliente")
-    @ResponseWrapper(localName = "obtenerRemisionesXClienteResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerRemisionesXClienteResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerRemisionesXClienteRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerRemisionesXClienteResponse")
-    public List<RemisionEntity> obtenerRemisionesXCliente(
-        @WebParam(name = "idCliente", targetNamespace = "")
-        int idCliente,
-        @WebParam(name = "fechaIni", targetNamespace = "")
-        XMLGregorianCalendar fechaIni,
-        @WebParam(name = "fechafin", targetNamespace = "")
-        XMLGregorianCalendar fechafin);
-
-    /**
-     * 
-     * @param idRemision
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.general.DetProdRemision>
-     */
-    @WebMethod
-    @WebResult(name = "detalles", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerDetalleRemision", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetalleRemision")
-    @ResponseWrapper(localName = "obtenerDetalleRemisionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetalleRemisionResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetalleRemisionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetalleRemisionResponse")
-    public List<DetProdRemision> obtenerDetalleRemision(
-        @WebParam(name = "idRemision", targetNamespace = "")
-        int idRemision);
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "buscaDocumentosPagosRemi", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.BuscaDocumentosPagosRemi")
+    @ResponseWrapper(localName = "buscaDocumentosPagosRemiResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.BuscaDocumentosPagosRemiResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/buscaDocumentosPagosRemiRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/buscaDocumentosPagosRemiResponse")
+    public RelFacRemiGenEntity buscaDocumentosPagosRemi(
+        @WebParam(name = "tipoDoc", targetNamespace = "")
+        String tipoDoc,
+        @WebParam(name = "idDocumento", targetNamespace = "")
+        int idDocumento);
 
     /**
      * 
@@ -260,6 +203,84 @@ public interface GeneralWS {
 
     /**
      * 
+     * @param idRemision
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.DetProdRemision>
+     */
+    @WebMethod
+    @WebResult(name = "detalles", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerDetalleRemision", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetalleRemision")
+    @ResponseWrapper(localName = "obtenerDetalleRemisionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerDetalleRemisionResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetalleRemisionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerDetalleRemisionResponse")
+    public List<DetProdRemision> obtenerDetalleRemision(
+        @WebParam(name = "idRemision", targetNamespace = "")
+        int idRemision);
+
+    /**
+     * 
+     * @param idCliente
+     * @param fechaIni
+     * @param fechafin
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.RemisionEntity>
+     */
+    @WebMethod
+    @WebResult(name = "remisiones", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerRemisionesXCliente", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerRemisionesXCliente")
+    @ResponseWrapper(localName = "obtenerRemisionesXClienteResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerRemisionesXClienteResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerRemisionesXClienteRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerRemisionesXClienteResponse")
+    public List<RemisionEntity> obtenerRemisionesXCliente(
+        @WebParam(name = "idCliente", targetNamespace = "")
+        int idCliente,
+        @WebParam(name = "fechaIni", targetNamespace = "")
+        XMLGregorianCalendar fechaIni,
+        @WebParam(name = "fechafin", targetNamespace = "")
+        XMLGregorianCalendar fechafin);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.ResolucionFactEntity>
+     */
+    @WebMethod
+    @WebResult(name = "resoluciones", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerResolucionesFact", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerResolucionesFact")
+    @ResponseWrapper(localName = "obtenerResolucionesFactResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerResolucionesFactResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerResolucionesFactRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerResolucionesFactResponse")
+    public List<ResolucionFactEntity> obtenerResolucionesFact();
+
+    /**
+     * 
+     * @param permiso
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.UsuarioEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaUsuarios", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerUsuariosXPermiso", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerUsuariosXPermiso")
+    @ResponseWrapper(localName = "obtenerUsuariosXPermisoResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerUsuariosXPermisoResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerUsuariosXPermisoRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerUsuariosXPermisoResponse")
+    public List<UsuarioEntity> obtenerUsuariosXPermiso(
+        @WebParam(name = "permiso", targetNamespace = "")
+        String permiso);
+
+    /**
+     * 
+     * @param mensajeCorreo
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "enviaCorreo", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.EnviaCorreo")
+    @ResponseWrapper(localName = "enviaCorreoResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.EnviaCorreoResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/enviaCorreoRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/enviaCorreoResponse")
+    public String enviaCorreo(
+        @WebParam(name = "mensajeCorreo", targetNamespace = "")
+        CorreoWrapperRequest mensajeCorreo);
+
+    /**
+     * 
      * @param sede
      * @return
      *     returns java.lang.String
@@ -272,39 +293,6 @@ public interface GeneralWS {
     public String actualizarSede(
         @WebParam(name = "sede", targetNamespace = "")
         SedeEntity sede);
-
-    /**
-     * 
-     * @param idDocumento
-     * @param tipoDoc
-     * @return
-     *     returns co.com.codesoftware.servicio.general.RelFacRemiGenEntity
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "buscaDocumentosPagosRemi", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.BuscaDocumentosPagosRemi")
-    @ResponseWrapper(localName = "buscaDocumentosPagosRemiResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.BuscaDocumentosPagosRemiResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/buscaDocumentosPagosRemiRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/buscaDocumentosPagosRemiResponse")
-    public RelFacRemiGenEntity buscaDocumentosPagosRemi(
-        @WebParam(name = "tipoDoc", targetNamespace = "")
-        String tipoDoc,
-        @WebParam(name = "idDocumento", targetNamespace = "")
-        int idDocumento);
-
-    /**
-     * 
-     * @param objEntity
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(name = "respuesta", targetNamespace = "")
-    @RequestWrapper(localName = "actualizaResolucion", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaResolucion")
-    @ResponseWrapper(localName = "actualizaResolucionResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ActualizaResolucionResponse")
-    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaResolucionRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/actualizaResolucionResponse")
-    public String actualizaResolucion(
-        @WebParam(name = "objEntity", targetNamespace = "")
-        ResolucionFactEntity objEntity);
 
     /**
      * 
@@ -323,5 +311,47 @@ public interface GeneralWS {
         List<MapaEntity> arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         List<MapaEntity> arg1);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.SedeEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerSedes", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerSedes")
+    @ResponseWrapper(localName = "obtenerSedesResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerSedesResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerSedesRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerSedesResponse")
+    public List<SedeEntity> obtenerSedes();
+
+    /**
+     * 
+     * @param idRemision
+     * @param idFactura
+     * @return
+     *     returns co.com.codesoftware.servicio.general.PagoRemisionEntity
+     */
+    @WebMethod
+    @WebResult(name = "pagoRemision", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerPrincPago", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerPrincPago")
+    @ResponseWrapper(localName = "obtenerPrincPagoResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerPrincPagoResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerPrincPagoRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerPrincPagoResponse")
+    public PagoRemisionEntity obtenerPrincPago(
+        @WebParam(name = "idRemision", targetNamespace = "")
+        int idRemision,
+        @WebParam(name = "idFactura", targetNamespace = "")
+        int idFactura);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.general.CiudadEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaCiudades", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerCiudades", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerCiudades")
+    @ResponseWrapper(localName = "obtenerCiudadesResponse", targetNamespace = "http://general.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.general.ObtenerCiudadesResponse")
+    @Action(input = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerCiudadesRequest", output = "http://general.servicio.codesoftware.com.co/GeneralWS/obtenerCiudadesResponse")
+    public List<CiudadEntity> obtenerCiudades();
 
 }

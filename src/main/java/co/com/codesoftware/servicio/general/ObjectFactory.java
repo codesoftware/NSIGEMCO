@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _ObtenerParametrosEmpresa_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerParametrosEmpresa");
     private final static QName _ObtenerRemisionesXClienteResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerRemisionesXClienteResponse");
+    private final static QName _ObtenerUsuariosXPermisoResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerUsuariosXPermisoResponse");
     private final static QName _ObtenerDepartamentosResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDepartamentosResponse");
     private final static QName _ObtenerDepartamentos_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDepartamentos");
     private final static QName _ObtenerPrincPagoResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerPrincPagoResponse");
@@ -56,7 +57,10 @@ public class ObjectFactory {
     private final static QName _BuscaDocumentosPagosRemiResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "buscaDocumentosPagosRemiResponse");
     private final static QName _ObtenerDetallePagos_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDetallePagos");
     private final static QName _InsertarResolucionResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "insertarResolucionResponse");
+    private final static QName _EnviaCorreoResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "enviaCorreoResponse");
+    private final static QName _EnviaCorreo_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "enviaCorreo");
     private final static QName _ObtenerPrincPago_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerPrincPago");
+    private final static QName _ObtenerUsuariosXPermiso_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerUsuariosXPermiso");
     private final static QName _BuscaDocumentosPagosRemi_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "buscaDocumentosPagosRemi");
     private final static QName _ObtenerDetalleRemision_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDetalleRemision");
     private final static QName _ObtenerDetallePagosResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDetallePagosResponse");
@@ -253,6 +257,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerUsuariosXPermisoResponse }
+     * 
+     */
+    public ObtenerUsuariosXPermisoResponse createObtenerUsuariosXPermisoResponse() {
+        return new ObtenerUsuariosXPermisoResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerDepartamentosResponse }
      * 
      */
@@ -285,6 +297,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EnviaCorreo }
+     * 
+     */
+    public EnviaCorreo createEnviaCorreo() {
+        return new EnviaCorreo();
+    }
+
+    /**
      * Create an instance of {@link ObtenerPrincPago }
      * 
      */
@@ -293,11 +313,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerUsuariosXPermiso }
+     * 
+     */
+    public ObtenerUsuariosXPermiso createObtenerUsuariosXPermiso() {
+        return new ObtenerUsuariosXPermiso();
+    }
+
+    /**
      * Create an instance of {@link InsertarResolucionResponse }
      * 
      */
     public InsertarResolucionResponse createInsertarResolucionResponse() {
         return new InsertarResolucionResponse();
+    }
+
+    /**
+     * Create an instance of {@link EnviaCorreoResponse }
+     * 
+     */
+    public EnviaCorreoResponse createEnviaCorreoResponse() {
+        return new EnviaCorreoResponse();
     }
 
     /**
@@ -405,14 +441,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ParametrosEmpresaEntity }
-     * 
-     */
-    public ParametrosEmpresaEntity createParametrosEmpresaEntity() {
-        return new ParametrosEmpresaEntity();
-    }
-
-    /**
      * Create an instance of {@link PerfilEntity }
      * 
      */
@@ -421,11 +449,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ParametrosEmpresaEntity }
+     * 
+     */
+    public ParametrosEmpresaEntity createParametrosEmpresaEntity() {
+        return new ParametrosEmpresaEntity();
+    }
+
+    /**
      * Create an instance of {@link ResolucionFactEntity }
      * 
      */
     public ResolucionFactEntity createResolucionFactEntity() {
         return new ResolucionFactEntity();
+    }
+
+    /**
+     * Create an instance of {@link CorreoWrapperRequest }
+     * 
+     */
+    public CorreoWrapperRequest createCorreoWrapperRequest() {
+        return new CorreoWrapperRequest();
     }
 
     /**
@@ -532,6 +576,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerRemisionesXClienteResponse")
     public JAXBElement<ObtenerRemisionesXClienteResponse> createObtenerRemisionesXClienteResponse(ObtenerRemisionesXClienteResponse value) {
         return new JAXBElement<ObtenerRemisionesXClienteResponse>(_ObtenerRemisionesXClienteResponse_QNAME, ObtenerRemisionesXClienteResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerUsuariosXPermisoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerUsuariosXPermisoResponse")
+    public JAXBElement<ObtenerUsuariosXPermisoResponse> createObtenerUsuariosXPermisoResponse(ObtenerUsuariosXPermisoResponse value) {
+        return new JAXBElement<ObtenerUsuariosXPermisoResponse>(_ObtenerUsuariosXPermisoResponse_QNAME, ObtenerUsuariosXPermisoResponse.class, null, value);
     }
 
     /**
@@ -805,12 +858,39 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviaCorreoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "enviaCorreoResponse")
+    public JAXBElement<EnviaCorreoResponse> createEnviaCorreoResponse(EnviaCorreoResponse value) {
+        return new JAXBElement<EnviaCorreoResponse>(_EnviaCorreoResponse_QNAME, EnviaCorreoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EnviaCorreo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "enviaCorreo")
+    public JAXBElement<EnviaCorreo> createEnviaCorreo(EnviaCorreo value) {
+        return new JAXBElement<EnviaCorreo>(_EnviaCorreo_QNAME, EnviaCorreo.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerPrincPago }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerPrincPago")
     public JAXBElement<ObtenerPrincPago> createObtenerPrincPago(ObtenerPrincPago value) {
         return new JAXBElement<ObtenerPrincPago>(_ObtenerPrincPago_QNAME, ObtenerPrincPago.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerUsuariosXPermiso }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerUsuariosXPermiso")
+    public JAXBElement<ObtenerUsuariosXPermiso> createObtenerUsuariosXPermiso(ObtenerUsuariosXPermiso value) {
+        return new JAXBElement<ObtenerUsuariosXPermiso>(_ObtenerUsuariosXPermiso_QNAME, ObtenerUsuariosXPermiso.class, null, value);
     }
 
     /**
