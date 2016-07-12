@@ -33,6 +33,7 @@ public class ObjectFactory {
     private final static QName _RealizarFacturaXRemisionResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "realizarFacturaXRemisionResponse");
     private final static QName _ActualizarSedeResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "actualizarSedeResponse");
     private final static QName _ObtenerCiudades_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerCiudades");
+    private final static QName _ObtenerValorVentasMesResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerValorVentasMesResponse");
     private final static QName _ActualizarSede_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "actualizarSede");
     private final static QName _RealizarFacturaXRemision_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "realizarFacturaXRemision");
     private final static QName _ActualizaParametro_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "actualizaParametro");
@@ -50,6 +51,7 @@ public class ObjectFactory {
     private final static QName _ObtenerCiudadesXDepartamento_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerCiudadesXDepartamento");
     private final static QName _GeneraReportes_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "generaReportes");
     private final static QName _ObtenerSedesResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerSedesResponse");
+    private final static QName _ObtenerValorVentasMes_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerValorVentasMes");
     private final static QName _ObtenerResolucionesFactResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerResolucionesFactResponse");
     private final static QName _ObtenerCiudadesResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerCiudadesResponse");
     private final static QName _ObtenerRemisionesXCliente_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerRemisionesXCliente");
@@ -241,6 +243,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerValorVentasMesResponse }
+     * 
+     */
+    public ObtenerValorVentasMesResponse createObtenerValorVentasMesResponse() {
+        return new ObtenerValorVentasMesResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerParametrosEmpresa }
      * 
      */
@@ -374,6 +384,14 @@ public class ObjectFactory {
      */
     public ObtenerDetallePagos createObtenerDetallePagos() {
         return new ObtenerDetallePagos();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerValorVentasMes }
+     * 
+     */
+    public ObtenerValorVentasMes createObtenerValorVentasMes() {
+        return new ObtenerValorVentasMes();
     }
 
     /**
@@ -642,6 +660,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerValorVentasMesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerValorVentasMesResponse")
+    public JAXBElement<ObtenerValorVentasMesResponse> createObtenerValorVentasMesResponse(ObtenerValorVentasMesResponse value) {
+        return new JAXBElement<ObtenerValorVentasMesResponse>(_ObtenerValorVentasMesResponse_QNAME, ObtenerValorVentasMesResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ActualizarSede }{@code >}}
      * 
      */
@@ -792,6 +819,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerSedesResponse")
     public JAXBElement<ObtenerSedesResponse> createObtenerSedesResponse(ObtenerSedesResponse value) {
         return new JAXBElement<ObtenerSedesResponse>(_ObtenerSedesResponse_QNAME, ObtenerSedesResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerValorVentasMes }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "obtenerValorVentasMes")
+    public JAXBElement<ObtenerValorVentasMes> createObtenerValorVentasMes(ObtenerValorVentasMes value) {
+        return new JAXBElement<ObtenerValorVentasMes>(_ObtenerValorVentasMes_QNAME, ObtenerValorVentasMes.class, null, value);
     }
 
     /**

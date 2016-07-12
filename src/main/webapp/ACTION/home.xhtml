@@ -6,10 +6,34 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
-			<br/>
+			<br />
 			<p:growl id="growl" showDetail="true" />
-			<p:chart type="pie" model="#{homeBean.pieModel}" style="width:400px;height:300px" />
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-4 col-sm-12 col-xs-12">
+					<p:panelGrid columns="2" styleClass="table" >
+						<p:outputLabel value="Dos meses Atras:"></p:outputLabel>
+						<p:outputLabel value="#{homeBean.dosMeses}" >
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+						<p:outputLabel value="Mes Anterior:" ></p:outputLabel>
+						<p:outputLabel value="#{homeBean.unMeses}" >
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+						<p:outputLabel value="Mes Actual:" ></p:outputLabel>
+						<p:outputLabel value="#{homeBean.actual}" >
+							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+						</p:outputLabel>
+					</p:panelGrid>
+					<p:chart type="pie" model="#{homeBean.pieModel}" style="width:100%;height:300px" />
+				</div>
+				<div class="col-md-4 col-sm-12 col-xs-12">
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
 			
+			
+
 		</ui:define>
 	</ui:composition>
 </body>
