@@ -10,6 +10,15 @@
 		<ui:define name="content">
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<br />
+			<p:dialog widgetVar="dialogSede" header="Sede Conteo" modal="true" closeOnEscape="true">
+				<h:form id="formSede">
+					<p:panelGrid>
+						<p:outputLabel value="Sede: " style="font-weight: bold !important;"></p:outputLabel>
+						<p:spacer width="20"></p:spacer>
+						<p:outputLabel value="#{conteosBean.sedeSelected.name}"></p:outputLabel>
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
 			<h:form id="formTabla">
 				<p:dataTable widgetVar="tablaConteo" emptyMessage="No existen conteos en el sistema registrados" id="tablaConteos" var="conteo" paginator="true" value="#{conteosBean.listaConteo}"
 					filteredValue="#{conteosBean.listaConteoFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
@@ -27,6 +36,10 @@
 					</p:column>
 					<p:column headerText="DESCRIPCIÓN">
 						<p:outputLabel value="#{conteo.descripcion}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="SEDE">
+						<p:commandButton value="VER SEDE" onsuccess="PF('dialogSede').show()" actionListener="#{conteosBean.buscaSede(conteo.sede)}" update=":formSede"></p:commandButton>
+						<p:commandButton value="GESTIONAR" styleClass="GreenButton" action="#{conteosBean.seleccionaConteo(conteo.id)}"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</h:form>

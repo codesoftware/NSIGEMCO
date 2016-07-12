@@ -104,7 +104,7 @@ public class LoginBean implements Serializable {
 					} else if ("UPD".equalsIgnoreCase(acceso)) {
 						FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 								.put("usuarioCambioContra", usuario);
-						redireccion = "ACTION/USUARIO/cambioContraObliga?faces-redirect=falsef";
+						redireccion = "ACTION/USUARIO/cambioContraObliga?faces-redirect=false";
 					} else {
 						this.setEnumer(ErrorEnum.ERROR);
 						this.messageBean("Error de credenciales");

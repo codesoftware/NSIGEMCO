@@ -33,5 +33,22 @@ public class SedesLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con la cual obtiene una sede por medio de su id
+	 * @return
+	 */
+	public SedeEntity obtenerSedeXId(Integer idSede){
+		SedeEntity aux = null;
+		try {
+			for(SedeEntity item : conexionWSGeneral().getPortGeneral().obtenerSedes()){
+				if(item.getId() == idSede){
+					aux = item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return aux;
+	}
 
 }

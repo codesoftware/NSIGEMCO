@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="cantidad" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="conteo" type="{http://conteos.servicio.codesoftware.com.co/}conteoEntity" minOccurs="0"/>
+ *         &lt;element name="diferencia" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="existencia" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="producto" type="{http://conteos.servicio.codesoftware.com.co/}productoEntity" minOccurs="0"/>
  *       &lt;/sequence>
@@ -32,6 +34,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "productoConteoEntity", propOrder = {
     "cantidad",
     "conteo",
+    "diferencia",
+    "existencia",
     "id",
     "producto"
 })
@@ -39,6 +43,8 @@ public class ProductoConteoEntity {
 
     protected Integer cantidad;
     protected ConteoEntity conteo;
+    protected Integer diferencia;
+    protected Integer existencia;
     protected Integer id;
     protected ProductoEntity producto;
 
@@ -88,6 +94,54 @@ public class ProductoConteoEntity {
      */
     public void setConteo(ConteoEntity value) {
         this.conteo = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad diferencia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getDiferencia() {
+        return diferencia;
+    }
+
+    /**
+     * Define el valor de la propiedad diferencia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setDiferencia(Integer value) {
+        this.diferencia = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad existencia.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getExistencia() {
+        return existencia;
+    }
+
+    /**
+     * Define el valor de la propiedad existencia.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setExistencia(Integer value) {
+        this.existencia = value;
     }
 
     /**

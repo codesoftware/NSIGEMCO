@@ -27,6 +27,51 @@ public interface ConteoWS {
 
     /**
      * 
+     * @param conteo
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(name = "respuesta", targetNamespace = "")
+    @RequestWrapper(localName = "insertaConteo", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.InsertaConteo")
+    @ResponseWrapper(localName = "insertaConteoResponse", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.InsertaConteoResponse")
+    @Action(input = "http://conteos.servicio.codesoftware.com.co/ConteoWS/insertaConteoRequest", output = "http://conteos.servicio.codesoftware.com.co/ConteoWS/insertaConteoResponse")
+    public String insertaConteo(
+        @WebParam(name = "conteo", targetNamespace = "")
+        ConteoEntity conteo);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(name = "conteo", targetNamespace = "")
+    @RequestWrapper(localName = "ejecutaCierreConteo", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.EjecutaCierreConteo")
+    @ResponseWrapper(localName = "ejecutaCierreConteoResponse", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.EjecutaCierreConteoResponse")
+    @Action(input = "http://conteos.servicio.codesoftware.com.co/ConteoWS/ejecutaCierreConteoRequest", output = "http://conteos.servicio.codesoftware.com.co/ConteoWS/ejecutaCierreConteoResponse")
+    public String ejecutaCierreConteo(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Integer arg0);
+
+    /**
+     * 
+     * @param idConteo
+     * @return
+     *     returns co.com.codesoftware.servicio.conteos.ConteoEntity
+     */
+    @WebMethod
+    @WebResult(name = "conteo", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerConteo", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.ObtenerConteo")
+    @ResponseWrapper(localName = "obtenerConteoResponse", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.ObtenerConteoResponse")
+    @Action(input = "http://conteos.servicio.codesoftware.com.co/ConteoWS/obtenerConteoRequest", output = "http://conteos.servicio.codesoftware.com.co/ConteoWS/obtenerConteoResponse")
+    public ConteoEntity obtenerConteo(
+        @WebParam(name = "idConteo", targetNamespace = "")
+        Integer idConteo);
+
+    /**
+     * 
      * @param idConteo
      * @param codigoExterno
      * @return
@@ -99,20 +144,5 @@ public interface ConteoWS {
     public List<ProductoConteoEntity> obtenerProductosConteo(
         @WebParam(name = "idConteo", targetNamespace = "")
         Integer idConteo);
-
-    /**
-     * 
-     * @param conteo
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(name = "respuesta", targetNamespace = "")
-    @RequestWrapper(localName = "insertaConteo", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.InsertaConteo")
-    @ResponseWrapper(localName = "insertaConteoResponse", targetNamespace = "http://conteos.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.conteos.InsertaConteoResponse")
-    @Action(input = "http://conteos.servicio.codesoftware.com.co/ConteoWS/insertaConteoRequest", output = "http://conteos.servicio.codesoftware.com.co/ConteoWS/insertaConteoResponse")
-    public String insertaConteo(
-        @WebParam(name = "conteo", targetNamespace = "")
-        ConteoEntity conteo);
 
 }

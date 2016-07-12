@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+			<p:commandLink value="CONSULTA CONTEOS" action="/ACTION/ADMIN/conteos"></p:commandLink>
+			<p:outputLabel value="/GESTION CONTEOS"></p:outputLabel>
+			<br />
+			<br />
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+
+					<p:panelGrid columns="6" styleClass="table">
+						<f:facet name="header">
+							<p:outputLabel value="CONTEO"></p:outputLabel>
+						</f:facet>
+						<p:outputLabel value="Nombre: "></p:outputLabel>
+						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.descripcion}"></p:outputLabel>
+						<p:outputLabel value="Fecha Inicial: "></p:outputLabel>
+						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.fechaIni}" converter="xmlDatetoDateConverter"></p:outputLabel>
+						<p:outputLabel value="Fecha Final: "></p:outputLabel>
+						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.fechaFin}" converter="xmlDatetoDateConverter"></p:outputLabel>
+						<p:outputLabel value="Estado: "></p:outputLabel>
+						<p:outputLabel value="ACTIVO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'A'}"></p:outputLabel>
+						<p:outputLabel value="CERRADO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'X'}"></p:outputLabel>
+						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}"></p:commandButton>
+						<p:commandButton value="ALTERACION INVENTARIO" styleClass="RedButton"></p:commandButton>
+					</p:panelGrid>
+					<br /> <br />
+					<p:dataTable value="#{visualizarConteoBean.listaConteo}" var="item" reflow="true" paginator="true" rows="10" emptyMessage="Conteo sin Productos asociados">
+						<f:facet name="header">
+							LISTA DE PRODUCTOS CONTADOS
+						</f:facet>
+						<p:column headerText="CANTIDAD CONTADA">
+							<p:outputLabel value="#{item.cantidad}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Existencia Inv.">
+							<p:outputLabel value="#{item.existencia}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Diferencia">
+							<p:outputLabel value="#{item.diferencia}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Codigo App">
+							<p:outputLabel value="#{item.producto.codigo}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Codigo Ext.">
+							<p:outputLabel value="#{item.producto.codigoExt}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Nombre">
+							<p:outputLabel value="#{item.producto.nombre}"></p:outputLabel>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -26,28 +26,24 @@ public class ObjectFactory {
 
     private final static QName _InsertaProductoConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "insertaProductoConteo");
     private final static QName _ObtenerConteoEstadoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerConteoEstadoResponse");
-    private final static QName _ObtenerProdConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProdConteoResponse");
     private final static QName _InsertaConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "insertaConteoResponse");
     private final static QName _InsertaConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "insertaConteo");
     private final static QName _ObtenerProductosConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProductosConteoResponse");
-    private final static QName _ObtenerConteoEstado_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerConteoEstado");
     private final static QName _ObtenerProdConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProdConteo");
-    private final static QName _ObtenerProductosConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProductosConteo");
+    private final static QName _ObtenerConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerConteoResponse");
     private final static QName _InsertaProductoConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "insertaProductoConteoResponse");
+    private final static QName _ObtenerConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerConteo");
+    private final static QName _EjecutaCierreConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "ejecutaCierreConteo");
+    private final static QName _EjecutaCierreConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "ejecutaCierreConteoResponse");
+    private final static QName _ObtenerProdConteoResponse_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProdConteoResponse");
+    private final static QName _ObtenerConteoEstado_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerConteoEstado");
+    private final static QName _ObtenerProductosConteo_QNAME = new QName("http://conteos.servicio.codesoftware.com.co/", "obtenerProductosConteo");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: co.com.codesoftware.servicio.conteos
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link ObtenerConteoEstado }
-     * 
-     */
-    public ObtenerConteoEstado createObtenerConteoEstado() {
-        return new ObtenerConteoEstado();
     }
 
     /**
@@ -67,11 +63,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ObtenerProductosConteo }
+     * Create an instance of {@link ObtenerConteoResponse }
      * 
      */
-    public ObtenerProductosConteo createObtenerProductosConteo() {
-        return new ObtenerProductosConteo();
+    public ObtenerConteoResponse createObtenerConteoResponse() {
+        return new ObtenerConteoResponse();
     }
 
     /**
@@ -80,6 +76,14 @@ public class ObjectFactory {
      */
     public InsertaProductoConteoResponse createInsertaProductoConteoResponse() {
         return new InsertaProductoConteoResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerConteo }
+     * 
+     */
+    public ObtenerConteo createObtenerConteo() {
+        return new ObtenerConteo();
     }
 
     /**
@@ -99,14 +103,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ObtenerProdConteoResponse }
-     * 
-     */
-    public ObtenerProdConteoResponse createObtenerProdConteoResponse() {
-        return new ObtenerProdConteoResponse();
-    }
-
-    /**
      * Create an instance of {@link InsertaConteoResponse }
      * 
      */
@@ -120,6 +116,46 @@ public class ObjectFactory {
      */
     public InsertaConteo createInsertaConteo() {
         return new InsertaConteo();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerConteoEstado }
+     * 
+     */
+    public ObtenerConteoEstado createObtenerConteoEstado() {
+        return new ObtenerConteoEstado();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerProductosConteo }
+     * 
+     */
+    public ObtenerProductosConteo createObtenerProductosConteo() {
+        return new ObtenerProductosConteo();
+    }
+
+    /**
+     * Create an instance of {@link EjecutaCierreConteo }
+     * 
+     */
+    public EjecutaCierreConteo createEjecutaCierreConteo() {
+        return new EjecutaCierreConteo();
+    }
+
+    /**
+     * Create an instance of {@link EjecutaCierreConteoResponse }
+     * 
+     */
+    public EjecutaCierreConteoResponse createEjecutaCierreConteoResponse() {
+        return new EjecutaCierreConteoResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerProdConteoResponse }
+     * 
+     */
+    public ObtenerProdConteoResponse createObtenerProdConteoResponse() {
+        return new ObtenerProdConteoResponse();
     }
 
     /**
@@ -205,15 +241,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdConteoResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerProdConteoResponse")
-    public JAXBElement<ObtenerProdConteoResponse> createObtenerProdConteoResponse(ObtenerProdConteoResponse value) {
-        return new JAXBElement<ObtenerProdConteoResponse>(_ObtenerProdConteoResponse_QNAME, ObtenerProdConteoResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertaConteoResponse }{@code >}}
      * 
      */
@@ -241,15 +268,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerConteoEstado }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerConteoEstado")
-    public JAXBElement<ObtenerConteoEstado> createObtenerConteoEstado(ObtenerConteoEstado value) {
-        return new JAXBElement<ObtenerConteoEstado>(_ObtenerConteoEstado_QNAME, ObtenerConteoEstado.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdConteo }{@code >}}
      * 
      */
@@ -259,12 +277,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosConteo }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerConteoResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerProductosConteo")
-    public JAXBElement<ObtenerProductosConteo> createObtenerProductosConteo(ObtenerProductosConteo value) {
-        return new JAXBElement<ObtenerProductosConteo>(_ObtenerProductosConteo_QNAME, ObtenerProductosConteo.class, null, value);
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerConteoResponse")
+    public JAXBElement<ObtenerConteoResponse> createObtenerConteoResponse(ObtenerConteoResponse value) {
+        return new JAXBElement<ObtenerConteoResponse>(_ObtenerConteoResponse_QNAME, ObtenerConteoResponse.class, null, value);
     }
 
     /**
@@ -274,6 +292,60 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "insertaProductoConteoResponse")
     public JAXBElement<InsertaProductoConteoResponse> createInsertaProductoConteoResponse(InsertaProductoConteoResponse value) {
         return new JAXBElement<InsertaProductoConteoResponse>(_InsertaProductoConteoResponse_QNAME, InsertaProductoConteoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerConteo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerConteo")
+    public JAXBElement<ObtenerConteo> createObtenerConteo(ObtenerConteo value) {
+        return new JAXBElement<ObtenerConteo>(_ObtenerConteo_QNAME, ObtenerConteo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EjecutaCierreConteo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "ejecutaCierreConteo")
+    public JAXBElement<EjecutaCierreConteo> createEjecutaCierreConteo(EjecutaCierreConteo value) {
+        return new JAXBElement<EjecutaCierreConteo>(_EjecutaCierreConteo_QNAME, EjecutaCierreConteo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EjecutaCierreConteoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "ejecutaCierreConteoResponse")
+    public JAXBElement<EjecutaCierreConteoResponse> createEjecutaCierreConteoResponse(EjecutaCierreConteoResponse value) {
+        return new JAXBElement<EjecutaCierreConteoResponse>(_EjecutaCierreConteoResponse_QNAME, EjecutaCierreConteoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdConteoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerProdConteoResponse")
+    public JAXBElement<ObtenerProdConteoResponse> createObtenerProdConteoResponse(ObtenerProdConteoResponse value) {
+        return new JAXBElement<ObtenerProdConteoResponse>(_ObtenerProdConteoResponse_QNAME, ObtenerProdConteoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerConteoEstado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerConteoEstado")
+    public JAXBElement<ObtenerConteoEstado> createObtenerConteoEstado(ObtenerConteoEstado value) {
+        return new JAXBElement<ObtenerConteoEstado>(_ObtenerConteoEstado_QNAME, ObtenerConteoEstado.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosConteo }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://conteos.servicio.codesoftware.com.co/", name = "obtenerProductosConteo")
+    public JAXBElement<ObtenerProductosConteo> createObtenerProductosConteo(ObtenerProductosConteo value) {
+        return new JAXBElement<ObtenerProductosConteo>(_ObtenerProductosConteo_QNAME, ObtenerProductosConteo.class, null, value);
     }
 
 }

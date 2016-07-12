@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import co.com.codesoftware.logica.SedesLogica;
 import co.com.codesoftware.logica.admin.ConteoLogica;
 import co.com.codesoftware.servicio.conteos.ConteoEntity;
+import co.com.codesoftware.servicio.general.SedeEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
@@ -28,15 +29,17 @@ public class ConteosBean implements Serializable, GeneralBean {
 	private List<ConteoEntity> listaConteo;
 	private List<ConteoEntity> listaConteoFiltered;
 	private ConteoEntity conteoEntity;
-	
+	private SedeEntity sedeSelected;
+
 	public ConteosBean() {
 		super();
 		this.conteoEntity = new ConteoEntity();
-		
+
 	}
+
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("datosSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		try {
 			ConteoLogica objLogica = new ConteoLogica();
 			this.listaConteo = objLogica.obtieneListaConteos("-1");
@@ -45,25 +48,45 @@ public class ConteosBean implements Serializable, GeneralBean {
 		}
 
 	}
+
 	/**
 	 * Funcion con la cual realizo la insercion de un conteo
 	 */
-	public void insertarConteo(){
+	public void insertarConteo() {
 		try {
 			ConteoLogica objLogica = new ConteoLogica();
 			this.conteoEntity.setTius(this.objetoSesion.getId());
 			String valida = objLogica.insertaConteo(this.conteoEntity);
-			if("Ok".equalsIgnoreCase(valida)){
-				this.messageBean("Conteo Insertado correctamente",ErrorEnum.SUCCESS);
+			if ("Ok".equalsIgnoreCase(valida)) {
+				this.messageBean("Conteo Insertado correctamente", ErrorEnum.SUCCESS);
 				this.listaConteo = objLogica.obtieneListaConteos("-1");
-			}else{
-				this.messageBean("Error al insertar el conteo",ErrorEnum.ERROR);
+			} else {
+				this.messageBean("Error al insertar el conteo", ErrorEnum.ERROR);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Funcion con la cual busca una sede
+	 * 
+	 * @param idSede
+	 */
+	public void buscaSede(Integer idSede) {
+		try {
+			SedesLogica objLogica = new SedesLogica();
+			this.sedeSelected = objLogica.obtenerSedeXId(idSede);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String seleccionaConteo(Integer idConteo){
+		String rta = "/ACTION/ADMIN/visualizarConteo.jsf";
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idConteo", idConteo);
+		return rta;
+	}
 
 	public ErrorEnum getEnumer() {
 		return enumer;
@@ -103,6 +126,14 @@ public class ConteosBean implements Serializable, GeneralBean {
 
 	public void setConteoEntity(ConteoEntity conteoEntity) {
 		this.conteoEntity = conteoEntity;
+	}
+
+	public SedeEntity getSedeSelected() {
+		return sedeSelected;
+	}
+
+	public void setSedeSelected(SedeEntity sedeSelected) {
+		this.sedeSelected = sedeSelected;
 	}
 
 }
