@@ -167,6 +167,9 @@ public class MenuBean implements Serializable {
 			
 			DefaultMenuItem segundoNivelCinco = new DefaultMenuItem("Proveedores.");
 			segundoNivelCinco.setCommand("/ACTION/ADMIN/proveedores.jsf");
+			
+			DefaultMenuItem segundoNivelSeis = new DefaultMenuItem("Clientes.");
+			segundoNivelSeis.setCommand("/ACTION/ADMIN/clientes.jsf");
 			//Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			menuPrincipal.addElement(segundoNivelUno);
@@ -174,6 +177,7 @@ public class MenuBean implements Serializable {
 			menuPrincipal.addElement(segundoNivelTres);
 			menuPrincipal.addElement(segundoNivelCuatro);
 			menuPrincipal.addElement(segundoNivelCinco);
+			menuPrincipal.addElement(segundoNivelSeis);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

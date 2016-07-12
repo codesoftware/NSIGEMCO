@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="nombres" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="telefono" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="dVerificacion" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
     "direccion",
     "id",
     "nombres",
-    "telefono"
+    "telefono",
+    "dVerificacion"
 })
 public class ClienteEntity {
 
@@ -50,6 +52,7 @@ public class ClienteEntity {
     protected Integer id;
     protected String nombres;
     protected String telefono;
+    protected Integer dVerificacion;
 
     /**
      * Obtiene el valor de la propiedad apellidos.
@@ -217,6 +220,30 @@ public class ClienteEntity {
      */
     public void setTelefono(String value) {
         this.telefono = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad dVerificacion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getDVerificacion() {
+        return dVerificacion;
+    }
+
+    /**
+     * Define el valor de la propiedad dVerificacion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setDVerificacion(Integer value) {
+        this.dVerificacion = value;
     }
 
 }

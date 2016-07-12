@@ -77,6 +77,18 @@ public interface UsuarioWS {
     /**
      * 
      * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.usuario.ClienteEntity>
+     */
+    @WebMethod
+    @WebResult(name = "Cliente", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerClientes", targetNamespace = "http://usuario.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.usuario.ObtenerClientes")
+    @ResponseWrapper(localName = "obtenerClientesResponse", targetNamespace = "http://usuario.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.usuario.ObtenerClientesResponse")
+    @Action(input = "http://usuario.servicio.codesoftware.com.co/UsuarioWS/obtenerClientesRequest", output = "http://usuario.servicio.codesoftware.com.co/UsuarioWS/obtenerClientesResponse")
+    public List<ClienteEntity> obtenerClientes();
+
+    /**
+     * 
+     * @return
      *     returns java.util.List<co.com.codesoftware.servicio.usuario.UsuarioEntity>
      */
     @WebMethod
@@ -112,18 +124,6 @@ public interface UsuarioWS {
     public String insertaUsuario(
         @WebParam(name = "usuario", targetNamespace = "")
         UsuarioEntity usuario);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.usuario.ClienteEntity>
-     */
-    @WebMethod
-    @WebResult(name = "Cliente", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerClientes", targetNamespace = "http://usuario.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.usuario.ObtenerClientes")
-    @ResponseWrapper(localName = "obtenerClientesResponse", targetNamespace = "http://usuario.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.usuario.ObtenerClientesResponse")
-    @Action(input = "http://usuario.servicio.codesoftware.com.co/UsuarioWS/obtenerClientesRequest", output = "http://usuario.servicio.codesoftware.com.co/UsuarioWS/obtenerClientesResponse")
-    public List<ClienteEntity> obtenerClientes();
 
     /**
      * 

@@ -20,5 +20,19 @@ public class ClienteLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * funcion que consulta el cliente por ID
+	 * @param idCliente
+	 * @return
+	 */
+	public ClienteEntity consultaCliente(String cedula){
+		ClienteEntity rta = null;
+		try {
+			rta = conexionWSUsuarios().getPortUsuarios().obtenerClienteXCedula(cedula);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 
 }

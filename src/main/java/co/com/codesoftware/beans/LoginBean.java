@@ -33,8 +33,8 @@ public class LoginBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		EnviaCorreosLogica logica = new EnviaCorreosLogica();
-		logica.enviaCorreosFacturaCompra();
+		//EnviaCorreosLogica logica = new EnviaCorreosLogica();
+		//logica.enviaCorreosFacturaCompra();
 		bandera = true;
 		try {
 			this.usuario = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()

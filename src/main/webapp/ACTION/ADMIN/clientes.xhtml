@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<f:event listener="#{clienteBean.buscaClientes}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="cliente" widgetVar="wcliente" id="tablaClientes"
+							value="#{clienteBean.clientes}" paginator="true" rows="20"
+							filteredValue="#{clienteBean.clientesFilter}" emptyMessage="No existen proveedores parametrizados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE CLIENTES
+							</f:facet>
+							<p:column headerText="CEDULA /NIT" filterBy="#{cliente.cedula}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{cliente.cedula}"></h:outputText>
+							</p:column>
+						    <p:column headerText="NOMBRES" filterBy="#{cliente.nombres}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{cliente.nombres}"></h:outputText>
+							</p:column>
+							<p:column headerText="DIRECCIÒN" filterBy="#{cliente.direccion}" priority="4" filterMatchMode="contains">
+								<h:outputText value="#{cliente.direccion}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE" priority="5">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{clienteBean.consultaCliente}" 
+									oncomplete="PF('datosCliente').show()" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosCliente" modal="true" header="DATOS CLIENTE" closeOnEscape="true">
+					</p:dialog>
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:head>
+<body>
+</body>
+</html>

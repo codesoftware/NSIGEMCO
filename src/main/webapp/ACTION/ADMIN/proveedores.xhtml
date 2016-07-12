@@ -16,7 +16,7 @@
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
 					<p:panel style="width:80%">
-						<p:dataTable var="proveedor" widgetVar="wproveedor" id="tablaProveedores" value="#{provedorBean.listaProveedores}" paginator="true" filteredValue="#{provedorBean.listaProveedoresFiltro}"
+						<p:dataTable var="proveedor" rows="20" widgetVar="wproveedor" id="tablaProveedores" value="#{provedorBean.listaProveedores}" paginator="true" filteredValue="#{provedorBean.listaProveedoresFiltro}"
 							emptyMessage="No existen proveedores parametrizados en el sistema">
 							<f:facet name="header">
 								CONSULTA GENERAL DE PROVEEDORES
