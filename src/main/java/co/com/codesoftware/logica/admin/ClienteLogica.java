@@ -34,5 +34,33 @@ public class ClienteLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * metodo que inserta un cliene
+	 * @return
+	 */
+	public Integer insertaCliente(ClienteEntity cliente){
+		Integer rta = null;
+		try {
+			rta = conexionWSUsuarios().getPortUsuarios().insertaCliente(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	
+	/**
+	 * 
+	 * @param cliente
+	 * @return
+	 */
+	public boolean actualizaCliente(ClienteEntity cliente){
+		boolean respuesta = false;
+		try {
+			respuesta = conexionWSUsuarios().getPortUsuarios().updateCliente(cliente);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return respuesta;
+	}
 
 }

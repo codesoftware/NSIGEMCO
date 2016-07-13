@@ -32,12 +32,52 @@
 								<h:outputText value="#{cliente.direccion}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="5">
-								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{clienteBean.consultaCliente}" 
-									oncomplete="PF('datosCliente').show()" />
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" actionListener="#{clienteBean.consultaCliente(cliente)}" 
+									oncomplete="PF('datosCliente').show()" update=":formTable:panelCliente" />
 							</p:column>
 						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelCliente" action="#{clienteBean.limpiaPanel}" oncomplete="PF('datosCliente').show()" />
 					</p:panel>
 					<p:dialog responsive="true" widgetVar="datosCliente" modal="true" header="DATOS CLIENTE" closeOnEscape="true">
+					<p:panelGrid columns="2" id="panelCliente" style="width:80%">
+						<p:column>
+							Nombres:
+								<p:inputText value="#{clienteBean.cliente.nombres}" style="width:100%"/>
+						</p:column>
+						<p:column>
+							Apellidos:
+								<p:inputText value="#{clienteBean.cliente.apellidos}" style="width:100%"/>
+						</p:column>
+						<p:column>
+							Nit/Cedula:
+							<p:inputText value="#{clienteBean.cliente.cedula}" style="width:60%">
+									<p:ajax event="blur" update="digitoVer" listener="#{clienteBean.muestraDigito}" />
+								</p:inputText>
+
+								<p:inputText value="#{clienteBean.cliente.DVerificacion}" id="digitoVer" style="width:20%"></p:inputText>
+
+							</p:column>
+							<p:column>
+							Direccion:
+								<p:inputText value="#{clienteBean.cliente.direccion}" style="width:100%"/>
+						</p:column>
+						<p:column>
+							Telefono:
+								<p:inputText value="#{clienteBean.cliente.telefono}" style="width:100%"/>
+						</p:column>
+						<p:column>
+							Correo:
+								<p:inputText value="#{clienteBean.cliente.correo}" style="width:100%"/>
+						</p:column>
+						<p:column>
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton"
+									rendered="#{clienteBean.banderaboton=='I'}"
+									actionListener="#{clienteBean.insertaCliente}" update="tablaClientes" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{clienteBean.banderaboton=='U'}" actionListener="#{clienteBean.actualizaCliente}" update="tablaClientes" />
+						</p:column>
+					</p:panelGrid>
+					
 					</p:dialog>
 				</center>
 			</h:form>
