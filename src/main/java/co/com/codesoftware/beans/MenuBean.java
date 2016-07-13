@@ -38,35 +38,7 @@ public class MenuBean implements Serializable {
 		if (menuDinamico == null) {
 			this.menuDinamico = new DefaultMenuModel();
 		}
-		DefaultSubMenu primerNivel = new DefaultSubMenu();
-		primerNivel.setLabel("INVENTARIOS");
-		primerNivel.setIcon("fa fa-bank");
-
-		DefaultSubMenu segundoNivel = new DefaultSubMenu();
-		segundoNivel.setLabel("Productos");
-
-		DefaultMenuItem tercerNivel = new DefaultMenuItem("Add. Prod. X Fact");
-		tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
-		DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
-		tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
 		
-		DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
-		tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
-
-		DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
-		tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
-
-		DefaultMenuItem tercerNivelCargaArchivo = new DefaultMenuItem("Cargue productosArchivo");
-		tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
-
-		DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
-		tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
-
-		DefaultMenuItem tercerNivelConsGeneral = new DefaultMenuItem("Consulta General");
-		tercerNivelConsGeneral.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
-
-		DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
-		tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
 		// Segundo punto de menu
 
 		DefaultSubMenu segundoPunto = new DefaultSubMenu();
@@ -99,16 +71,7 @@ public class MenuBean implements Serializable {
 		segPunNivDos.addElement(segPunNvDosPrecMasivIns);
 		segPunNivDos.addElement(segPunNvDosPrecMasivEje);
 
-		segundoNivel.addElement(tercerNivel);
-		segundoNivel.addElement(tercerNivelFacturaCompra);
-		segundoNivel.addElement(tercerNivelFacturaCompraTmp);
-		segundoNivel.addElement(tercerNivelPrueba);
-		segundoNivel.addElement(tercerNivelCargaArchivo);
-		segundoNivel.addElement(tercerNivelPrecio);
-		segundoNivel.addElement(tercerNivelConsGeneral);
-		segundoNivel.addElement(tercerNivelSolicitudes);
-
-		primerNivel.addElement(segundoNivel);
+		
 
 		// REPORTES
 		DefaultMenuItem menuReportes = new DefaultMenuItem("REPORTES");
@@ -130,7 +93,7 @@ public class MenuBean implements Serializable {
 		DefaultMenuItem cuartoPunto = new DefaultMenuItem("SIGEMCO");
 		cuartoPunto.setCommand("#{loginBean.cambioSigemco}");
 		this.menuDinamico.addElement(this.generaMenuAdmon());
-		this.menuDinamico.addElement(primerNivel);
+		this.menuDinamico.addElement(this.generaMenuProd());
 		this.menuDinamico.addElement(segundoPunto);
 		this.menuDinamico.addElement(menuReportes);
 		this.menuDinamico.addElement(this.generaMenuFacturacion());
@@ -138,6 +101,63 @@ public class MenuBean implements Serializable {
 		this.menuDinamico.addElement(this.generaMenuContabilidad());
 		this.menuDinamico.addElement(tercerPunto);
 		this.menuDinamico.addElement(cuartoPunto);
+	}
+	
+	public DefaultSubMenu generaMenuProd(){
+		DefaultSubMenu primerNivel = new DefaultSubMenu();
+		try {
+			primerNivel.setLabel("INVENTARIOS");
+			primerNivel.setIcon("fa fa-bank");
+
+			DefaultSubMenu segundoNivel = new DefaultSubMenu();
+			segundoNivel.setLabel("Productos ");
+
+			DefaultMenuItem tercerNivel = new DefaultMenuItem("Add. Prod. X Fact");
+			tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
+			DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
+			tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
+			
+			DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
+			tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
+
+			DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
+			tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
+
+			DefaultMenuItem tercerNivelCargaArchivo = new DefaultMenuItem("Cargue productosArchivo");
+			tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
+
+			DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
+			tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
+
+			DefaultMenuItem tercerNivelConsGeneral = new DefaultMenuItem("Consulta General");
+			tercerNivelConsGeneral.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
+
+			DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
+			tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
+			
+			DefaultSubMenu segundoNivelUno = new DefaultSubMenu();
+			segundoNivelUno.setLabel("Merma");
+			
+			DefaultMenuItem consultaMerma = new DefaultMenuItem("Administra");
+			consultaMerma.setCommand("/ACTION/PRODUCTOS/adminMerma.jsf?faces-redirect=false");
+			  
+			segundoNivelUno.addElement(consultaMerma);
+			
+			segundoNivel.addElement(tercerNivel);
+			segundoNivel.addElement(tercerNivelFacturaCompra);
+			segundoNivel.addElement(tercerNivelFacturaCompraTmp);
+			segundoNivel.addElement(tercerNivelPrueba);
+			segundoNivel.addElement(tercerNivelCargaArchivo);
+			segundoNivel.addElement(tercerNivelPrecio);
+			segundoNivel.addElement(tercerNivelConsGeneral);
+			segundoNivel.addElement(tercerNivelSolicitudes);
+
+			primerNivel.addElement(segundoNivel);
+			primerNivel.addElement(segundoNivelUno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return primerNivel;
 	}
 	/**
 	 * Funcion con la cual genero el menu de administracion, con todos sus hijos
