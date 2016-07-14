@@ -104,16 +104,22 @@ public class MenuBean implements Serializable {
 	}
 	
 	public DefaultSubMenu generaMenuProd(){
-		DefaultSubMenu primerNivel = new DefaultSubMenu();
+		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			primerNivel.setLabel("INVENTARIOS");
-			primerNivel.setIcon("fa fa-bank");
-
-			DefaultSubMenu segundoNivel = new DefaultSubMenu();
-			segundoNivel.setLabel("Productos ");
-
+			menuPrincipal.setLabel("INVENTARIOS");
+			menuPrincipal.setIcon("fa fa-bank");
+			
+			//Segundo Nivel
+			DefaultSubMenu productos = new DefaultSubMenu();
+			productos.setLabel("Productos ");
+			
+			DefaultSubMenu cargues = new DefaultSubMenu();
+			cargues.setLabel("Cargues Masivos ");
+			
+			
 			DefaultMenuItem tercerNivel = new DefaultMenuItem("Add. Prod. X Fact");
 			tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
+			
 			DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
 			tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
 			
@@ -123,8 +129,8 @@ public class MenuBean implements Serializable {
 			DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
 			tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
 
-			DefaultMenuItem tercerNivelCargaArchivo = new DefaultMenuItem("Cargue productosArchivo");
-			tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
+			//DefaultMenuItem tercerNivelCargaArchivo = new DefaultMenuItem("Cargue productosArchivo");
+			//tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
 
 			DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
 			tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
@@ -135,29 +141,32 @@ public class MenuBean implements Serializable {
 			DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
 			tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
 			
-			DefaultSubMenu segundoNivelUno = new DefaultSubMenu();
-			segundoNivelUno.setLabel("Merma");
+			productos.addElement(tercerNivel);
+			productos.addElement(tercerNivelFacturaCompra);
+			productos.addElement(tercerNivelFacturaCompraTmp);
+			productos.addElement(tercerNivelPrueba);
+			//segundoNivel.addElement(tercerNivelCargaArchivo);
+			productos.addElement(tercerNivelPrecio);
+			productos.addElement(tercerNivelConsGeneral);
+			productos.addElement(tercerNivelSolicitudes);
 			
-			DefaultMenuItem consultaMerma = new DefaultMenuItem("Administra");
-			consultaMerma.setCommand("/ACTION/PRODUCTOS/adminMerma.jsf?faces-redirect=false");
-			  
-			segundoNivelUno.addElement(consultaMerma);
 			
-			segundoNivel.addElement(tercerNivel);
-			segundoNivel.addElement(tercerNivelFacturaCompra);
-			segundoNivel.addElement(tercerNivelFacturaCompraTmp);
-			segundoNivel.addElement(tercerNivelPrueba);
-			segundoNivel.addElement(tercerNivelCargaArchivo);
-			segundoNivel.addElement(tercerNivelPrecio);
-			segundoNivel.addElement(tercerNivelConsGeneral);
-			segundoNivel.addElement(tercerNivelSolicitudes);
-
-			primerNivel.addElement(segundoNivel);
-			primerNivel.addElement(segundoNivelUno);
+			//Tercer Nivel
+			DefaultMenuItem cargueProductos = new DefaultMenuItem("Cargue Productos");
+			cargueProductos.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
+			cargues.addElement(cargueProductos);
+			
+			DefaultMenuItem cargueProd = new DefaultMenuItem("Solo Prod");
+			cargueProd.setCommand("/ACTION/PRODUCTOS/cargueSoloProducto.jsf?faces-redirect=false");
+			cargues.addElement(cargueProd);
+			
+			menuPrincipal.addElement(productos);
+			menuPrincipal.addElement(cargues);
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return primerNivel;
+		return menuPrincipal;
 	}
 	/**
 	 * Funcion con la cual genero el menu de administracion, con todos sus hijos

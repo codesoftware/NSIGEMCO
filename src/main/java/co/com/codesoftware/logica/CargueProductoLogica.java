@@ -53,24 +53,24 @@ public class CargueProductoLogica implements WSGeneralInterface {
 					cell = null;
 					cell = cellIterator.next();
 					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
-						System.out.println("nulo codigo "+row.getRowNum());
+						System.out.println("nulo codigo " + row.getRowNum());
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
-						cellIterator.hasNext(); 
+						cellIterator.hasNext();
 					} else {
 						entidad.setUbicacion(cell.getStringCellValue());
 						cell = cellIterator.next();
 						try {
-							entidad.setCodigoExterno(String.valueOf(""+cell.getStringCellValue()).trim());
+							entidad.setCodigoExterno(String.valueOf("" + cell.getStringCellValue()).trim());
 						} catch (IllegalStateException ex) {
 							Double celda = cell.getNumericCellValue();
-							entidad.setCodigoExterno(""+celda.longValue());
-							//Muestro el codigo como quedo
-							System.out.println("Obtenido como un campo numerico: " + celda.longValue() );
+							entidad.setCodigoExterno("" + celda.longValue());
+							// Muestro el codigo como quedo
+							System.out.println("Obtenido como un campo numerico: " + celda.longValue());
 						}
 						cell = cellIterator.next();
 						entidad.setDescripcion(cell.getStringCellValue());
@@ -82,8 +82,8 @@ public class CargueProductoLogica implements WSGeneralInterface {
 						} catch (IllegalStateException e) {
 							Double celda = cell.getNumericCellValue();
 							System.out.println(celda);
-							entidad.setSubcategoria(""+celda.longValue());
-							//Muestro el codigo como quedo
+							entidad.setSubcategoria("" + celda.longValue());
+							// Muestro el codigo como quedo
 						}
 						cell = cellIterator.next();
 						entidad.setTipo(cell.getStringCellValue());
@@ -97,9 +97,9 @@ public class CargueProductoLogica implements WSGeneralInterface {
 							String celda = cell.getStringCellValue();
 							System.out.println(celda);
 							entidad.setCosto(new BigDecimal(celda));
-						}						
+						}
 						cell = cellIterator.next();
-						entidad.setCodigoBarras(""+cell.getRichStringCellValue().getString());
+						entidad.setCodigoBarras("" + cell.getRichStringCellValue().getString());
 						entidad.setUsuario(1);
 						listaProductos.add(entidad);
 						mensaje = validaNuloVacioExcel(entidad);
@@ -145,17 +145,20 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		}
 
 	}
+
 	/**
-	 * Funcion con la cual llamo el webservice de insertar categorias subcategorias y marcas
+	 * Funcion con la cual llamo el webservice de insertar categorias
+	 * subcategorias y marcas
+	 * 
 	 * @return
 	 */
-	public RespuestaEntity insertaParametros(){
+	public RespuestaEntity insertaParametros() {
 		RespuestaEntity respuesta = new RespuestaEntity();
 		try {
-			respuesta=conexionWSAdmin().getPortAdm().insertarProductoExcel();
+			respuesta = conexionWSAdmin().getPortAdm().insertarProductoExcel();
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return respuesta;
 	}
@@ -222,6 +225,110 @@ public class CargueProductoLogica implements WSGeneralInterface {
 				respuesta = "Error en el campo codigo Existencias columna " + 6 + "fila ";
 			} else if (entidad.getExistencias() == -1 || entidad.getExistencias() == null) {
 				respuesta = "Error en el campo costo columna " + 7 + "fila ";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return respuesta;
+	}
+
+	public RespuestaEntity cargaExcelProducto(UploadedFile fileUp, FileUploadEvent event, Integer idTius) {
+		RespuestaEntity respuesta = new RespuestaEntity();
+		String mensaje = "";
+		Row row = null;
+		Cell cell = null;
+		try {
+			file = event.getFile().getInputstream();
+			workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			List<ProductoTmpEntity> listaProductos = new ArrayList<ProductoTmpEntity>();
+			rowIterator.next();
+			while (rowIterator.hasNext()) {
+				row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				ProductoTmpEntity entidad = new ProductoTmpEntity();
+				while (cellIterator.hasNext()) {
+					cell = null;
+					cell = cellIterator.next();
+					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
+						System.out.println("nulo codigo " + row.getRowNum());
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+					} else {
+						entidad.setUbicacion(cell.getStringCellValue());
+						cell = cellIterator.next();
+						try {
+							entidad.setCodigoExterno(String.valueOf("" + cell.getStringCellValue()).trim());
+						} catch (IllegalStateException ex) {
+							Double celda = cell.getNumericCellValue();
+							entidad.setCodigoExterno("" + celda.longValue());
+							// Muestro el codigo como quedo
+							System.out.println("Obtenido como un campo numerico: " + celda.longValue());
+						}
+						cell = cellIterator.next();
+						entidad.setDescripcion(cell.getStringCellValue());
+						cell = cellIterator.next();
+						entidad.setCategoria(cell.getStringCellValue());
+						cell = cellIterator.next();
+						try {
+							entidad.setSubcategoria(cell.getStringCellValue());
+						} catch (IllegalStateException e) {
+							Double celda = cell.getNumericCellValue();
+							System.out.println(celda);
+							entidad.setSubcategoria("" + celda.longValue());
+							// Muestro el codigo como quedo
+						}
+						cell = cellIterator.next();
+						entidad.setTipo(cell.getStringCellValue());
+						entidad.setUsuario(idTius);
+						entidad.setExistencias(0);
+						listaProductos.add(entidad);
+						mensaje = validaNuloVacioExcelSoloP(entidad);
+						if (!"".equalsIgnoreCase(mensaje)) {
+							mensaje += row.getRowNum();
+							break;
+						}
+					}
+				}
+			}
+			if ("".equalsIgnoreCase(mensaje)) {
+				respuesta = insertaDatos(listaProductos);
+			} else {
+				respuesta.setCodigoRespuesta(0);
+				respuesta.setDescripcionRespuesta("ERROR DE DATOS");
+				System.out.println(mensaje);
+				respuesta.setMensajeRespuesta(mensaje);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			respuesta.setCodigoRespuesta(0);
+			respuesta.setDescripcionRespuesta(e.getMessage());
+			respuesta.setMensajeRespuesta("error en  Fila" + row.getRowNum());
+			System.out.println("error en  Fila" + row.getRowNum());
+		}
+		return respuesta;
+	}
+
+	public String validaNuloVacioExcelSoloP(ProductoTmpEntity entidad) {
+		String respuesta = "";
+		try {
+			if ("".equalsIgnoreCase(entidad.getCodigoExterno()) || entidad.getCodigoExterno() == null) {
+				respuesta = "Error en el campo codigo Externo columna " + 1 + "fila ";
+			} else if ("".equalsIgnoreCase(entidad.getUbicacion()) || entidad.getUbicacion() == null) {
+				respuesta = "Error en el campo  Ubicación columna " + 2 + "fila ";
+			} else if ("".equalsIgnoreCase(entidad.getDescripcion()) || entidad.getDescripcion() == null) {
+				respuesta = "Error en el campo  Descripción columna " + 3 + "fila ";
+			} else if ("".equalsIgnoreCase(entidad.getSubcategoria()) || entidad.getSubcategoria() == null) {
+				respuesta = "Error en el campo Tipo columna " + 5 + "fila ";
+			} else if ("".equalsIgnoreCase(entidad.getTipo()) || entidad.getTipo() == null) {
+				respuesta = "Error en el campo codigo Existencias columna " + 6 + "fila ";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,65 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<br /> <br />
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					<p:panel header="Cargar Excel de productos" styleClass="table table-bordered">
+						<p:column colspan="2">
+							<h:form id="formCargue">
+								<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
+									<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+										invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{cargueProductoBean.cargueExcelSoloProd}" update=":formTable" />
+								</p:panelGrid>
+							</h:form>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Tambien puede arrastrar su archivo aqui.." />
+						</p:column>
+					</p:panel>
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<h:form id="formTable">
+						<p:dataTable var="productos" id="productos" value="#{cargueProductoBean.listaProductos}" rows="10" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
+							<p:column headerText="Codigo Externo">
+								<h:outputText value="#{productos.codigoExterno}" />
+							</p:column>
+
+							<p:column headerText="Ubicación">
+								<h:outputText value="#{productos.ubicacion}" />
+							</p:column>
+
+							<p:column headerText="Descripción">
+								<h:outputText value="#{productos.descripcion}" />
+							</p:column>
+
+							<p:column headerText="Categoría">
+								<h:outputText value="#{productos.categoria}" />
+							</p:column>
+							<p:column headerText="SubCategoría">
+								<h:outputText value="#{productos.subcategoria}" />
+							</p:column>
+							<p:column headerText="Tipo">
+								<h:outputText value="#{productos.tipo}" />
+							</p:column>
+						</p:dataTable>					
+					</h:form>
+				</div>
+				<div class="col-md-1 col-sm-0 col-xs-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
