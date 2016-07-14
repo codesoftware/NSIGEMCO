@@ -102,6 +102,23 @@ public class CargueProductoBean implements Serializable, GeneralBean {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Funcion con la cual registro los productos del excel cargado previamente
+	 */
+	public void registroProductos(){
+		try {
+			CargueProductoLogica objLogica = new CargueProductoLogica();
+			String valida = objLogica.enviaRegistroProductos();
+			if("Ok".equalsIgnoreCase(valida)){
+				messageBean("Ok", ErrorEnum.SUCCESS);
+			}else{
+				messageBean("Error al registrar los productos " + valida, ErrorEnum.ERROR);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Metodo generico para mostrar mensajes de error o advertencia

@@ -51,6 +51,7 @@ public class ObjectFactory {
     private final static QName _ConsultaProductosTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductosTemporalResponse");
     private final static QName _InsertaReferencia_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaReferencia");
     private final static QName _ObtieneMarcasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneMarcasResponse");
+    private final static QName _RegistroProductosExcelResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "registroProductosExcelResponse");
     private final static QName _ObtieneSubCuentasFiltro_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneSubCuentasFiltro");
     private final static QName _ConsultaTablasRetencion_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaTablasRetencion");
     private final static QName _InsertaProveedorResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaProveedorResponse");
@@ -71,6 +72,7 @@ public class ObjectFactory {
     private final static QName _ObtieneProveedores_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProveedores");
     private final static QName _ConsultaProductoCodigoExternoResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductoCodigoExternoResponse");
     private final static QName _InsertaPedidosProductoResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaPedidosProductoResponse");
+    private final static QName _RegistroProductosExcel_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "registroProductosExcel");
     private final static QName _CambioPrecioProductoResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "cambioPrecioProductoResponse");
     private final static QName _LoginUsuario_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "loginUsuario");
     private final static QName _ObtieneProductosCategoriaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProductosCategoriaResponse");
@@ -178,6 +180,14 @@ public class ObjectFactory {
      */
     public ObtieneSubCuentasFiltro createObtieneSubCuentasFiltro() {
         return new ObtieneSubCuentasFiltro();
+    }
+
+    /**
+     * Create an instance of {@link RegistroProductosExcelResponse }
+     * 
+     */
+    public RegistroProductosExcelResponse createRegistroProductosExcelResponse() {
+        return new RegistroProductosExcelResponse();
     }
 
     /**
@@ -418,6 +428,14 @@ public class ObjectFactory {
      */
     public ObtieneSubCuentasFiltroResponse createObtieneSubCuentasFiltroResponse() {
         return new ObtieneSubCuentasFiltroResponse();
+    }
+
+    /**
+     * Create an instance of {@link RegistroProductosExcel }
+     * 
+     */
+    public RegistroProductosExcel createRegistroProductosExcel() {
+        return new RegistroProductosExcel();
     }
 
     /**
@@ -912,6 +930,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegistroProductosExcelResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "registroProductosExcelResponse")
+    public JAXBElement<RegistroProductosExcelResponse> createRegistroProductosExcelResponse(RegistroProductosExcelResponse value) {
+        return new JAXBElement<RegistroProductosExcelResponse>(_RegistroProductosExcelResponse_QNAME, RegistroProductosExcelResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneSubCuentasFiltro }{@code >}}
      * 
      */
@@ -1089,6 +1116,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertaPedidosProductoResponse")
     public JAXBElement<InsertaPedidosProductoResponse> createInsertaPedidosProductoResponse(InsertaPedidosProductoResponse value) {
         return new JAXBElement<InsertaPedidosProductoResponse>(_InsertaPedidosProductoResponse_QNAME, InsertaPedidosProductoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RegistroProductosExcel }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "registroProductosExcel")
+    public JAXBElement<RegistroProductosExcel> createRegistroProductosExcel(RegistroProductosExcel value) {
+        return new JAXBElement<RegistroProductosExcel>(_RegistroProductosExcel_QNAME, RegistroProductosExcel.class, null, value);
     }
 
     /**

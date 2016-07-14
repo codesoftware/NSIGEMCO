@@ -54,11 +54,19 @@
 							<p:column headerText="Tipo">
 								<h:outputText value="#{productos.tipo}" />
 							</p:column>
-						</p:dataTable>					
+						</p:dataTable>
 					</h:form>
+					<br />
+					<p:commandButton value="REGISTRO" actionListener="#{cargueProductoBean.registroProductos}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"></p:commandButton>
+					<br />
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 			</div>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			Realizacion de proceso:
+			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>

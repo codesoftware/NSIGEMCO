@@ -335,5 +335,19 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
+	/**
+	 * Funcion con la cual registro los productos en el sistema
+	 * @return
+	 */
+	public String enviaRegistroProductos(){
+		String rta = "";
+		try {
+			RespuestaEntity respuesta = conexionWSAdmin().getPortAdm().registroProductosExcel();
+			rta = respuesta.getDescripcionRespuesta();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 
 }
