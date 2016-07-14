@@ -1,0 +1,55 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<br />
+			<h:form id="formTabla">
+				<p:dataTable widgetVar="tablaConteo" emptyMessage="No existen conteos en el sistema registrados" id="tablaConteos" var="conteo" paginator="true" value="#{conteosBean.listaConteo}"
+					filteredValue="#{conteosBean.listaConteoFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+					<p:column headerText="ID">
+						<p:outputLabel value="#{conteo.id}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="FECHA CREACION">
+						<p:outputLabel value="#{conteo.fecha}" converter="xmlDatetoDateConverterHour"></p:outputLabel>
+					</p:column>
+					<p:column headerText="FECHA INICIO">
+						<p:outputLabel value="#{conteo.fechaIni}" converter="xmlDatetoDateConverterHour"></p:outputLabel>
+					</p:column>
+					<p:column headerText="FECHA FINAL">
+						<p:outputLabel value="#{conteo.fechaFin}" converter="xmlDatetoDateConverterHour"></p:outputLabel>
+					</p:column>
+					<p:column headerText="DESCRIPCIÓN">
+						<p:outputLabel value="#{conteo.descripcion}"></p:outputLabel>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			<br />
+			<p:commandButton value="INSERTAR CONTEO" onclick="PF('dialogInsertCont').show();"></p:commandButton>
+			<p:dialog widgetVar="dialogInsertCont" modal="true" responsive="true" width="500" closeOnEscape="true">
+				<h:form>
+					<p:panelGrid columns="2" layout="grid">
+						<f:facet name="header">
+							<p:outputLabel value="INSERCION CONTEO"></p:outputLabel>
+						</f:facet>
+						<p:outputLabel value="Descripcion:"></p:outputLabel>
+						<p:inputText value="#{conteosBean.conteoEntity.descripcion}"></p:inputText>
+						<p:outputLabel value="Sede "></p:outputLabel>
+						<h:selectOneMenu value="#{conteosBean.conteoEntity.sede}" styleClass="form-control" id="selectSede">
+							<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+							<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+						</h:selectOneMenu>
+						<p:commandButton styleClass="ButtonGreen" value="Insertar" actionListener="#{conteosBean.insertarConteo}" oncomplete="PF('dialogInsertCont').hide();" update=":formTabla:tablaConteos" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
