@@ -376,7 +376,6 @@ public class CargueProductoLogica implements WSGeneralInterface {
 					cell = null;
 					cell = cellIterator.next();
 					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
-						System.out.println("nulo codigo " + row.getRowNum());
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
