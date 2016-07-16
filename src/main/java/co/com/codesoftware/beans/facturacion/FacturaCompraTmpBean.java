@@ -275,7 +275,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 				messageBean(mensaje, ErrorEnum.ERROR);
 			} else {
 				messageBean(mensaje, ErrorEnum.SUCCESS);
-				rta = "consultaFacturaCompras?faces-redirect=false";
+				rta = "/ACTION/PRODUCTOS/consultaFacturaCompras?faces-redirect=false";
 			}
 		}
 		return rta;
