@@ -98,5 +98,32 @@ public class ReporteLogica implements WSGeneralInterface{
 		}
 		return  ruta;
 	}
+	/**
+	 * Funcion con la cual realizo el llamado al reporte de comprados y vendidos
+	 * @return
+	 */
+	public String consultaRutaReporteCompVendidos() {
+		String extension = "pdf";
+		String ruta = "";
+		String reporte = "ProductosVendidos";
+		try {
+			List<MapaEntity> datos = new ArrayList<MapaEntity>();
+			MapaEntity entity = new MapaEntity();
+			List<MapaEntity> parametros = new  ArrayList<MapaEntity>();
+			entity = new MapaEntity();
+			entity.setClave("tipoReporte");
+			entity.setValor(extension);
+			parametros.add(entity);
+			entity = new MapaEntity();
+			entity.setClave("nombreReporte");
+			entity.setValor(reporte);
+			parametros.add(entity);
+			entity = new MapaEntity();
+			ruta = conexionWSGeneral().getPortGeneral().generaReportes(datos, parametros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ruta;
+	}
 
 }

@@ -1,0 +1,37 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<center>
+			<br/>
+				<h:form id="consultaImportaciones">
+					<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+					<p:panelGrid columns="7">
+						<f:facet name="header">
+							<p:outputLabel value="CONSULTA de COMPRA Y VENTA DE PRODUCTOS" />
+						</f:facet>
+						<p:outputLabel value="Fecha Inicial" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{reportesBean.fechaInicial}" navigator="true" style="width:60%;">
+						</p:calendar>
+						<p:outputLabel value="Fecha Final" />
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{reportesBean.fechaFinal}" navigator="true" style="width:60%;">
+						</p:calendar> 
+						<p:outputLabel value="TIPO"></p:outputLabel>
+						<h:selectOneMenu value="#{reportesBean.tipo}" styleClass="form-control" id="selectSede">
+							<f:selectItem itemLabel="COMPRAS" itemValue="CO"></f:selectItem>
+							<f:selectItem itemLabel="VENTAS" itemValue="VE"></f:selectItem>
+						</h:selectOneMenu>
+						<p:commandButton value="GENERAR REPORTE" styleClass="OrangeButton" actionListener="#{reportesBean.descargarReporteVentasCompras}"/>
+					</p:panelGrid>
+				</h:form>
+			</center>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

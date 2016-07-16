@@ -10,10 +10,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 
 import co.com.codesoftware.logica.ReporteLogica;
+import co.com.codesoftware.logica.facturacion.RemisionLogica;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
+import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
 
 @ManagedBean
@@ -26,6 +29,7 @@ public class ReportesBean implements GeneralBean {
 	private Integer idSede;
 	private Integer formato;
 	private DefaultStreamedContent download;
+	private String tipo;
 
 	/**
 	 * metodo que llama a la consulta del servicio web y este le retorna una
@@ -44,6 +48,31 @@ public class ReportesBean implements GeneralBean {
 		}
 
 	}
+	/**
+	 * Funcion con la cual genero el reporte de compras y ventas en el sistema
+	 */
+	public void descargarReporteVentasCompras(){
+		ReporteLogica reporte = new ReporteLogica();
+		try {
+			String ruta = "";
+			String documento = reporte.consultaRutaReporteCompVendidos();
+			RemisionLogica objLogica = new RemisionLogica();
+			String valida = objLogica.materializaImagen(documento, "aaa" );
+			if ("Ok".equalsIgnoreCase(valida)) {
+				this.messageBean("Reporte Generado correctamente",ErrorEnum.SUCCESS);
+				ruta = objLogica.getRutaImagen();
+				
+				File file = new File(ruta);
+				InputStream input = new FileInputStream(file);
+				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+				setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	@Override
 	public void setObjetoSesion(UsuarioEntity objetoSesion) {
@@ -105,4 +134,11 @@ public class ReportesBean implements GeneralBean {
 		this.download = download;
 	}
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 }

@@ -73,16 +73,6 @@ public class MenuBean implements Serializable {
 
 		
 
-		// REPORTES
-		DefaultMenuItem menuReportes = new DefaultMenuItem("REPORTES");
-		menuReportes.setIcon("fa fa-file-excel-o");
-		menuReportes.setCommand("/ACTION/REPORTES/reportes.jsf");
-		// Tercer punto de menu
-		// DefaultSubMenu tercerPunto = new DefaultSubMenu();
-		// Menu Facturacion
-//		DefaultSubMenu menuFacturacion = new DefaultSubMenu();
-//		menuFacturacion.setLabel("FACTURACION");
-
 		
 
 		DefaultMenuItem tercerPunto = new DefaultMenuItem("Cerrar Sesion");
@@ -95,12 +85,34 @@ public class MenuBean implements Serializable {
 		this.menuDinamico.addElement(this.generaMenuAdmon());
 		this.menuDinamico.addElement(this.generaMenuProd());
 		this.menuDinamico.addElement(segundoPunto);
-		this.menuDinamico.addElement(menuReportes);
+		this.menuDinamico.addElement(this.generaMenuReportes());
 		this.menuDinamico.addElement(this.generaMenuFacturacion());
 		this.menuDinamico.addElement(this.generaMenuImportaciones());
 		this.menuDinamico.addElement(this.generaMenuContabilidad());
 		this.menuDinamico.addElement(tercerPunto);
 		this.menuDinamico.addElement(cuartoPunto);
+	}
+	/**
+	 * Funcion con la cual genero el menu de reportes
+	 * @return
+	 */
+	public DefaultSubMenu generaMenuReportes(){
+		// REPORTES
+		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
+		menuPrincipal.setLabel("REPORTES");
+		menuPrincipal.setIcon("fa fa-file-excel-o");
+		
+		
+		DefaultMenuItem basico = new DefaultMenuItem("Basico");
+		basico.setCommand("/ACTION/REPORTES/reportes.jsf");
+		
+		DefaultMenuItem comVentas = new DefaultMenuItem ("Compras y Ventas");
+		comVentas.setCommand("/ACTION/REPORTES/comprasVentas.xhtml");
+		
+		menuPrincipal.addElement(basico);
+		menuPrincipal.addElement(comVentas);
+
+		return menuPrincipal;
 	}
 	
 	public DefaultSubMenu generaMenuProd(){
