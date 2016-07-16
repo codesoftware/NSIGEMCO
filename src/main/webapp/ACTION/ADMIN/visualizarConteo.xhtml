@@ -17,36 +17,39 @@
 			<div class="row">
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-
-					<p:panelGrid columns="6" styleClass="table">
+					<h:form id="formPrincipal">
+					<p:panelGrid columns="4" styleClass="table">
 						<f:facet name="header">
 							<p:outputLabel value="CONTEO"></p:outputLabel>
 						</f:facet>
 						<p:outputLabel value="Nombre: "></p:outputLabel>
 						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.descripcion}"></p:outputLabel>
-						<p:outputLabel value="Fecha Inicial: "></p:outputLabel>
-						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.fechaIni}" converter="xmlDatetoDateConverter"></p:outputLabel>
 						<p:outputLabel value="Fecha Final: "></p:outputLabel>
 						<p:outputLabel value="#{visualizarConteoBean.conteoEntity.fechaFin}" converter="xmlDatetoDateConverter"></p:outputLabel>
 						<p:outputLabel value="Estado: "></p:outputLabel>
 						<p:outputLabel value="ACTIVO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'A'}"></p:outputLabel>
 						<p:outputLabel value="CERRADO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'X'}"></p:outputLabel>
-						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}"></p:commandButton>
-						<p:commandButton value="ALTERACION INVENTARIO" styleClass="RedButton"></p:commandButton>
+						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}" update=":formTable,:formPrincipal" rendered="#{visualizarConteoBean.conteoEntity.estado != 'X'}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"></p:commandButton>
+						<p:commandButton value="CREAR SOLICITUD" styleClass="RedButton" rendered="#{visualizarConteoBean.conteoEntity.estado != 'X'}" ></p:commandButton>
 					</p:panelGrid>
+					</h:form>
 					<br />
 					<h:form id="formCarga">
 						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
 							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
-								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{visualizarConteoBean.cargueExcelConteo}" update=":formTable"
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{visualizarConteoBean.cargueExcelConteo}" update=":formTable,:formPrincipal"
 								onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 						</p:panelGrid>
 					</h:form>
 					<br />
 					<h:form id="formTable">
-						<p:dataTable value="#{visualizarConteoBean.listaConteo}" var="item" reflow="true" paginator="true" rows="10" emptyMessage="Conteo sin Productos asociados">
+						<p:dataTable value="#{visualizarConteoBean.listaConteo}" id="tablaProductos" var="item" reflow="true" paginator="true" rows="10" emptyMessage="Conteo sin Productos asociados">
 							<f:facet name="header">
 							LISTA DE PRODUCTOS CONTADOS
+							<h:commandLink>
+								<p:graphicImage name="/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
+							</h:commandLink>
 						</f:facet>
 							<p:column headerText="CANTIDAD CONTADA">
 								<p:outputLabel value="#{item.cantidad}"></p:outputLabel>

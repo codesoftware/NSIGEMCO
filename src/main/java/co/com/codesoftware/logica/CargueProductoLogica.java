@@ -376,7 +376,6 @@ public class CargueProductoLogica implements WSGeneralInterface {
 					cell = null;
 					cell = cellIterator.next();
 					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
-						System.out.println("nulo codigo " + row.getRowNum());
 						cellIterator.hasNext();
 						cellIterator.hasNext();
 						cellIterator.hasNext();
@@ -415,9 +414,7 @@ public class CargueProductoLogica implements WSGeneralInterface {
 			respuesta = "Ok";
 		} catch (Exception e) {
 			e.printStackTrace();
-			//respuesta.setCodigoRespuesta(0);
-			//respuesta.setDescripcionRespuesta(e.getMessage());
-			//respuesta.setMensajeRespuesta("error en  Fila" + row.getRowNum());
+			respuesta = "Error " + e;
 			System.out.println("error en  Fila" + row.getRowNum());
 		}
 		return respuesta;

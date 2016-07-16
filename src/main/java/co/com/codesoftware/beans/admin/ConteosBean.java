@@ -54,14 +54,20 @@ public class ConteosBean implements Serializable, GeneralBean {
 	 */
 	public void insertarConteo() {
 		try {
-			ConteoLogica objLogica = new ConteoLogica();
-			this.conteoEntity.setTius(this.objetoSesion.getId());
-			String valida = objLogica.insertaConteo(this.conteoEntity);
-			if ("Ok".equalsIgnoreCase(valida)) {
-				this.messageBean("Conteo Insertado correctamente", ErrorEnum.SUCCESS);
-				this.listaConteo = objLogica.obtieneListaConteos("-1");
-			} else {
-				this.messageBean("Error al insertar el conteo", ErrorEnum.ERROR);
+			if (this.conteoEntity.getSede() == -1) {
+				this.messageBean("Por favor seleccione una sede", ErrorEnum.ERROR);
+			} else if(this.conteoEntity.getDescripcion() == null || "".equalsIgnoreCase(this.conteoEntity.getDescripcion())){
+				this.messageBean("Campo descripcion es obligatorio", ErrorEnum.ERROR);
+			}else {
+				ConteoLogica objLogica = new ConteoLogica();
+				this.conteoEntity.setTius(this.objetoSesion.getId());
+				String valida = objLogica.insertaConteo(this.conteoEntity);
+				if ("Ok".equalsIgnoreCase(valida)) {
+					this.messageBean("Conteo Insertado correctamente", ErrorEnum.SUCCESS);
+					this.listaConteo = objLogica.obtieneListaConteos("-1");
+				} else {
+					this.messageBean("Error al insertar el conteo", ErrorEnum.ERROR);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,8 +87,8 @@ public class ConteosBean implements Serializable, GeneralBean {
 			e.printStackTrace();
 		}
 	}
-	
-	public String seleccionaConteo(Integer idConteo){
+
+	public String seleccionaConteo(Integer idConteo) {
 		String rta = "/ACTION/ADMIN/visualizarConteo.jsf";
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idConteo", idConteo);
 		return rta;

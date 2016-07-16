@@ -11,17 +11,20 @@
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
 					<h:form id="formConsulta">
-						
-						<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{consGeneralProductosBean.listaProductos}" filteredValue="#{consGeneralProductosBean.filteredProductos}" rows="20"
-							rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+
+						<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{consGeneralProductosBean.listaProductos}"
+							filteredValue="#{consGeneralProductosBean.filteredProductos}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
 							<f:facet name="header">
 							CONSULTA GENERAL DE PRODUCTOS
 							<h:commandLink>
-								<p:graphicImage name="/images/excel.png" width="24" />
-								<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
-							</h:commandLink>
-						</f:facet>
-							<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
+									<p:graphicImage name="/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tablaProductos" fileName="tablaProductos" />
+								</h:commandLink>
+							</f:facet>
+							<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.ubicacion}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains" exportable="false">
 								<h:outputText value="#{prod.codigo}"></h:outputText>
 							</p:column>
 							<p:column headerText="CODIGO EXTERNO" filterBy="#{prod.codigoExt}" filterMatchMode="contains">
@@ -30,13 +33,19 @@
 							<p:column headerText="DESCRIPCION" filterBy="#{prod.descripcion}" filterMatchMode="contains">
 								<h:outputText value="#{prod.descripcion}"></h:outputText>
 							</p:column>
-							<p:column headerText="nombre" filterBy="#{prod.nombre}" filterMatchMode="contains">
+							<p:column headerText="nombre" filterBy="#{prod.nombre}" filterMatchMode="contains" exportable="false">
 								<h:outputText value="#{prod.nombre}"></h:outputText>
 							</p:column>
-							<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
-								<h:outputText value="#{prod.ubicacion}"></h:outputText>
+							<p:column headerText="CATEGORIA" filterBy="#{prod.categoriaObj.descripcion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.categoriaObj.descripcion}"></h:outputText>
 							</p:column>
-							<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
+							<p:column headerText="SUBCATEGORIA" filterBy="#{prod.referenciaObj.nombre}" filterMatchMode="contains">
+								<h:outputText value="#{prod.referenciaObj.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="MARCA" filterBy="#{prod.marcaObj.nombre}" filterMatchMode="contains">
+								<h:outputText value="#{prod.marcaObj.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains" exportable="false">
 								<h:outputText value="#{prod.codigoBarras}"></h:outputText>
 							</p:column>
 							<p:column headerText="ACCION" exportable="false">
@@ -49,7 +58,7 @@
 			</div>
 			<p:dialog header="SELECCIONE UNA ACCION A EJECUTAR SOBRE EL PRODUCTO" widgetVar="dialogAccion" modal="true" closable="true">
 				<p:panelGrid columns="1" styleClass="table table-bordered">
-					<p:commandButton value="ACTUALIZAR" action="/ACTION/PRODUCTOS/actualizaProducto" ></p:commandButton>
+					<p:commandButton value="ACTUALIZAR" action="/ACTION/PRODUCTOS/actualizaProducto"></p:commandButton>
 					<p:commandButton value="PROM. PONDERADO" action="/ACTION/PRODUCTOS/promedioPonderado"></p:commandButton>
 				</p:panelGrid>
 			</p:dialog>
