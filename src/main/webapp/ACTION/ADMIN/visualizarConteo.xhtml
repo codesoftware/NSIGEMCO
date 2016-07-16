@@ -17,7 +17,7 @@
 			<div class="row">
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
-
+					<h:form id="formPrincipal">
 					<p:panelGrid columns="6" styleClass="table">
 						<f:facet name="header">
 							<p:outputLabel value="CONTEO"></p:outputLabel>
@@ -31,14 +31,15 @@
 						<p:outputLabel value="Estado: "></p:outputLabel>
 						<p:outputLabel value="ACTIVO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'A'}"></p:outputLabel>
 						<p:outputLabel value="CERRADO" rendered="#{visualizarConteoBean.conteoEntity.estado == 'X'}"></p:outputLabel>
-						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}"></p:commandButton>
-						<p:commandButton value="ALTERACION INVENTARIO" styleClass="RedButton"></p:commandButton>
+						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}" update=":formTable,:formPrincipal" rendered="#{visualizarConteoBean.conteoEntity.estado != 'X'}"></p:commandButton>
+						<p:commandButton value="CREAR SOLICITUD" styleClass="RedButton"></p:commandButton>
 					</p:panelGrid>
+					</h:form>
 					<br />
 					<h:form id="formCarga">
 						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
 							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
-								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{visualizarConteoBean.cargueExcelConteo}" update=":formTable"
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{visualizarConteoBean.cargueExcelConteo}" update=":formTable,:formPrincipal"
 								onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 						</p:panelGrid>
 					</h:form>

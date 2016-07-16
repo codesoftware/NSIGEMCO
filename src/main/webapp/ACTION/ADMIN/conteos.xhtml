@@ -9,6 +9,7 @@
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
 			<br />
 			<h:form id="formTabla">
 				<p:dataTable widgetVar="tablaConteo" emptyMessage="No existen conteos en el sistema registrados" id="tablaConteos" var="conteo" paginator="true" value="#{conteosBean.listaConteo}"
@@ -27,6 +28,10 @@
 					</p:column>
 					<p:column headerText="DESCRIPCIÓN">
 						<p:outputLabel value="#{conteo.descripcion}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="ESTADO">
+						<p:outputLabel value="CERRADO" rendered="#{conteo.estado == 'X'}"></p:outputLabel>
+						<p:outputLabel value="ABIERTO" rendered="#{conteo.estado != 'X'}"></p:outputLabel>
 					</p:column>
 					<p:column>
 						<p:commandButton value="DETALLE" action="#{conteosBean.seleccionaConteo(conteo.id)}"></p:commandButton>

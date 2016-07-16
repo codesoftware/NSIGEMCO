@@ -7,11 +7,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
 import co.com.codesoftware.logica.CargueProductoLogica;
 import co.com.codesoftware.logica.admin.ConteoLogica;
-import co.com.codesoftware.server.nsigemco.RespuestaEntity;
 import co.com.codesoftware.servicio.conteos.ConteoEntity;
 import co.com.codesoftware.servicio.conteos.ProductoConteoEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
@@ -46,6 +46,9 @@ public class VisualizarConteoBean implements GeneralBean {
 			ConteoLogica objLogica = new ConteoLogica();
 			String rta = objLogica.ejecutaProcesoConteo(this.conteoEntity.getId());
 			messageBean("Mensaje: " + rta, ErrorEnum.SUCCESS);
+			ConteoLogica conteoLogica = new ConteoLogica();
+			this.conteoEntity = conteoLogica.obtieneConteoXId(this.conteoEntity.getId());
+			this.listaConteo = conteoLogica.obtieneProductosConteo(this.conteoEntity.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,9 +59,16 @@ public class VisualizarConteoBean implements GeneralBean {
 		try {
 			CargueProductoLogica logica = new CargueProductoLogica();
 			respuesta = logica.cargaExcelConteo(null, event, this.objetoSesion.getId(), this.conteoEntity.getId());
-			//listaProductos = logica.consultaProductosTemporal();
-			//this.setEnumer(ErrorEnum.WARNING);
-			//this.messageBean(respuesta.getMensajeRespuesta());
+			if("Ok".equalsIgnoreCase(respuesta)){
+				this.messageBean("Cargue por excel de conteos correctamente ", ErrorEnum.SUCCESS);
+			}else{
+				this.messageBean(" "+ respuesta, ErrorEnum.ERROR);
+			}
+			RequestContext requestContext = RequestContext.getCurrentInstance();  
+			requestContext.execute("PF('statusDialog').hide()");
+			ConteoLogica conteoLogica = new ConteoLogica();
+			this.conteoEntity = conteoLogica.obtieneConteoXId(this.conteoEntity.getId());
+			this.listaConteo = conteoLogica.obtieneProductosConteo(this.conteoEntity.getId());
 		} catch (Exception e) {
 			this.messageBean("Error al cargar el archivo " + event.getFile().getFileName(),ErrorEnum.ERROR);
 			e.printStackTrace();
