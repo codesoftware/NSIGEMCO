@@ -349,5 +349,78 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con el cual cargo el excel de conteos
+	 * @param fileUp
+	 * @param event
+	 * @param idTius
+	 * @return
+	 */
+	public String cargaExcelConteo(UploadedFile fileUp, FileUploadEvent event, Integer idTius, Integer idCont) {
+		String respuesta = "";
+		String mensaje = "";
+		Row row = null;
+		Cell cell = null;
+		try {
+			file = event.getFile().getInputstream();
+			workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			List<ProductoTmpEntity> listaProductos = new ArrayList<ProductoTmpEntity>();
+			rowIterator.next();
+			while (rowIterator.hasNext()) {
+				row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				ProductoTmpEntity entidad = new ProductoTmpEntity();
+				while (cellIterator.hasNext()) {
+					cell = null;
+					cell = cellIterator.next();
+					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
+						System.out.println("nulo codigo " + row.getRowNum());
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+					} else {
+						String codigoExterno=""; 
+						Integer idConteo, cantidad;
+						String codigoBarras="", ubicacion="";
+						try {
+							codigoExterno = cell.getStringCellValue().trim();
+						} catch (IllegalStateException ex) {
+							Double celda = cell.getNumericCellValue();
+							codigoExterno = ""+celda.longValue();
+						}
+						cell = cellIterator.next();
+						idConteo = idCont;
+						try {
+							Double aux = cell.getNumericCellValue();
+							cantidad = aux.intValue();
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+							String aux = cell.getStringCellValue().trim();
+							cantidad  = Integer.parseInt(aux);
+						}
+						co.com.codesoftware.servicio.conteos.RespuestaEntity valida = conexionWSConteo().getPortConteo().insertaProductoConteo(codigoExterno, idConteo, cantidad, codigoBarras, ubicacion);
+						if (!"".equalsIgnoreCase(mensaje)) {
+							mensaje += row.getRowNum();
+							break;
+						}
+					}
+				}
+			}
+			respuesta = "Ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			//respuesta.setCodigoRespuesta(0);
+			//respuesta.setDescripcionRespuesta(e.getMessage());
+			//respuesta.setMensajeRespuesta("error en  Fila" + row.getRowNum());
+			System.out.println("error en  Fila" + row.getRowNum());
+		}
+		return respuesta;
+	}
 
 }

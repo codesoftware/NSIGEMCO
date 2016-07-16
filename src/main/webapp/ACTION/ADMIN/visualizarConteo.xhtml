@@ -34,33 +34,47 @@
 						<p:commandButton value="EJECUCION DE PROCESO" styleClass="GreenButton" actionListener="#{visualizarConteoBean.enviarEjecucionCierre}"></p:commandButton>
 						<p:commandButton value="ALTERACION INVENTARIO" styleClass="RedButton"></p:commandButton>
 					</p:panelGrid>
-					<br /> <br />
-					<p:dataTable value="#{visualizarConteoBean.listaConteo}" var="item" reflow="true" paginator="true" rows="10" emptyMessage="Conteo sin Productos asociados">
-						<f:facet name="header">
+					<br />
+					<h:form id="formCarga">
+						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
+							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{visualizarConteoBean.cargueExcelConteo}" update=":formTable"
+								onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+						</p:panelGrid>
+					</h:form>
+					<br />
+					<h:form id="formTable">
+						<p:dataTable value="#{visualizarConteoBean.listaConteo}" var="item" reflow="true" paginator="true" rows="10" emptyMessage="Conteo sin Productos asociados">
+							<f:facet name="header">
 							LISTA DE PRODUCTOS CONTADOS
 						</f:facet>
-						<p:column headerText="CANTIDAD CONTADA">
-							<p:outputLabel value="#{item.cantidad}"></p:outputLabel>
-						</p:column>
-						<p:column headerText="Existencia Inv.">
-							<p:outputLabel value="#{item.existencia}"></p:outputLabel>
-						</p:column>
-						<p:column headerText="Diferencia">
-							<p:outputLabel value="#{item.diferencia}"></p:outputLabel>
-						</p:column>
-						<p:column headerText="Codigo App">
-							<p:outputLabel value="#{item.producto.codigo}"></p:outputLabel>
-						</p:column>
-						<p:column headerText="Codigo Ext.">
-							<p:outputLabel value="#{item.producto.codigoExt}"></p:outputLabel>
-						</p:column>
-						<p:column headerText="Nombre">
-							<p:outputLabel value="#{item.producto.nombre}"></p:outputLabel>
-						</p:column>
-					</p:dataTable>
+							<p:column headerText="CANTIDAD CONTADA">
+								<p:outputLabel value="#{item.cantidad}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Existencia Inv.">
+								<p:outputLabel value="#{item.existencia}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Diferencia">
+								<p:outputLabel value="#{item.diferencia}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Codigo App">
+								<p:outputLabel value="#{item.producto.codigo}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Codigo Ext.">
+								<p:outputLabel value="#{item.producto.codigoExt}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Nombre">
+								<p:outputLabel value="#{item.producto.nombre}"></p:outputLabel>
+							</p:column>
+						</p:dataTable>
+					</h:form>
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 			</div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			Realizacion de proceso:
+			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>
