@@ -7,7 +7,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
+
+import co.com.codesoftware.logica.CargueProductoLogica;
 import co.com.codesoftware.logica.admin.ConteoLogica;
+import co.com.codesoftware.server.nsigemco.RespuestaEntity;
 import co.com.codesoftware.servicio.conteos.ConteoEntity;
 import co.com.codesoftware.servicio.conteos.ProductoConteoEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
@@ -45,6 +49,21 @@ public class VisualizarConteoBean implements GeneralBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void cargueExcelConteo(FileUploadEvent event) {
+		String respuesta = "";
+		try {
+			CargueProductoLogica logica = new CargueProductoLogica();
+			respuesta = logica.cargaExcelConteo(null, event, this.objetoSesion.getId(), this.conteoEntity.getId());
+			//listaProductos = logica.consultaProductosTemporal();
+			//this.setEnumer(ErrorEnum.WARNING);
+			//this.messageBean(respuesta.getMensajeRespuesta());
+		} catch (Exception e) {
+			this.messageBean("Error al cargar el archivo " + event.getFile().getFileName(),ErrorEnum.ERROR);
+			e.printStackTrace();
+		}
+
 	}
 
 	public UsuarioEntity getObjetoSesion() {
