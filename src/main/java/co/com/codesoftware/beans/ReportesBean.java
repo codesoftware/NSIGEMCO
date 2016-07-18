@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import co.com.codesoftware.logica.ReporteLogica;
 import co.com.codesoftware.logica.facturacion.RemisionLogica;
@@ -30,6 +31,8 @@ public class ReportesBean implements GeneralBean {
 	private Integer formato;
 	private DefaultStreamedContent download;
 	private String tipo;
+	private String rutaDocumento;
+	private StreamedContent file;
 
 	/**
 	 * metodo que llama a la consulta del servicio web y este le retorna una
@@ -48,31 +51,48 @@ public class ReportesBean implements GeneralBean {
 		}
 
 	}
+
 	/**
 	 * Funcion con la cual genero el reporte de compras y ventas en el sistema
 	 */
-	public void descargarReporteVentasCompras(){
+	public void descargarReporteVentasCompras() {
 		ReporteLogica reporte = new ReporteLogica();
+		String documento = "";
+		RequestContext requestContext = RequestContext.getCurrentInstance();
 		try {
-			String ruta = "";
-			String documento = reporte.consultaRutaReporteCompVendidos();
-			RemisionLogica objLogica = new RemisionLogica();
-			String valida = objLogica.materializaImagen(documento, "aaa" );
-			if ("Ok".equalsIgnoreCase(valida)) {
-				this.messageBean("Reporte Generado correctamente",ErrorEnum.SUCCESS);
-				ruta = objLogica.getRutaImagen();
-				
-				File file = new File(ruta);
-				InputStream input = new FileInputStream(file);
-				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-				setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+			if ("pdf".equalsIgnoreCase(this.tipo)) {
+				String ruta = "";
+				documento = reporte.consultaRutaReporteCompVendidos();
+				RemisionLogica objLogica = new RemisionLogica();
+				String valida = objLogica.materializaImagenCarpeta(documento, "reportes", "ComprasVentas.pdf",
+						"relativa");
+				if ("Ok".equalsIgnoreCase(valida)) {
+					this.messageBean("Reporte Generado correctamente", ErrorEnum.SUCCESS);
+					ruta = objLogica.getRutaImagen();
+					this.rutaDocumento = ruta;
+					requestContext.execute("PF('abrirVisor').show()");
+				}
+			} else {
+				documento = reporte.generarExcelSql(
+						"SELECT dska_cod_ext codigo_externo ,dska_desc descripcion_producto, coalesce((select sum(dtpr_cant) from fa_tdtpr where dtpr_dska = dska_dska), 0 ) productos_vendidos, (select coalesce(sum(fcprd_cant),0) from fa_tfacom, fa_tfcprd where upper(facom_estad) = 'F' and fcprd_facom = facom_facom and fcprd_dska = dska_dska) productos_comprados FROM IN_TDSKA order by dska_dska ");
+				RemisionLogica objLogica = new RemisionLogica();
+				String valida = objLogica.materializaImagenCarpeta(documento, "reportes", "ComprasVentas.xls",
+						"relativa");
+				if ("Ok".equalsIgnoreCase(valida)) {
+					this.rutaDocumento = objLogica.getRutaImagen();
+					this.messageBean("Ok", ErrorEnum.SUCCESS);
+					InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
+							.getResourceAsStream(this.rutaDocumento);
+					file = new DefaultStreamedContent(stream, "image/jpg", "ComprasVentas.xls");
+				} else {
+					this.messageBean("Error al generar el excel: " + valida, ErrorEnum.ERROR);
+				}
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	@Override
 	public void setObjetoSesion(UsuarioEntity objetoSesion) {
@@ -83,8 +103,6 @@ public class ReportesBean implements GeneralBean {
 	public void init() {
 
 	}
-
-
 
 	public Integer getTipoReporte() {
 		return tipoReporte;
@@ -141,4 +159,21 @@ public class ReportesBean implements GeneralBean {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	public String getRutaDocumento() {
+		return rutaDocumento;
+	}
+
+	public void setRutaDocumento(String rutaDocumento) {
+		this.rutaDocumento = rutaDocumento;
+	}
+
+	public StreamedContent getFile() {
+		return file;
+	}
+
+	public void setFile(StreamedContent file) {
+		this.file = file;
+	}
+
 }

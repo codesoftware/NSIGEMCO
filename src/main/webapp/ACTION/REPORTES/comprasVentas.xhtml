@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -9,7 +9,12 @@
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
 			<center>
-			<br/>
+				<br />
+				<h:form id="formVisor">
+					<p:dialog id="visorPdf" widgetVar="abrirVisor" modal="true" closeOnEscape="true">
+						<pe:documentViewer id="Visor" width="850" height="500" url="#{reportesBean.rutaDocumento}" />
+					</p:dialog>
+				</h:form>
 				<h:form id="consultaImportaciones">
 					<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
 					<p:panelGrid columns="7">
@@ -21,16 +26,31 @@
 						</p:calendar>
 						<p:outputLabel value="Fecha Final" />
 						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{reportesBean.fechaFinal}" navigator="true" style="width:60%;">
-						</p:calendar> 
+						</p:calendar>
 						<p:outputLabel value="TIPO"></p:outputLabel>
 						<h:selectOneMenu value="#{reportesBean.tipo}" styleClass="form-control" id="selectSede">
-							<f:selectItem itemLabel="COMPRAS" itemValue="CO"></f:selectItem>
-							<f:selectItem itemLabel="VENTAS" itemValue="VE"></f:selectItem>
+							<f:selectItem itemLabel="PDF" itemValue="pdf"></f:selectItem>
+							<f:selectItem itemLabel="EXCEL" itemValue="xls"></f:selectItem>
 						</h:selectOneMenu>
-						<p:commandButton value="GENERAR REPORTE" styleClass="OrangeButton" actionListener="#{reportesBean.descargarReporteVentasCompras}"/>
+						<p:commandButton value="GENERAR REPORTE" ajax="false" styleClass="OrangeButton" actionListener="#{reportesBean.descargarReporteVentasCompras}" onsuccess="stop()" onstart="start()" update=":formVisor:Visor"  >
+							<p:fileDownload value="#{reportesBean.file}" />
+						</p:commandButton>
 					</p:panelGrid>
 				</h:form>
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+						Realizacion de proceso:
+						<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+				</p:dialog>
 			</center>
+			<script type="text/javascript">
+				function start() {
+					PF('statusDialog').show();
+				}
+
+				function stop() {
+					PF('statusDialog').hide();
+				}
+			</script>
 		</ui:define>
 	</ui:composition>
 </body>

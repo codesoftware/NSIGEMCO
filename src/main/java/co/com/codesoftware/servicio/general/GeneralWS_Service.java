@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "GeneralWS", targetNamespace = "http://general.servicio.codesoftware.com.co/", wsdlLocation = "http://localhost:8777/SIGEMCOWS/GeneralWS?wsdl")
+@WebServiceClient(name = "GeneralWS", targetNamespace = "http://general.servicio.codesoftware.com.co/", wsdlLocation = "http://localhost:8084/SIGEMCOWS/GeneralWS?wsdl")
 public class GeneralWS_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class GeneralWS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8777/SIGEMCOWS/GeneralWS?wsdl");
+            url = new URL("http://localhost:8084/SIGEMCOWS/GeneralWS?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

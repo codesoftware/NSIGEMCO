@@ -52,6 +52,7 @@ public class ObjectFactory {
     private final static QName _GeneraReportes_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "generaReportes");
     private final static QName _ObtenerSedesResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerSedesResponse");
     private final static QName _ObtenerValorVentasMes_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerValorVentasMes");
+    private final static QName _GenerarExcelSql_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "generarExcelSql");
     private final static QName _ObtenerResolucionesFactResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerResolucionesFactResponse");
     private final static QName _ObtenerCiudadesResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerCiudadesResponse");
     private final static QName _ObtenerRemisionesXCliente_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerRemisionesXCliente");
@@ -60,6 +61,7 @@ public class ObjectFactory {
     private final static QName _ObtenerDetallePagos_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerDetallePagos");
     private final static QName _InsertarResolucionResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "insertarResolucionResponse");
     private final static QName _EnviaCorreoResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "enviaCorreoResponse");
+    private final static QName _GenerarExcelSqlResponse_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "generarExcelSqlResponse");
     private final static QName _EnviaCorreo_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "enviaCorreo");
     private final static QName _ObtenerPrincPago_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerPrincPago");
     private final static QName _ObtenerUsuariosXPermiso_QNAME = new QName("http://general.servicio.codesoftware.com.co/", "obtenerUsuariosXPermiso");
@@ -347,6 +349,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GenerarExcelSqlResponse }
+     * 
+     */
+    public GenerarExcelSqlResponse createGenerarExcelSqlResponse() {
+        return new GenerarExcelSqlResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerCiudadesResponse }
      * 
      */
@@ -392,6 +402,14 @@ public class ObjectFactory {
      */
     public ObtenerValorVentasMes createObtenerValorVentasMes() {
         return new ObtenerValorVentasMes();
+    }
+
+    /**
+     * Create an instance of {@link GenerarExcelSql }
+     * 
+     */
+    public GenerarExcelSql createGenerarExcelSql() {
+        return new GenerarExcelSql();
     }
 
     /**
@@ -831,6 +849,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GenerarExcelSql }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "generarExcelSql")
+    public JAXBElement<GenerarExcelSql> createGenerarExcelSql(GenerarExcelSql value) {
+        return new JAXBElement<GenerarExcelSql>(_GenerarExcelSql_QNAME, GenerarExcelSql.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerResolucionesFactResponse }{@code >}}
      * 
      */
@@ -900,6 +927,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "enviaCorreoResponse")
     public JAXBElement<EnviaCorreoResponse> createEnviaCorreoResponse(EnviaCorreoResponse value) {
         return new JAXBElement<EnviaCorreoResponse>(_EnviaCorreoResponse_QNAME, EnviaCorreoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GenerarExcelSqlResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://general.servicio.codesoftware.com.co/", name = "generarExcelSqlResponse")
+    public JAXBElement<GenerarExcelSqlResponse> createGenerarExcelSqlResponse(GenerarExcelSqlResponse value) {
+        return new JAXBElement<GenerarExcelSqlResponse>(_GenerarExcelSqlResponse_QNAME, GenerarExcelSqlResponse.class, null, value);
     }
 
     /**

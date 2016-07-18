@@ -67,10 +67,12 @@ public class RemisionLogica implements WSGeneralInterface {
 	 * @param idTius
 	 * @return
 	 */
-	public String llamaProcesoFacturar(Integer idRemision, Integer idTius, Integer idRsfa, Integer diasPlazo, String retefuente) {
+	public String llamaProcesoFacturar(Integer idRemision, Integer idTius, Integer idRsfa, Integer diasPlazo,
+			String retefuente) {
 		String rta = "";
 		try {
-			rta = conexionWSGeneral().getPortGeneral().realizarFacturaXRemision(idRemision, idTius, idRsfa, diasPlazo,retefuente);
+			rta = conexionWSGeneral().getPortGeneral().realizarFacturaXRemision(idRemision, idTius, idRsfa, diasPlazo,
+					retefuente);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,7 +168,8 @@ public class RemisionLogica implements WSGeneralInterface {
 	}
 
 	/**
-	 * Funcion con la cual
+	 * Funcion con la cual materializo una remision apartir de un documento en
+	 * base 64
 	 */
 	public String materializaImagen(String documento, String idRemision) {
 		String rta = null;
@@ -179,6 +182,39 @@ public class RemisionLogica implements WSGeneralInterface {
 			boolean valida = codifica64.decodificaBase64(realPath, "Remision_" + idRemision + ".pdf");
 			if (valida) {
 				this.setRutaImagen("/resources/images/remisiones/Remision_" + idRemision + ".pdf");
+				rta = "Ok";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rta = null;
+		}
+		return rta;
+	}
+
+	/**
+	 * Funcion con la cual genero un pdf apartir de un string en base 64 pero
+	 * con las rutas de materializacion y nombre del documento como parametros
+	 * 
+	 * @param documento
+	 * @param idRemision
+	 * @return
+	 */
+	public String materializaImagenCarpeta(String documento,String carpeta, String nombreDocumento,String tipoRuta) {
+		String rta = null;
+		try {
+			ExternalContext tmpEC;
+			tmpEC = FacesContext.getCurrentInstance().getExternalContext();
+			String realPath = tmpEC.getRealPath("/resources/images/"+carpeta+"/");
+			CodificaBase64 codifica64 = new CodificaBase64();
+			codifica64.setDocumento(documento);
+			boolean valida = codifica64.decodificaBase64(realPath, nombreDocumento);
+			if (valida) {
+				if("completa".equalsIgnoreCase(tipoRuta)){
+					this.setRutaImagen(realPath+"/"+nombreDocumento);
+				}else if("relativa".equalsIgnoreCase(tipoRuta)){
+					this.setRutaImagen("/resources/images/"+carpeta+"/"+nombreDocumento);
+				}
 				rta = "Ok";
 			}
 
@@ -212,14 +248,12 @@ public class RemisionLogica implements WSGeneralInterface {
 	 * 
 	 * @return
 	 */
-	public String realizaAbonoRemision(Integer idTius,
-            Integer idFact,
-            BigDecimal valorPago,
-            String tipoPago,
-            String pagoTotal) {
+	public String realizaAbonoRemision(Integer idTius, Integer idFact, BigDecimal valorPago, String tipoPago,
+			String pagoTotal) {
 		String rta = "";
 		try {
-			rta = conexionWSGeneral().getPortGeneral().ejecutaPagoRemision(idTius, idFact, valorPago, tipoPago, pagoTotal);
+			rta = conexionWSGeneral().getPortGeneral().ejecutaPagoRemision(idTius, idFact, valorPago, tipoPago,
+					pagoTotal);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -233,13 +267,15 @@ public class RemisionLogica implements WSGeneralInterface {
 	public void setRutaImagen(String rutaImagen) {
 		this.rutaImagen = rutaImagen;
 	}
+
 	/**
-	 * Funcion con la cual evaluo si la remision o la factura a realizar se le debe hacer retencion en la fuente
+	 * Funcion con la cual evaluo si la remision o la factura a realizar se le
+	 * debe hacer retencion en la fuente
 	 */
-	public String evaluaRetefuente(){
+	public String evaluaRetefuente() {
 		String rta = "S";
 		try {
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

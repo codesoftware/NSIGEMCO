@@ -125,5 +125,20 @@ public class ReporteLogica implements WSGeneralInterface{
 		}
 		return ruta;
 	}
+	
+	/**
+	 * Funcion con la cual genero un excel apartir de una sentencia sql y retorna un string en base 64
+	 * @param sql
+	 * @return
+	 */
+	public String generarExcelSql(String sql){
+		String rta = "";
+		try {
+			rta = conexionWSGeneral().getPortGeneral().generarExcelSql(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	} 
 
 }
