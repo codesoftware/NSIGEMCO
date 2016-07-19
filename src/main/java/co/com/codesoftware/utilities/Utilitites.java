@@ -48,6 +48,7 @@ public class Utilitites {
 
 	/**
 	 * metodo para calcular el digito de verificacion
+	 * 
 	 * @param cadena
 	 * @return
 	 */
@@ -73,13 +74,68 @@ public class Utilitites {
 		for (int i = 0; i < cadena.length(); i++) {
 			acumulador += (Integer.parseInt(cadena.substring(i, i + 1)) * listaPrimos.get(i));
 		}
-		int resultado = acumulador%11;
-		if(resultado >2){
-			resultado = 11- resultado;
+		int resultado = acumulador % 11;
+		if (resultado > 2) {
+			resultado = 11 - resultado;
 		}
-		
+
 		return resultado;
 
 	}
-	
+
+	/**
+	 * Funcio con la cual transformo un numero en el mes del año
+	 * 
+	 * @param mes
+	 */
+	public static String convierteNumMes(int mes) {
+		String rta = "";
+		try {
+			switch (mes) {
+			case 1:
+				rta = "ENERO";
+				break;
+			case 2:
+				rta = "FEBRERO";
+				break;
+			case 3:
+				rta = "MARZO";
+				break;
+			case 4:
+				rta = "ABRIL";
+				break;
+			case 5:
+				rta = "MAYO";
+				break;
+			case 6:
+				rta = "JUNIO";
+				break;
+			case 7:
+				rta = "JULIO";
+				break;
+			case 8:
+				rta = "AGOSTO";
+				break;
+			case 9:
+				rta = "SEPTIEMBRE";
+				break;
+			case 10:
+				rta = "OCTUBRE";
+				break;
+			case 11:
+				rta = "NOVIEMBRE";
+				break;
+			case 12:
+				rta = "DICIEMBRE";
+				break;
+			default:
+				rta = "Error";
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+
 }
