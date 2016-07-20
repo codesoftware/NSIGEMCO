@@ -65,7 +65,7 @@
 							</p:row>
 							<p:row>
 								<p:column colspan="4" style="text-align:center;">
-									<p:commandButton value="BUSCA PRODUCTOS A CAMBIAR PRECIO" styleClass="btn" actionListener="#{precioMasivoBean.buscaHistoricoParametros}" update=":formConsulta:tableconsulta,formCnfirma" />
+									<p:commandButton value="BUSCA PRODUCTOS A CAMBIAR PRECIO" styleClass="RedButton" actionListener="#{precioMasivoBean.buscaHistoricoParametros}" update=":formConsulta:tableconsulta,formCnfirma" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -78,8 +78,8 @@
 					<div class="col-md-2 col-sm-0 col-xs-0"></div>
 					<div class="col-md-8 col-sm-12 col-xs-12">
 						<p:dataTable id="tableconsulta" widgetVar="tablePorc" emptyMessage="NO EXISTEN PORCENTAJES PARAMETRIZADOS" var="porcentaje" value="#{precioMasivoBean.listaPorc}" paginator="true" rows="20" filteredValue="#{histPorcPrecioBean.listaPorcFiltered}">
-							<p:column headerText="SEDE" filterBy="#{porcentaje.sede.nombre}">
-								<h:outputText value="#{porcentaje.sede.nombre}"></h:outputText>
+							<p:column headerText="SEDE" filterBy="#{porcentaje.sede.name}">
+								<h:outputText value="#{porcentaje.sede.name}"></h:outputText>
 							</p:column>
 							<p:column headerText="CATEGORIA" filterBy="#{porcentaje.categoria.descripcion}">
 								<h:outputText value="#{porcentaje.categoria.descripcion}"></h:outputText>
@@ -114,7 +114,7 @@
 						<p:panelGrid styleClass="table">
 							<p:row>
 								<p:column>
-									<p:commandButton value="EJECUTAR PROCESO" styleClass="btn" actionListener="#{precioMasivoBean.ejecutaProcesoPrecios}" id="btnEjecuta" />
+									<p:commandButton value="EJECUTAR PROCESO" styleClass="GreenButton" actionListener="#{precioMasivoBean.ejecutaProcesoPrecios}" id="btnEjecuta" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -126,7 +126,7 @@
 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
 			Ejecutando Proceso
 			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
-	</p:dialog>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>

@@ -94,7 +94,13 @@ public class PrecioMasivoBean implements GeneralBean, Serializable {
 			} else {
 				ProductosLogica objLogica = new ProductosLogica();
 				this.listaPorc = objLogica.consultaGeneralPorc("A", idSede, idCate,idRefe,idMarca);
-				RequestContext.getCurrentInstance().execute("$('#formCnfirma').show();");
+				if(this.listaPorc == null || this.listaPorc.size() == 0){
+					this.messageBean("Error al obtener lista de precios parametrizados o la consulta no arrojo ningun resultado", ErrorEnum.ERROR);
+					RequestContext.getCurrentInstance().execute("$('#formCnfirma').hide();");
+				}else{
+					this.messageBean("Ok", ErrorEnum.SUCCESS);
+					RequestContext.getCurrentInstance().execute("$('#formCnfirma').show();");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
