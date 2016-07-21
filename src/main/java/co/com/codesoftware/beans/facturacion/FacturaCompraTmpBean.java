@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
+import co.com.codesoftware.logica.ProveedoresLogica;
 import co.com.codesoftware.logica.facturacion.FacturaCompraTmpLogica;
 import co.com.codesoftware.server.nsigemco.CiudadEntity;
 import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
@@ -50,6 +51,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	private BigDecimal valorProducto;
 	private Integer idFacturaConsulta;
 	private UsuarioEntity objetoSesion;
+
+	private List<ProveedoresEntity> listaProveedores;
 
 	@PostConstruct
 	public void init() {
@@ -142,8 +145,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	/**
 	 * funcion que muestra el mensaje de proveedor
 	 */
-	public void seleccionaProveedor() {
-		this.setEnumer(ErrorEnum.SUCCESS);
+	public void seleccionaProveedor(ProveedoresEntity objEntity) {
+		proveedor = objEntity;
 		this.messageBean("Proveedor " + proveedor.getNombre() + " adicionado correctamente.", ErrorEnum.SUCCESS);
 	}
 
@@ -268,7 +271,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	 * metodo que llama al procedimiento almacenado de factura de compra
 	 */
 	public String terminaTransaccion() {
-		String rta="";
+		String rta = "";
 		if (validaDatos()) {
 			String mensaje = logica.ejecutaProcedimientoFactCompra(this.facturaCompra.getId());
 			if (mensaje.startsWith("Error")) {
@@ -338,6 +341,18 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Funcion con la cual obtengo
+	 */
+	public void consultaProveedores() {
+		try {
+			ProveedoresLogica objLogica = new ProveedoresLogica();
+			this.listaProveedores = objLogica.buscaProveedores(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -491,6 +506,14 @@ public class FacturaCompraTmpBean implements GeneralBean {
 
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
+	}
+
+	public List<ProveedoresEntity> getListaProveedores() {
+		return listaProveedores;
+	}
+
+	public void setListaProveedores(List<ProveedoresEntity> listaProveedores) {
+		this.listaProveedores = listaProveedores;
 	}
 
 }

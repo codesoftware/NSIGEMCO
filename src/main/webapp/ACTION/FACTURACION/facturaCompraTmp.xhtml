@@ -10,7 +10,14 @@
 		<ui:define name="content">
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<h:form id="formconsProv">
+				<br />
+				<br />
+				<p:commandButton value="PROVEEDORES" styleClass="RedButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()"></p:commandButton>
+
+			</h:form>
 			<h:form id="datosFactura">
+				<br />
 				<p:remoteCommand name="codExt" update="panelDetProducto" actionListener="#{facturaCompraTmpBean.busquedaProducto}" />
 				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" />
 				<p:commandButton value="GUARDAR" title="GUARDAR" icon="ui-icon-disk" id="tb" actionListener="#{facturaCompraTmpBean.autoGuardado}" update="fechaGuardado" />
@@ -58,42 +65,32 @@
 
 					</p:panelGrid>
 					<br />
-					<p:panelGrid columns="5" layout="grid">
+
+					<p:panelGrid id="panelProveedor" columns="5" styleClass="table table-borderd">
 						<f:facet name="header">
 							<p:outputLabel value="DATOS PROVEEDOR" style="color:black" />
 						</f:facet>
 						<p:column>
-							<p:outputLabel value="Busqueda Proveedor" />
-							<p:autoComplete id="inputAutCProv" value="#{facturaCompraTmpBean.proveedor}" completeMethod="#{autoCompleteBean.completeText}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" converter="proveedoresConverter"
-								placeholder="CONSULTAR PROVEEDOR" style="width:100%">
-								<p:ajax listener="#{facturaCompraTmpBean.seleccionaProveedor}" event="itemSelect" update="panelProveedor" />
-							</p:autoComplete>
+							<p:outputLabel value="Nombre:" style="color:black" />
+							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nombre}" style="width:100%" />
 						</p:column>
-						<p:column colspan="4">
-							<p:panelGrid id="panelProveedor" columns="5" layout="grid" style="width:100%">
-								<p:column>
-									<p:outputLabel value="Nombre:" style="color:black" />
-									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nombre}" style="width:100%" />
-								</p:column>
-								<p:column>
-									<p:outputLabel value="NIT:" style="color:black" />
-									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nit}-#{facturaCompraTmpBean.proveedor.dverificacion}" />
-								</p:column>
-								<p:column>
-									<p:outputLabel value="Ciudad:" style="color:black" />
-									<p:outputLabel value="#{facturaCompraTmpBean.proveedor.ciudad.nombre}" />
-								</p:column>
-								<p:column>
-									<p:outputLabel value="Plazo pago:" style="color:black" />
-									<p:inputText value="#{facturaCompraTmpBean.proveedor.dcredito}" style="width:50%" />
-								</p:column>
-								<p:column>
-									<p:outputLabel value="Porcentaje retefuente:" style="color:black" />
-									<p:inputText value="#{facturaCompraTmpBean.proveedor.porcRetencion}" style="width:50%">
-										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-									</p:inputText>
-								</p:column>
-							</p:panelGrid>
+						<p:column>
+							<p:outputLabel value="NIT:&nbsp;&nbsp;" style="color:black" />
+							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nit}-#{facturaCompraTmpBean.proveedor.dverificacion}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Ciudad:&nbsp;" style="color:black" />
+							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.ciudad.nombre}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Plazo pago:" style="color:black" />
+							<p:inputText value="#{facturaCompraTmpBean.proveedor.dcredito}" style="width:50%" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Porcentaje retefuente:" style="color:black" />
+							<p:inputText value="#{facturaCompraTmpBean.proveedor.porcRetencion}" style="width:50%">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:inputText>
 						</p:column>
 					</p:panelGrid>
 					<br />
@@ -239,8 +236,25 @@
 						</p:outputLabel>
 					</p:panelGrid>
 				</p:dialog>
-
 			</h:form>
+			<p:dialog closeOnEscape="true" header="CONSULTA PROVEEDORES" widgetVar="dialogProveedor" styleClass="modalResponsive" modal="true">
+				<h:form id="formTableProv">
+					<p:dataTable var="item" paginator="true" rows="5" reflow="true" value="#{facturaCompraTmpBean.listaProveedores}">
+						<p:column>
+							<p:outputLabel value="#{item.id}"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{item.nombre}"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{item.nit}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Seleccionar">
+							<p:commandButton styleClass="RedButton" value="ADD." actionListener="#{facturaCompraTmpBean.seleccionaProveedor(item)}" update=":datosFactura:panelProveedor" onsuccess="PF('dialogProveedor').hide()"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>
