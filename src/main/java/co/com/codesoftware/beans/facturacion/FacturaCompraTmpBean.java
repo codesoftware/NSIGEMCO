@@ -59,12 +59,10 @@ public class FacturaCompraTmpBean implements GeneralBean {
 
 		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("dataSession");
-		System.out.println("Id" + objetoSesion.getId());
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
 		facturaCompraTmp = new FacturaCompraTmpEntity();
 		this.logica = new FacturaCompraTmpLogica();
-		this.productosConsulta = logica.consultaProductos();
 		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("facturaCompra");
 		if (this.idFacturaConsulta != null && this.idFacturaConsulta != 0) {
@@ -78,24 +76,41 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		}
 
 	}
+	/**
+	 * Funcion con la cual busco los productos que se encuentran en el sistema
+	 */
+	public void busquedaAvanzada(){
+		try {
+			if(this.productosConsulta == null || this.productosConsulta.size() == 0){
+				this.productosConsulta = logica.consultaProductos();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * funcion que ejecuta el guardado del borrador de la factura de compra
 	 */
 	public void autoGuardado() {
-		seteaObjeto();
-		if (this.facturaCompra.getId() == null || this.facturaCompra.getId() == 0) {
-			insertaFacturaTmp();
+		if(this.proveedor == null){
+			this.messageBean("El proveedor no puede ser nulo", ErrorEnum.ERROR);
+		}else if(this.idSede == -1 ){
+			this.messageBean("Por Favor Seleccione una sede", ErrorEnum.ERROR);
+		}else{
+			seteaObjeto();
+			if (this.facturaCompra.getId() == null || this.facturaCompra.getId() == 0) {
+				insertaFacturaTmp();
+				this.setEnumer(ErrorEnum.SUCCESS);
+				this.messageBean("Factura insertada Correctamente", ErrorEnum.SUCCESS);
+			} else {
+				actualizaFacturaTmp();
+				this.setEnumer(ErrorEnum.SUCCESS);
+				this.messageBean("Factura actualizada Correctamente", ErrorEnum.SUCCESS);
+			}
+			this.fechaGuardado = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 			this.setEnumer(ErrorEnum.SUCCESS);
-			this.messageBean("Factura insertada Correctamente", ErrorEnum.SUCCESS);
-		} else {
-			actualizaFacturaTmp();
-			this.setEnumer(ErrorEnum.SUCCESS);
-			this.messageBean("Factura actualizada Correctamente", ErrorEnum.SUCCESS);
 		}
-		this.fechaGuardado = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
-		this.setEnumer(ErrorEnum.SUCCESS);
-
 	}
 
 	/**
@@ -255,12 +270,16 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			entidadCiudad.setDescripcion(objeto.getCiudad().getDescripcion());
 			entidadCiudad.setId(objeto.getCiudad().getId());
 			entidadCiudad.setNombre(objeto.getCiudad().getNombre());
+			if(this.proveedor == null){
+				this.proveedor = new ProveedoresEntity();
+			}
 			this.proveedor.setCiudad(entidadCiudad);
 			this.proveedor.setDcredito(this.facturaCompra.getPlazo());
 			this.proveedor.setPorcRetencion(this.facturaCompra.getProveedor().getPorcRetencion());
 			this.proveedor.setNit(this.facturaCompra.getProveedor().getNit());
 			this.proveedor.setDverificacion(this.facturaCompra.getProveedor().getDverificacion());
 			this.proveedor.setNombre(this.facturaCompra.getProveedor().getNombre());
+			this.proveedor.setId(this.facturaCompra.getProveedor().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

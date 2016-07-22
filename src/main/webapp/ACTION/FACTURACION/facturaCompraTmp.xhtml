@@ -115,7 +115,7 @@
 							<pe:inputNumber id="valorUnidad" value="#{facturaCompraTmpBean.valorProducto}" decimalPlaces="2" symbol="$" style="width:100%" onblur="adicionaProd()" />
 						</p:column>
 						<p:column>
-							<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" />
+							<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"/>
 						</p:column>
 						<p:column colspan="5">
 							<p:panel id="panelDetProducto">

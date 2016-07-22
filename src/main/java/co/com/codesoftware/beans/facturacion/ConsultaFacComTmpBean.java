@@ -60,10 +60,13 @@ public class ConsultaFacComTmpBean implements GeneralBean {
 	 * metodo que consulta las facturas por criterio
 	 */
 	public void consultaFacturasCriterio() {
-		if (this.idSede != null) {
-			this.listaFacturas = logica.consultaFacturasXCriterio(estado, idSede, fechaInicial, fechaFinal);
-		}else{
+		if (this.idSede == null || this.idSede == 0) {
 			messageBean("Debe seleccionar por lo menos la sede",ErrorEnum.ERROR);
+		}else{
+			this.listaFacturas = logica.consultaFacturasXCriterio(estado, idSede, fechaInicial, fechaFinal);
+			if(this.listaFacturas == null || this.listaFacturas.size() == 0){
+				messageBean("La consulta no arroja ningun resultado", ErrorEnum.ERROR);
+			}
 		}
 	}
 
