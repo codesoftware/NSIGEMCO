@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -14,24 +14,26 @@
 			<br></br>
 			<center>
 				<div class="row">
-					<div class="col-md-2 col-sm-0 col-xs-0"></div>
-					<div class="col-md-8 col-sm-12 col-xs-12">
-						<div class="panel panel-heading" style="color: #337ab7; background: #eee">CONSULTA FACTURACIÓN</div>
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
+					<div class="col-md-10 col-sm-12 col-xs-12 panel">
+						<div class="panel-heading" style="color: #337ab7; background: #eee">CONSULTA FACTURACIÓN</div>
 						<h:form>
-							<p:panelGrid id="panelDatosGeneral">
+							<p:panelGrid id="panelDatosGeneral" styleClass="table">
 								<p:row>
 									<p:column>
 										Fecha Inicial:
 									</p:column>
 									<p:column>
-										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{consultaFacturacionBean.fechaInicial}" navigator="true" style="width:60%;" required="true" requiredMessage="Seleccione fecha Inicial">
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaInicial" value="#{consultaFacturacionBean.fechaInicial}" navigator="true" style="width:60%;" required="true"
+											requiredMessage="Seleccione fecha Inicial">
 										</p:calendar>
 									</p:column>
 									<p:column>
 										Fecha Final:		
 									</p:column>
 									<p:column>
-										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{consultaFacturacionBean.fechaFinal}" navigator="true" style="width:60%;" required="true" requiredMessage="Seleccione fecha Final">
+										<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" id="fechaFinal" value="#{consultaFacturacionBean.fechaFinal}" navigator="true" style="width:60%;" required="true"
+											requiredMessage="Seleccione fecha Final">
 										</p:calendar>
 									</p:column>
 									<p:column>
@@ -52,8 +54,10 @@
 							</p:panelGrid>
 							<br />
 							<br />
-							<p:dataTable id="tablaFacturas" widgetVar="tFacturas" paginator="true" var="factura" value="#{consultaFacturacionBean.listaFacturas}" rows="20" emptyMessage="No existe facturas" filteredValue="#{consultaFacturacionBean.listaFacturasFiltradas}">
+							<p:dataTable id="tablaFacturas" widgetVar="tFacturas" paginator="true" var="factura" value="#{consultaFacturacionBean.listaFacturas}" rows="20" emptyMessage="No existe facturas"
+								filteredValue="#{consultaFacturacionBean.listaFacturasFiltradas}" styleClass="table">
 								<f:facet name="header">
+									Numero de Facturas #{consultaFacturacionBean.listaFacturas.size()}.
 									<h:commandLink>
 										<p:graphicImage name="/images/excel.png" width="24" />
 										<p:dataExporter type="xls" target="tablaFacturas" fileName="tablaFacturas" />
@@ -85,7 +89,12 @@
 										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 									</h:outputText>
 								</p:column>
-								<p:column headerText="total" width="30%" priority="3">
+								<p:column headerText="Subtotal" width="30%" priority="3">
+									<h:outputText value="#{factura.valor}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Total" width="30%" priority="3">
 									<h:outputText value="#{factura.valor+factura.vlrIva}">
 										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 									</h:outputText>
@@ -93,9 +102,18 @@
 								<p:column headerText="Detalle" width="10%" priority="2" exportable="false">
 									<p:commandButton icon="ui-icon-search" action="#{consultaFacturacionBean.consultaEspecifico(factura.id)}" />
 								</p:column>
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="5" style="text-align:right" footerText="Totales: " />
+										<p:column footerText="$#{consultaFacturacionBean.totalIva}" />
+										<p:column footerText="$#{consultaFacturacionBean.subTotalFacturas}" />
+										<p:column colspan="2"  footerText="$#{consultaFacturacionBean.totalFacturas}" />
+									</p:row>
+								</p:columnGroup>
 							</p:dataTable>
 						</h:form>
 					</div>
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				</div>
 			</center>
 		</ui:define>

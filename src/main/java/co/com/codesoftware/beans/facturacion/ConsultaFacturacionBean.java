@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +65,7 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 	public void consultaFacturas() {
 		try {
 			if(this.idSede != -1){
-				if (this.listaFacturas == null) {
+				if (this.listaFacturas == null || this.listaFacturas.size() == 0 ) {
 					this.listaFacturas = new ArrayList<FacturaEntity>();
 				}
 				this.listaFacturas = logica.consultaFacturasFechaSede(idSede, fechaInicial, fechaFinal);
@@ -315,7 +317,7 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 		consultaFacturaEspecifica();
 		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		consultaImagenesFactura();
-
+		this.listaFacturas = new ArrayList<FacturaEntity>();
 	}
 
 	public ErrorEnum getEnumer() {
@@ -343,6 +345,39 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 			break;
 		}
 
+	}
+	/**
+	 * Funcion con la cual obtengo el subtotal de las facturas
+	 * @return
+	 */
+	public String getSubTotalFacturas(){
+		BigDecimal total=new BigDecimal(0);
+		if(this.listaFacturas != null){
+			for(FacturaEntity item : this.listaFacturas){
+				total = total.add(item.getValor());
+			}
+		}
+		return new DecimalFormat("###,###.###").format(total);
+	}
+	
+	public String getTotalFacturas(){
+		BigDecimal total=new BigDecimal(0);
+		if(this.listaFacturas != null){
+			for(FacturaEntity item : this.listaFacturas){
+				total = total.add(item.getValor().add(item.getVlrIva()));
+			}
+		}
+		return new DecimalFormat("###,###.###").format(total);
+	}
+	
+	public String getTotalIva(){
+		BigDecimal total=new BigDecimal(0);
+		if(this.listaFacturas != null){
+			for(FacturaEntity item : this.listaFacturas){
+				total = total.add(item.getVlrIva());
+			}
+		}
+		return new DecimalFormat("###,###.###").format(total);
 	}
 
 	// accesors y mutators
