@@ -53,18 +53,17 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	private UsuarioEntity objetoSesion;
 
 	private List<ProveedoresEntity> listaProveedores;
+	private List<ProveedoresEntity> listaProveedoresFiltered;
 
 	@PostConstruct
 	public void init() {
 		this.proveedor = new ProveedoresEntity();
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
 		facturaCompraTmp = new FacturaCompraTmpEntity();
 		this.logica = new FacturaCompraTmpLogica();
-		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("facturaCompra");
+		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("facturaCompra");
 		if (this.idFacturaConsulta != null && this.idFacturaConsulta != 0) {
 			this.facturaCompra = logica.consultaFacturaID(this.idFacturaConsulta);
 			seteaProveedor(this.facturaCompra.getProveedor());
@@ -76,12 +75,13 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		}
 
 	}
+
 	/**
 	 * Funcion con la cual busco los productos que se encuentran en el sistema
 	 */
-	public void busquedaAvanzada(){
+	public void busquedaAvanzada() {
 		try {
-			if(this.productosConsulta == null || this.productosConsulta.size() == 0){
+			if (this.productosConsulta == null || this.productosConsulta.size() == 0) {
 				this.productosConsulta = logica.consultaProductos();
 			}
 		} catch (Exception e) {
@@ -93,11 +93,11 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	 * funcion que ejecuta el guardado del borrador de la factura de compra
 	 */
 	public void autoGuardado() {
-		if(this.proveedor == null){
+		if (this.proveedor == null) {
 			this.messageBean("El proveedor no puede ser nulo", ErrorEnum.ERROR);
-		}else if(this.idSede == -1 ){
+		} else if (this.idSede == -1) {
 			this.messageBean("Por Favor Seleccione una sede", ErrorEnum.ERROR);
-		}else{
+		} else {
 			seteaObjeto();
 			if (this.facturaCompra.getId() == null || this.facturaCompra.getId() == 0) {
 				insertaFacturaTmp();
@@ -136,8 +136,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void insertaProductos() {
 		if (listaProductos != null && listaProductos.size() != 0) {
 			if (this.facturaCompra.getId() != 0 && this.facturaCompra.getId() != null) {
-				this.listaProductos = logica.insertaProductosFactCompra(this.listaProductos,
-						this.facturaCompra.getId());
+				this.listaProductos = logica.insertaProductosFactCompra(this.listaProductos, this.facturaCompra.getId());
 			}
 		}
 	}
@@ -217,8 +216,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			if (this.listaProductos == null) {
 				this.listaProductos = new ArrayList<>();
 			}
-			this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad,
-					porcentajeIva, valorProducto);
+			this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto);
 			this.cantidad = 0;
 			this.porcentajeIva = new BigDecimal("0");
 			this.valorProducto = new BigDecimal("0");
@@ -270,7 +268,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			entidadCiudad.setDescripcion(objeto.getCiudad().getDescripcion());
 			entidadCiudad.setId(objeto.getCiudad().getId());
 			entidadCiudad.setNombre(objeto.getCiudad().getNombre());
-			if(this.proveedor == null){
+			if (this.proveedor == null) {
 				this.proveedor = new ProveedoresEntity();
 			}
 			this.proveedor.setCiudad(entidadCiudad);
@@ -346,8 +344,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			messageBean("debe añadir por lo menos un producto ", ErrorEnum.ERROR);
 			return false;
 		}
-		if (this.facturaCompra.getNumeroFactura() == null
-				|| "".equalsIgnoreCase(this.facturaCompra.getNumeroFactura())) {
+		if (this.facturaCompra.getNumeroFactura() == null || "".equalsIgnoreCase(this.facturaCompra.getNumeroFactura())) {
 			messageBean("debe ingresar el número de factura ", ErrorEnum.ERROR);
 			return false;
 		}
@@ -368,7 +365,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void consultaProveedores() {
 		try {
 			ProveedoresLogica objLogica = new ProveedoresLogica();
-			this.listaProveedores = objLogica.buscaProveedores(); 
+			this.listaProveedores = objLogica.buscaProveedores();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -533,6 +530,14 @@ public class FacturaCompraTmpBean implements GeneralBean {
 
 	public void setListaProveedores(List<ProveedoresEntity> listaProveedores) {
 		this.listaProveedores = listaProveedores;
+	}
+
+	public List<ProveedoresEntity> getListaProveedoresFiltered() {
+		return listaProveedoresFiltered;
+	}
+
+	public void setListaProveedoresFiltered(List<ProveedoresEntity> listaProveedoresFiltered) {
+		this.listaProveedoresFiltered = listaProveedoresFiltered;
 	}
 
 }

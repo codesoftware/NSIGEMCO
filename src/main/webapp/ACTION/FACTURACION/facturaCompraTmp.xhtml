@@ -20,7 +20,7 @@
 							<div class="panel-heading text-center">
 								<h4>
 									DATOS DEL PROVEEDOR&nbsp;&nbsp;
-									<p:commandButton value="PROVEEDORES" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()"></p:commandButton>
+									<p:commandButton value="PROVEEDORES" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()" onstart="PF('tablaProveedores').clearFilters()"></p:commandButton>
 								</h4>
 							</div>
 							<div class="panel-body">
@@ -128,7 +128,7 @@
 						</p:column>
 						<f:facet name="footer">
 							<p:panel id="panelDetProducto">
-								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos" />
+								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"  onstart="PF('tablaProd').clearFilters()"/>
 								<p:outputLabel value="Codigo Externo:#{facturaCompraTmpBean.productoBusqueda.producto.codigoExt}---Nombre :#{facturaCompraTmpBean.productoBusqueda.producto.descripcion}" />
 							</p:panel>
 						</f:facet>
@@ -168,7 +168,6 @@
 					<p:commandButton value="TERMINAR" title="TERMINAR" icon="fa fa-check-square-o" styleClass="BlueButton" onclick="PF('confirmacionTer').show()" update="tablaConsultaProdPrin" />
 					<p:commandButton value="VER DETALLE" title="VER DETALLE" icon="fa fa-eye" styleClass="GreenButton" action="#{facturaCompraTmpBean.consultaPagos}" update="verTotales" />
 				</center>
-
 				<p:dialog header="Consulta de productos" widgetVar="addProducto" minHeight="150" width="90%" modal="true" closeOnEscape="true">
 					<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{facturaCompraTmpBean.productosConsulta}"
 						filteredValue="#{facturaCompraTmpBean.productosConsultaFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
@@ -215,7 +214,7 @@
 
 				</p:dialog>
 
-				<p:dialog responsive="true" modal="true" widgetVar="datosPago" closeOnEscape="true">
+				<p:dialog responsive="true" modal="true" widgetVar="datosPago" closeOnEscape="true" styleClass="modalResponsiveSmall">
 					<p:panelGrid columns="2" layout="grid" id="verTotales">
 						<f:facet name="header">
 							<p:outputLabel value="DATOS PAGO" />
@@ -248,15 +247,17 @@
 			</h:form>
 			<p:dialog closeOnEscape="true" header="CONSULTA PROVEEDORES" widgetVar="dialogProveedor" styleClass="modalResponsive" modal="true">
 				<h:form id="formTableProv">
-					<p:dataTable var="item" paginator="true" rows="5" reflow="true" value="#{facturaCompraTmpBean.listaProveedores}">
-						<p:column>
+					<p:dataTable var="item" widgetVar="tablaProveedores" paginator="true" rows="5" reflow="true" value="#{facturaCompraTmpBean.listaProveedores}" filteredValue="#{facturaCompraTmpBean.listaProveedoresFiltered}" >
+						<p:column headerText="Id" >
 							<p:outputLabel value="#{item.id}"></p:outputLabel>
 						</p:column>
-						<p:column>
+						<p:column headerText="NOMBRE" filterBy="#{item.nombre}" filterMatchMode="contains">
 							<p:outputLabel value="#{item.nombre}"></p:outputLabel>
 						</p:column>
-						<p:column>
+						<p:column headerText="NIT" filterBy="#{item.nit}" filterMatchMode="contains">
 							<p:outputLabel value="#{item.nit}"></p:outputLabel>
+							<p:outputLabel value="-"></p:outputLabel>
+							<p:outputLabel value="#{item.dverificacion}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="Seleccionar">
 							<p:commandButton styleClass="RedButton" value="ADD." actionListener="#{facturaCompraTmpBean.seleccionaProveedor(item)}" update=":formconsProv:panelProveedor"
@@ -268,4 +269,4 @@
 		</ui:define>
 	</ui:composition>
 </body>
-</html>
+</html> 
