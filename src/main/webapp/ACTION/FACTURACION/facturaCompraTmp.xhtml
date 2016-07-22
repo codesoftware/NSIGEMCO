@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -13,17 +13,55 @@
 			<h:form id="formconsProv">
 				<br />
 				<br />
-				<p:commandButton value="PROVEEDORES" styleClass="RedButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()"></p:commandButton>
+				<div class="row">
+					<div class="col-md-1 col-xs-0 col-sm-0"></div>
+					<div class="col-md-10 col-xs-12 col-sm-12">
+						<div class="panel panel-default">
+							<div class="panel-heading text-center">
+								<h4>
+									DATOS DEL PROVEEDOR&nbsp;&nbsp;
+									<p:commandButton value="PROVEEDORES" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()"></p:commandButton>
+								</h4>
+							</div>
+							<div class="panel-body">
+								<p:panelGrid id="panelProveedor" columns="5" layout="grid">
+									<p:column>
+										<p:outputLabel value="Nombre:" style="color:black" />
+										<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nombre}" style="width:100%" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="NIT:&nbsp;&nbsp;" style="color:black" />
+										<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nit}-#{facturaCompraTmpBean.proveedor.dverificacion}" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Ciudad:&nbsp;" style="color:black" />
+										<p:outputLabel value="#{facturaCompraTmpBean.proveedor.ciudad.nombre}" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Plazo pago:" style="color:black" />
+										<p:inputText value="#{facturaCompraTmpBean.proveedor.dcredito}" style="width:50%" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Porcentaje retefuente:" style="color:black" />
+										<p:inputText value="#{facturaCompraTmpBean.proveedor.porcRetencion}" style="width:50%">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:inputText>
+									</p:column>
+								</p:panelGrid>
+							</div>
+						</div>
 
+					</div>
+					<div class="col-md-1 col-xs-0 col-sm-0"></div>
+				</div>
 			</h:form>
 			<h:form id="datosFactura">
 				<br />
 				<p:remoteCommand name="codExt" update="panelDetProducto" actionListener="#{facturaCompraTmpBean.busquedaProducto}" />
-				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" />
-				<p:commandButton value="GUARDAR" title="GUARDAR" icon="ui-icon-disk" id="tb" actionListener="#{facturaCompraTmpBean.autoGuardado}" update="fechaGuardado" />
-				<p:sticky target="tb" />
+				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" oncomplete="document.getElementById('datosFactura:codAplicCons').focus();"/>
 				<center>
-					<p:outputLabel id="fechaGuardado" value="Autoguardado: #{facturaCompraTmpBean.fechaGuardado}" />
+					<p:commandButton value="GUARDAR" title="GUARDAR" icon="ui-icon-disk" id="tb" actionListener="#{facturaCompraTmpBean.autoGuardado}" update="fechaGuardado" />
+					<p:outputLabel id="fechaGuardado" value="&nbsp;&nbsp;Guardado: #{facturaCompraTmpBean.fechaGuardado}" />
 					<br />
 					<p:panelGrid columns="6" layout="grid">
 						<f:facet name="header">
@@ -31,13 +69,15 @@
 						</f:facet>
 						<p:column>
 					Fecha Factura
-						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaFact}" id="fechaFact" navigator="true" style="width:100%;" maxdate="#{facturaCompraTmpBean.maxDate}">
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaFact}" id="fechaFact" navigator="true" style="width:100%;"
+								maxdate="#{facturaCompraTmpBean.maxDate}">
 								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
 							</p:calendar>
 						</p:column>
 						<p:column>
 					Fecha Recepción
-						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaRec}" id="fechaRecep" navigator="true" style="width:100%;" maxdate="#{facturaCompraTmpBean.maxDate}">
+						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaRec}" id="fechaRecep" navigator="true" style="width:100%;"
+								maxdate="#{facturaCompraTmpBean.maxDate}">
 								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
 							</p:calendar>
 
@@ -65,42 +105,14 @@
 
 					</p:panelGrid>
 					<br />
-
-					<p:panelGrid id="panelProveedor" columns="5" styleClass="table table-borderd">
-						<f:facet name="header">
-							<p:outputLabel value="DATOS PROVEEDOR" style="color:black" />
-						</f:facet>
-						<p:column>
-							<p:outputLabel value="Nombre:" style="color:black" />
-							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nombre}" style="width:100%" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="NIT:&nbsp;&nbsp;" style="color:black" />
-							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.nit}-#{facturaCompraTmpBean.proveedor.dverificacion}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Ciudad:&nbsp;" style="color:black" />
-							<p:outputLabel value="#{facturaCompraTmpBean.proveedor.ciudad.nombre}" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Plazo pago:" style="color:black" />
-							<p:inputText value="#{facturaCompraTmpBean.proveedor.dcredito}" style="width:50%" />
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Porcentaje retefuente:" style="color:black" />
-							<p:inputText value="#{facturaCompraTmpBean.proveedor.porcRetencion}" style="width:50%">
-								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-							</p:inputText>
-						</p:column>
-					</p:panelGrid>
-					<br />
-					<p:panelGrid columns="5" layout="grid">
+					<p:panelGrid columns="4" layout="grid" id="panelProductos">
 						<f:facet name="header">
 							<p:outputLabel value="ADICIÓN DE  PRODUCTOS" style="color:black" />
 						</f:facet>
 						<p:column>
-							<p:outputLabel value="Cod. Ext:" style="color:black" />
-							<p:inputText id="codAplicCons" value="#{facturaCompraTmpBean.codConExterno}" onblur="codExt()" style="width:100%;" styleClass="codigoExterno" onkeypress="if (event.keyCode == 13){ return false;}" />
+							<p:outputLabel value="Cod. Ext:&nbsp;&nbsp;" style="color:black" styleClass="width:18%;"/>
+							<p:inputText id="codAplicCons" value="#{facturaCompraTmpBean.codConExterno}" onblur="codExt()" style="width:80%;" styleClass="codigoExterno"
+								onkeypress="if (event.keyCode == 13){ return false;}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Cantidad :" style="color:black" />
@@ -114,18 +126,15 @@
 							<p:outputLabel value="Valor unidad :" style="color:black" />
 							<pe:inputNumber id="valorUnidad" value="#{facturaCompraTmpBean.valorProducto}" decimalPlaces="2" symbol="$" style="width:100%" onblur="adicionaProd()" />
 						</p:column>
-						<p:column>
-							<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"/>
-						</p:column>
-						<p:column colspan="5">
+						<f:facet name="footer">
 							<p:panel id="panelDetProducto">
+								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos" />
 								<p:outputLabel value="Codigo Externo:#{facturaCompraTmpBean.productoBusqueda.producto.codigoExt}---Nombre :#{facturaCompraTmpBean.productoBusqueda.producto.descripcion}" />
 							</p:panel>
-						</p:column>
-
+						</f:facet>
 					</p:panelGrid>
-					<p:dataTable id="tablaConsultaProdPrin" reflow="true" widgetVar="tablaConsultaPrinc" value="#{facturaCompraTmpBean.listaProductos}" var="producto" paginator="true" rows="10" rowsPerPageTemplate="10,20,30"
-						filteredValue="#{facturaCompraTmpBean.listaProductosFiltro}">
+					<p:dataTable id="tablaConsultaProdPrin" reflow="true" widgetVar="tablaConsultaPrinc" value="#{facturaCompraTmpBean.listaProductos}" var="producto" paginator="true" rows="10"
+						rowsPerPageTemplate="10,20,30" filteredValue="#{facturaCompraTmpBean.listaProductosFiltro}">
 						<f:facet name="header">
 							<p:outputLabel value="LISTA DE PRODUCTOS" />
 						</f:facet>
@@ -250,7 +259,8 @@
 							<p:outputLabel value="#{item.nit}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="Seleccionar">
-							<p:commandButton styleClass="RedButton" value="ADD." actionListener="#{facturaCompraTmpBean.seleccionaProveedor(item)}" update=":datosFactura:panelProveedor" onsuccess="PF('dialogProveedor').hide()"></p:commandButton>
+							<p:commandButton styleClass="RedButton" value="ADD." actionListener="#{facturaCompraTmpBean.seleccionaProveedor(item)}" update=":formconsProv:panelProveedor"
+								onsuccess="PF('dialogProveedor').hide()"></p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</h:form>

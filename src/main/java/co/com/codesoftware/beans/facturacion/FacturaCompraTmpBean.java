@@ -56,7 +56,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 
 	@PostConstruct
 	public void init() {
-
+		this.proveedor = new ProveedoresEntity();
 		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("dataSession");
 		this.maxDate = new Date();

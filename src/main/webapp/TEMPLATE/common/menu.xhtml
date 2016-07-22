@@ -8,8 +8,9 @@
 <body>
 	<ui:composition>
 		<h:form id="formMenu">
-			<p:menubar model="#{menuBean.menuDinamico}" autoDisplay="true">				
+			<p:menubar model="#{menuBean.menuDinamico}" autoDisplay="true" id="menuGeneral">				
 			</p:menubar>
+			<p:sticky target="menuGeneral" />
 		</h:form>
 	</ui:composition>
 </body>
