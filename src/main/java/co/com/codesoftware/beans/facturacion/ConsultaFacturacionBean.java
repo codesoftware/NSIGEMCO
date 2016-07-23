@@ -59,25 +59,27 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 	private List<MoviContableEntity> listaMndef;
 	private List<ImagenFacturaEntity> listaImagenes;
 
+	private String estadoFactura;
+
 	/**
 	 * metodo que consulta las facturas de acuerdo a los filtros
 	 */
 	public void consultaFacturas() {
 		try {
-			if(this.idSede != -1){
-				if (this.listaFacturas == null || this.listaFacturas.size() == 0 ) {
+			if (this.idSede != -1) {
+				if (this.listaFacturas == null || this.listaFacturas.size() == 0) {
 					this.listaFacturas = new ArrayList<FacturaEntity>();
 				}
-				this.listaFacturas = logica.consultaFacturasFechaSede(idSede, fechaInicial, fechaFinal);
-				if(listaFacturas == null || listaFacturas.size() == 0){
+				this.listaFacturas = logica.consultaFacturasFechaSede(idSede, fechaInicial, fechaFinal, this.estadoFactura);
+				if (listaFacturas == null || listaFacturas.size() == 0) {
 					this.setEnumer(ErrorEnum.ERROR);
 					this.messageBean("La consulta no arrojo ningun resultado");
 				}
-			}else{
+			} else {
 				this.setEnumer(ErrorEnum.ERROR);
 				this.messageBean("Por favor seleccione una sede");
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -328,7 +330,6 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 		this.enumer = enumer;
 	}
 
-
 	public void messageBean(String message) {
 		switch (this.enumer) {
 		case ERROR:
@@ -346,34 +347,36 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 		}
 
 	}
+
 	/**
 	 * Funcion con la cual obtengo el subtotal de las facturas
+	 * 
 	 * @return
 	 */
-	public String getSubTotalFacturas(){
-		BigDecimal total=new BigDecimal(0);
-		if(this.listaFacturas != null){
-			for(FacturaEntity item : this.listaFacturas){
+	public String getSubTotalFacturas() {
+		BigDecimal total = new BigDecimal(0);
+		if (this.listaFacturas != null) {
+			for (FacturaEntity item : this.listaFacturas) {
 				total = total.add(item.getValor());
 			}
 		}
 		return new DecimalFormat("###,###.###").format(total);
 	}
-	
-	public String getTotalFacturas(){
-		BigDecimal total=new BigDecimal(0);
-		if(this.listaFacturas != null){
-			for(FacturaEntity item : this.listaFacturas){
+
+	public String getTotalFacturas() {
+		BigDecimal total = new BigDecimal(0);
+		if (this.listaFacturas != null) {
+			for (FacturaEntity item : this.listaFacturas) {
 				total = total.add(item.getValor().add(item.getVlrIva()));
 			}
 		}
 		return new DecimalFormat("###,###.###").format(total);
 	}
-	
-	public String getTotalIva(){
-		BigDecimal total=new BigDecimal(0);
-		if(this.listaFacturas != null){
-			for(FacturaEntity item : this.listaFacturas){
+
+	public String getTotalIva() {
+		BigDecimal total = new BigDecimal(0);
+		if (this.listaFacturas != null) {
+			for (FacturaEntity item : this.listaFacturas) {
 				total = total.add(item.getVlrIva());
 			}
 		}
@@ -538,6 +541,14 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 
 	public void setFacturaEspecifico(FacturaEntity facturaEspecifico) {
 		this.facturaEspecifico = facturaEspecifico;
+	}
+
+	public String getEstadoFactura() {
+		return estadoFactura;
+	}
+
+	public void setEstadoFactura(String estadoFactura) {
+		this.estadoFactura = estadoFactura;
 	}
 
 }

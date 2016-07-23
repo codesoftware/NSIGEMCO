@@ -32,12 +32,12 @@ public class ConsultaFacturasLogic implements WSGeneralInterface {
 	 * @param fechaFinal
 	 * @return
 	 */
-	public List<FacturaEntity> consultaFacturasFechaSede(Integer sedeId, Date fechaInicial, Date fechaFinal) {
+	public List<FacturaEntity> consultaFacturasFechaSede(Integer sedeId, Date fechaInicial, Date fechaFinal, String estado) {
 		List<FacturaEntity> rta = null;
 		try {
 			rta = new ArrayList<FacturaEntity>();
 			rta = conexionWSFacturacion().getPortFact().obtenerFacturasSede(Utilitites.dateToXMLGC(fechaInicial),
-					Utilitites.dateToXMLGC(fechaFinal), sedeId);
+					Utilitites.dateToXMLGC(fechaFinal), sedeId, estado);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

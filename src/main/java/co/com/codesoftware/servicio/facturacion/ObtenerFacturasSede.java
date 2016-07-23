@@ -22,6 +22,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fInicial" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="fFinal" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="idSede" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +35,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "obtenerFacturasSede", propOrder = {
     "fInicial",
     "fFinal",
-    "idSede"
+    "idSede",
+    "estado"
 })
 public class ObtenerFacturasSede {
 
@@ -45,6 +47,8 @@ public class ObtenerFacturasSede {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fFinal;
     protected int idSede;
+    @XmlElement(required = true)
+    protected String estado;
 
     /**
      * Obtiene el valor de la propiedad fInicial.
@@ -108,6 +112,30 @@ public class ObtenerFacturasSede {
      */
     public void setIdSede(int value) {
         this.idSede = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad estado.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * Define el valor de la propiedad estado.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEstado(String value) {
+        this.estado = value;
     }
 
 }

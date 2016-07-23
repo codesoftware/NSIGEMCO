@@ -45,9 +45,21 @@
 											<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
 										</h:selectOneMenu>
 									</p:column>
+									<p:column>
+										Estado:
+									</p:column>
+									<p:column>
+										<h:selectOneMenu styleClass="form-control" id="selectEstado" style="width:200px" value="#{consultaFacturacionBean.estadoFactura}">
+											<f:selectItem itemLabel="TODAS" 					itemValue="T" ></f:selectItem>
+											<f:selectItem itemLabel="FACTURADAS" 				itemValue="P" ></f:selectItem>
+											<f:selectItem itemLabel="CANCELADAS" 				itemValue="C" ></f:selectItem>
+											<f:selectItem itemLabel="EN PROCESO DE CANCELACION"	itemValue="PC" ></f:selectItem>
+											<f:selectItem itemLabel="REMISIONADAS" 				itemValue="R" ></f:selectItem>
+										</h:selectOneMenu>
+									</p:column>
 								</p:row>
 								<p:row>
-									<p:column colspan="6">
+									<p:column colspan="8">
 										<p:commandButton value="CONSULTAR" actionListener="#{consultaFacturacionBean.consultaFacturas}" update="tablaFacturas"></p:commandButton>
 									</p:column>
 								</p:row>
@@ -55,7 +67,7 @@
 							<br />
 							<br />
 							<p:dataTable id="tablaFacturas" widgetVar="tFacturas" paginator="true" var="factura" value="#{consultaFacturacionBean.listaFacturas}" rows="20" emptyMessage="No existe facturas"
-								filteredValue="#{consultaFacturacionBean.listaFacturasFiltradas}" styleClass="table">
+								filteredValue="#{consultaFacturacionBean.listaFacturasFiltradas}" styleClass="table" reflow="true">
 								<f:facet name="header">
 									Numero de Facturas #{consultaFacturacionBean.listaFacturas.size()}.
 									<h:commandLink>
@@ -63,11 +75,18 @@
 										<p:dataExporter type="xls" target="tablaFacturas" fileName="tablaFacturas" />
 									</h:commandLink>
 								</f:facet>
-								<p:column filterMatchMode="contains" filterBy="#{factura.resolucion}" headerText="Resolucion" width="12%" priority="1">
+								<p:column filterMatchMode="contains" filterBy="#{factura.resolucion}" headerText="Res" width="10%" priority="1">
 									<h:outputText value="#{factura.resolucion}" />
 								</p:column>
-								<p:column filterMatchMode="contains" filterBy="#{factura.consecutivo}" headerText="Consecutivo" width="13%" priority="1">
+								<p:column filterMatchMode="contains" filterBy="#{factura.consecutivo}" headerText="Consec." width="10%" priority="1">
 									<h:outputText value="#{factura.consecutivo}" />
+								</p:column>
+								<p:column filterMatchMode="contains" filterBy="#{factura.estado}" headerText="Estado" width="20%" priority="2">
+									<h:outputText value="FACTURADO" rendered="#{factura.estado == 'P'}" />
+									<h:outputText value="CANCELADAS" rendered="#{factura.estado == 'C'}" />
+									<h:outputText value="SOL. CANCELACION" rendered="#{factura.estado == 'S'}" />
+									<h:outputText value="APROVACION CANCELACION" rendered="#{factura.estado == 'A'}" />
+									<h:outputText value="CANCELACION CONTABILIZADA " rendered="#{factura.estado == 'R'}" />
 								</p:column>
 								<p:column headerText="Cliente" width="35%" priority="5" filterMatchMode="contains" filterBy="#{factura.cliente.nombres}">
 									<h:outputText value="#{factura.cliente.apellidos}"></h:outputText>
@@ -77,11 +96,6 @@
 								<p:column headerText="Fecha Facturacion" width="15%" priority="4" filterMatchMode="contains" filterBy="#{factura.fecha.toGregorianCalendar().time}">
 									<h:outputText value="#{factura.fecha.toGregorianCalendar().time}">
 										<f:convertDateTime pattern="dd/MM/yyyy" />
-									</h:outputText>
-								</p:column>
-								<p:column headerText="Subtotal" width="20%">
-									<h:outputText value="#{factura.valor}">
-										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 									</h:outputText>
 								</p:column>
 								<p:column headerText="Iva" width="25%">
