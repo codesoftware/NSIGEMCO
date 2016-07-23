@@ -23,6 +23,7 @@ import org.primefaces.model.DefaultStreamedContent;
 
 import co.com.codesoftware.logica.ConsultaFacturasLogic;
 import co.com.codesoftware.logica.ReporteLogica;
+import co.com.codesoftware.logica.facturacion.RemisionLogica;
 import co.com.codesoftware.server.nsigemco.RespuestaEntity;
 import co.com.codesoftware.servicio.facturacion.FacturaEntity;
 import co.com.codesoftware.servicio.facturacion.HistorialFacturaEntity;
@@ -229,11 +230,18 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 	public void descargarReporte() {
 		ReporteLogica reporte = new ReporteLogica();
 		try {
-			String ruta = reporte.consultaReporteNotaCredito(this.facturaEspecifico.getId(), "NOTA_CREDITO", "pdf");
-			File file = new File(ruta);
-			InputStream input = new FileInputStream(file);
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+			String ruta = "";
+			String documento = reporte.consultaReporteNotaCredito(this.facturaEspecifico.getId(), "NOTA_CREDITO", "pdf");
+			RemisionLogica objLogica = new RemisionLogica();
+			String valida = objLogica.materializaImagenCarpeta(documento, "notaCredito", "notaCredito.pdf", "completa");
+			if ("Ok".equalsIgnoreCase(valida)) {
+				ruta = objLogica.getRutaImagen();
+				File file = new File(ruta);
+				InputStream input = new FileInputStream(file);
+				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+				setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -381,6 +389,19 @@ public class ConsultaFacturacionBean implements Serializable, GeneralBean {
 			}
 		}
 		return new DecimalFormat("###,###.###").format(total);
+	}
+
+	/**
+	 * Funcion con la cual destruyo el id de la facturacion para que no vuelva a
+	 * llamar a los webservices de la consulta especifica de facturas
+	 */
+	public String limpiaFactura() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idFact", null);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/ACTION/FACTURACION/consultaFacturas.jsf";
 	}
 
 	// accesors y mutators

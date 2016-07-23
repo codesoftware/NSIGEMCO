@@ -83,7 +83,7 @@
 								</p:column>
 								<p:column filterMatchMode="contains" filterBy="#{factura.estado}" headerText="Estado" width="20%" priority="2">
 									<h:outputText value="FACTURADO" rendered="#{factura.estado == 'P'}" />
-									<h:outputText value="CANCELADAS" rendered="#{factura.estado == 'C'}" />
+									<h:outputText value="CANCELADA" rendered="#{factura.estado == 'C'}" />
 									<h:outputText value="SOL. CANCELACION" rendered="#{factura.estado == 'S'}" />
 									<h:outputText value="APROVACION CANCELACION" rendered="#{factura.estado == 'A'}" />
 									<h:outputText value="CANCELACION CONTABILIZADA " rendered="#{factura.estado == 'R'}" />

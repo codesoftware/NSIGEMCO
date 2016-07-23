@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes" />
@@ -61,6 +61,8 @@
 				}
 			</script>
 			<br></br>
+			<p:commandLink value="CONSULTA DE FACTURACION"  action="#{consultaFacturacionBean.limpiaFactura}"></p:commandLink>
+			<p:outputLabel value="/ Detalle Factura"></p:outputLabel>
 			<br></br>
 			<center>
 				<div class="row">
@@ -124,7 +126,8 @@
 									</p:dataTable>
 								</p:panel>
 								<p:panel header="IMAGENES FACTURA">
-									<p:dataTable id="tablaImagenes" var="imagen" value="#{consultaFacturacionBean.listaImagenes}" widgetVar="wtablaImagenes" rows="5" paginator="true" emptyMessage="No existen imagenes asociadas a la factura">
+									<p:dataTable id="tablaImagenes" var="imagen" value="#{consultaFacturacionBean.listaImagenes}" widgetVar="wtablaImagenes" rows="5" paginator="true"
+										emptyMessage="No existen imagenes asociadas a la factura">
 										<p:column headerText="TIPO IMAGEN" priority="2">
 											<h:outputText value="#{imagen.tipoFactura}" />
 										</p:column>
@@ -139,7 +142,8 @@
 								</p:panel>
 								<p:panel>
 									<p:commandButton id="solCancelacion" styleClass="OrangeButton" value="SOLICITAR CANC. FACTURA" onclick="PF('confirmaCancela').show()" actionListener="#{consultaFacturacionBean.resetMessage}" />
-									<p:commandButton styleClass="CyanButton" id="pdfFactura" value="FACTURA PDF" actionListener="#{consultaFacturacionBean.generaFacturacion}" update="banderaPdf,idPdfAbrir" oncomplete="abrirPdf()" />
+									<p:commandButton styleClass="CyanButton" id="pdfFactura" value="FACTURA PDF" actionListener="#{consultaFacturacionBean.generaFacturacion}" update="banderaPdf,idPdfAbrir"
+										oncomplete="abrirPdf()" />
 									<p:commandButton styleClass="PurpleButton" id="historial" value="VER HISTORIAL" onclick="PF('historialFactura').show()" />
 									<p:commandButton styleClass="RedButton" id="cancelar" value="CANCELAR FACTURA" onclick="PF('cNotaCredito').show();" />
 									<p:commandButton styleClass="BlueButton" id="autoriza" value="APROBACION CANC." onclick="PF('confirmaAprobacion').show()" />
@@ -190,14 +194,18 @@
 											</h:outputText>
 										</p:column>
 										<p:column headerText="Estado">
-											<h:outputText value="#{historial.estado}" />
+											<h:outputText value="FACTURADO" rendered="#{historial.estado == 'P'}" />
+											<h:outputText value="CANCELADAS" rendered="#{historial.estado == 'C'}" />
+											<h:outputText value="SOLICITUD DE CANCELACION" rendered="#{historial.estado == 'S'}" />
+											<h:outputText value="APROVACION CANCELACION" rendered="#{historial.estado == 'A'}" />
+											<h:outputText value="CANCELACION CONTABILIZADA " rendered="#{historial.estado == 'R'}" />
 										</p:column>
 										<p:column headerText="Comentario">
 											<h:outputText value="#{historial.comentarios}" />
 										</p:column>
 									</p:dataTable>
 								</p:dialog>
-								<p:dialog header="CONTABILIZAR" modal="true" widgetVar="contabilizar" closeOnEscape="true" id="mcontabilizar" width="500">
+								<p:dialog header="CONTABILIZAR" modal="true" widgetVar="contabilizar" closeOnEscape="true" id="mcontabilizar" styleClass="modalResponsiveMedium" responsive="true">
 									<p:panelGrid columns="1">
 										<h:outputText
 											value="Recuerde, al contabilizar la factura le saldra una opción de descargar nota crédito, se debe descargar y firmar por las personas que se muestra en la nota crédito, luego de esto hay un boton de Cancelar Factura en el cual se debe adjuntar la nota Credito previmente firmada, de lo contrario no tendra validez legal alguna. " />
@@ -212,8 +220,8 @@
 										</p:row>
 										<p:row>
 											<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(pdf)$/" previewWidth="100"
-												invalidFileMessage="Solo se puede subir archivos con extensión pdf" multiple="false" fileUploadListener="#{consultaFacturacionBean.cargaNotaCredito}" update=":formFactura" onstart="PF('cNotaCredito').show();"
-												oncomplete="PF('cNotaCredito').hide()" />
+												invalidFileMessage="Solo se puede subir archivos con extensión pdf" multiple="false" fileUploadListener="#{consultaFacturacionBean.cargaNotaCredito}" update=":formFactura"
+												onstart="PF('cNotaCredito').show();" oncomplete="PF('cNotaCredito').hide()" />
 										</p:row>
 									</p:panel>
 								</p:dialog>
