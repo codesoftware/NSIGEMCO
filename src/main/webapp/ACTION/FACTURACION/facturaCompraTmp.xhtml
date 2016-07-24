@@ -9,7 +9,7 @@
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
-			<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+			<p:growl id="mensajes" showDetail="true" autoUpdate="true" life="30000"></p:growl>
 			<h:form id="formconsProv">
 				<br />
 				<br />
