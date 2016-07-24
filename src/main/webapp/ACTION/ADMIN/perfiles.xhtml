@@ -1,0 +1,34 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br/>
+			<br/>
+			<p:dataTable value="#{perfilesBean.listaPerifiles}" rows="5" paginator="true" reflow="true" var="item">
+				<f:facet name="header">
+					<p:outputLabel value="LISTA DE PERFILES"></p:outputLabel>
+				</f:facet>
+				<p:column headerText="ID">
+					<p:outputLabel value="#{item.id}"> </p:outputLabel>
+				</p:column>
+				<p:column headerText="NOMBRE">
+					<p:outputLabel value="#{item.nombre}"> </p:outputLabel>
+				</p:column>
+				<p:column headerText="DESCRIPCION">
+					<p:outputLabel value="#{item.descripcion}"> </p:outputLabel>
+				</p:column>
+				<p:column headerText="ESTADO">
+					<p:outputLabel value="ACTIVO" rendered="#{item.estado == 'A'}"> </p:outputLabel>
+					<p:outputLabel value="INACTIVO" rendered="#{item.estado == 'I'}"> </p:outputLabel>
+				</p:column>
+			</p:dataTable>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

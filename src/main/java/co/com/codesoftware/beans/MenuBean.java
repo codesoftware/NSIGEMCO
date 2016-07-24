@@ -69,11 +69,7 @@ public class MenuBean implements Serializable {
 		segundoPunto.addElement(segPunNivDos);
 		segPunNivDos.addElement(segPunNvDosPrecMasiv);
 		segPunNivDos.addElement(segPunNvDosPrecMasivIns);
-		segPunNivDos.addElement(segPunNvDosPrecMasivEje);
-
-		
-
-		
+		segPunNivDos.addElement(segPunNvDosPrecMasivEje);		
 
 		DefaultMenuItem tercerPunto = new DefaultMenuItem("Cerrar Sesion");
 		tercerPunto.setIcon("fa fa-close");
@@ -211,6 +207,9 @@ public class MenuBean implements Serializable {
 			
 			DefaultMenuItem segundoNivelSeis = new DefaultMenuItem("Clientes.");
 			segundoNivelSeis.setCommand("/ACTION/ADMIN/clientes.jsf");
+			
+			DefaultMenuItem segundoNivelSiete = new DefaultMenuItem("Perfiles.");
+			segundoNivelSiete.setCommand("/ACTION/ADMIN/perfiles.jsf");
 			//Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			menuPrincipal.addElement(segundoNivelUno);
@@ -219,6 +218,7 @@ public class MenuBean implements Serializable {
 			menuPrincipal.addElement(segundoNivelCuatro);
 			menuPrincipal.addElement(segundoNivelCinco);
 			menuPrincipal.addElement(segundoNivelSeis);
+			menuPrincipal.addElement(segundoNivelSiete);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
