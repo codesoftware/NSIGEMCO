@@ -96,7 +96,6 @@ public class PromPonderadoBean implements Serializable, GeneralBean {
 		try {
 			ProductosLogica objLogica = new ProductosLogica();
 			this.existenciasSede = objLogica.existenciaProductoXSede(this.idDska, this.idSede);
-			System.out.println("Esta es la sede seleccionada: " + this.idSede);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
