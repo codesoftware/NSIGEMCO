@@ -2,8 +2,10 @@ package co.com.codesoftware.beans;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -164,7 +166,7 @@ public class ProvedorBean {
 	 * metodo que consulta las ciudades por su departamento
 	 */
 	public void consultaCiudades() {
-		this.listaMapCiudades = new HashMap<>();
+		this.listaMapCiudades = new LinkedHashMap<>();
 		if (this.idMuni != null) {
 			UbicacionLogica logica = new UbicacionLogica();
 			List<CiudadEntity> ciudades = logica.obtieneListaCiudadesXDpto(this.idMuni);
