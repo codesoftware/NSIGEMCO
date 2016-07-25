@@ -1,6 +1,7 @@
 package co.com.codesoftware.beans;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -42,9 +43,10 @@ public class HomeBean implements GeneralBean {
 			yAxis.setLabel("Dinero");
 			yAxis.setMin(0);
 			BigDecimal aux = this.actual.add(this.unMeses);
-			aux.add(this.dosMeses);
-			aux = aux.divide(new BigDecimal(3));
-			aux.add(new BigDecimal(10000000));
+			aux = aux.add(this.dosMeses);
+			aux = aux.divide(new BigDecimal(3),2,RoundingMode.HALF_UP);
+			aux = aux.add(new BigDecimal(10000000));
+			aux = aux.add(this.dosMeses);
 			yAxis.setMax(aux);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,11 +67,20 @@ public class HomeBean implements GeneralBean {
 			int mes = date.getMonth() + 1;
 			String meString = Utilitites.convierteNumMes(mes);
 			this.actual = objLogica.obtenerValorFacturasMes(0);
+			if(this.actual == null){
+				this.actual = new BigDecimal(0);
+			}
 			ventas.set(meString, actual);
 			meString = Utilitites.convierteNumMes(mes - 1);
 			this.unMeses = objLogica.obtenerValorFacturasMes(1);
+			if(this.unMeses == null){
+				this.unMeses = new BigDecimal(0);
+			}
 			ventas.set(meString, unMeses);
 			this.dosMeses = objLogica.obtenerValorFacturasMes(2);
+			if(this.dosMeses== null){
+				this.dosMeses = new BigDecimal(0);
+			}
 			meString = Utilitites.convierteNumMes(mes - 2);
 			ventas.set(meString, dosMeses);
 			modelo.addSeries(ventas);

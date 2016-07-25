@@ -115,7 +115,11 @@ public class UsuarioLogic implements WSGeneralInterface {
 	public void copiaLogoServer(String rutaDestino) {
 		try {
 			File file = new File(rutaDestino);
-			this.guardaImagenServidor(file);
+			if(!file.exists()){
+				System.out.println("El logo no se encuentra en la ruta parametrizada");
+			}else{
+				this.guardaImagenServidor(file);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
