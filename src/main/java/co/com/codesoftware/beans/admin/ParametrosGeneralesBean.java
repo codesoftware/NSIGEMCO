@@ -92,7 +92,9 @@ public class ParametrosGeneralesBean implements GeneralBean {
 				if ("VALORAJUSTEPESO".equalsIgnoreCase(item.getClave())) {
 					this.parametros.setAjustePeso(item.getValor());
 				}
-
+				if ("PAGOTARJETA".equalsIgnoreCase(item.getClave())) {
+					this.parametros.setPagoTarjeta(item.getValor());
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +121,7 @@ public class ParametrosGeneralesBean implements GeneralBean {
 			objLogica.actualizaParametroEmpresarial("CLAVECORRENV", this.parametros.getPassEnvio());
 			objLogica.actualizaParametroEmpresarial("SERVSMTP", this.parametros.getServerEnvio());
 			objLogica.actualizaParametroEmpresarial("VALORAJUSTEPESO", this.parametros.getAjustePeso());
+			objLogica.actualizaParametroEmpresarial("PAGOTARJETA", this.parametros.getPagoTarjeta());
 			this.messageBean("Parametros actualizados correctamente", ErrorEnum.SUCCESS);
 		} catch (Exception e) {
 			e.printStackTrace();

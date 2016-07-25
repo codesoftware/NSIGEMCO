@@ -16,7 +16,7 @@ public class ParametrosGeneralesEntity {
 	private String passEnvio;
 	private String serverEnvio;
 	private String ajustePeso;
-	
+	private String pagoTarjeta;
 
 	public String getNombre() {
 		return nombre;
@@ -129,8 +129,13 @@ public class ParametrosGeneralesEntity {
 	public void setAjustePeso(String ajustePeso) {
 		this.ajustePeso = ajustePeso;
 	}
-	
-	
-	
+
+	public String getPagoTarjeta() {
+		return pagoTarjeta;
+	}
+
+	public void setPagoTarjeta(String pagoTarjeta) {
+		this.pagoTarjeta = pagoTarjeta;
+	}
 
 }

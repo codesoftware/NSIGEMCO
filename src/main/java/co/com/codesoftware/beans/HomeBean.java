@@ -12,7 +12,6 @@ import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.PieChartModel;
 
 import co.com.codesoftware.logica.facturacion.FacturaLogica;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
