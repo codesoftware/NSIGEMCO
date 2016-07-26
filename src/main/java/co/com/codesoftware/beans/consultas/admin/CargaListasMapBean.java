@@ -174,7 +174,7 @@ public class CargaListasMapBean {
 			if (ciudades != null) {
 				for (CiudadEntity ciudad : ciudades) {
 					if (listaMapCiudades == null) {
-						this.listaMapCiudades = new HashMap<>();
+						this.listaMapCiudades = new LinkedHashMap<String, Integer>();
 					}
 					this.listaMapCiudades.put(ciudad.getNombre(), ciudad.getId());
 				}
