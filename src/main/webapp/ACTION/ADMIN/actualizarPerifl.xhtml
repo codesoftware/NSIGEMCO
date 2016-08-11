@@ -31,18 +31,21 @@
 				</div>
 				<div class="col-md-4 col-xs-0 col-sm-0"></div>
 			</div>
+			<br/>
+			<br/>
 			<div>
-				<div class="col-md-4 col-xs-0 col-sm-0"></div>
-				<div class="col-md-4 col-xs-12 col-sm-12">
+				<div class="col-md-2 col-xs-0 col-sm-0"></div>
+				<div class="col-md-8 col-xs-12 col-sm-12">
 					<h:form id="formPermisos">
 						<h3>ADMINISTRACION</h3>
 						<p:selectManyCheckbox id="gridAdm" value="#{perfilesBean.permisosAdm}" layout="responsive" columns="3">
 							<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
 						</p:selectManyCheckbox>
-						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check"  actionListener="#{perfilesBean.enviarPermisos}"/>
+						<br/>
+						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check" styleClass="RedButton"  actionListener="#{perfilesBean.enviarPermisos}"/>
 					</h:form>
 				</div>
-				<div class="col-md-4 col-xs-0 col-sm-0"></div>
+				<div class="col-md-2 col-xs-0 col-sm-0"></div>
 			</div>
 		</ui:define>
 	</ui:composition>
