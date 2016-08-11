@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -13,6 +14,7 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
 import co.com.codesoftware.entity.PuntoMenuEntity;
+import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 
 @ManagedBean
 @ViewScoped
@@ -25,9 +27,12 @@ public class MenuBean implements Serializable {
 	private String listaPermisos = ".InPr13.";
 	private ArrayList<PuntoMenuEntity> menu;
 	private MenuModel menuDinamico;
+	private UsuarioEntity objetoSesion;
 
 	@PostConstruct
 	public void init() {
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.listaPermisos = this.objetoSesion.getPerfil().getPermisos();
 		this.creaMenu();
 	}
 
@@ -38,7 +43,7 @@ public class MenuBean implements Serializable {
 		if (menuDinamico == null) {
 			this.menuDinamico = new DefaultMenuModel();
 		}
-		
+
 		// Segundo punto de menu
 
 		DefaultSubMenu segundoPunto = new DefaultSubMenu();
@@ -69,7 +74,7 @@ public class MenuBean implements Serializable {
 		segundoPunto.addElement(segPunNivDos);
 		segPunNivDos.addElement(segPunNvDosPrecMasiv);
 		segPunNivDos.addElement(segPunNvDosPrecMasivIns);
-		segPunNivDos.addElement(segPunNvDosPrecMasivEje);		
+		segPunNivDos.addElement(segPunNvDosPrecMasivEje);
 
 		DefaultMenuItem tercerPunto = new DefaultMenuItem("Cerrar Sesion");
 		tercerPunto.setIcon("fa fa-close");
@@ -88,57 +93,58 @@ public class MenuBean implements Serializable {
 		this.menuDinamico.addElement(tercerPunto);
 		this.menuDinamico.addElement(cuartoPunto);
 	}
+
 	/**
 	 * Funcion con la cual genero el menu de reportes
+	 * 
 	 * @return
 	 */
-	public DefaultSubMenu generaMenuReportes(){
+	public DefaultSubMenu generaMenuReportes() {
 		// REPORTES
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		menuPrincipal.setLabel("REPORTES");
 		menuPrincipal.setIcon("fa fa-file-excel-o");
-		
-		
+
 		DefaultMenuItem basico = new DefaultMenuItem("Basico");
 		basico.setCommand("/ACTION/REPORTES/reportes.jsf");
-		
-		DefaultMenuItem comVentas = new DefaultMenuItem ("Compras y Ventas");
+
+		DefaultMenuItem comVentas = new DefaultMenuItem("Compras y Ventas");
 		comVentas.setCommand("/ACTION/REPORTES/comprasVentas.xhtml");
-		
+
 		menuPrincipal.addElement(basico);
 		menuPrincipal.addElement(comVentas);
 
 		return menuPrincipal;
 	}
-	
-	public DefaultSubMenu generaMenuProd(){
+
+	public DefaultSubMenu generaMenuProd() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
 			menuPrincipal.setLabel("INVENTARIOS");
 			menuPrincipal.setIcon("fa fa-bank");
-			
-			//Segundo Nivel
+
+			// Segundo Nivel
 			DefaultSubMenu productos = new DefaultSubMenu();
 			productos.setLabel("Productos ");
-			
+
 			DefaultSubMenu cargues = new DefaultSubMenu();
 			cargues.setLabel("Cargues Masivos ");
-			
-			
+
 			DefaultMenuItem tercerNivel = new DefaultMenuItem("Add. Prod. X Fact");
 			tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
-			
+
 			DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
 			tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
-			
+
 			DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
 			tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
 
 			DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
 			tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
 
-			//DefaultMenuItem tercerNivelCargaArchivo = new DefaultMenuItem("Cargue productosArchivo");
-			//tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
+			// DefaultMenuItem tercerNivelCargaArchivo = new
+			// DefaultMenuItem("Cargue productosArchivo");
+			// tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
 
 			DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
 			tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
@@ -148,85 +154,103 @@ public class MenuBean implements Serializable {
 
 			DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
 			tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
-			
+
 			productos.addElement(tercerNivel);
 			productos.addElement(tercerNivelFacturaCompra);
 			productos.addElement(tercerNivelFacturaCompraTmp);
 			productos.addElement(tercerNivelPrueba);
-			//segundoNivel.addElement(tercerNivelCargaArchivo);
+			// segundoNivel.addElement(tercerNivelCargaArchivo);
 			productos.addElement(tercerNivelPrecio);
 			productos.addElement(tercerNivelConsGeneral);
 			productos.addElement(tercerNivelSolicitudes);
-			
-			
-			//Tercer Nivel
+
+			// Tercer Nivel
 			DefaultMenuItem cargueProductos = new DefaultMenuItem("Cargue Productos");
 			cargueProductos.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
 			cargues.addElement(cargueProductos);
-			
+
 			DefaultMenuItem cargueProd = new DefaultMenuItem("Solo Prod");
 			cargueProd.setCommand("/ACTION/PRODUCTOS/cargueSoloProducto.jsf?faces-redirect=false");
 			cargues.addElement(cargueProd);
-			
+
 			menuPrincipal.addElement(productos);
 			menuPrincipal.addElement(cargues);
-			 
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return menuPrincipal;
 	}
+
 	/**
 	 * Funcion con la cual genero el menu de administracion, con todos sus hijos
+	 * 
 	 * @return
 	 */
 	public DefaultSubMenu generaMenuAdmon() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			menuPrincipal.setLabel("ADMINISTRACION");
-			menuPrincipal.setIcon("fa fa-users");
-			// Se generan los submenus de segundo nivel
-			//Genero el segundo nivel del menu
-			DefaultMenuItem segundoNivel = new DefaultMenuItem("Resolución Fact.");
-			segundoNivel.setCommand("/ACTION/ADMIN/resolucionFacturacion.jsf");
-			//Genero sedes
-			DefaultMenuItem segundoNivelUno = new DefaultMenuItem("Sedes.");
-			segundoNivelUno.setCommand("/ACTION/ADMIN/sedes.jsf");
-			//Genero conteos
-			DefaultMenuItem segundoNivelDos = new DefaultMenuItem("Conteo.");
-			segundoNivelDos.setCommand("/ACTION/ADMIN/conteos.jsf");
-			//Punto de menu para parametros
-			DefaultMenuItem segundoNivelTres = new DefaultMenuItem("Parametros.");
-			segundoNivelTres.setCommand("/ACTION/ADMIN/parametrosGenerales.jsf");
-			//Punto de menu para usuarios
-			DefaultMenuItem segundoNivelCuatro = new DefaultMenuItem("Usuarios.");
-			segundoNivelCuatro.setCommand("/ACTION/ADMIN/usuarios.jsf");
-			
-			DefaultMenuItem segundoNivelCinco = new DefaultMenuItem("Proveedores.");
-			segundoNivelCinco.setCommand("/ACTION/ADMIN/proveedores.jsf");
-			
-			DefaultMenuItem segundoNivelSeis = new DefaultMenuItem("Clientes.");
-			segundoNivelSeis.setCommand("/ACTION/ADMIN/clientes.jsf");
-			
-			DefaultMenuItem segundoNivelSiete = new DefaultMenuItem("Perfiles.");
-			segundoNivelSiete.setCommand("/ACTION/ADMIN/perfiles.jsf");
-			//Adiciono al punto de menu principal
-			menuPrincipal.addElement(segundoNivel);
-			menuPrincipal.addElement(segundoNivelUno);
-			menuPrincipal.addElement(segundoNivelDos);
-			menuPrincipal.addElement(segundoNivelTres);
-			menuPrincipal.addElement(segundoNivelCuatro);
-			menuPrincipal.addElement(segundoNivelCinco);
-			menuPrincipal.addElement(segundoNivelSeis);
-			menuPrincipal.addElement(segundoNivelSiete);
+			if (this.listaPermisos.contains(".Adm1.") || this.listaPermisos.contains(".Adm2.") || this.listaPermisos.contains(".Adm3.") || this.listaPermisos.contains(".Adm4.") || this.listaPermisos.contains(".Adm5.")
+					|| this.listaPermisos.contains(".Adm6.") || this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")) {
+				menuPrincipal.setLabel("ADMINISTRACION");
+				menuPrincipal.setIcon("fa fa-users");
+				// Se generan los submenus de segundo nivel
+				// Genero el segundo nivel del menu
+				if (this.listaPermisos.contains(".Adm1.")) {
+					DefaultMenuItem segundoNivel = new DefaultMenuItem("Resolución Fact.");
+					segundoNivel.setCommand("/ACTION/ADMIN/resolucionFacturacion.jsf");
+					menuPrincipal.addElement(segundoNivel);
+				}
+				if (this.listaPermisos.contains(".Adm2.")) {
+					// Genero sedes
+					DefaultMenuItem segundoNivelUno = new DefaultMenuItem("Sedes.");
+					segundoNivelUno.setCommand("/ACTION/ADMIN/sedes.jsf");
+					menuPrincipal.addElement(segundoNivelUno);
+				}
+				if (this.listaPermisos.contains(".Adm3.")) {
+					// Genero conteos
+					DefaultMenuItem segundoNivelDos = new DefaultMenuItem("Conteo.");
+					segundoNivelDos.setCommand("/ACTION/ADMIN/conteos.jsf");
+					menuPrincipal.addElement(segundoNivelDos);
+				}
+				if (this.listaPermisos.contains(".Adm4.")) {
+					// Punto de menu para parametros
+					DefaultMenuItem segundoNivelTres = new DefaultMenuItem("Parametros.");
+					segundoNivelTres.setCommand("/ACTION/ADMIN/parametrosGenerales.jsf");
+					menuPrincipal.addElement(segundoNivelTres);
+				}
+				if (this.listaPermisos.contains(".Adm5.")) {
+					// Punto de menu para usuarios
+					DefaultMenuItem segundoNivelCuatro = new DefaultMenuItem("Usuarios.");
+					segundoNivelCuatro.setCommand("/ACTION/ADMIN/usuarios.jsf");
+					menuPrincipal.addElement(segundoNivelCuatro);
+				}
+				if (this.listaPermisos.contains(".Adm6.")) {
+					DefaultMenuItem segundoNivelCinco = new DefaultMenuItem("Proveedores.");
+					segundoNivelCinco.setCommand("/ACTION/ADMIN/proveedores.jsf");
+					menuPrincipal.addElement(segundoNivelCinco);
+				}
+				if (this.listaPermisos.contains(".Adm7.")) {
+					DefaultMenuItem segundoNivelSeis = new DefaultMenuItem("Clientes.");
+					segundoNivelSeis.setCommand("/ACTION/ADMIN/clientes.jsf");
+					menuPrincipal.addElement(segundoNivelSeis);
+
+				}
+				if (this.listaPermisos.contains(".Adm8.")) {
+					DefaultMenuItem segundoNivelSiete = new DefaultMenuItem("Perfiles.");
+					segundoNivelSiete.setCommand("/ACTION/ADMIN/perfiles.jsf");
+					menuPrincipal.addElement(segundoNivelSiete);
+				}				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return menuPrincipal;
 	}
-	
+
 	/**
 	 * Funcion con la cual genero el menu de facturacion, con todos sus hijos
+	 * 
 	 * @return
 	 */
 	public DefaultSubMenu generaMenuFacturacion() {
@@ -235,20 +259,20 @@ public class MenuBean implements Serializable {
 			menuPrincipal.setLabel("FACTURACION");
 			menuPrincipal.setIcon("fa fa-files-o");
 			// Se generan los submenus de segundo nivel
-			//Genero el segundo nivel del menu
+			// Genero el segundo nivel del menu
 			DefaultMenuItem segundoNivel = new DefaultMenuItem("Consulta Facturas");
 			segundoNivel.setCommand("/ACTION/FACTURACION/consultaFacturas.jsf");
 			DefaultSubMenu segundoNivelDos = new DefaultSubMenu("Remisiones");
-			
+
 			DefaultMenuItem consultaRemi = new DefaultMenuItem("Consulta Remisiones");
 			consultaRemi.setCommand("/ACTION/FACTURACION/remisionFacturacion.jsf");
 			DefaultMenuItem consultaPagos = new DefaultMenuItem("Registro Pagos");
-			consultaPagos .setCommand("/ACTION/FACTURACION/pagosRemision.jsf");
-			
+			consultaPagos.setCommand("/ACTION/FACTURACION/pagosRemision.jsf");
+
 			segundoNivelDos.addElement(consultaRemi);
 			segundoNivelDos.addElement(consultaPagos);
 
-			//Adiciono al punto de menu principal
+			// Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			menuPrincipal.addElement(segundoNivelDos);
 		} catch (Exception e) {
@@ -256,8 +280,10 @@ public class MenuBean implements Serializable {
 		}
 		return menuPrincipal;
 	}
+
 	/**
 	 * Menu en el cual se generan las importaciones
+	 * 
 	 * @return
 	 */
 	public DefaultSubMenu generaMenuImportaciones() {
@@ -266,13 +292,13 @@ public class MenuBean implements Serializable {
 			menuPrincipal.setLabel("IMPORTACIONES");
 			menuPrincipal.setIcon("fa fa-briefcase");
 			// Se generan los submenus de segundo nivel
-			//Genero el segundo nivel del menu
+			// Genero el segundo nivel del menu
 			DefaultMenuItem segundoNivel = new DefaultMenuItem("Info Principal");
 			DefaultMenuItem segundoNivelConsulta = new DefaultMenuItem("Consulta Gral");
 			segundoNivel.setCommand("/ACTION/IMPORTACION/adminImportacion.jsf");
 			segundoNivelConsulta.setCommand("/ACTION/IMPORTACION/consultaImportacion.jsf");
 
-			//Adiciono al punto de menu principal
+			// Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			menuPrincipal.addElement(segundoNivelConsulta);
 		} catch (Exception e) {
@@ -280,8 +306,10 @@ public class MenuBean implements Serializable {
 		}
 		return menuPrincipal;
 	}
+
 	/**
 	 * Menu en el cual se generan las importaciones
+	 * 
 	 * @return
 	 */
 	public DefaultSubMenu generaMenuContabilidad() {
@@ -290,20 +318,20 @@ public class MenuBean implements Serializable {
 			menuPrincipal.setLabel("CONTABILIDAD");
 			menuPrincipal.setIcon("fa fa-calculator");
 			// Se generan los submenus de segundo nivel
-			//Genero el segundo nivel del menu
+			// Genero el segundo nivel del menu
 			DefaultSubMenu segundoNivel = new DefaultSubMenu("PUC");
 			DefaultMenuItem tercerNivelConsulta = new DefaultMenuItem("Consulta Gral");
-			//tercerNivelConsulta.setCommand("/ACTION/IMPORTACION/adminImportacion.jsf");
+			// tercerNivelConsulta.setCommand("/ACTION/IMPORTACION/adminImportacion.jsf");
 			tercerNivelConsulta.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaClase.jsf");
-			
+
 			DefaultSubMenu segundoNivelDos = new DefaultSubMenu("CONSULTA MV.");
 			DefaultMenuItem tercerNivelConsultaDos = new DefaultMenuItem("POR TIPO DOCUMENTO");
 			tercerNivelConsultaDos.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaMoviContable.jsf");
-			
-			//Adiciono al punto de menu principal
+
+			// Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);
 			segundoNivel.addElement(tercerNivelConsulta);
-			
+
 			segundoNivelDos.addElement(tercerNivelConsultaDos);
 			menuPrincipal.addElement(segundoNivelDos);
 		} catch (Exception e) {
@@ -311,8 +339,6 @@ public class MenuBean implements Serializable {
 		}
 		return menuPrincipal;
 	}
-	
-	
 
 	public String getListaPermisos() {
 		return listaPermisos;
@@ -336,6 +362,14 @@ public class MenuBean implements Serializable {
 
 	public void setMenuDinamico(MenuModel menuDinamico) {
 		this.menuDinamico = menuDinamico;
+	}
+
+	public UsuarioEntity getObjetoSesion() {
+		return objetoSesion;
+	}
+
+	public void setObjetoSesion(UsuarioEntity objetoSesion) {
+		this.objetoSesion = objetoSesion;
 	}
 
 }

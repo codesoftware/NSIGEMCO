@@ -116,7 +116,7 @@ public class UsuarioLogic implements WSGeneralInterface {
 		try {
 			File file = new File(rutaDestino);
 			if(!file.exists()){
-				System.out.println("El logo no se encuentra en la ruta parametrizada");
+				System.out.println("El logo no se encuentra en la ruta parametrizada: " + rutaDestino);
 			}else{
 				this.guardaImagenServidor(file);
 			}
@@ -208,6 +208,27 @@ public class UsuarioLogic implements WSGeneralInterface {
 			rta = conexionWSUsuarios().getPortUsuarios().insertaUsuario(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
+	 * Funcion con la cual se actualizan los perfiles
+	 * @param objEntity
+	 * @return
+	 */
+	public String actualizaPerfiles(PerfilEntity objEntity){
+		String rta = "";
+		try {
+			co.com.codesoftware.server.nsigemco.PerfilEntity aux = new co.com.codesoftware.server.nsigemco.PerfilEntity();
+			aux.setId(objEntity.getId());
+			aux.setEstado(objEntity.getEstado());
+			aux.setDescripcion(objEntity.getDescripcion());
+			aux.setNombre(objEntity.getNombre());
+			aux.setPermisos(objEntity.getPermisos());
+			rta = conexionWSAdmin().getPortAdm().actualizarPerfiles(aux);
+		} catch (Exception e) {
+			e.printStackTrace();
+			rta = "Error " +  e;
 		}
 		return rta;
 	}
