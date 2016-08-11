@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<p:growl id="mensaje" life="30000" autoUpdate="true"></p:growl>
+			<br />
+			<div class="row">
+				<div class="col-md-4 col-xs-0 col-sm-0"></div>
+				<div class="col-md-4 col-xs-12 col-sm-12">
+					<p:panelGrid columns="4" styleClass="table table-bordered">
+						<p:column>
+							<p:outputLabel value="PERFIL: "></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{perfilesBean.perfilSelec.nombre}"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="ESTADO: "></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Activo" rendered="#{perfilesBean.perfilSelec.estado == 'A'}"></p:outputLabel>
+							<p:outputLabel value="Inactivo" rendered="#{perfilesBean.perfilSelec.estado == 'I'}"></p:outputLabel>
+						</p:column>
+					</p:panelGrid>
+
+				</div>
+				<div class="col-md-4 col-xs-0 col-sm-0"></div>
+			</div>
+			<div>
+				<div class="col-md-4 col-xs-0 col-sm-0"></div>
+				<div class="col-md-4 col-xs-12 col-sm-12">
+					<h:form id="formPermisos">
+						<h3>ADMINISTRACION</h3>
+						<p:selectManyCheckbox id="gridAdm" value="#{perfilesBean.permisosAdm}" layout="responsive" columns="3">
+							<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+						</p:selectManyCheckbox>
+						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check"  actionListener="#{perfilesBean.enviarPermisos}"/>
+					</h:form>
+				</div>
+				<div class="col-md-4 col-xs-0 col-sm-0"></div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

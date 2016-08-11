@@ -116,7 +116,7 @@ public class UsuarioLogic implements WSGeneralInterface {
 		try {
 			File file = new File(rutaDestino);
 			if(!file.exists()){
-				System.out.println("El logo no se encuentra en la ruta parametrizada");
+				System.out.println("El logo no se encuentra en la ruta parametrizada: " + rutaDestino);
 			}else{
 				this.guardaImagenServidor(file);
 			}

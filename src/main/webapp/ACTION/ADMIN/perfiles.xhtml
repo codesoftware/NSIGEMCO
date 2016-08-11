@@ -27,6 +27,9 @@
 					<p:outputLabel value="ACTIVO" rendered="#{item.estado == 'A'}"> </p:outputLabel>
 					<p:outputLabel value="INACTIVO" rendered="#{item.estado == 'I'}"> </p:outputLabel>
 				</p:column>
+				<p:column headerText="EDITAR PERFIL">
+					<p:commandButton value="EDIT" action="#{perfilesBean.actualizaPerfil(item)}" ></p:commandButton>
+				</p:column>
 			</p:dataTable>
 		</ui:define>
 	</ui:composition>
