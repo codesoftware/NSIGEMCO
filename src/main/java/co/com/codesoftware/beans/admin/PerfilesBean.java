@@ -23,19 +23,25 @@ public class PerfilesBean implements GeneralBean {
 	// Perfil seleccionado
 	private PerfilEntity perfilSelec;
 	private String[] permisosAdm;
+	private String[] permisosInv;
+	private String[] permisosPara;
 	private List<PerfilBean> listPermAdm;
 	private List<PerfilBean> listPermInv;
+	private List<PerfilBean> listPermPara;
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		try {
 			UsuarioLogic objLogic = new UsuarioLogic();
 			listaPerifiles = objLogic.obtenerPerfiles();
-			this.perfilSelec = (PerfilEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("perfilSelected");
+			this.perfilSelec = (PerfilEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+					.get("perfilSelected");
 			if (this.perfilSelec != null) {
 				this.setPermisosAplicacion();
 				permisosAdm = this.perfilSelec.getPermisos().split("\\.");
+				permisosInv = this.perfilSelec.getPermisos().split("\\.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +56,7 @@ public class PerfilesBean implements GeneralBean {
 			listPermAdm = new ArrayList<>();
 		}
 		// Permisos de Administracion
-		listPermAdm.add(new PerfilBean("RESOLUCION DE FACTURACION", "Adm1"));
+		listPermAdm.add(new PerfilBean("RESOLUCION. DE FACT.", "Adm1"));
 		listPermAdm.add(new PerfilBean("SEDES", "Adm2"));
 		listPermAdm.add(new PerfilBean("CONTEO", "Adm3"));
 		listPermAdm.add(new PerfilBean("PARAMETROS", "Adm4"));
@@ -58,6 +64,28 @@ public class PerfilesBean implements GeneralBean {
 		listPermAdm.add(new PerfilBean("PROVEEDORES", "Adm6"));
 		listPermAdm.add(new PerfilBean("CLIENTES", "Adm7"));
 		listPermAdm.add(new PerfilBean("PERFILES", "Adm8"));
+		// Permisos de Inventario
+		if (listPermInv == null) {
+			this.listPermInv = new ArrayList<>();
+		}
+		listPermInv.add(new PerfilBean("FACTURA DE COMPRA", "Inv1"));
+		listPermInv.add(new PerfilBean("CONS. FACTURA COMPRA", "Inv2"));
+		listPermInv.add(new PerfilBean("CONS. TEMP. FACTURA COMPRA", "Inv3"));
+		listPermInv.add(new PerfilBean("INSERTAR PRODUCTOS", "Inv4"));
+		listPermInv.add(new PerfilBean("PARAM. PRECIO", "Inv5"));
+		listPermInv.add(new PerfilBean("CONSULTA GENERAL", "Inv6"));
+		listPermInv.add(new PerfilBean("SOLICITUDES PROD", "Inv7"));
+		listPermInv.add(new PerfilBean("CARGUE PRODUCTOS TODO", "Inv8"));
+		listPermInv.add(new PerfilBean("CARGUE PRODUCTOS", "Inv9"));
+		// Permisos de parametros
+		if (listPermPara == null) {
+			this.listPermPara = new ArrayList<>();
+		}
+		listPermPara.add(new PerfilBean("ASOCIACION CATEGORIAS", "Per1"));
+		listPermPara.add(new PerfilBean("ADM. PRECIOS MASIVOS", "Per2"));
+		listPermPara.add(new PerfilBean("REPORTE BASICO", "Per3"));
+		listPermPara.add(new PerfilBean("COMPRAS Y VENTAS", "Per4"));
+
 	}
 
 	/**
@@ -65,11 +93,24 @@ public class PerfilesBean implements GeneralBean {
 	 */
 	public void enviarPermisos() {
 		String perAdm = "";
-		if (this.permisosAdm == null || this.permisosAdm.length == 0) {
+		if ((this.permisosAdm == null || this.permisosAdm.length == 0)
+				&& (this.permisosInv == null || this.permisosInv.length == 0) && (this.permisosPara == null || this.permisosPara.length == 0)) {
 			this.messageBean("Por Favor seleccione un permiso al menos", ErrorEnum.ERROR);
 		} else {
-			for (String item : this.permisosAdm) {
-				perAdm += "." + item + ".";
+			if (this.permisosAdm != null) {
+				for (String item : this.permisosAdm) {
+					perAdm += "." + item + ".";
+				}
+			}
+			if (this.permisosInv != null) {
+				for (String item : this.permisosInv) {
+					perAdm += "." + item + ".";
+				}
+			}
+			if (this.permisosPara != null) {
+				for (String item : this.permisosPara) {
+					perAdm += "." + item + ".";
+				}
 			}
 			UsuarioLogic objLogic = new UsuarioLogic();
 			this.perfilSelec.setPermisos(perAdm);
@@ -142,6 +183,30 @@ public class PerfilesBean implements GeneralBean {
 
 	public void setListPermInv(List<PerfilBean> listPermInv) {
 		this.listPermInv = listPermInv;
+	}
+
+	public String[] getPermisosInv() {
+		return permisosInv;
+	}
+
+	public void setPermisosInv(String[] permisosInv) {
+		this.permisosInv = permisosInv;
+	}
+
+	public String[] getPermisosPara() {
+		return permisosPara;
+	}
+
+	public void setPermisosPara(String[] permisosPara) {
+		this.permisosPara = permisosPara;
+	}
+
+	public List<PerfilBean> getListPermPara() {
+		return listPermPara;
+	}
+
+	public void setListPermPara(List<PerfilBean> listPermPara) {
+		this.listPermPara = listPermPara;
 	}
 
 }

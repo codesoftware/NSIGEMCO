@@ -7,6 +7,47 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
+			<style>
+#selecciones input[type=checkbox] {
+	display: none;
+}
+
+#selecciones label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+
+#selecciones label:before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	position: absolute;
+	left: 0;
+	bottom: 1px;
+	background-color: #0E62D4;
+	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px
+		rgba(255, 255, 255, .8);
+}
+
+#selecciones .checkbox label:before {
+	border-radius: 4px;
+}
+
+#selecciones input[type=checkbox]:checked+label:before {
+	content: "\2713";
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font-size: 17px;
+	color: #f3f3f3;
+	text-align: center;
+	line-height: 18px;
+}
+</style>
 			<p:growl id="mensaje" life="30000" autoUpdate="true" showDetail="true"></p:growl>
 			<br />
 			<div class="row">
@@ -31,18 +72,35 @@
 				</div>
 				<div class="col-md-4 col-xs-0 col-sm-0"></div>
 			</div>
-			<br/>
-			<br/>
-			<div>
+			<br />
+			<br />
+			<div id="selecciones">
 				<div class="col-md-2 col-xs-0 col-sm-0"></div>
 				<div class="col-md-8 col-xs-12 col-sm-12">
 					<h:form id="formPermisos">
+						<br />
 						<h3>ADMINISTRACION</h3>
-						<p:selectManyCheckbox id="gridAdm" value="#{perfilesBean.permisosAdm}" layout="responsive" columns="3">
-							<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
-						</p:selectManyCheckbox>
-						<br/>
-						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check" styleClass="RedButton"  actionListener="#{perfilesBean.enviarPermisos}"/>
+						<h:panelGroup layout="block" styleClass="selection">
+							<h:selectManyCheckbox id="gridAdm" value="#{perfilesBean.permisosAdm}" styleClass="checkbox" layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+						</h:panelGroup>
+						<br />
+						<h3>INVENTARIOS</h3>
+						<h:panelGroup layout="block" styleClass="selection">
+							<h:selectManyCheckbox id="gridInv" value="#{perfilesBean.permisosInv}" styleClass="checkbox" layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermInv}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+						</h:panelGroup>
+						<br />
+						<h3>PARAMETROS Y REPORTES</h3>
+						<h:panelGroup layout="block" styleClass="selection">
+							<h:selectManyCheckbox id="gridPar" value="#{perfilesBean.permisosPara}" styleClass="checkbox" layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermPara}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+						</h:panelGroup>
+						<br />
+						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check" styleClass="RedButton" actionListener="#{perfilesBean.enviarPermisos}" />
 					</h:form>
 				</div>
 				<div class="col-md-2 col-xs-0 col-sm-0"></div>
