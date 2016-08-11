@@ -1,9 +1,7 @@
 package co.com.codesoftware.beans.admin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -26,20 +24,18 @@ public class PerfilesBean implements GeneralBean {
 	private PerfilEntity perfilSelec;
 	private String[] permisosAdm;
 	private List<PerfilBean> listPermAdm;
+	private List<PerfilBean> listPermInv;
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		try {
 			UsuarioLogic objLogic = new UsuarioLogic();
 			listaPerifiles = objLogic.obtenerPerfiles();
-			this.perfilSelec = (PerfilEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-					.get("perfilSelected");
+			this.perfilSelec = (PerfilEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("perfilSelected");
 			if (this.perfilSelec != null) {
 				this.setPermisosAplicacion();
 				permisosAdm = this.perfilSelec.getPermisos().split("\\.");
-				System.out.println("Estos son los permisos: " + this.perfilSelec.getPermisos());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,15 +49,15 @@ public class PerfilesBean implements GeneralBean {
 		if (listPermAdm == null) {
 			listPermAdm = new ArrayList<>();
 		}
-		//Permisos de Administracion
-		listPermAdm.add(new PerfilBean("RESOLUCION DE FACTURACION","Adm1"));
-		listPermAdm.add(new PerfilBean("SEDES","Adm2"));
-		listPermAdm.add(new PerfilBean("CONTEO","Adm3"));
-		listPermAdm.add(new PerfilBean("PARAMETROS","Adm4"));
-		listPermAdm.add(new PerfilBean("USUARIOS","Adm5"));
-		listPermAdm.add(new PerfilBean("PROVEEDORES","Adm6"));
-		listPermAdm.add(new PerfilBean("CLIENTES","Adm7"));
-		listPermAdm.add(new PerfilBean("PERFILES","Adm8"));
+		// Permisos de Administracion
+		listPermAdm.add(new PerfilBean("RESOLUCION DE FACTURACION", "Adm1"));
+		listPermAdm.add(new PerfilBean("SEDES", "Adm2"));
+		listPermAdm.add(new PerfilBean("CONTEO", "Adm3"));
+		listPermAdm.add(new PerfilBean("PARAMETROS", "Adm4"));
+		listPermAdm.add(new PerfilBean("USUARIOS", "Adm5"));
+		listPermAdm.add(new PerfilBean("PROVEEDORES", "Adm6"));
+		listPermAdm.add(new PerfilBean("CLIENTES", "Adm7"));
+		listPermAdm.add(new PerfilBean("PERFILES", "Adm8"));
 	}
 
 	/**
@@ -69,14 +65,21 @@ public class PerfilesBean implements GeneralBean {
 	 */
 	public void enviarPermisos() {
 		String perAdm = "";
-		if(this.permisosAdm == null || this.permisosAdm.length == 0 ){
+		if (this.permisosAdm == null || this.permisosAdm.length == 0) {
 			this.messageBean("Por Favor seleccione un permiso al menos", ErrorEnum.ERROR);
-		}else{
+		} else {
 			for (String item : this.permisosAdm) {
 				perAdm += "." + item + ".";
 			}
+			UsuarioLogic objLogic = new UsuarioLogic();
+			this.perfilSelec.setPermisos(perAdm);
+			String valida = objLogic.actualizaPerfiles(this.perfilSelec);
+			if ("Ok".equalsIgnoreCase(valida)) {
+				this.messageBean("Perfil actualizado correctamente", ErrorEnum.SUCCESS);
+			} else {
+				this.messageBean(valida, ErrorEnum.ERROR);
+			}
 		}
-		System.out.println("Estos son los permisos: " + perAdm);
 	}
 
 	/**
@@ -133,6 +136,12 @@ public class PerfilesBean implements GeneralBean {
 		this.listPermAdm = listPermAdm;
 	}
 
+	public List<PerfilBean> getListPermInv() {
+		return listPermInv;
+	}
 
+	public void setListPermInv(List<PerfilBean> listPermInv) {
+		this.listPermInv = listPermInv;
+	}
 
 }

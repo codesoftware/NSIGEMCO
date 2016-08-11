@@ -48,6 +48,7 @@ public class ObjectFactory {
     private final static QName _ObtieneReferenciasXIdCateResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneReferenciasXIdCateResponse");
     private final static QName _ConsultaSubcuentas_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaSubcuentas");
     private final static QName _ConsultaProductoCodigoExterno_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductoCodigoExterno");
+    private final static QName _ActualizarPerfiles_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "actualizarPerfiles");
     private final static QName _ConsultaProductosTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductosTemporalResponse");
     private final static QName _InsertaReferencia_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaReferencia");
     private final static QName _ObtieneMarcasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneMarcasResponse");
@@ -58,6 +59,7 @@ public class ObjectFactory {
     private final static QName _InsertarProductoTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertarProductoTemporalResponse");
     private final static QName _ObtieneProductos_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProductos");
     private final static QName _InsertaReferenciaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaReferenciaResponse");
+    private final static QName _ActualizarPerfilesResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "actualizarPerfilesResponse");
     private final static QName _LoginUsuarioResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "loginUsuarioResponse");
     private final static QName _InsertaMarca_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaMarca");
     private final static QName _ConsultaProductosTemporal_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductosTemporal");
@@ -148,6 +150,14 @@ public class ObjectFactory {
      */
     public ObtieneMarcasResponse createObtieneMarcasResponse() {
         return new ObtieneMarcasResponse();
+    }
+
+    /**
+     * Create an instance of {@link ActualizarPerfiles }
+     * 
+     */
+    public ActualizarPerfiles createActualizarPerfiles() {
+        return new ActualizarPerfiles();
     }
 
     /**
@@ -476,6 +486,14 @@ public class ObjectFactory {
      */
     public LoginUsuarioResponse createLoginUsuarioResponse() {
         return new LoginUsuarioResponse();
+    }
+
+    /**
+     * Create an instance of {@link ActualizarPerfilesResponse }
+     * 
+     */
+    public ActualizarPerfilesResponse createActualizarPerfilesResponse() {
+        return new ActualizarPerfilesResponse();
     }
 
     /**
@@ -903,6 +921,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ActualizarPerfiles }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "actualizarPerfiles")
+    public JAXBElement<ActualizarPerfiles> createActualizarPerfiles(ActualizarPerfiles value) {
+        return new JAXBElement<ActualizarPerfiles>(_ActualizarPerfiles_QNAME, ActualizarPerfiles.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaProductosTemporalResponse }{@code >}}
      * 
      */
@@ -990,6 +1017,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertaReferenciaResponse")
     public JAXBElement<InsertaReferenciaResponse> createInsertaReferenciaResponse(InsertaReferenciaResponse value) {
         return new JAXBElement<InsertaReferenciaResponse>(_InsertaReferenciaResponse_QNAME, InsertaReferenciaResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ActualizarPerfilesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "actualizarPerfilesResponse")
+    public JAXBElement<ActualizarPerfilesResponse> createActualizarPerfilesResponse(ActualizarPerfilesResponse value) {
+        return new JAXBElement<ActualizarPerfilesResponse>(_ActualizarPerfilesResponse_QNAME, ActualizarPerfilesResponse.class, null, value);
     }
 
     /**
