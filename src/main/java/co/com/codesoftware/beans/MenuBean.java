@@ -31,7 +31,8 @@ public class MenuBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		this.listaPermisos = this.objetoSesion.getPerfil().getPermisos();
 		this.creaMenu();
 	}
@@ -43,39 +44,6 @@ public class MenuBean implements Serializable {
 		if (menuDinamico == null) {
 			this.menuDinamico = new DefaultMenuModel();
 		}
-
-		// Segundo punto de menu
-
-		DefaultSubMenu segundoPunto = new DefaultSubMenu();
-		segundoPunto.setLabel("PARAMETROS");
-		segundoPunto.setIcon("fa fa-archive");
-
-		DefaultSubMenu segPunNivUno = new DefaultSubMenu();
-		segPunNivUno.setLabel("Categoria");
-
-		DefaultMenuItem segPunNvUnoAsoc = new DefaultMenuItem("Asociar Cat y Sub Cat");
-		segPunNvUnoAsoc.setCommand("/ACTION/SUBCATEGORIA/asocCatSubCat.jsf");
-
-		segundoPunto.addElement(segPunNivUno);
-		segPunNivUno.addElement(segPunNvUnoAsoc);
-
-		DefaultSubMenu segPunNivDos = new DefaultSubMenu();
-		segPunNivDos.setLabel("Precio Masivo");
-
-		DefaultMenuItem segPunNvDosPrecMasiv = new DefaultMenuItem("Consulta Porcentajes");
-		segPunNvDosPrecMasiv.setCommand("/ACTION/PRECIOS/ConsPorcPrecioMasivo.jsf");
-
-		DefaultMenuItem segPunNvDosPrecMasivIns = new DefaultMenuItem("Insercion Parametros");
-		segPunNvDosPrecMasivIns.setCommand("/ACTION/PRECIOS/InsercionParametrosPrecio.jsf");
-
-		DefaultMenuItem segPunNvDosPrecMasivEje = new DefaultMenuItem("Ejecucion");
-		segPunNvDosPrecMasivEje.setCommand("/ACTION/PRECIOS/EjecuionParaPrecioMasivo.jsf");
-
-		segundoPunto.addElement(segPunNivDos);
-		segPunNivDos.addElement(segPunNvDosPrecMasiv);
-		segPunNivDos.addElement(segPunNvDosPrecMasivIns);
-		segPunNivDos.addElement(segPunNvDosPrecMasivEje);
-
 		DefaultMenuItem tercerPunto = new DefaultMenuItem("Cerrar Sesion");
 		tercerPunto.setIcon("fa fa-close");
 		tercerPunto.setCommand("#{loginBean.cerrarSesion}");
@@ -85,7 +53,7 @@ public class MenuBean implements Serializable {
 		cuartoPunto.setCommand("#{loginBean.cambioSigemco}");
 		this.menuDinamico.addElement(this.generaMenuAdmon());
 		this.menuDinamico.addElement(this.generaMenuProd());
-		this.menuDinamico.addElement(segundoPunto);
+		this.menuDinamico.addElement(this.generaMenuParametros());
 		this.menuDinamico.addElement(this.generaMenuReportes());
 		this.menuDinamico.addElement(this.generaMenuFacturacion());
 		this.menuDinamico.addElement(this.generaMenuImportaciones());
@@ -94,39 +62,88 @@ public class MenuBean implements Serializable {
 		this.menuDinamico.addElement(cuartoPunto);
 	}
 
+	public DefaultSubMenu generaMenuParametros() {
+		DefaultSubMenu segundoPunto = new DefaultSubMenu();		
+		try {
+			// REPORTES
+			if (this.listaPermisos.contains(".Per1.") || this.listaPermisos.contains(".Per2.")) {
+				segundoPunto.setLabel("PARAMETROS");
+				segundoPunto.setIcon("fa fa-archive");
+				if (this.listaPermisos.contains(".Per3.")) {
+					DefaultSubMenu segPunNivUno = new DefaultSubMenu();
+					segPunNivUno.setLabel("Categoria");
+					DefaultMenuItem segPunNvUnoAsoc = new DefaultMenuItem("Asociar Cat y Sub Cat");
+					segPunNvUnoAsoc.setCommand("/ACTION/SUBCATEGORIA/asocCatSubCat.jsf");
+					segundoPunto.addElement(segPunNivUno);
+					segPunNivUno.addElement(segPunNvUnoAsoc);
+				}
+				if (this.listaPermisos.contains(".Per4.")) {
+					DefaultSubMenu segPunNivDos = new DefaultSubMenu();
+					segPunNivDos.setLabel("Precio Masivo");
+					
+					DefaultMenuItem segPunNvDosPrecMasiv = new DefaultMenuItem("Consulta Porcentajes");
+					segPunNvDosPrecMasiv.setCommand("/ACTION/PRECIOS/ConsPorcPrecioMasivo.jsf");
+
+					DefaultMenuItem segPunNvDosPrecMasivIns = new DefaultMenuItem("Insercion Parametros");
+					segPunNvDosPrecMasivIns.setCommand("/ACTION/PRECIOS/InsercionParametrosPrecio.jsf");
+
+					DefaultMenuItem segPunNvDosPrecMasivEje = new DefaultMenuItem("Ejecucion");
+					segPunNvDosPrecMasivEje.setCommand("/ACTION/PRECIOS/EjecuionParaPrecioMasivo.jsf");
+					segundoPunto.addElement(segPunNivDos);
+					segPunNivDos.addElement(segPunNvDosPrecMasiv);
+					segPunNivDos.addElement(segPunNvDosPrecMasivIns);
+					segPunNivDos.addElement(segPunNvDosPrecMasivEje);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return segundoPunto;
+	}
+	
 	/**
 	 * Funcion con la cual genero el menu de reportes
 	 * 
 	 * @return
 	 */
 	public DefaultSubMenu generaMenuReportes() {
-		// REPORTES
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
-		menuPrincipal.setLabel("REPORTES");
-		menuPrincipal.setIcon("fa fa-file-excel-o");
-
-		DefaultMenuItem basico = new DefaultMenuItem("Basico");
-		basico.setCommand("/ACTION/REPORTES/reportes.jsf");
-
-		DefaultMenuItem comVentas = new DefaultMenuItem("Compras y Ventas");
-		comVentas.setCommand("/ACTION/REPORTES/comprasVentas.xhtml");
-
-		menuPrincipal.addElement(basico);
-		menuPrincipal.addElement(comVentas);
-
+		try {
+			// REPORTES
+			if (this.listaPermisos.contains(".Per3.") || this.listaPermisos.contains(".Per4.")) {
+				menuPrincipal.setLabel("REPORTES");
+				menuPrincipal.setIcon("fa fa-file-excel-o");
+				if (this.listaPermisos.contains(".Per3.")) {
+					DefaultMenuItem basico = new DefaultMenuItem("Basico");
+					basico.setCommand("/ACTION/REPORTES/reportes.jsf");
+					menuPrincipal.addElement(basico);
+				}
+				if (this.listaPermisos.contains(".Per4.")) {
+					DefaultMenuItem comVentas = new DefaultMenuItem("Compras y Ventas");
+					comVentas.setCommand("/ACTION/REPORTES/comprasVentas.xhtml");
+					menuPrincipal.addElement(comVentas);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return menuPrincipal;
 	}
-	
 
 	public DefaultSubMenu generaMenuProd() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Inv5.")
-					|| this.listaPermisos.contains(".Inv6.") || this.listaPermisos.contains(".Inv7.") || this.listaPermisos.contains(".Inv8.") || this.listaPermisos.contains(".Inv9.")) {
+			if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.")
+					|| this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.")
+					|| this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Inv6.")
+					|| this.listaPermisos.contains(".Inv7.") || this.listaPermisos.contains(".Inv8.")
+					|| this.listaPermisos.contains(".Inv9.")) {
 				menuPrincipal.setLabel("INVENTARIOS");
 				menuPrincipal.setIcon("fa fa-bank");
-				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Adm5.")
-						|| this.listaPermisos.contains(".Inv6.") || this.listaPermisos.contains(".Inv7.")) {
+				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.")
+						|| this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.")
+						|| this.listaPermisos.contains(".Adm5.") || this.listaPermisos.contains(".Inv6.")
+						|| this.listaPermisos.contains(".Inv7.")) {
 					// Segundo Nivel
 					DefaultSubMenu productos = new DefaultSubMenu();
 					productos.setLabel("Productos ");
@@ -138,12 +155,14 @@ public class MenuBean implements Serializable {
 					}
 					if (this.listaPermisos.contains(".Inv2.")) {
 						DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
-						tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
+						tercerNivelFacturaCompra
+								.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
 						productos.addElement(tercerNivelFacturaCompra);
 					}
 					if (this.listaPermisos.contains(".Inv3.")) {
 						DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
-						tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
+						tercerNivelFacturaCompraTmp
+								.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
 						productos.addElement(tercerNivelFacturaCompraTmp);
 					}
 					if (this.listaPermisos.contains(".Inv4.")) {
@@ -158,13 +177,15 @@ public class MenuBean implements Serializable {
 					}
 					if (this.listaPermisos.contains(".Inv6.")) {
 						DefaultMenuItem tercerNivelConsGeneral = new DefaultMenuItem("Consulta General");
-						tercerNivelConsGeneral.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
+						tercerNivelConsGeneral
+								.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
 						productos.addElement(tercerNivelConsGeneral);
 
 					}
 					if (this.listaPermisos.contains(".Inv7.")) {
 						DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
-						tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
+						tercerNivelSolicitudes
+								.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
 						productos.addElement(tercerNivelSolicitudes);
 					}
 
@@ -200,8 +221,10 @@ public class MenuBean implements Serializable {
 	public DefaultSubMenu generaMenuAdmon() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			if (this.listaPermisos.contains(".Adm1.") || this.listaPermisos.contains(".Adm2.") || this.listaPermisos.contains(".Adm3.") || this.listaPermisos.contains(".Adm4.") || this.listaPermisos.contains(".Adm5.")
-					|| this.listaPermisos.contains(".Adm6.") || this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")) {
+			if (this.listaPermisos.contains(".Adm1.") || this.listaPermisos.contains(".Adm2.")
+					|| this.listaPermisos.contains(".Adm3.") || this.listaPermisos.contains(".Adm4.")
+					|| this.listaPermisos.contains(".Adm5.") || this.listaPermisos.contains(".Adm6.")
+					|| this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")) {
 				menuPrincipal.setLabel("ADMINISTRACION");
 				menuPrincipal.setIcon("fa fa-users");
 				// Se generan los submenus de segundo nivel
