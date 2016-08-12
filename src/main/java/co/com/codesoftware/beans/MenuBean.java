@@ -116,66 +116,76 @@ public class MenuBean implements Serializable {
 
 		return menuPrincipal;
 	}
+	
 
 	public DefaultSubMenu generaMenuProd() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			menuPrincipal.setLabel("INVENTARIOS");
-			menuPrincipal.setIcon("fa fa-bank");
+			if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Inv5.")
+					|| this.listaPermisos.contains(".Inv6.") || this.listaPermisos.contains(".Inv7.") || this.listaPermisos.contains(".Inv8.") || this.listaPermisos.contains(".Inv9.")) {
+				menuPrincipal.setLabel("INVENTARIOS");
+				menuPrincipal.setIcon("fa fa-bank");
+				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Adm5.")
+						|| this.listaPermisos.contains(".Inv6.") || this.listaPermisos.contains(".Inv7.")) {
+					// Segundo Nivel
+					DefaultSubMenu productos = new DefaultSubMenu();
+					productos.setLabel("Productos ");
+					menuPrincipal.addElement(productos);
+					if (this.listaPermisos.contains(".Inv1.")) {
+						DefaultMenuItem tercerNivel = new DefaultMenuItem("Factura de Compra");
+						tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
+						productos.addElement(tercerNivel);
+					}
+					if (this.listaPermisos.contains(".Inv2.")) {
+						DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
+						tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelFacturaCompra);
+					}
+					if (this.listaPermisos.contains(".Inv3.")) {
+						DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
+						tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelFacturaCompraTmp);
+					}
+					if (this.listaPermisos.contains(".Inv4.")) {
+						DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
+						tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelPrueba);
+					}
+					if (this.listaPermisos.contains(".Inv5.")) {
+						DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
+						tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelPrecio);
+					}
+					if (this.listaPermisos.contains(".Inv6.")) {
+						DefaultMenuItem tercerNivelConsGeneral = new DefaultMenuItem("Consulta General");
+						tercerNivelConsGeneral.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelConsGeneral);
 
-			// Segundo Nivel
-			DefaultSubMenu productos = new DefaultSubMenu();
-			productos.setLabel("Productos ");
+					}
+					if (this.listaPermisos.contains(".Inv7.")) {
+						DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
+						tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelSolicitudes);
+					}
 
-			DefaultSubMenu cargues = new DefaultSubMenu();
-			cargues.setLabel("Cargues Masivos ");
+				}
+				if (this.listaPermisos.contains(".Inv8.") || this.listaPermisos.contains(".Inv9.")) {
+					DefaultSubMenu cargues = new DefaultSubMenu();
+					cargues.setLabel("Cargues Masivos ");
+					menuPrincipal.addElement(cargues);
+					if (this.listaPermisos.contains(".Inv8.")) {
+						DefaultMenuItem cargueProductos = new DefaultMenuItem("Cargue Productos");
+						cargueProductos.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
+						cargues.addElement(cargueProductos);
 
-			DefaultMenuItem tercerNivel = new DefaultMenuItem("Add. Prod. X Fact");
-			tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
-			tercerNivelFacturaCompra.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
-			tercerNivelFacturaCompraTmp.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
-			tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
-
-			// DefaultMenuItem tercerNivelCargaArchivo = new
-			// DefaultMenuItem("Cargue productosArchivo");
-			// tercerNivelCargaArchivo.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelPrecio = new DefaultMenuItem("Parametrizacion de precio");
-			tercerNivelPrecio.setCommand("/ACTION/PRODUCTOS/precioProductos.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelConsGeneral = new DefaultMenuItem("Consulta General");
-			tercerNivelConsGeneral.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
-
-			DefaultMenuItem tercerNivelSolicitudes = new DefaultMenuItem("Solicitudes");
-			tercerNivelSolicitudes.setCommand("/ACTION/SOLICITUDES/consultaSolicitudes.jsf?faces-redirect=false");
-
-			productos.addElement(tercerNivel);
-			productos.addElement(tercerNivelFacturaCompra);
-			productos.addElement(tercerNivelFacturaCompraTmp);
-			productos.addElement(tercerNivelPrueba);
-			// segundoNivel.addElement(tercerNivelCargaArchivo);
-			productos.addElement(tercerNivelPrecio);
-			productos.addElement(tercerNivelConsGeneral);
-			productos.addElement(tercerNivelSolicitudes);
-
-			// Tercer Nivel
-			DefaultMenuItem cargueProductos = new DefaultMenuItem("Cargue Productos");
-			cargueProductos.setCommand("/ACTION/PRODUCTOS/cargueProductos.jsf?faces-redirect=false");
-			cargues.addElement(cargueProductos);
-
-			DefaultMenuItem cargueProd = new DefaultMenuItem("Solo Prod");
-			cargueProd.setCommand("/ACTION/PRODUCTOS/cargueSoloProducto.jsf?faces-redirect=false");
-			cargues.addElement(cargueProd);
-
-			menuPrincipal.addElement(productos);
-			menuPrincipal.addElement(cargues);
-
+					}
+					if (this.listaPermisos.contains(".Inv9.")) {
+						DefaultMenuItem cargueProd = new DefaultMenuItem("Solo Prod");
+						cargueProd.setCommand("/ACTION/PRODUCTOS/cargueSoloProducto.jsf?faces-redirect=false");
+						cargues.addElement(cargueProd);
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -240,7 +250,7 @@ public class MenuBean implements Serializable {
 					DefaultMenuItem segundoNivelSiete = new DefaultMenuItem("Perfiles.");
 					segundoNivelSiete.setCommand("/ACTION/ADMIN/perfiles.jsf");
 					menuPrincipal.addElement(segundoNivelSiete);
-				}				
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
