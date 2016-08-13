@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import co.com.codesoftware.server.nsigemco.CategoriaEntity;
 import co.com.codesoftware.server.nsigemco.MarcaEntity;
 import co.com.codesoftware.server.nsigemco.ReteFuenteEntity;
+import co.com.codesoftware.server.nsigemco.SocioEntity;
 import co.com.codesoftware.servicio.general.CiudadEntity;
 import co.com.codesoftware.servicio.general.DepartamentoEntity;
 import co.com.codesoftware.servicio.general.ResolucionFactEntity;
@@ -33,6 +34,7 @@ public class CargaListasMapBean {
 	private FiltrosServiceBean filtrosService;
 	private Map<String, Integer> listaMapSedes;
 	private Map<String, Integer> listaMapPerfiles;
+	private Map<String,Integer> listaSocios;
 
 	/**
 	 * Funcion con la cual se carga la lista de categorias de la aplicacion
@@ -183,6 +185,20 @@ public class CargaListasMapBean {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * metodo que carga los socios que estan en el sistem
+	 */
+	public void cargaListaSocios(){
+		List<SocioEntity> socios = filtrosService.serviceObtieneSocios();
+		if(socios!=null){
+			for(SocioEntity socio:socios){
+				if(listaSocios == null){
+					this.listaSocios = new LinkedHashMap<String,Integer>();
+				}
+				this.listaSocios.put(socio.getRazonSocial(), socio.getId());
+			}
+		}
+	}
 	
 	/**
 	 * Funcion con la cual se cargan los perfiles
@@ -282,5 +298,15 @@ public class CargaListasMapBean {
 	public void setListaMapPerfiles(Map<String, Integer> listaMapPerfiles) {
 		this.listaMapPerfiles = listaMapPerfiles;
 	}
+
+	public Map<String, Integer> getListaSocios() {
+		return listaSocios;
+	}
+
+	public void setListaSocios(Map<String, Integer> listaSocios) {
+		this.listaSocios = listaSocios;
+	}
+	
+	
 
 }

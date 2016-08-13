@@ -21,6 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="codigo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTransMvco" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -39,6 +40,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "aporteSocioEntity", propOrder = {
     "codigo",
     "descripcion",
+    "estado",
     "fecha",
     "id",
     "idTransMvco",
@@ -50,6 +52,7 @@ public class AporteSocioEntity {
 
     protected String codigo;
     protected String descripcion;
+    protected String estado;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fecha;
     protected Integer id;
@@ -104,6 +107,30 @@ public class AporteSocioEntity {
      */
     public void setDescripcion(String value) {
         this.descripcion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad estado.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * Define el valor de la propiedad estado.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEstado(String value) {
+        this.estado = value;
     }
 
     /**

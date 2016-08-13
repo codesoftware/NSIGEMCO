@@ -6,7 +6,77 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
-			aqui hago el aporte de socios
+			<br />
+			<f:event listener="#{aportesSociosBean.consultaAportes}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSocios}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="aporte" rows="20" widgetVar="waporte" id="tablaAportes" value="#{aportesSociosBean.listaAportes}" paginator="true" filteredValue="#{aportesSociosBean.listaAportesFiltro}"
+							emptyMessage="No existen aportes registrados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE APORTES
+							</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{aporte.codigo}"></h:outputText>
+							</p:column>
+							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="ESTADO" filterBy="#{aporte.estado}" priority="4" filterMatchMode="contains">
+								<h:outputText value="#{aporte.estado}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE" priority="2">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte"
+									oncomplete="PF('datosAporte').show()"></p:commandButton>
+								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos"
+								oncomplete="PF('datosProductosAporte').show()"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelAporte" action="#{aportesSociosBean.limpiaPanel}" oncomplete="PF('datosAporte').show()" />
+					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosAporte" modal="true" header="DATOS APORTE" closeOnEscape="true">
+						<p:panelGrid columns="2" id="panelAporte" style="width:80%">
+							<p:column>
+							Codigo:
+									<p:inputText value="#{aportesSociosBean.aportes.codigo}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+							Descripciòn:
+									<p:inputText value="#{aportesSociosBean.aportes.descripcion}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								Socio
+							<h:selectOneMenu value="#{aportesSociosBean.idSocio}" styleClass="form-control" id="selectSocio">
+									<f:selectItem itemLabel="SELECCIONE UN SOCIO" itemValue="1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaSocios}"></f:selectItems>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{aportesSociosBean.banderaboton=='I'}" actionListener="#{aportesSociosBean.insertaAporte}" update="tablaAportes" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{aportesSociosBean.banderaboton=='U'}" actionListener="#{aportesSociosBean.actualizaAporte}" update="tablaAportes" />
+							</p:column>
+						</p:panelGrid>
+					</p:dialog>
+					<p:dialog responsive="true" widgetVar="datosProductosAporte" modal="true" header="CARGUE PRODUCTOS" closeOnEscape="true">
+						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
+							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{aportesSociosBean.cargueExcelProductos}" onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+						</p:panelGrid>
+					</p:dialog>
+					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			Realizacion de proceso:
+			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+					</p:dialog>
+				</center>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </body>

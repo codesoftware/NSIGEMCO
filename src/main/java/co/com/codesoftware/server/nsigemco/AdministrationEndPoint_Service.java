@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "AdministrationEndPoint", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", wsdlLocation = "http://localhost:8777/SIGEMCOWS/AdministrationEndPoint?wsdl")
+@WebServiceClient(name = "AdministrationEndPoint", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", wsdlLocation = "http://localhost:8084/SIGEMCOWS/AdministrationEndPoint?wsdl")
 public class AdministrationEndPoint_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class AdministrationEndPoint_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8777/SIGEMCOWS/AdministrationEndPoint?wsdl");
+            url = new URL("http://localhost:8084/SIGEMCOWS/AdministrationEndPoint?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
