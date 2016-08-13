@@ -1,4 +1,4 @@
-package co.com.codesoftware.rest.logica.administracion;
+package co.com.codesoftware.logica.admin;
 
 import java.util.ArrayList;
 import java.util.List;

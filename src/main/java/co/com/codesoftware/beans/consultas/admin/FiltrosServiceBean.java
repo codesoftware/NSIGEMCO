@@ -16,6 +16,7 @@ import co.com.codesoftware.logica.SedesLogica;
 import co.com.codesoftware.logica.SubCuentaLogic;
 import co.com.codesoftware.logica.UsuarioLogic;
 import co.com.codesoftware.logica.admin.ResolucionFactLogica;
+import co.com.codesoftware.logica.admin.SocioLogica;
 import co.com.codesoftware.logica.admin.UbicacionLogica;
 import co.com.codesoftware.server.nsigemco.CategoriaEntity;
 import co.com.codesoftware.server.nsigemco.MarcaEntity;
@@ -423,7 +424,8 @@ public class FiltrosServiceBean {
 	 */
 	public List<SocioEntity> serviceObtieneSocios(){
 		try {
-			this.listaSocios = new ArrayList<>();
+			SocioLogica logica = new SocioLogica();
+			this.listaSocios = logica.consultaSocios();
 		} catch (Exception e) {
 			e.printStackTrace();
 			

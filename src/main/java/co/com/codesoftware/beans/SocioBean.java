@@ -8,8 +8,8 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import co.com.codesoftware.logica.admin.SocioLogica;
 import co.com.codesoftware.logica.admin.UbicacionLogica;
-import co.com.codesoftware.rest.logica.administracion.SocioLogica;
 import co.com.codesoftware.server.nsigemco.SocioEntity;
 import co.com.codesoftware.servicio.general.CiudadEntity;
 

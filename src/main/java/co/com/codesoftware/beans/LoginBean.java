@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import co.com.codesoftware.logica.UsuarioLogic;
-import co.com.codesoftware.rest.logica.administracion.SocioLogica;
+import co.com.codesoftware.logica.admin.SocioLogica;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.EnviaCorreosLogica;
 import co.com.codesoftware.utilities.ErrorEnum;
