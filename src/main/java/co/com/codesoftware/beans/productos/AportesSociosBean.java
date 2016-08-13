@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
 
 import co.com.codesoftware.logica.productos.AportesSocioLogica;
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
@@ -29,6 +30,7 @@ public class AportesSociosBean implements GeneralBean {
 	private String banderaboton;
 	private UsuarioEntity objetoSesion;
 	private Integer idSocio;
+	private Integer idAporte;
 
 	/**
 	 * constructor donde se incializa las entidades que siempre se van a
@@ -112,6 +114,23 @@ public class AportesSociosBean implements GeneralBean {
 		}
 
 	}
+	
+	/**
+	 * metodo que carga el id del aporte
+	 * @param id
+	 */
+	public void cargaIdAporte(Integer id){
+		this.idAporte = id;
+	}
+
+	/**
+	 * metodo que carga los productos de un excel
+	 * 
+	 * @param event
+	 */
+	public void cargueExcelProductos(FileUploadEvent event) {
+
+	}
 
 	public AporteSocioEntity getAportes() {
 		return aportes;
@@ -157,7 +176,6 @@ public class AportesSociosBean implements GeneralBean {
 		return objetoSesion;
 	}
 
-	
 	public Integer getIdSocio() {
 		return idSocio;
 	}
@@ -176,7 +194,5 @@ public class AportesSociosBean implements GeneralBean {
 		// TODO Auto-generated method stub
 
 	}
-	
-	
 
 }
