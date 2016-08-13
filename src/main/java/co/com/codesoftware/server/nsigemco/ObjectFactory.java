@@ -47,6 +47,7 @@ public class ObjectFactory {
     private final static QName _ObtenerSocio_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerSocio");
     private final static QName _ObtieneCategorias_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneCategorias");
     private final static QName _InsertarProductoExcel_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertarProductoExcel");
+    private final static QName _InsertaAporteResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaAporteResponse");
     private final static QName _InsertarProductoExcelResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertarProductoExcelResponse");
     private final static QName _ObtieneReferenciasXIdCateResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneReferenciasXIdCateResponse");
     private final static QName _ConsultaSubcuentas_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaSubcuentas");
@@ -70,6 +71,7 @@ public class ObjectFactory {
     private final static QName _ConsultaProductosTemporal_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductosTemporal");
     private final static QName _InsertaFacturaCompra_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaFacturaCompra");
     private final static QName _ObtieneReferencias_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneReferencias");
+    private final static QName _InsertaAporte_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaAporte");
     private final static QName _ConsultaSubcuentasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaSubcuentasResponse");
     private final static QName _InsertaProveedor_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaProveedor");
     private final static QName _ObtieneProveedoresResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProveedoresResponse");
@@ -190,6 +192,14 @@ public class ObjectFactory {
      */
     public ObtieneReferenciasXIdCateResponse createObtieneReferenciasXIdCateResponse() {
         return new ObtieneReferenciasXIdCateResponse();
+    }
+
+    /**
+     * Create an instance of {@link InsertaAporteResponse }
+     * 
+     */
+    public InsertaAporteResponse createInsertaAporteResponse() {
+        return new InsertaAporteResponse();
     }
 
     /**
@@ -601,6 +611,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link InsertaAporte }
+     * 
+     */
+    public InsertaAporte createInsertaAporte() {
+        return new InsertaAporte();
+    }
+
+    /**
      * Create an instance of {@link InsertaMarca }
      * 
      */
@@ -734,6 +752,14 @@ public class ObjectFactory {
      */
     public ProveedoresEntity createProveedoresEntity() {
         return new ProveedoresEntity();
+    }
+
+    /**
+     * Create an instance of {@link AporteSocioEntity }
+     * 
+     */
+    public AporteSocioEntity createAporteSocioEntity() {
+        return new AporteSocioEntity();
     }
 
     /**
@@ -992,6 +1018,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertaAporteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertaAporteResponse")
+    public JAXBElement<InsertaAporteResponse> createInsertaAporteResponse(InsertaAporteResponse value) {
+        return new JAXBElement<InsertaAporteResponse>(_InsertaAporteResponse_QNAME, InsertaAporteResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertarProductoExcelResponse }{@code >}}
      * 
      */
@@ -1196,6 +1231,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneReferencias")
     public JAXBElement<ObtieneReferencias> createObtieneReferencias(ObtieneReferencias value) {
         return new JAXBElement<ObtieneReferencias>(_ObtieneReferencias_QNAME, ObtieneReferencias.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertaAporte }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertaAporte")
+    public JAXBElement<InsertaAporte> createInsertaAporte(InsertaAporte value) {
+        return new JAXBElement<InsertaAporte>(_InsertaAporte_QNAME, InsertaAporte.class, null, value);
     }
 
     /**
