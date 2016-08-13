@@ -1,5 +1,6 @@
 package co.com.codesoftware.beans.productos;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import co.com.codesoftware.logica.productos.AportesSocioLogica;
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
+import co.com.codesoftware.server.nsigemco.ProductoAporte;
 import co.com.codesoftware.server.nsigemco.SocioEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
@@ -33,6 +35,7 @@ public class AportesSociosBean implements GeneralBean {
 	private Integer idSocio;
 	private Integer idAporte;
 	private Integer idSede;
+	private List<ProductoAporte> listaAporProdSelected;
 
 	/**
 	 * constructor donde se incializa las entidades que siempre se van a
@@ -71,17 +74,30 @@ public class AportesSociosBean implements GeneralBean {
 	 */
 	public void insertaAporte() {
 		try {
-			this.aportes.setUsuario(this.objetoSesion.getId());
-			this.aportes.setEstado("C");
-			this.aportes.setSocio(this.idSocio);
-			this.aportes.setFecha(Utilitites.dateToXMLGC(new Date()));
-			String mensaje = logica.insertaAporte(this.aportes);
-			if (mensaje.startsWith("Error")) {
-				messageBean("Error al insertar el aporte", ErrorEnum.ERROR);
+			if (this.idSocio == -1) {
+				messageBean("Por favor seleccione un socio", ErrorEnum.ERROR);
+			} else if (this.idSede == -1) {
+				messageBean("Por favor seleccione una sede", ErrorEnum.ERROR);
+			} else if (this.aportes.getDescripcion() == null || "".equalsIgnoreCase(this.aportes.getDescripcion().trim())) {
+				messageBean("El campo descripcion no puede ser nulo", ErrorEnum.ERROR);
+			} else if (this.aportes.getCodigo() == null || "".equalsIgnoreCase(this.aportes.getCodigo().trim())) {
+				messageBean("El campo codigo no puede ser nulo", ErrorEnum.ERROR);
 			} else {
-				messageBean("Inserto correctamente el aporte", ErrorEnum.SUCCESS);
-				RequestContext requestContext = RequestContext.getCurrentInstance();
-				requestContext.execute("PF('datosAporte').hide();");
+				this.aportes.setUsuario(this.objetoSesion.getId());
+				this.aportes.setEstado("C");
+				this.aportes.setSocio(this.idSocio);
+				this.aportes.setFecha(Utilitites.dateToXMLGC(new Date()));
+				this.aportes.setIdSede(this.idSede);
+				this.aportes.setValor(new BigDecimal(0));
+
+				String mensaje = logica.insertaAporte(this.aportes);
+				if (mensaje.startsWith("Error")) {
+					messageBean("Error al insertar el aporte", ErrorEnum.ERROR);
+				} else {
+					messageBean("Inserto correctamente el aporte", ErrorEnum.SUCCESS);
+					RequestContext requestContext = RequestContext.getCurrentInstance();
+					requestContext.execute("PF('datosAporte').hide();");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,26 +110,55 @@ public class AportesSociosBean implements GeneralBean {
 	 * @param id
 	 */
 	public void consultaAporte(Integer id) {
-		if (this.aportes == null)
-			this.aportes = new AporteSocioEntity();
-		this.aportes = logica.consultaAporte(id);
-		this.banderaboton = "U";
+		try {
+			if (this.aportes == null)
+				this.aportes = new AporteSocioEntity();
+			this.aportes = logica.consultaAporte(id);
+			this.banderaboton = "U";
+			this.idSede = this.aportes.getIdSede();
+			this.idSocio = this.aportes.getSocio();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * metodo que actualiza un aporte
 	 */
 	public void actualizaAporte() {
-		this.aportes.setSocio(this.idSocio);
-		String mensaje = logica.actualizaAporte(this.aportes);
-		if (mensaje.startsWith("Error")) {
-			messageBean("Error al Actualizar el aporte", ErrorEnum.ERROR);
+		if (this.idSocio == -1) {
+			messageBean("Por favor seleccione un socio", ErrorEnum.ERROR);
+		} else if (this.idSede == -1) {
+			messageBean("Por favor seleccione una sede", ErrorEnum.ERROR);
+		} else if (this.aportes.getDescripcion() == null || "".equalsIgnoreCase(this.aportes.getDescripcion().trim())) {
+			messageBean("El campo descripcion no puede ser nulo", ErrorEnum.ERROR);
+		} else if (this.aportes.getCodigo() == null || "".equalsIgnoreCase(this.aportes.getCodigo().trim())) {
+			messageBean("El campo codigo no puede ser nulo", ErrorEnum.ERROR);
 		} else {
-			messageBean("Actualizo correctamente el aporte", ErrorEnum.SUCCESS);
-			RequestContext requestContext = RequestContext.getCurrentInstance();
-			requestContext.execute("PF('datosAporte').hide();");
+			this.aportes.setSocio(this.idSocio);
+			this.aportes.setIdSede(this.idSede);
+			String mensaje = logica.actualizaAporte(this.aportes);
+			if (mensaje.startsWith("Error")) {
+				messageBean("Error al Actualizar el aporte", ErrorEnum.ERROR);
+			} else {
+				messageBean("Actualizo correctamente el aporte", ErrorEnum.SUCCESS);
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('datosAporte').hide();");
+			}
 		}
+	}
 
+	/**
+	 * Funcion con la cual consulto los productos que tiene un aporte
+	 */
+	public void consultaProdAportes(Integer idAporte) {
+		try {
+			AportesSocioLogica objLogica = new AportesSocioLogica();
+			this.listaAporProdSelected = objLogica.consultaProdAporte(idAporte);
+			this.idAporte = idAporte;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -193,8 +238,7 @@ public class AportesSociosBean implements GeneralBean {
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		this.banderaboton = "I";
 	}
 
@@ -213,6 +257,13 @@ public class AportesSociosBean implements GeneralBean {
 	public void setIdSede(Integer idSede) {
 		this.idSede = idSede;
 	}
-	
+
+	public List<ProductoAporte> getListaAporProdSelected() {
+		return listaAporProdSelected;
+	}
+
+	public void setListaAporProdSelected(List<ProductoAporte> listaAporProdSelected) {
+		this.listaAporProdSelected = listaAporProdSelected;
+	}
 
 }

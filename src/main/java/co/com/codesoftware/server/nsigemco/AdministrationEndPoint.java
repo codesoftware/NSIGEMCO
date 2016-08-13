@@ -28,6 +28,21 @@ public interface AdministrationEndPoint {
 
     /**
      * 
+     * @param idAporte
+     * @return
+     *     returns java.util.List<co.com.codesoftware.server.nsigemco.ProductoAporte>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerPoductosAporte", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerPoductosAporte")
+    @ResponseWrapper(localName = "obtenerPoductosAporteResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerPoductosAporteResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerPoductosAporteRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerPoductosAporteResponse")
+    public List<ProductoAporte> obtenerPoductosAporte(
+        @WebParam(name = "idAporte", targetNamespace = "")
+        Integer idAporte);
+
+    /**
+     * 
      * @return
      *     returns java.util.List<co.com.codesoftware.server.nsigemco.SubCuentaEntity>
      */

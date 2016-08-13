@@ -24,6 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ObtenerPoductosAporteResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerPoductosAporteResponse");
     private final static QName _InsertaMarcaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaMarcaResponse");
     private final static QName _ObtieneCategoriasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneCategoriasResponse");
     private final static QName _ActualizaReferenciaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "actualizaReferenciaResponse");
@@ -79,6 +80,7 @@ public class ObjectFactory {
     private final static QName _ConsultaSubcuentasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaSubcuentasResponse");
     private final static QName _InsertaProveedor_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaProveedor");
     private final static QName _ObtieneProveedoresResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProveedoresResponse");
+    private final static QName _ObtenerPoductosAporte_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerPoductosAporte");
     private final static QName _ObtieneSubCuentasFiltros_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneSubCuentasFiltros");
     private final static QName _InsertaRegistroProducto_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaRegistroProducto");
     private final static QName _ObtenerSociosResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerSociosResponse");
@@ -409,6 +411,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerPoductosAporteResponse }
+     * 
+     */
+    public ObtenerPoductosAporteResponse createObtenerPoductosAporteResponse() {
+        return new ObtenerPoductosAporteResponse();
+    }
+
+    /**
      * Create an instance of {@link InsertaSocioResponse }
      * 
      */
@@ -617,6 +627,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerPoductosAporte }
+     * 
+     */
+    public ObtenerPoductosAporte createObtenerPoductosAporte() {
+        return new ObtenerPoductosAporte();
+    }
+
+    /**
      * Create an instance of {@link LoginUsuarioResponse }
      * 
      */
@@ -705,14 +723,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RespuestaEntity }
-     * 
-     */
-    public RespuestaEntity createRespuestaEntity() {
-        return new RespuestaEntity();
-    }
-
-    /**
      * Create an instance of {@link SocioEntity }
      * 
      */
@@ -721,19 +731,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FacturaCompraEntity }
+     * Create an instance of {@link ProductoAporte }
      * 
      */
-    public FacturaCompraEntity createFacturaCompraEntity() {
-        return new FacturaCompraEntity();
-    }
-
-    /**
-     * Create an instance of {@link PerfilEntity }
-     * 
-     */
-    public PerfilEntity createPerfilEntity() {
-        return new PerfilEntity();
+    public ProductoAporte createProductoAporte() {
+        return new ProductoAporte();
     }
 
     /**
@@ -753,35 +755,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CategoriaEntity }
-     * 
-     */
-    public CategoriaEntity createCategoriaEntity() {
-        return new CategoriaEntity();
-    }
-
-    /**
      * Create an instance of {@link PersonaEntity }
      * 
      */
     public PersonaEntity createPersonaEntity() {
         return new PersonaEntity();
-    }
-
-    /**
-     * Create an instance of {@link ProductoEntity }
-     * 
-     */
-    public ProductoEntity createProductoEntity() {
-        return new ProductoEntity();
-    }
-
-    /**
-     * Create an instance of {@link ProductoFacCompraEntity }
-     * 
-     */
-    public ProductoFacCompraEntity createProductoFacCompraEntity() {
-        return new ProductoFacCompraEntity();
     }
 
     /**
@@ -793,35 +771,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ClienteEntity }
-     * 
-     */
-    public ClienteEntity createClienteEntity() {
-        return new ClienteEntity();
-    }
-
-    /**
      * Create an instance of {@link ProveedoresEntity }
      * 
      */
     public ProveedoresEntity createProveedoresEntity() {
         return new ProveedoresEntity();
-    }
-
-    /**
-     * Create an instance of {@link AporteSocioEntity }
-     * 
-     */
-    public AporteSocioEntity createAporteSocioEntity() {
-        return new AporteSocioEntity();
-    }
-
-    /**
-     * Create an instance of {@link SedeEntity }
-     * 
-     */
-    public SedeEntity createSedeEntity() {
-        return new SedeEntity();
     }
 
     /**
@@ -857,11 +811,92 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RespuestaEntity }
+     * 
+     */
+    public RespuestaEntity createRespuestaEntity() {
+        return new RespuestaEntity();
+    }
+
+    /**
+     * Create an instance of {@link FacturaCompraEntity }
+     * 
+     */
+    public FacturaCompraEntity createFacturaCompraEntity() {
+        return new FacturaCompraEntity();
+    }
+
+    /**
+     * Create an instance of {@link PerfilEntity }
+     * 
+     */
+    public PerfilEntity createPerfilEntity() {
+        return new PerfilEntity();
+    }
+
+    /**
+     * Create an instance of {@link CategoriaEntity }
+     * 
+     */
+    public CategoriaEntity createCategoriaEntity() {
+        return new CategoriaEntity();
+    }
+
+    /**
+     * Create an instance of {@link ProductoEntity }
+     * 
+     */
+    public ProductoEntity createProductoEntity() {
+        return new ProductoEntity();
+    }
+
+    /**
+     * Create an instance of {@link ProductoFacCompraEntity }
+     * 
+     */
+    public ProductoFacCompraEntity createProductoFacCompraEntity() {
+        return new ProductoFacCompraEntity();
+    }
+
+    /**
+     * Create an instance of {@link ClienteEntity }
+     * 
+     */
+    public ClienteEntity createClienteEntity() {
+        return new ClienteEntity();
+    }
+
+    /**
+     * Create an instance of {@link AporteSocioEntity }
+     * 
+     */
+    public AporteSocioEntity createAporteSocioEntity() {
+        return new AporteSocioEntity();
+    }
+
+    /**
+     * Create an instance of {@link SedeEntity }
+     * 
+     */
+    public SedeEntity createSedeEntity() {
+        return new SedeEntity();
+    }
+
+    /**
      * Create an instance of {@link ReferenciaEntity }
      * 
      */
     public ReferenciaEntity createReferenciaEntity() {
         return new ReferenciaEntity();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerPoductosAporteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtenerPoductosAporteResponse")
+    public JAXBElement<ObtenerPoductosAporteResponse> createObtenerPoductosAporteResponse(ObtenerPoductosAporteResponse value) {
+        return new JAXBElement<ObtenerPoductosAporteResponse>(_ObtenerPoductosAporteResponse_QNAME, ObtenerPoductosAporteResponse.class, null, value);
     }
 
     /**
@@ -1357,6 +1392,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneProveedoresResponse")
     public JAXBElement<ObtieneProveedoresResponse> createObtieneProveedoresResponse(ObtieneProveedoresResponse value) {
         return new JAXBElement<ObtieneProveedoresResponse>(_ObtieneProveedoresResponse_QNAME, ObtieneProveedoresResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerPoductosAporte }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtenerPoductosAporte")
+    public JAXBElement<ObtenerPoductosAporte> createObtenerPoductosAporte(ObtenerPoductosAporte value) {
+        return new JAXBElement<ObtenerPoductosAporte>(_ObtenerPoductosAporte_QNAME, ObtenerPoductosAporte.class, null, value);
     }
 
     /**

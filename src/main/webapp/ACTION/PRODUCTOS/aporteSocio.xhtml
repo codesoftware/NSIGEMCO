@@ -28,7 +28,7 @@
 								</h:outputText>
 							</p:column>
 							<p:column headerText="ESTADO" filterBy="#{aporte.estado}" priority="4" filterMatchMode="contains">
-								<h:outputText value="#{aporte.estado}"></h:outputText>
+								<h:outputText value="CREADO" rendered="#{aporte.estado == 'C'}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="2">
 								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte"
@@ -80,8 +80,11 @@
 						</p:panelGrid>
 					</p:dialog>
 					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
-			Realizacion de proceso:
-			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+						Realizacion de proceso:
+						<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+					</p:dialog>
+					<p:dialog closeOnEscape="true">
+						
 					</p:dialog>
 				</center>
 			</h:form>
