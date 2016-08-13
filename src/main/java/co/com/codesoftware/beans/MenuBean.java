@@ -137,7 +137,7 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.")
 					|| this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Inv6.")
 					|| this.listaPermisos.contains(".Inv7.") || this.listaPermisos.contains(".Inv8.")
-					|| this.listaPermisos.contains(".Inv9.")) {
+					|| this.listaPermisos.contains(".Inv9.") || this.listaPermisos.contains(".Inv10.")) {
 				menuPrincipal.setLabel("INVENTARIOS");
 				menuPrincipal.setIcon("fa fa-bank");
 				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.")
@@ -204,6 +204,16 @@ public class MenuBean implements Serializable {
 						DefaultMenuItem cargueProd = new DefaultMenuItem("Solo Prod");
 						cargueProd.setCommand("/ACTION/PRODUCTOS/cargueSoloProducto.jsf?faces-redirect=false");
 						cargues.addElement(cargueProd);
+					}
+				}
+				if(this.listaPermisos.contains(".Inv10.")){
+					DefaultSubMenu aportesSoci = new DefaultSubMenu();
+					aportesSoci.setLabel("APORTES SOCIOS");
+					menuPrincipal.addElement(aportesSoci);
+					if (this.listaPermisos.contains(".Inv10.")) {
+						DefaultMenuItem cargarAparte = new DefaultMenuItem("APORTES");
+						cargarAparte.setCommand("/ACTION/PRODUCTOS/aporteSocio.jsf?faces-redirect=false");
+						aportesSoci.addElement(cargarAparte);
 					}
 				}
 			}
