@@ -36,7 +36,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PucEntity {
 
-    protected String clave;
+    public void setValor(List<Integer> valor) {
+		this.valor = valor;
+	}
+
+	protected String clave;
     @XmlElement(nillable = true)
     protected List<Integer> valor;
 
