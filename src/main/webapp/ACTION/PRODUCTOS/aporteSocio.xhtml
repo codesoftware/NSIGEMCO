@@ -7,6 +7,54 @@
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
 			<br />
+			<f:event listener="#{aportesSociosBean.consultaAportes}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="aporte" rows="20" widgetVar="waporte" id="tablaAportes" value="#{aportesSociosBean.listaAportes}" paginator="true" filteredValue="#{aportesSociosBean.listaAportesFiltro}"
+							emptyMessage="No existen aportes registrados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE APORTES
+							</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{aporte.codigo}"></h:outputText>
+							</p:column>
+							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+							</p:column>
+							<p:column headerText="ESTADO" filterBy="#{aporte.estado}" priority="4" filterMatchMode="contains">
+								<h:outputText value="#{aporte.estado}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE" priority="2">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte" oncomplete="PF('datosAporte').show()"></p:commandButton>
+								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelAporte" action="#{aportesSociosBean.limpiaPanel}" oncomplete="PF('datosAporte').show()" />
+					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosAporte" modal="true" header="DATOS APORTE" closeOnEscape="true">
+						<p:panelGrid columns="2" id="panelAporte" style="width:80%">
+							<p:column>
+							Codigo:
+									<p:inputText value="#{aportesSociosBean.aportes.codigo}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+							Descripciòn:
+									<p:inputText value="#{aportesSociosBean.aportes.descripcion}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{aportesSociosBean.banderaboton=='I'}" actionListener="#{aportesSociosBean.insertaAporte}" update="tablaAportes" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{aportesSociosBean.banderaboton=='U'}" actionListener="#{aportesSociosBean.actualizaAporte}" update="tablaAportes" />
+							</p:column>
+						</p:panelGrid>
+					</p:dialog>
+				</center>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </body>
