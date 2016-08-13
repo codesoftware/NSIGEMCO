@@ -1,5 +1,5 @@
 
-package co.com.codesoftware.servicio.general;
+package co.com.codesoftware.server.nsigemco;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para generarExcelSql complex type.
+ * <p>Clase Java para actualizaSocio complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="generarExcelSql">
+ * &lt;complexType name="actualizaSocio">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="sql" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="socio" type="{http://nsigemco.server.codesoftware.com.co/}socioEntity" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "generarExcelSql", propOrder = {
-    "sql"
+@XmlType(name = "actualizaSocio", propOrder = {
+    "socio"
 })
-public class GenerarExcelSql {
+public class ActualizaSocio {
 
-    protected String sql;
+    protected SocioEntity socio;
 
     /**
-     * Obtiene el valor de la propiedad sql.
+     * Obtiene el valor de la propiedad socio.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link SocioEntity }
      *     
      */
-    public String getSql() {
-        return sql;
+    public SocioEntity getSocio() {
+        return socio;
     }
 
     /**
-     * Define el valor de la propiedad sql.
+     * Define el valor de la propiedad socio.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link SocioEntity }
      *     
      */
-    public void setSql(String value) {
-        this.sql = value;
+    public void setSocio(SocioEntity value) {
+        this.socio = value;
     }
 
 }

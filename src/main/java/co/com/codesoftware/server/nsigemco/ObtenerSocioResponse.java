@@ -1,5 +1,5 @@
 
-package co.com.codesoftware.servicio.general;
+package co.com.codesoftware.server.nsigemco;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para generarExcelSqlResponse complex type.
+ * <p>Clase Java para obtenerSocioResponse complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="generarExcelSqlResponse">
+ * &lt;complexType name="obtenerSocioResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://nsigemco.server.codesoftware.com.co/}socioEntity" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,23 +27,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "generarExcelSqlResponse", propOrder = {
+@XmlType(name = "obtenerSocioResponse", propOrder = {
     "_return"
 })
-public class GenerarExcelSqlResponse {
+public class ObtenerSocioResponse {
 
     @XmlElement(name = "return")
-    protected String _return;
+    protected SocioEntity _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link SocioEntity }
      *     
      */
-    public String getReturn() {
+    public SocioEntity getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class GenerarExcelSqlResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link SocioEntity }
      *     
      */
-    public void setReturn(String value) {
+    public void setReturn(SocioEntity value) {
         this._return = value;
     }
 
