@@ -28,6 +28,7 @@ public class AportesSociosBean implements GeneralBean {
 	private List<SocioEntity> listaSocios;
 	private String banderaboton;
 	private UsuarioEntity objetoSesion;
+	private Integer idSocio;
 
 	/**
 	 * constructor donde se incializa las entidades que siempre se van a
@@ -69,7 +70,7 @@ public class AportesSociosBean implements GeneralBean {
 		try {
 			this.aportes.setUsuario(this.objetoSesion.getId());
 			this.aportes.setEstado("C");
-			this.aportes.setSocio(1);
+			this.aportes.setSocio(this.idSocio);
 			this.aportes.setFecha(Utilitites.dateToXMLGC(new Date()));
 			String mensaje = logica.insertaAporte(this.aportes);
 			if (mensaje.startsWith("Error")) {
@@ -100,6 +101,7 @@ public class AportesSociosBean implements GeneralBean {
 	 * metodo que actualiza un aporte
 	 */
 	public void actualizaAporte() {
+		this.aportes.setSocio(this.idSocio);
 		String mensaje = logica.actualizaAporte(this.aportes);
 		if (mensaje.startsWith("Error")) {
 			messageBean("Error al Actualizar el aporte", ErrorEnum.ERROR);
@@ -155,6 +157,15 @@ public class AportesSociosBean implements GeneralBean {
 		return objetoSesion;
 	}
 
+	
+	public Integer getIdSocio() {
+		return idSocio;
+	}
+
+	public void setIdSocio(Integer idSocio) {
+		this.idSocio = idSocio;
+	}
+
 	@Override
 	public void setObjetoSesion(UsuarioEntity objetoSesion) {
 
@@ -165,5 +176,7 @@ public class AportesSociosBean implements GeneralBean {
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 
 }

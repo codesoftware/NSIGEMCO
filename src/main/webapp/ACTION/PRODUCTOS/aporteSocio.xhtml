@@ -8,6 +8,7 @@
 		<ui:define name="content">
 			<br />
 			<f:event listener="#{aportesSociosBean.consultaAportes}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSocios}" type="preRenderView" />
 			<h:form id="formTable">
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
@@ -22,13 +23,15 @@
 							</p:column>
 							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
-									<f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
 							</p:column>
 							<p:column headerText="ESTADO" filterBy="#{aporte.estado}" priority="4" filterMatchMode="contains">
 								<h:outputText value="#{aporte.estado}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="2">
-								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte" oncomplete="PF('datosAporte').show()"></p:commandButton>
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte"
+									oncomplete="PF('datosAporte').show()"></p:commandButton>
 								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton"></p:commandButton>
 							</p:column>
 						</p:dataTable>
@@ -46,6 +49,13 @@
 							Descripciòn:
 									<p:inputText value="#{aportesSociosBean.aportes.descripcion}" style="width:100%">
 								</p:inputText>
+							</p:column>
+							<p:column>
+								Socio
+							<h:selectOneMenu value="#{aportesSociosBean.idSocio}" styleClass="form-control" id="selectSocio">
+									<f:selectItem itemLabel="SELECCIONE UN SOCIO" itemValue="1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaSocios}"></f:selectItems>
+								</h:selectOneMenu>
 							</p:column>
 							<p:column>
 								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{aportesSociosBean.banderaboton=='I'}" actionListener="#{aportesSociosBean.insertaAporte}" update="tablaAportes" />

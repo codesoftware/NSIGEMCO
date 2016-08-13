@@ -23,6 +23,7 @@ import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
 import co.com.codesoftware.server.nsigemco.PucEntity;
 import co.com.codesoftware.server.nsigemco.ReferenciaEntity;
 import co.com.codesoftware.server.nsigemco.ReteFuenteEntity;
+import co.com.codesoftware.server.nsigemco.SocioEntity;
 import co.com.codesoftware.server.nsigemco.SubCuentaEntity;
 import co.com.codesoftware.servicio.general.CiudadEntity;
 import co.com.codesoftware.servicio.general.DepartamentoEntity;
@@ -56,6 +57,7 @@ public class FiltrosServiceBean {
 	private static boolean banderaCiudad;
 	private List<PerfilEntity> listaPerfil;
 	private static boolean banderaPerfiles;
+	private List<SocioEntity> listaSocios;
 	
 	ParametrosLogica logicaP = null;
 
@@ -416,6 +418,20 @@ public class FiltrosServiceBean {
 	}
 	
 	/**
+	 * metodo que carga los socios 
+	 * @return
+	 */
+	public List<SocioEntity> serviceObtieneSocios(){
+		try {
+			this.listaSocios = new ArrayList<>();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return this.listaSocios;
+	}
+	
+	/**
 	 * Funcion con la cual obtengo la lista de ciudades parametrizados en el sistema
 	 * sistema
 	 * 
@@ -538,6 +554,9 @@ public class FiltrosServiceBean {
 	public static void setBanderaDepartamento(boolean banderaDepartamento) {
 		FiltrosServiceBean.banderaDepartamento = banderaDepartamento;
 	}
+	
+	
+	
 	
 	
 
