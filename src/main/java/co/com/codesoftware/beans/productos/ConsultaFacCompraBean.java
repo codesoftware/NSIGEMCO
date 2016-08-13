@@ -126,7 +126,6 @@ public class ConsultaFacCompraBean implements GeneralBean {
 	 * @param idFactura
 	 */
 	public String seteaIdFactura(Integer idFacturaSel) {
-		System.out.println("ENTRO");
 		String rta = "";
 		try {
 			if (this.factura == null) {
@@ -134,6 +133,20 @@ public class ConsultaFacCompraBean implements GeneralBean {
 			}
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idFactCom", idFacturaSel);
 			rta = "detalleFactCompra?faces-redirect=false";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	
+	public String enviaPagosFactura(Integer idFacturaSel) {
+		String rta = "";
+		try {
+			if (this.factura == null) {
+				this.factura = new FacturaCompraEntity();
+			}
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idFactCom", idFacturaSel);
+			rta = "pagosFacturaCompra?faces-redirect=false";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

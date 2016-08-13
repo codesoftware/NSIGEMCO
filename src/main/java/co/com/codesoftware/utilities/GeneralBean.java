@@ -6,7 +6,6 @@ import javax.faces.context.FacesContext;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 
 public interface GeneralBean {
-	
 	public void setObjetoSesion(UsuarioEntity objetoSesion);
 	public void init();
 	public default void messageBean(String message,ErrorEnum enumer){
@@ -27,6 +26,14 @@ public interface GeneralBean {
 		default:
 			break;
 		}
+	}
+	/**
+	 * metodo que trae los datos de sesion del usuario
+	 * @return
+	 */
+	public default UsuarioEntity traeDatosSesion(){
+		return (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 	}
 
 }

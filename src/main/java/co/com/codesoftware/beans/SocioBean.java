@@ -37,8 +37,7 @@ public class SocioBean implements GeneralBean {
 	public SocioBean() {
 		this.socio = new SocioEntity();
 		this.logica = new SocioLogica();
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = traeDatosSesion();
 	}
 
 	/**
