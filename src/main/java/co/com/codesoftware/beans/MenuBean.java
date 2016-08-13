@@ -224,7 +224,8 @@ public class MenuBean implements Serializable {
 			if (this.listaPermisos.contains(".Adm1.") || this.listaPermisos.contains(".Adm2.")
 					|| this.listaPermisos.contains(".Adm3.") || this.listaPermisos.contains(".Adm4.")
 					|| this.listaPermisos.contains(".Adm5.") || this.listaPermisos.contains(".Adm6.")
-					|| this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")) {
+					|| this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")
+					|| this.listaPermisos.contains(".Adm9.")) {
 				menuPrincipal.setLabel("ADMINISTRACION");
 				menuPrincipal.setIcon("fa fa-users");
 				// Se generan los submenus de segundo nivel
@@ -273,6 +274,11 @@ public class MenuBean implements Serializable {
 					DefaultMenuItem segundoNivelSiete = new DefaultMenuItem("Perfiles.");
 					segundoNivelSiete.setCommand("/ACTION/ADMIN/perfiles.jsf");
 					menuPrincipal.addElement(segundoNivelSiete);
+				}
+				if (this.listaPermisos.contains(".Adm9.")) {
+					DefaultMenuItem segundoNivelOcho = new DefaultMenuItem("Socios.");
+					segundoNivelOcho.setCommand("/ACTION/ADMIN/socios.jsf");
+					menuPrincipal.addElement(segundoNivelOcho);
 				}
 			}
 		} catch (Exception e) {

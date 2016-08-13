@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 
 import co.com.codesoftware.logica.UsuarioLogic;
-import co.com.codesoftware.rest.entidades.SocioEntity;
 import co.com.codesoftware.rest.logica.administracion.SocioLogica;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.EnviaCorreosLogica;
@@ -39,8 +38,7 @@ public class LoginBean implements Serializable {
 		//logica.enviaCorreosFacturaCompra();
 		bandera = true;
 		try {
-			SocioLogica logicas = new SocioLogica();
-			List<SocioEntity> lista =logicas.consultaSocios();
+			
 			this.usuario = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 					.get("usuarioCambioContra");
 			this.objetoUsuario = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()

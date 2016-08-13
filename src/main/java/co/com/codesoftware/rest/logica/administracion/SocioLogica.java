@@ -1,57 +1,51 @@
 package co.com.codesoftware.rest.logica.administracion;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.WebTarget;
+import co.com.codesoftware.server.nsigemco.SocioEntity;
+import co.com.codesoftware.utilities.WSGeneralInterface;
 
-import com.google.gson.Gson;
-
-import co.com.codesoftware.rest.entidades.SocioEntity;
-
-public class SocioLogica {
-	static class AdministracionRecurso_JerseyClient {
-
-		private WebTarget webTarget;
-		private Client client;
-		private static final String BASE_URI = "http://localhost:8084/SIGEMCORS/rest";
-
-		public AdministracionRecurso_JerseyClient() {
-			client = javax.ws.rs.client.ClientBuilder.newClient();
-			webTarget = client.target(BASE_URI).path("admin");
+public class SocioLogica implements WSGeneralInterface{
+	
+	/**
+	 * metodo que consulta una lista de socios
+	 * @return
+	 */
+	public List<SocioEntity> consultaSocios(){
+		List<SocioEntity> respuesta = new ArrayList<>();
+		try {
+			respuesta = conexionWSAdmin().getPortAdm().obtenerSocios();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		public <T> T obtenerSocios(Class<T> responseType) throws ClientErrorException {
-			return webTarget.path("socio/lista").request().post(null, responseType);
-		}
-
-		public String insertarSocio() throws ClientErrorException {
-			return webTarget.path("socio/insertar").request().post(null, String.class);
-		}
-
-		public <T> T obtenerSocio(Class<T> responseType) throws ClientErrorException {
-			return webTarget.path("socio").request().post(null, responseType);
-		}
-
-		public String actualizarSocio() throws ClientErrorException {
-			return webTarget.path("socio/actualizar").request().post(null, String.class);
-		}
-
-		public void close() {
-			client.close();
-		}
+		return respuesta;
 	}
-
-	public List<SocioEntity> consultaSocios() {
-		SocioLogica.AdministracionRecurso_JerseyClient ob = new AdministracionRecurso_JerseyClient();
-		List<Object> lista = ob.obtenerSocios(List.class);
-		System.out.println("size:" + lista.size());
-		Gson gson = new Gson();
-		String json = gson.toJson(lista);
-		System.out.println(json);
-		ob.close();
-		return null;
+	
+	/**
+	 * metodo que consulta un socio en particular
+	 * @param id
+	 * @return
+	 */
+	public SocioEntity consultaSocio(Integer id){
+			return conexionWSAdmin().getPortAdm().obtenerSocio(id);
+	}
+	
+	/**
+	 * metodo que actualiza un socio 
+	 * @param entidad
+	 * @return
+	 */
+	public String actualizaSocio(SocioEntity entidad){
+		return conexionWSAdmin().getPortAdm().actualizaSocio(entidad);
+	}
+	
+	/**
+	 * metodo que inserta un socio
+	 * @param entidad
+	 * @return
+	 */
+	public String insertaSocio(SocioEntity entidad){
+		return conexionWSAdmin().getPortAdm().insertaSocio(entidad);
 	}
 }

@@ -1,0 +1,33 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<f:event listener="#{socioBean.consultaSocios}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaDepartamento}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="socio" rows="20" widgetVar="wsocio" id="tablaSocios" value="#{socioBean.listaSocios}" paginator="true" filteredValue="#{socioBean.listaSociosFiltro}"
+							emptyMessage="No existen socios parametrizados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE SOCIOS
+							</f:facet>
+							<p:column headerText="NIT" filterBy="#{socio.nit}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{socio.nit}-#{socio.digitoVer}"></h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
