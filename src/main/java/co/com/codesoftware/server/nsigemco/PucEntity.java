@@ -40,11 +40,7 @@ public class PucEntity {
     @XmlElement(nillable = true)
     protected List<Integer> valor;
 
-    public void setValor(List<Integer> valor) {
-		this.valor = valor;
-	}
-
-	/**
+    /**
      * Obtiene el valor de la propiedad clave.
      * 
      * @return
@@ -96,5 +92,11 @@ public class PucEntity {
         }
         return this.valor;
     }
+
+	public void setValor(List<Integer> valor) {
+		this.valor = valor;
+	}
+    
+    
 
 }
