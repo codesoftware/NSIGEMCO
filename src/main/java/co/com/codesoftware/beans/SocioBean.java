@@ -7,15 +7,21 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import co.com.codesoftware.logica.admin.SocioLogica;
 import co.com.codesoftware.logica.admin.UbicacionLogica;
 import co.com.codesoftware.server.nsigemco.SocioEntity;
 import co.com.codesoftware.servicio.general.CiudadEntity;
+import co.com.codesoftware.servicio.usuario.UsuarioEntity;
+import co.com.codesoftware.utilities.ErrorEnum;
+import co.com.codesoftware.utilities.GeneralBean;
 
 @ManagedBean
 @ViewScoped
-public class SocioBean {
+public class SocioBean implements GeneralBean {
 
 	private SocioEntity socio;
 	private Integer idMuni;
@@ -24,10 +30,14 @@ public class SocioBean {
 	private List<SocioEntity> listaSociosFiltro;
 	private SocioLogica logica;
 	private Map<String, Integer> listaMapCiudades;
+	private String banderaboton;
+	private UsuarioEntity objetoSesion;
 
 	public SocioBean() {
 		this.socio = new SocioEntity();
 		this.logica = new SocioLogica();
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 	}
 
 	/**
@@ -54,6 +64,52 @@ public class SocioBean {
 				}
 			}
 		}
+	}
+
+	/**
+	 * metodo que consulta un socio
+	 * 
+	 * @param id
+	 */
+	public void consultaSocio(Integer id) {
+		try {
+			this.socio = logica.consultaSocio(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+
+	/**
+	 * metodo que consulta un socio
+	 */
+	public void insertarSocio() {
+		try {
+			this.socio.setCiudad(idCiu);
+			this.socio.setMunicipio(idMuni);
+			this.socio.setEstado("A");
+			this.socio.setUsuario(this.objetoSesion.getId());
+			String mensaje = logica.insertaSocio(this.socio);
+			if (mensaje.startsWith("Error")) {
+				messageBean("Error al insertar socio", ErrorEnum.ERROR);
+			} else {
+				messageBean("Inserto socio correctamente", ErrorEnum.SUCCESS);
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('datosSocio').hide();");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * metodo que limpia el panel para insertar un socio
+	 */
+	public void limpiaPanel() {
+		this.banderaboton = "I";
+		this.socio = new SocioEntity();
+		this.idCiu = -1;
+		this.idMuni = -1;
 	}
 
 	public SocioEntity getSocio() {
@@ -102,6 +158,28 @@ public class SocioBean {
 
 	public void setListaMapCiudades(Map<String, Integer> listaMapCiudades) {
 		this.listaMapCiudades = listaMapCiudades;
+	}
+
+	public String getBanderaboton() {
+		return banderaboton;
+	}
+
+	public void setBanderaboton(String banderaboton) {
+		this.banderaboton = banderaboton;
+	}
+
+	public UsuarioEntity getObjetoSesion() {
+		return objetoSesion;
+	}
+
+	public void setObjetoSesion(UsuarioEntity objetoSesion) {
+		this.objetoSesion = objetoSesion;
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

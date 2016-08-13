@@ -23,8 +23,67 @@
 							<p:column headerText="NIT" filterBy="#{socio.nit}" priority="1" filterMatchMode="contains">
 								<h:outputText value="#{socio.nit}-#{socio.digitoVer}"></h:outputText>
 							</p:column>
+							<p:column headerText="RAZON SOCIAL" filterBy="#{socio.razonSocial}" priority="2" filterMatchMode="contains">
+								<h:outputText value="#{socio.razonSocial}"></h:outputText>
+							</p:column>
+							<p:column headerText="DIRECCION" filterBy="#{socio.direccion}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{socio.direccion}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE" priority="4">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{socioBean.consultaSocio(socio.id)}" update=":formTable:panelSocio" oncomplete="PF('datosSocio').show()"></p:commandButton>
+							</p:column>
 						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelSocio" action="#{socioBean.limpiaPanel}" oncomplete="PF('datosSocio').show()" />
 					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosSocio" modal="true" header="DATOS SOCIO" closeOnEscape="true">
+						<p:panelGrid columns="2" id="panelSocio" style="width:80%">
+							<p:column>
+							Nit:
+									<p:inputText value="#{socioBean.socio.nit}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+							Digito Verificaciòn:
+									<p:inputText value="#{socioBean.socio.digitoVer}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+							Razon Social:
+									<p:inputText value="#{socioBean.socio.razonSocial}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+							Representante legal:
+									<p:inputText value="#{socioBean.socio.representanteLegal}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								Departamento
+							<h:selectOneMenu value="#{socioBean.idMuni}" styleClass="form-control" id="selectDepartamento">
+									<f:selectItem itemLabel="SELECCIONE UN DEPARTAMENTO" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaMapDepartamentos}"></f:selectItems>
+									<p:ajax update="selectCiudad" listener="#{socioBean.consultaCiudades}"></p:ajax>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>
+							Ciudad
+							<h:selectOneMenu value="#{socioBean.idCiu}" styleClass="form-control" id="selectCiudad">
+									<f:selectItem itemLabel="SELECCIONE UNA CIUDAD" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{socioBean.listaMapCiudades}"></f:selectItems>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column colspan="2">
+							Direccion:
+									<p:inputText value="#{socioBean.socio.direccion}" style="width:100%">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{socioBean.banderaboton=='I'}" actionListener="#{socioBean.insertarSocio}" update="tablaSocios" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{socioBean.banderaboton=='U'}" actionListener="#{aportesSociosBean.actualizaAporte}" update="tablaSocios" />
+							</p:column>
+						</p:panelGrid>
+					</p:dialog>
 				</center>
 			</h:form>
 		</ui:define>
