@@ -18,6 +18,7 @@ import co.com.codesoftware.servicio.general.CiudadEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
+import co.com.codesoftware.utilities.Utilitites;
 
 @ManagedBean
 @ViewScoped
@@ -74,9 +75,35 @@ public class SocioBean implements GeneralBean {
 	public void consultaSocio(Integer id) {
 		try {
 			this.socio = logica.consultaSocio(id);
+			this.idMuni = this.socio.getMunicipio();
+			consultaCiudades();
+			this.idCiu = this.socio.getCiudad();
+			this.banderaboton = "U";
 		} catch (Exception e) {
 			e.printStackTrace();
 
+		}
+	}
+
+	/**
+	 * metodo que actualiza un socio
+	 */
+	public void actualizaSocio() {
+		try {
+			if (validaDatos()) {
+				this.socio.setCiudad(idCiu);
+				this.socio.setMunicipio(idMuni);
+				String mensaje = logica.actualizaSocio(this.socio);
+				if (mensaje.startsWith("Error")) {
+					messageBean("Error al actualizar socio", ErrorEnum.ERROR);
+				} else {
+					messageBean("Actualizo socio correctamente", ErrorEnum.SUCCESS);
+					RequestContext requestContext = RequestContext.getCurrentInstance();
+					requestContext.execute("PF('datosSocio').hide();");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -85,17 +112,19 @@ public class SocioBean implements GeneralBean {
 	 */
 	public void insertarSocio() {
 		try {
-			this.socio.setCiudad(idCiu);
-			this.socio.setMunicipio(idMuni);
-			this.socio.setEstado("A");
-			this.socio.setUsuario(this.objetoSesion.getId());
-			String mensaje = logica.insertaSocio(this.socio);
-			if (mensaje.startsWith("Error")) {
-				messageBean("Error al insertar socio", ErrorEnum.ERROR);
-			} else {
-				messageBean("Inserto socio correctamente", ErrorEnum.SUCCESS);
-				RequestContext requestContext = RequestContext.getCurrentInstance();
-				requestContext.execute("PF('datosSocio').hide();");
+			if (validaDatos()) {
+				this.socio.setCiudad(idCiu);
+				this.socio.setMunicipio(idMuni);
+				this.socio.setEstado("A");
+				this.socio.setUsuario(this.objetoSesion.getId());
+				String mensaje = logica.insertaSocio(this.socio);
+				if (mensaje.startsWith("Error")) {
+					messageBean("Error al insertar socio", ErrorEnum.ERROR);
+				} else {
+					messageBean("Inserto socio correctamente", ErrorEnum.SUCCESS);
+					RequestContext requestContext = RequestContext.getCurrentInstance();
+					requestContext.execute("PF('datosSocio').hide();");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,6 +139,45 @@ public class SocioBean implements GeneralBean {
 		this.socio = new SocioEntity();
 		this.idCiu = -1;
 		this.idMuni = -1;
+	}
+
+	/**
+	 * metodo con el cual se validan los datos del formulario de socios
+	 * 
+	 * @return
+	 */
+	public boolean validaDatos() {
+		boolean resultado = true;
+		try {
+			if (this.socio.getNit() == null || "".equalsIgnoreCase(this.socio.getNit())) {
+				messageBean("El nit del socio no puede ir vacio", ErrorEnum.ERROR);
+				return false;
+			}
+			if (this.socio.getRazonSocial() == null || "".equalsIgnoreCase(this.socio.getRazonSocial())) {
+				messageBean("La razón social del socio no puede ir vacia ", ErrorEnum.ERROR);
+				return false;
+			}
+			if (this.socio.getDireccion() == null || "".equalsIgnoreCase(this.socio.getDireccion())) {
+				messageBean("La dirección del socio no puede ir vacia ", ErrorEnum.ERROR);
+				return false;
+			}
+			if (this.getIdMuni() == null || this.getIdMuni() == -1) {
+				messageBean("Favor seleccione un muncipio ", ErrorEnum.ERROR);
+				return false;
+			}
+			if (this.getIdCiu() == null || this.getIdCiu() == -1) {
+				messageBean("Favor seleccione ciudad ", ErrorEnum.ERROR);
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+
+	public void muestraDigito() {
+		Utilitites ut = new Utilitites();
+		this.socio.setDigitoVer("" + ut.obtenerSumaPorDigitos(this.socio.getNit()));
 	}
 
 	public SocioEntity getSocio() {

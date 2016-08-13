@@ -41,11 +41,12 @@
 							<p:column>
 							Nit:
 									<p:inputText value="#{socioBean.socio.nit}" style="width:100%">
+									<p:ajax event="blur" update="digitoVer" listener="#{socioBean.muestraDigito}" />
 								</p:inputText>
 							</p:column>
 							<p:column>
 							Digito Verificaciòn:
-									<p:inputText value="#{socioBean.socio.digitoVer}" style="width:100%">
+									<p:inputText value="#{socioBean.socio.digitoVer}" id="digitoVer" style="width:100%">
 								</p:inputText>
 							</p:column>
 							<p:column>
@@ -80,7 +81,7 @@
 							</p:column>
 							<p:column>
 								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{socioBean.banderaboton=='I'}" actionListener="#{socioBean.insertarSocio}" update="tablaSocios" />
-								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{socioBean.banderaboton=='U'}" actionListener="#{aportesSociosBean.actualizaAporte}" update="tablaSocios" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{socioBean.banderaboton=='U'}" actionListener="#{socioBean.actualizaSocio}" update="tablaSocios" />
 							</p:column>
 						</p:panelGrid>
 					</p:dialog>
