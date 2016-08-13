@@ -93,10 +93,4 @@ public class PucEntity {
         return this.valor;
     }
 
-	public void setValor(List<Integer> valor) {
-		this.valor = valor;
-	}
-    
-    
-
 }
