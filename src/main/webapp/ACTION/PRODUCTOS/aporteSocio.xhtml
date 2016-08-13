@@ -9,6 +9,7 @@
 			<br />
 			<f:event listener="#{aportesSociosBean.consultaAportes}" type="preRenderView" />
 			<f:event listener="#{cargaListasMapBean.cargaListaSocios}" type="preRenderView" />
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<h:form id="formTable">
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
@@ -33,14 +34,14 @@
 								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte"
 									oncomplete="PF('datosAporte').show()"></p:commandButton>
 								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos"
-								oncomplete="PF('datosProductosAporte').show()"></p:commandButton>
+									oncomplete="PF('datosProductosAporte').show()"></p:commandButton>
 							</p:column>
 						</p:dataTable>
 						<br />
 						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelAporte" action="#{aportesSociosBean.limpiaPanel}" oncomplete="PF('datosAporte').show()" />
 					</p:panel>
 					<p:dialog responsive="true" widgetVar="datosAporte" modal="true" header="DATOS APORTE" closeOnEscape="true">
-						<p:panelGrid columns="2" id="panelAporte" style="width:80%">
+						<p:panelGrid columns="1" id="panelAporte" style="width:80%">
 							<p:column>
 							Codigo:
 									<p:inputText value="#{aportesSociosBean.aportes.codigo}" style="width:100%">
@@ -56,6 +57,13 @@
 							<h:selectOneMenu value="#{aportesSociosBean.idSocio}" styleClass="form-control" id="selectSocio">
 									<f:selectItem itemLabel="SELECCIONE UN SOCIO" itemValue="-1"></f:selectItem>
 									<f:selectItems value="#{cargaListasMapBean.listaSocios}"></f:selectItems>
+								</h:selectOneMenu>
+							</p:column>
+							<p:column>
+								Sede:
+								<h:selectOneMenu value="#{aportesSociosBean.idSede}" styleClass="form-control" id="selectSedeUInstert">
+									<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
 								</h:selectOneMenu>
 							</p:column>
 							<p:column>

@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idSede" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTransMvco" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="socio" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="usuario" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -43,6 +44,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "estado",
     "fecha",
     "id",
+    "idSede",
     "idTransMvco",
     "socio",
     "usuario",
@@ -56,6 +58,7 @@ public class AporteSocioEntity {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fecha;
     protected Integer id;
+    protected Integer idSede;
     protected Integer idTransMvco;
     protected Integer socio;
     protected Integer usuario;
@@ -179,6 +182,30 @@ public class AporteSocioEntity {
      */
     public void setId(Integer value) {
         this.id = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idSede.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdSede() {
+        return idSede;
+    }
+
+    /**
+     * Define el valor de la propiedad idSede.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdSede(Integer value) {
+        this.idSede = value;
     }
 
     /**

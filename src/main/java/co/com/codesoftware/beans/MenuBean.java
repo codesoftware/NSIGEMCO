@@ -208,10 +208,10 @@ public class MenuBean implements Serializable {
 				}
 				if(this.listaPermisos.contains(".Inv10.")){
 					DefaultSubMenu aportesSoci = new DefaultSubMenu();
-					aportesSoci.setLabel("APORTES SOCIOS");
+					aportesSoci.setLabel("Aporte Socio");
 					menuPrincipal.addElement(aportesSoci);
 					if (this.listaPermisos.contains(".Inv10.")) {
-						DefaultMenuItem cargarAparte = new DefaultMenuItem("APORTES");
+						DefaultMenuItem cargarAparte = new DefaultMenuItem("Aportes");
 						cargarAparte.setCommand("/ACTION/PRODUCTOS/aporteSocio.jsf?faces-redirect=false");
 						aportesSoci.addElement(cargarAparte);
 					}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -31,6 +32,7 @@ public class AportesSociosBean implements GeneralBean {
 	private UsuarioEntity objetoSesion;
 	private Integer idSocio;
 	private Integer idAporte;
+	private Integer idSede;
 
 	/**
 	 * constructor donde se incializa las entidades que siempre se van a
@@ -39,8 +41,7 @@ public class AportesSociosBean implements GeneralBean {
 	public AportesSociosBean() {
 		this.aportes = new AporteSocioEntity();
 		this.logica = new AportesSocioLogica();
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-				.get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 	}
 
 	/**
@@ -114,12 +115,13 @@ public class AportesSociosBean implements GeneralBean {
 		}
 
 	}
-	
+
 	/**
 	 * metodo que carga el id del aporte
+	 * 
 	 * @param id
 	 */
-	public void cargaIdAporte(Integer id){
+	public void cargaIdAporte(Integer id) {
 		this.idAporte = id;
 	}
 
@@ -189,10 +191,28 @@ public class AportesSociosBean implements GeneralBean {
 
 	}
 
-	@Override
+	@PostConstruct
 	public void init() {
-		// TODO Auto-generated method stub
-
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
+		this.banderaboton = "I";
 	}
+
+	public Integer getIdAporte() {
+		return idAporte;
+	}
+
+	public void setIdAporte(Integer idAporte) {
+		this.idAporte = idAporte;
+	}
+
+	public Integer getIdSede() {
+		return idSede;
+	}
+
+	public void setIdSede(Integer idSede) {
+		this.idSede = idSede;
+	}
+	
 
 }
