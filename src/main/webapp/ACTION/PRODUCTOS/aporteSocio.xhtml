@@ -20,7 +20,8 @@
 								CONSULTA GENERAL DE APORTES
 							</f:facet>
 							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
-								<h:outputText value="#{aporte.codigo}"></h:outputText>
+								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" rendered="#{aporte.estado == 'C'}" update=":formDetalleProd" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id)}" ></p:commandLink>
+								<h:outputText value="#{aporte.codigo}" rendered="#{aporte.estado != 'C'}"></h:outputText>
 							</p:column>
 							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
@@ -83,11 +84,26 @@
 						Realizacion de proceso:
 						<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
 					</p:dialog>
-					<p:dialog closeOnEscape="true">
-						
-					</p:dialog>
 				</center>
 			</h:form>
+			<p:dialog closeOnEscape="true" responsive="true" widgetVar="dialogProductos" modal="true" styleClass="modalResponsive">
+				<h:form id="formDetalleProd">
+					<p:dataTable var="item" value="#{aportesSociosBean.listaAporProdSelected}" reflow="true" paginator="true" rows="5">
+						<p:column headerText="CODIGO EXTERNO">
+							<p:outputLabel value="#{item.codExterno}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="CANTIDAD">
+							<p:outputLabel value="#{item.cantidad}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="COSTO">
+							<p:outputLabel value="$&nbsp;&nbsp;"></p:outputLabel>
+							<p:outputLabel value="#{item.costo}">
+								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+							</p:outputLabel>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</p:dialog>
 		</ui:define>
 	</ui:composition>
 </body>
