@@ -39,13 +39,17 @@ public class ObjectFactory {
     private final static QName _ObtenerProductosYRecetasXCriterio_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasXCriterio");
     private final static QName _InsertaSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaSolicitud");
     private final static QName _ObtenerProductoXCodBarrasResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodBarrasResponse");
+    private final static QName _ObtenerProdcutoGeneriXCodExtResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProdcutoGeneriXCodExtResponse");
     private final static QName _ActualizaSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "actualizaSolicitudResponse");
     private final static QName _ObtieneRecetasXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtieneRecetasXSedeResponse");
     private final static QName _ObtieneRecetasXSede_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtieneRecetasXSede");
     private final static QName _ObtenerCantidadesXProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesXProducto");
+    private final static QName _ConsultaPagosFactCompra_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagosFactCompra");
     private final static QName _ObtenerProductoXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXSedeResponse");
+    private final static QName _InsertaPagoFactCompra_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaPagoFactCompra");
     private final static QName _ObtenerSolicitudesFiltrosResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudesFiltrosResponse");
     private final static QName _ObtenerProductoXCodigo_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodigo");
+    private final static QName _ConsultaPagosFactCompraResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagosFactCompraResponse");
     private final static QName _ObtenerCantidadesXProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesXProductoResponse");
     private final static QName _ObtenerCantidadesXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesXSedeResponse");
     private final static QName _ObtenerProductosXSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSolicitud");
@@ -53,11 +57,13 @@ public class ObjectFactory {
     private final static QName _ConsultaPromPonderado_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPromPonderado");
     private final static QName _ObtenerProductoXCodigoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodigoResponse");
     private final static QName _ActualizaSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "actualizaSolicitud");
+    private final static QName _InsertaPagoFactCompraResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaPagoFactCompraResponse");
     private final static QName _ObtenerProductosYRecetasResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasResponse");
     private final static QName _ObtenerProductoXCodExtResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodExtResponse");
     private final static QName _ObtenerProductosYRecetasXCriterioResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasXCriterioResponse");
     private final static QName _ObtenerProductoXCodExt_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodExt");
     private final static QName _ObtenerCantidadesTotales_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesTotales");
+    private final static QName _ObtenerProdcutoGeneriXCodExt_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProdcutoGeneriXCodExt");
     private final static QName _ObtenerProductoXCodBarras_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodBarras");
     private final static QName _InsertaSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaSolicitudResponse");
     private final static QName _ObtenerExistenciasProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerExistenciasProducto");
@@ -123,11 +129,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConsultaPagosFactCompraResponse }
+     * 
+     */
+    public ConsultaPagosFactCompraResponse createConsultaPagosFactCompraResponse() {
+        return new ConsultaPagosFactCompraResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConsultaPagosFactCompra }
+     * 
+     */
+    public ConsultaPagosFactCompra createConsultaPagosFactCompra() {
+        return new ConsultaPagosFactCompra();
+    }
+
+    /**
      * Create an instance of {@link ObtenerProductoXSedeResponse }
      * 
      */
     public ObtenerProductoXSedeResponse createObtenerProductoXSedeResponse() {
         return new ObtenerProductoXSedeResponse();
+    }
+
+    /**
+     * Create an instance of {@link InsertaPagoFactCompra }
+     * 
+     */
+    public InsertaPagoFactCompra createInsertaPagoFactCompra() {
+        return new InsertaPagoFactCompra();
     }
 
     /**
@@ -203,6 +233,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerProdcutoGeneriXCodExt }
+     * 
+     */
+    public ObtenerProdcutoGeneriXCodExt createObtenerProdcutoGeneriXCodExt() {
+        return new ObtenerProdcutoGeneriXCodExt();
+    }
+
+    /**
      * Create an instance of {@link ObtenerProductoXCodBarras }
      * 
      */
@@ -216,6 +254,14 @@ public class ObjectFactory {
      */
     public ActualizaSolicitud createActualizaSolicitud() {
         return new ActualizaSolicitud();
+    }
+
+    /**
+     * Create an instance of {@link InsertaPagoFactCompraResponse }
+     * 
+     */
+    public InsertaPagoFactCompraResponse createInsertaPagoFactCompraResponse() {
+        return new InsertaPagoFactCompraResponse();
     }
 
     /**
@@ -395,6 +441,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerProdcutoGeneriXCodExtResponse }
+     * 
+     */
+    public ObtenerProdcutoGeneriXCodExtResponse createObtenerProdcutoGeneriXCodExtResponse() {
+        return new ObtenerProdcutoGeneriXCodExtResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerProductosXSolicitudResponse }
      * 
      */
@@ -440,6 +494,14 @@ public class ObjectFactory {
      */
     public RespuestaEntity createRespuestaEntity() {
         return new RespuestaEntity();
+    }
+
+    /**
+     * Create an instance of {@link PagoFacturaCompraEntity }
+     * 
+     */
+    public PagoFacturaCompraEntity createPagoFacturaCompraEntity() {
+        return new PagoFacturaCompraEntity();
     }
 
     /**
@@ -698,6 +760,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdcutoGeneriXCodExtResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProdcutoGeneriXCodExtResponse")
+    public JAXBElement<ObtenerProdcutoGeneriXCodExtResponse> createObtenerProdcutoGeneriXCodExtResponse(ObtenerProdcutoGeneriXCodExtResponse value) {
+        return new JAXBElement<ObtenerProdcutoGeneriXCodExtResponse>(_ObtenerProdcutoGeneriXCodExtResponse_QNAME, ObtenerProdcutoGeneriXCodExtResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ActualizaSolicitudResponse }{@code >}}
      * 
      */
@@ -734,12 +805,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaPagosFactCompra }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "consultaPagosFactCompra")
+    public JAXBElement<ConsultaPagosFactCompra> createConsultaPagosFactCompra(ConsultaPagosFactCompra value) {
+        return new JAXBElement<ConsultaPagosFactCompra>(_ConsultaPagosFactCompra_QNAME, ConsultaPagosFactCompra.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductoXSedeResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProductoXSedeResponse")
     public JAXBElement<ObtenerProductoXSedeResponse> createObtenerProductoXSedeResponse(ObtenerProductoXSedeResponse value) {
         return new JAXBElement<ObtenerProductoXSedeResponse>(_ObtenerProductoXSedeResponse_QNAME, ObtenerProductoXSedeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertaPagoFactCompra }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "insertaPagoFactCompra")
+    public JAXBElement<InsertaPagoFactCompra> createInsertaPagoFactCompra(InsertaPagoFactCompra value) {
+        return new JAXBElement<InsertaPagoFactCompra>(_InsertaPagoFactCompra_QNAME, InsertaPagoFactCompra.class, null, value);
     }
 
     /**
@@ -758,6 +847,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProductoXCodigo")
     public JAXBElement<ObtenerProductoXCodigo> createObtenerProductoXCodigo(ObtenerProductoXCodigo value) {
         return new JAXBElement<ObtenerProductoXCodigo>(_ObtenerProductoXCodigo_QNAME, ObtenerProductoXCodigo.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaPagosFactCompraResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "consultaPagosFactCompraResponse")
+    public JAXBElement<ConsultaPagosFactCompraResponse> createConsultaPagosFactCompraResponse(ConsultaPagosFactCompraResponse value) {
+        return new JAXBElement<ConsultaPagosFactCompraResponse>(_ConsultaPagosFactCompraResponse_QNAME, ConsultaPagosFactCompraResponse.class, null, value);
     }
 
     /**
@@ -824,6 +922,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertaPagoFactCompraResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "insertaPagoFactCompraResponse")
+    public JAXBElement<InsertaPagoFactCompraResponse> createInsertaPagoFactCompraResponse(InsertaPagoFactCompraResponse value) {
+        return new JAXBElement<InsertaPagoFactCompraResponse>(_InsertaPagoFactCompraResponse_QNAME, InsertaPagoFactCompraResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosYRecetasResponse }{@code >}}
      * 
      */
@@ -866,6 +973,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerCantidadesTotales")
     public JAXBElement<ObtenerCantidadesTotales> createObtenerCantidadesTotales(ObtenerCantidadesTotales value) {
         return new JAXBElement<ObtenerCantidadesTotales>(_ObtenerCantidadesTotales_QNAME, ObtenerCantidadesTotales.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdcutoGeneriXCodExt }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProdcutoGeneriXCodExt")
+    public JAXBElement<ObtenerProdcutoGeneriXCodExt> createObtenerProdcutoGeneriXCodExt(ObtenerProdcutoGeneriXCodExt value) {
+        return new JAXBElement<ObtenerProdcutoGeneriXCodExt>(_ObtenerProdcutoGeneriXCodExt_QNAME, ObtenerProdcutoGeneriXCodExt.class, null, value);
     }
 
     /**

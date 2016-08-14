@@ -29,33 +29,81 @@ public interface ProductoWS {
 
     /**
      * 
-     * @param idDska
+     * @param codigoExterno
      * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.producto.ExistenciaXSedeEntity>
+     *     returns co.com.codesoftware.servicio.producto.ProductoGenericoEntity
      */
     @WebMethod
-    @WebResult(name = "ExistenciaXSedeEntity", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerCantidadesTotales", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesTotales")
-    @ResponseWrapper(localName = "obtenerCantidadesTotalesResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesTotalesResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesTotalesRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesTotalesResponse")
-    public List<ExistenciaXSedeEntity> obtenerCantidadesTotales(
-        @WebParam(name = "idDska", targetNamespace = "")
-        int idDska);
+    @WebResult(name = "prodGenerico", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerProdcutoGeneriXCodExt", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProdcutoGeneriXCodExt")
+    @ResponseWrapper(localName = "obtenerProdcutoGeneriXCodExtResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProdcutoGeneriXCodExtResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProdcutoGeneriXCodExtRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProdcutoGeneriXCodExtResponse")
+    public ProductoGenericoEntity obtenerProdcutoGeneriXCodExt(
+        @WebParam(name = "codigoExterno", targetNamespace = "")
+        String codigoExterno);
 
     /**
      * 
      * @param sedeSede
      * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.producto.PrecioProductoEntity>
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.ProductoGenericoEntity>
      */
     @WebMethod
-    @WebResult(name = "PrecioProducto", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerProductoXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductoXSede")
-    @ResponseWrapper(localName = "obtenerProductoXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductoXSedeResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductoXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductoXSedeResponse")
-    public List<PrecioProductoEntity> obtenerProductoXSede(
+    @WebResult(name = "ListGeneric", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerProductosXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosXSede")
+    @ResponseWrapper(localName = "obtenerProductosXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosXSedeResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosXSedeResponse")
+    public List<ProductoGenericoEntity> obtenerProductosXSede(
         @WebParam(name = "sede_sede", targetNamespace = "")
         int sedeSede);
+
+    /**
+     * 
+     * @param sedeSede
+     * @param criterio
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.ProductoGenericoEntity>
+     */
+    @WebMethod
+    @WebResult(name = "ListGeneric", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerProductosYRecetasXCriterio", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosYRecetasXCriterio")
+    @ResponseWrapper(localName = "obtenerProductosYRecetasXCriterioResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosYRecetasXCriterioResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosYRecetasXCriterioRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosYRecetasXCriterioResponse")
+    public List<ProductoGenericoEntity> obtenerProductosYRecetasXCriterio(
+        @WebParam(name = "sede_sede", targetNamespace = "")
+        int sedeSede,
+        @WebParam(name = "criterio", targetNamespace = "")
+        String criterio);
+
+    /**
+     * 
+     * @param idSede
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.PrecioRecetaEntity>
+     */
+    @WebMethod
+    @WebResult(name = "ListaReceta", targetNamespace = "")
+    @RequestWrapper(localName = "obtieneRecetasXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtieneRecetasXSede")
+    @ResponseWrapper(localName = "obtieneRecetasXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtieneRecetasXSedeResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtieneRecetasXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtieneRecetasXSedeResponse")
+    public List<PrecioRecetaEntity> obtieneRecetasXSede(
+        @WebParam(name = "idSede", targetNamespace = "")
+        Integer idSede);
+
+    /**
+     * 
+     * @param solicitud
+     * @return
+     *     returns co.com.codesoftware.servicio.producto.RespuestaEntity
+     */
+    @WebMethod
+    @WebResult(name = "RespuestaEntity", targetNamespace = "")
+    @RequestWrapper(localName = "insertaSolicitud", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaSolicitud")
+    @ResponseWrapper(localName = "insertaSolicitudResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaSolicitudResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaSolicitudRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaSolicitudResponse")
+    public RespuestaEntity insertaSolicitud(
+        @WebParam(name = "solicitud", targetNamespace = "")
+        SolicitudEntity solicitud);
 
     /**
      * 
@@ -71,6 +119,24 @@ public interface ProductoWS {
     public List<ProductoGenericoEntity> obtenerProductosYRecetas(
         @WebParam(name = "sede_sede", targetNamespace = "")
         int sedeSede);
+
+    /**
+     * 
+     * @param precio
+     * @param dskaDska
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "consultaPromPonderado", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPromPonderado")
+    @ResponseWrapper(localName = "consultaPromPonderadoResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPromPonderadoResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPromPonderadoRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPromPonderadoResponse")
+    public String consultaPromPonderado(
+        @WebParam(name = "dska_dska", targetNamespace = "")
+        int dskaDska,
+        @WebParam(name = "precio", targetNamespace = "")
+        BigDecimal precio);
 
     /**
      * 
@@ -106,67 +172,16 @@ public interface ProductoWS {
      * 
      * @param sedeSede
      * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.producto.ProductoGenericoEntity>
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.PrecioProductoEntity>
      */
     @WebMethod
-    @WebResult(name = "ListGeneric", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerProductosXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosXSede")
-    @ResponseWrapper(localName = "obtenerProductosXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosXSedeResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosXSedeResponse")
-    public List<ProductoGenericoEntity> obtenerProductosXSede(
+    @WebResult(name = "PrecioProducto", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerProductoXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductoXSede")
+    @ResponseWrapper(localName = "obtenerProductoXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductoXSedeResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductoXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductoXSedeResponse")
+    public List<PrecioProductoEntity> obtenerProductoXSede(
         @WebParam(name = "sede_sede", targetNamespace = "")
         int sedeSede);
-
-    /**
-     * 
-     * @param precio
-     * @param dskaDska
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "consultaPromPonderado", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPromPonderado")
-    @ResponseWrapper(localName = "consultaPromPonderadoResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPromPonderadoResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPromPonderadoRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPromPonderadoResponse")
-    public String consultaPromPonderado(
-        @WebParam(name = "dska_dska", targetNamespace = "")
-        int dskaDska,
-        @WebParam(name = "precio", targetNamespace = "")
-        BigDecimal precio);
-
-    /**
-     * 
-     * @param idSede
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.producto.PrecioRecetaEntity>
-     */
-    @WebMethod
-    @WebResult(name = "ListaReceta", targetNamespace = "")
-    @RequestWrapper(localName = "obtieneRecetasXSede", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtieneRecetasXSede")
-    @ResponseWrapper(localName = "obtieneRecetasXSedeResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtieneRecetasXSedeResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtieneRecetasXSedeRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtieneRecetasXSedeResponse")
-    public List<PrecioRecetaEntity> obtieneRecetasXSede(
-        @WebParam(name = "idSede", targetNamespace = "")
-        Integer idSede);
-
-    /**
-     * 
-     * @param sedeSede
-     * @param criterio
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.producto.ProductoGenericoEntity>
-     */
-    @WebMethod
-    @WebResult(name = "ListGeneric", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerProductosYRecetasXCriterio", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosYRecetasXCriterio")
-    @ResponseWrapper(localName = "obtenerProductosYRecetasXCriterioResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerProductosYRecetasXCriterioResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosYRecetasXCriterioRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerProductosYRecetasXCriterioResponse")
-    public List<ProductoGenericoEntity> obtenerProductosYRecetasXCriterio(
-        @WebParam(name = "sede_sede", targetNamespace = "")
-        int sedeSede,
-        @WebParam(name = "criterio", targetNamespace = "")
-        String criterio);
 
     /**
      * 
@@ -266,27 +281,27 @@ public interface ProductoWS {
      */
     @WebMethod
     @WebResult(name = "ExistenciaXSedeEntity", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerCantidadesTotales", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesTotales")
+    @ResponseWrapper(localName = "obtenerCantidadesTotalesResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesTotalesResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesTotalesRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesTotalesResponse")
+    public List<ExistenciaXSedeEntity> obtenerCantidadesTotales(
+        @WebParam(name = "idDska", targetNamespace = "")
+        int idDska);
+
+    /**
+     * 
+     * @param idDska
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.ExistenciaXSedeEntity>
+     */
+    @WebMethod
+    @WebResult(name = "ExistenciaXSedeEntity", targetNamespace = "")
     @RequestWrapper(localName = "obtenerCantidadesXProducto", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesXProducto")
     @ResponseWrapper(localName = "obtenerCantidadesXProductoResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ObtenerCantidadesXProductoResponse")
     @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesXProductoRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/obtenerCantidadesXProductoResponse")
     public List<ExistenciaXSedeEntity> obtenerCantidadesXProducto(
         @WebParam(name = "idDska", targetNamespace = "")
         int idDska);
-
-    /**
-     * 
-     * @param solicitud
-     * @return
-     *     returns co.com.codesoftware.servicio.producto.RespuestaEntity
-     */
-    @WebMethod
-    @WebResult(name = "RespuestaEntity", targetNamespace = "")
-    @RequestWrapper(localName = "insertaSolicitud", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaSolicitud")
-    @ResponseWrapper(localName = "insertaSolicitudResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaSolicitudResponse")
-    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaSolicitudRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaSolicitudResponse")
-    public RespuestaEntity insertaSolicitud(
-        @WebParam(name = "solicitud", targetNamespace = "")
-        SolicitudEntity solicitud);
 
     /**
      * 
@@ -383,5 +398,35 @@ public interface ProductoWS {
         Integer idUsuario,
         @WebParam(name = "productosSolicitud", targetNamespace = "")
         List<SolicitudProdEntity> productosSolicitud);
+
+    /**
+     * 
+     * @param idFactura
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.producto.PagoFacturaCompraEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "consultaPagosFactCompra", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPagosFactCompra")
+    @ResponseWrapper(localName = "consultaPagosFactCompraResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.ConsultaPagosFactCompraResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPagosFactCompraRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/consultaPagosFactCompraResponse")
+    public List<PagoFacturaCompraEntity> consultaPagosFactCompra(
+        @WebParam(name = "idFactura", targetNamespace = "")
+        Integer idFactura);
+
+    /**
+     * 
+     * @param pago
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "insertaPagoFactCompra", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaPagoFactCompra")
+    @ResponseWrapper(localName = "insertaPagoFactCompraResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.InsertaPagoFactCompraResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaPagoFactCompraRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/insertaPagoFactCompraResponse")
+    public String insertaPagoFactCompra(
+        @WebParam(name = "pago", targetNamespace = "")
+        PagoFacturaCompraEntity pago);
 
 }

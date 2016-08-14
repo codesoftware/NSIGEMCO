@@ -19,6 +19,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="categoria" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="categoriaObj" type="{http://producto.servicio.codesoftware.com.co/}categoriaEntity" minOccurs="0"/>
  *         &lt;element name="codigo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="codigoBarras" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="codigoExt" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -30,8 +31,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="iva" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="ivaPorc" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="marca" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="marcaObj" type="{http://producto.servicio.codesoftware.com.co/}marcaEntity" minOccurs="0"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="referencia" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="referenciaObj" type="{http://producto.servicio.codesoftware.com.co/}referenciaEntity" minOccurs="0"/>
  *         &lt;element name="subcuenta" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="ubicacion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -45,6 +48,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "productoSimpleEntity", propOrder = {
     "categoria",
+    "categoriaObj",
     "codigo",
     "codigoBarras",
     "codigoExt",
@@ -56,14 +60,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "iva",
     "ivaPorc",
     "marca",
+    "marcaObj",
     "nombre",
     "referencia",
+    "referenciaObj",
     "subcuenta",
     "ubicacion"
 })
 public class ProductoSimpleEntity {
 
     protected Integer categoria;
+    protected CategoriaEntity categoriaObj;
     protected String codigo;
     protected String codigoBarras;
     protected String codigoExt;
@@ -76,8 +83,10 @@ public class ProductoSimpleEntity {
     protected String iva;
     protected Integer ivaPorc;
     protected Integer marca;
+    protected MarcaEntity marcaObj;
     protected String nombre;
     protected Integer referencia;
+    protected ReferenciaEntity referenciaObj;
     protected Integer subcuenta;
     protected String ubicacion;
 
@@ -103,6 +112,30 @@ public class ProductoSimpleEntity {
      */
     public void setCategoria(Integer value) {
         this.categoria = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad categoriaObj.
+     * 
+     * @return
+     *     possible object is
+     *     {@link CategoriaEntity }
+     *     
+     */
+    public CategoriaEntity getCategoriaObj() {
+        return categoriaObj;
+    }
+
+    /**
+     * Define el valor de la propiedad categoriaObj.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link CategoriaEntity }
+     *     
+     */
+    public void setCategoriaObj(CategoriaEntity value) {
+        this.categoriaObj = value;
     }
 
     /**
@@ -370,6 +403,30 @@ public class ProductoSimpleEntity {
     }
 
     /**
+     * Obtiene el valor de la propiedad marcaObj.
+     * 
+     * @return
+     *     possible object is
+     *     {@link MarcaEntity }
+     *     
+     */
+    public MarcaEntity getMarcaObj() {
+        return marcaObj;
+    }
+
+    /**
+     * Define el valor de la propiedad marcaObj.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link MarcaEntity }
+     *     
+     */
+    public void setMarcaObj(MarcaEntity value) {
+        this.marcaObj = value;
+    }
+
+    /**
      * Obtiene el valor de la propiedad nombre.
      * 
      * @return
@@ -415,6 +472,30 @@ public class ProductoSimpleEntity {
      */
     public void setReferencia(Integer value) {
         this.referencia = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad referenciaObj.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ReferenciaEntity }
+     *     
+     */
+    public ReferenciaEntity getReferenciaObj() {
+        return referenciaObj;
+    }
+
+    /**
+     * Define el valor de la propiedad referenciaObj.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ReferenciaEntity }
+     *     
+     */
+    public void setReferenciaObj(ReferenciaEntity value) {
+        this.referenciaObj = value;
     }
 
     /**
