@@ -16,6 +16,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="codigoExterno" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="descripcionProducto" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="existencias" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idDska" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -30,6 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "existenciaXSedeEntity", propOrder = {
+    "codigoExterno",
+    "descripcionProducto",
     "existencias",
     "id",
     "idDska",
@@ -37,10 +41,60 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ExistenciaXSedeEntity {
 
+    protected String codigoExterno;
+    protected String descripcionProducto;
     protected Integer existencias;
     protected Integer id;
     protected Integer idDska;
     protected SedeEntity sede;
+
+    /**
+     * Obtiene el valor de la propiedad codigoExterno.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodigoExterno() {
+        return codigoExterno;
+    }
+
+    /**
+     * Define el valor de la propiedad codigoExterno.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodigoExterno(String value) {
+        this.codigoExterno = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad descripcionProducto.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDescripcionProducto() {
+        return descripcionProducto;
+    }
+
+    /**
+     * Define el valor de la propiedad descripcionProducto.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDescripcionProducto(String value) {
+        this.descripcionProducto = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad existencias.
