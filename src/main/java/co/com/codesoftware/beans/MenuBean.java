@@ -137,7 +137,8 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.")
 					|| this.listaPermisos.contains(".Inv5.") || this.listaPermisos.contains(".Inv6.")
 					|| this.listaPermisos.contains(".Inv7.") || this.listaPermisos.contains(".Inv8.")
-					|| this.listaPermisos.contains(".Inv9.") || this.listaPermisos.contains(".Inv10.")) {
+					|| this.listaPermisos.contains(".Inv9.") || this.listaPermisos.contains(".Inv10.")
+					|| this.listaPermisos.contains(".Inv11")) {
 				menuPrincipal.setLabel("INVENTARIOS");
 				menuPrincipal.setIcon("fa fa-bank");
 				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.")
@@ -180,6 +181,13 @@ public class MenuBean implements Serializable {
 						tercerNivelConsGeneral
 								.setCommand("/ACTION/PRODUCTOS/consGeneralProductos.jsf?faces-redirect=false");
 						productos.addElement(tercerNivelConsGeneral);
+
+					}
+					if (this.listaPermisos.contains(".Inv11.")) {
+						DefaultMenuItem tercerNivelConsGeneral2 = new DefaultMenuItem("Consulta Prod X Sede");
+						tercerNivelConsGeneral2
+								.setCommand("/ACTION/PRODUCTOS/consultaProductosXsede.jsf?faces-redirect=false");
+						productos.addElement(tercerNivelConsGeneral2);
 
 					}
 					if (this.listaPermisos.contains(".Inv7.")) {

@@ -79,6 +79,7 @@ public class PerfilesBean implements GeneralBean {
 		listPermInv.add(new PerfilBean("CARGUE PRODUCTOS TODO", "Inv8"));
 		listPermInv.add(new PerfilBean("CARGUE PRODUCTOS", "Inv9"));
 		listPermInv.add(new PerfilBean("APORTES SOCIOS", "Inv10"));
+		listPermInv.add(new PerfilBean("CONS PROD X SEDE", "Inv11"));
 		// Permisos de parametros
 		if (listPermPara == null) {
 			this.listPermPara = new ArrayList<>();
