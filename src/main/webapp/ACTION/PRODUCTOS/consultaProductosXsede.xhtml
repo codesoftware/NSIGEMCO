@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
+			<h:form id="formulario">
+				<p:spacer></p:spacer>
+				<center>
+					<p:panel header="CONSULTA PRODUCTOS POR SEDE" style="width:50%">
+						<div class="ui-grid ui-grid-responsive">
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-2">
+									<h:outputLabel value="Seleccione Sede:" />
+								</div>
+								<div class="ui-grid-col-8">
+									<h:selectOneMenu value="#{consultaProdXSedeBean.sedeId}" styleClass="form-control" id="selectSede">
+										<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+									</h:selectOneMenu>
+								</div>
+								<div class="ui-grid-col-12">
+									<p:commandButton value="Consultar" styleClass="GreenButton" actionListener="#{consultaProdXSedeBean.consultaProductoXsede}" update="tablaProdSede" onstart="PF('statusDialog').show()"/>
+								</div>
+							</div>
+						</div>
+					</p:panel>
+					<p:dataTable id="tablaProdSede" var="prod" widgetVar="wtablaProdSede" value="#{consultaProdXSedeBean.listaProd}" paginator="true" rows="15" rowsPerPageTemplate="15,20,25"
+						styleClass="table table-bordered" filteredValue="#{consultaProdXSedeBean.listaProdFiltro}" emptyMessage="No existen productos con cantidades en esa sede">
+						<f:facet name="header">
+							<h:commandLink>
+								<p:graphicImage name="/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tablaProdSede" fileName="tablaProductosSede" />
+							</h:commandLink>
+						</f:facet>
+						<p:column headerText="codigoExterno" priority="1" filterBy="#{prod.codigoExterno}">
+							<h:outputText value="#{prod.codigoExterno}"></h:outputText>
+						</p:column>
+						<p:column headerText="Descripción" priority="2" filterBy="#{prod.descripcionProducto}">
+							<h:outputText value="#{prod.descripcionProducto}"></h:outputText>
+						</p:column>
+						<p:column headerText="Existencias" priority="3" filterBy="#{prod.existencias}">
+							<h:outputText value="#{prod.existencias}"></h:outputText>
+						</p:column>
+					</p:dataTable>
+				</center>
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+						Realizacion de proceso:
+						<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
