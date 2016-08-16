@@ -49,10 +49,33 @@
 							<br></br>
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-12" align="right">
-									<p:commandButton value="INSERTAR"  styleClass="OrangeButton"/>
+									<p:commandButton value="INSERTAR" styleClass="OrangeButton" />
 								</div>
 							</div>
 						</div>
+					</p:panel>
+					<p:panel header="PRODUCTOS SOLICITUD" style="width:90%">
+						<p:dataTable id="tablaProdSolicitud" var="prod" widgetVar="wtablaProdSolicitud" value="#{detalleSolicitudBean.listaProductos}" paginator="true" rows="15" rowsPerPageTemplate="15,20,25"
+							styleClass="table table-bordered" filteredValue="#{detalleSolicitudBean.listaProductosFiltro}" emptyMessage="Recuerde que no puede enviar una solicitud sin prodcutos">
+							<p:column width="20%" headerText="Codigo Ext" filterValue="#{prod.producto.codigoExt}" filterMatchMode="contains">
+								<p:outputLabel value="#{prod.producto.codigoExt}" />
+							</p:column>
+							<p:column width="30%" headerText="Descripcion" filterValue="#{prod.producto.descripcion}" filterMatchMode="contains">
+								<p:outputLabel value="#{prod.producto.descripcion}" />
+							</p:column>
+							<p:column width="10%" headerText="Cantidad Solicitada" filterValue="#{prod.cantidadSolicitada}" filterMatchMode="contains">
+								<p:outputLabel value="#{prod.cantidadSolicitada}" />
+							</p:column>
+							<p:column width="10%" headerText="Cantidad Enviada" filterValue="#{prod.cantidadEnvidada}" filterMatchMode="contains">
+								<p:outputLabel value="#{prod.cantidadEnvidada}" />
+							</p:column>
+							<p:column width="30%" headerText="Detalle">
+							<p:commandButton value="VER CANT" styleClass="GreenButton" />
+							<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" />
+							<p:commandButton value="BORRAR" styleClass="RedButton" />
+							</p:column>
+
+						</p:dataTable>
 					</p:panel>
 				</center>
 			</h:form>
