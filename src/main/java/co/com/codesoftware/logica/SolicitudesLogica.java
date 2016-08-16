@@ -31,6 +31,20 @@ public class SolicitudesLogica implements WSGeneralInterface {
 	}
 	
 	/**
+	 * metodo que consulta una solicitud por id
+	 * @param id
+	 * @return
+	 */
+	public SolicitudEntity consultaSolicitudXId(Integer id){
+		SolicitudEntity rta = new SolicitudEntity();
+		try {
+			rta = conexionWSNewProd().getPortNewProductos().obtenerSolicitudXId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
 	 * metodo que consulta los productos de la solicitud especificos
 	 * @param idSoliciud
 	 * @return

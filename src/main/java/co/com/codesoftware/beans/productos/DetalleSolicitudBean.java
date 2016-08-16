@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 
 import co.com.codesoftware.logica.SolicitudesLogica;
 import co.com.codesoftware.servicio.producto.SolicitudEntity;
+import co.com.codesoftware.servicio.producto.SolicitudProdEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.GeneralBean;
 
@@ -17,26 +18,32 @@ public class DetalleSolicitudBean implements GeneralBean {
 
 	private Integer idSolicitud;
 	private SolicitudEntity solicitud;
-	private List<SolicitudEntity> listaProductos;
-	private List<SolicitudEntity> listaProductosFiltro;
+	private List<SolicitudProdEntity> listaProductos;
+	private List<SolicitudProdEntity> listaProductosFiltro;
 	private SolicitudesLogica logica;
+	private Integer idSede;
+	private String codigoExterno;
+	private Integer cantidad;
 
 	/**
 	 * constructor donde inicializa lo necesario
 	 */
 	public DetalleSolicitudBean() {
 		this.logica = new SolicitudesLogica();
+		this.solicitud = new SolicitudEntity();
 		this.idSolicitud = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("idSolicitud");
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idSolicitud", null);
-
+		this.solicitud = logica.consultaSolicitudXId(this.idSolicitud);
+		this.listaProductos = logica.consultaProductosEspecificos(this.idSolicitud);
 	}
 
-	/**
-	 * metodo que consulta una solicitud por ID
-	 */
-	public void consultaSolicitudXId() {
+	public String getCodigoExterno() {
+		return codigoExterno;
+	}
 
+	public void setCodigoExterno(String codigoExterno) {
+		this.codigoExterno = codigoExterno;
 	}
 
 	@Override
@@ -59,20 +66,38 @@ public class DetalleSolicitudBean implements GeneralBean {
 		this.solicitud = solicitud;
 	}
 
-	public List<SolicitudEntity> getListaProductos() {
+	public List<SolicitudProdEntity> getListaProductos() {
 		return listaProductos;
 	}
 
-	public void setListaProductos(List<SolicitudEntity> listaProductos) {
+	public void setListaProductos(List<SolicitudProdEntity> listaProductos) {
 		this.listaProductos = listaProductos;
 	}
 
-	public List<SolicitudEntity> getListaProductosFiltro() {
+	public List<SolicitudProdEntity> getListaProductosFiltro() {
 		return listaProductosFiltro;
 	}
 
-	public void setListaProductosFiltro(List<SolicitudEntity> listaProductosFiltro) {
+	public void setListaProductosFiltro(List<SolicitudProdEntity> listaProductosFiltro) {
 		this.listaProductosFiltro = listaProductosFiltro;
 	}
+
+	public Integer getIdSede() {
+		return idSede;
+	}
+
+	public void setIdSede(Integer idSede) {
+		this.idSede = idSede;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+	
+	
 
 }
