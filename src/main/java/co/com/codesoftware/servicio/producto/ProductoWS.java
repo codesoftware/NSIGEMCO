@@ -410,6 +410,27 @@ public interface ProductoWS {
 
     /**
      * 
+     * @param idAuxCon
+     * @param idAporte
+     * @param idTius
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "generaProcesoAporte", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.GeneraProcesoAporte")
+    @ResponseWrapper(localName = "generaProcesoAporteResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.GeneraProcesoAporteResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/generaProcesoAporteRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/generaProcesoAporteResponse")
+    public String generaProcesoAporte(
+        @WebParam(name = "idAporte", targetNamespace = "")
+        Integer idAporte,
+        @WebParam(name = "idAuxCon", targetNamespace = "")
+        Integer idAuxCon,
+        @WebParam(name = "idTius", targetNamespace = "")
+        Integer idTius);
+
+    /**
+     * 
      * @param sedeSede
      * @return
      *     returns java.util.List<co.com.codesoftware.servicio.producto.ProductoGenericoEntity>

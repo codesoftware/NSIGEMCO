@@ -221,14 +221,18 @@ public class AportesSociosBean implements GeneralBean {
 	 */
 	public void generaProcesoAporte(){
 		try {
-			AportesSocioLogica objLogica = new AportesSocioLogica();
-			String valida = objLogica.generaProcesoAporte(this.idAporte);
-			if("Ok".equalsIgnoreCase(valida)){
-				messageBean("Proceso Generado correctamente", ErrorEnum.SUCCESS);
-				this.listaAportes = null;
-				consultaAportes();
+			if(this.auxiliarContable == null){
+				messageBean("Por Favor seleccione un auxiliar contable para continuar con el proceso", ErrorEnum.ERROR);
 			}else{
-				messageBean("Error al generar el proceso de aporte", ErrorEnum.ERROR);
+				AportesSocioLogica objLogica = new AportesSocioLogica();
+				String valida = objLogica.generaProcesoAporte(this.idAporte, this.auxiliarContable.getId(),this.objetoSesion.getId());
+				if("Ok".equalsIgnoreCase(valida)){
+					messageBean("Proceso Generado correctamente", ErrorEnum.SUCCESS);
+					this.listaAportes = null;
+					consultaAportes();
+				}else{
+					messageBean("Error al generar el proceso de aporte", ErrorEnum.ERROR);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

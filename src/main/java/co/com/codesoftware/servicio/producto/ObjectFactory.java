@@ -24,6 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GeneraProcesoAporte_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "generaProcesoAporte");
     private final static QName _ConsultaPromPonderadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPromPonderadoResponse");
     private final static QName _ObtenerPromedioPonderadoProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerPromedioPonderadoProducto");
     private final static QName _ObtenerCantidadesTotalesResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesTotalesResponse");
@@ -57,6 +58,7 @@ public class ObjectFactory {
     private final static QName _InsertaProductosSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaProductosSolicitud");
     private final static QName _ObtenerSolicitudesFiltros_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudesFiltros");
     private final static QName _ObtenerSolicitudXfiltroResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXfiltroResponse");
+    private final static QName _GeneraProcesoAporteResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "generaProcesoAporteResponse");
     private final static QName _ObtenerRecetaXCodigo_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerRecetaXCodigo");
     private final static QName _ObtenerProductosXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSedeResponse");
     private final static QName _ObtenerProductosXSede_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSede");
@@ -260,6 +262,14 @@ public class ObjectFactory {
      */
     public ObtenerPromedioPonderadoProducto createObtenerPromedioPonderadoProducto() {
         return new ObtenerPromedioPonderadoProducto();
+    }
+
+    /**
+     * Create an instance of {@link GeneraProcesoAporte }
+     * 
+     */
+    public GeneraProcesoAporte createGeneraProcesoAporte() {
+        return new GeneraProcesoAporte();
     }
 
     /**
@@ -479,6 +489,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GeneraProcesoAporteResponse }
+     * 
+     */
+    public GeneraProcesoAporteResponse createGeneraProcesoAporteResponse() {
+        return new GeneraProcesoAporteResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerSolicitudesFiltros }
      * 
      */
@@ -676,6 +694,15 @@ public class ObjectFactory {
      */
     public ReferenciaEntity createReferenciaEntity() {
         return new ReferenciaEntity();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GeneraProcesoAporte }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "generaProcesoAporte")
+    public JAXBElement<GeneraProcesoAporte> createGeneraProcesoAporte(GeneraProcesoAporte value) {
+        return new JAXBElement<GeneraProcesoAporte>(_GeneraProcesoAporte_QNAME, GeneraProcesoAporte.class, null, value);
     }
 
     /**
@@ -973,6 +1000,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerSolicitudXfiltroResponse")
     public JAXBElement<ObtenerSolicitudXfiltroResponse> createObtenerSolicitudXfiltroResponse(ObtenerSolicitudXfiltroResponse value) {
         return new JAXBElement<ObtenerSolicitudXfiltroResponse>(_ObtenerSolicitudXfiltroResponse_QNAME, ObtenerSolicitudXfiltroResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GeneraProcesoAporteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "generaProcesoAporteResponse")
+    public JAXBElement<GeneraProcesoAporteResponse> createGeneraProcesoAporteResponse(GeneraProcesoAporteResponse value) {
+        return new JAXBElement<GeneraProcesoAporteResponse>(_GeneraProcesoAporteResponse_QNAME, GeneraProcesoAporteResponse.class, null, value);
     }
 
     /**

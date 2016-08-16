@@ -78,12 +78,13 @@ public class AportesSocioLogica implements WSGeneralInterface {
 	 * @param idAporte
 	 * @return
 	 */
-	public String generaProcesoAporte(Integer idAporte){
+	public String generaProcesoAporte(Integer idAporte, Integer idAuxCont, Integer idTius){
 		String rta = "";
 		try {
-			
+			rta = conexionWSNewProd().getPortNewProductos().generaProcesoAporte(idAporte, idAuxCont, idTius);
 		} catch (Exception e) {
 			e.printStackTrace();
+			rta = "Error "+ e;
 		}
 		return rta;
 	}
