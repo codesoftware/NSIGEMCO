@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
+import co.com.codesoftware.logica.CargueProductoLogica;
 import co.com.codesoftware.logica.productos.AportesSocioLogica;
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
 import co.com.codesoftware.server.nsigemco.ProductoAporte;
@@ -176,6 +177,20 @@ public class AportesSociosBean implements GeneralBean {
 	 * @param event
 	 */
 	public void cargueExcelProductos(FileUploadEvent event) {
+		try {
+			CargueProductoLogica objLogica= new CargueProductoLogica();
+			String valida = objLogica.cargaExcelAporte(event,this.objetoSesion.getId(),this.idAporte);
+			RequestContext requestContext = RequestContext.getCurrentInstance();  
+			requestContext.execute("PF('datosProductosAporte').hide()");
+			requestContext.execute("PF('statusDialog').hide()");
+			if("Ok".equalsIgnoreCase(valida)){
+				messageBean("Cargue realizado correctamente", ErrorEnum.SUCCESS);
+			}else{
+				messageBean("Error al cargargar el excel: " + valida, ErrorEnum.ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

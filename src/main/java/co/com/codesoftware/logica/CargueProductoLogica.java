@@ -419,5 +419,82 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
+	
+	/**
+	 * Funcion con el cual cargo el excel de conteos
+	 * @param fileUp
+	 * @param event
+	 * @param idTius
+	 * @return
+	 */
+	public String cargaExcelAporte(FileUploadEvent event, Integer idTius, Integer idAporte) {
+		String respuesta = "";
+		String mensaje = "";
+		Row row = null;
+		Cell cell = null;
+		try {
+			file = event.getFile().getInputstream();
+			workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			List<ProductoTmpEntity> listaProductos = new ArrayList<ProductoTmpEntity>();
+			rowIterator.next();
+			while (rowIterator.hasNext()) {
+				row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				while (cellIterator.hasNext()) {
+					cell = null;
+					cell = cellIterator.next();
+					if (cell.getStringCellValue() == null || "".equalsIgnoreCase(cell.getStringCellValue())) {
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+						cellIterator.hasNext();
+					} else {
+						String codigoExterno=""; 
+						Integer cantidad;
+						BigDecimal costo;
+						try {
+							codigoExterno = cell.getStringCellValue().trim();
+						} catch (IllegalStateException ex) {
+							Double celda = cell.getNumericCellValue();
+							codigoExterno = ""+celda.longValue();
+						}
+						cell = cellIterator.next();
+						try {
+							Double aux = cell.getNumericCellValue();
+							cantidad = aux.intValue();
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+							String aux = cell.getStringCellValue().trim();
+							cantidad  = Integer.parseInt(aux);
+						}
+						cell = cellIterator.next();
+						try {
+							costo = new BigDecimal(cell.getNumericCellValue());
+						} catch (Exception e) {
+							String celda = cell.getStringCellValue();
+							System.out.println(celda);
+							costo = new BigDecimal(celda);
+						}
+						if (!"".equalsIgnoreCase(mensaje)) {
+							mensaje += row.getRowNum();
+							break;
+						}
+						String valida = "";
+						valida= conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, codigoExterno, cantidad, costo, idTius);
+						if(!"Ok".equalsIgnoreCase(valida)){
+							return valida; 
+						}
+					}
+				}
+			}
+			respuesta = "Ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			respuesta = "Error " + e;
+			System.out.println("error en  Fila" + row.getRowNum());
+		}
+		return respuesta;
+	}
 
 }
