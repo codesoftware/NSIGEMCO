@@ -29,6 +29,7 @@ public class ObjectFactory {
     private final static QName _ObtenerPromedioPonderadoProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerPromedioPonderadoProducto");
     private final static QName _ObtenerCantidadesTotalesResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesTotalesResponse");
     private final static QName _ObtenerExistenciasProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerExistenciasProductoResponse");
+    private final static QName _ObtenerSolicitudXIdResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXIdResponse");
     private final static QName _ObtenerProductosYRecetas_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetas");
     private final static QName _ObtenerPromedioPonderadoProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerPromedioPonderadoProductoResponse");
     private final static QName _ObtenerProductosXSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSolicitudResponse");
@@ -57,6 +58,7 @@ public class ObjectFactory {
     private final static QName _ObtenerRecetaXCodigoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerRecetaXCodigoResponse");
     private final static QName _InsertaProductosSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaProductosSolicitud");
     private final static QName _ObtenerSolicitudesFiltros_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudesFiltros");
+    private final static QName _ObtenerSolicitudXId_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXId");
     private final static QName _ObtenerSolicitudXfiltroResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXfiltroResponse");
     private final static QName _GeneraProcesoAporteResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "generaProcesoAporteResponse");
     private final static QName _ObtenerRecetaXCodigo_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerRecetaXCodigo");
@@ -254,6 +256,14 @@ public class ObjectFactory {
      */
     public ObtenerExistenciasProductoResponse createObtenerExistenciasProductoResponse() {
         return new ObtenerExistenciasProductoResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerSolicitudXIdResponse }
+     * 
+     */
+    public ObtenerSolicitudXIdResponse createObtenerSolicitudXIdResponse() {
+        return new ObtenerSolicitudXIdResponse();
     }
 
     /**
@@ -478,6 +488,14 @@ public class ObjectFactory {
      */
     public ObtenerProductosXSede createObtenerProductosXSede() {
         return new ObtenerProductosXSede();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerSolicitudXId }
+     * 
+     */
+    public ObtenerSolicitudXId createObtenerSolicitudXId() {
+        return new ObtenerSolicitudXId();
     }
 
     /**
@@ -742,6 +760,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerSolicitudXIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerSolicitudXIdResponse")
+    public JAXBElement<ObtenerSolicitudXIdResponse> createObtenerSolicitudXIdResponse(ObtenerSolicitudXIdResponse value) {
+        return new JAXBElement<ObtenerSolicitudXIdResponse>(_ObtenerSolicitudXIdResponse_QNAME, ObtenerSolicitudXIdResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosYRecetas }{@code >}}
      * 
      */
@@ -991,6 +1018,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerSolicitudesFiltros")
     public JAXBElement<ObtenerSolicitudesFiltros> createObtenerSolicitudesFiltros(ObtenerSolicitudesFiltros value) {
         return new JAXBElement<ObtenerSolicitudesFiltros>(_ObtenerSolicitudesFiltros_QNAME, ObtenerSolicitudesFiltros.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerSolicitudXId }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerSolicitudXId")
+    public JAXBElement<ObtenerSolicitudXId> createObtenerSolicitudXId(ObtenerSolicitudXId value) {
+        return new JAXBElement<ObtenerSolicitudXId>(_ObtenerSolicitudXId_QNAME, ObtenerSolicitudXId.class, null, value);
     }
 
     /**

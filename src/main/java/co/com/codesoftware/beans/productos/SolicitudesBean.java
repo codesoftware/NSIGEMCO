@@ -34,13 +34,13 @@ public class SolicitudesBean implements GeneralBean {
 	private List<SolicitudProdEntity> productosSolicitud;
 	private String estadoSolicitud;
 	private String sedeNombreSelec;
-	private List<ExistenciaXSedeEntity> listaExistencia;	
+	private List<ExistenciaXSedeEntity> listaExistencia;
 
 	@Override
 	@PostConstruct
 	public void init() {
 		logica = new SolicitudesLogica();
-		this.estadoSolicitud="P";
+		this.estadoSolicitud = "P";
 	}
 
 	/**
@@ -75,33 +75,50 @@ public class SolicitudesBean implements GeneralBean {
 	}
 
 	/**
+	 * envia al formulario de detalle de productos de la solicitud
+	 * 
+	 * @param idSolicitud
+	 */
+	public String consultaDetalleSolicitud(Integer idSolicitud) {
+		String rta = "";
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idSolicitud", idSolicitud);
+			rta = "/ACTION/SOLICITUDES/detalleSolicitud.jsf";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+
+	/**
 	 * metodo que evalua el cambio de la tabla editable
 	 * 
 	 * @param event
 	 */
 	public void onCellEdit(CellEditEvent event) {
 
-
 	}
-	
+
 	/**
 	 * metodo que acutaliza los datos del pedido
 	 */
-	public void actualizaPedido(){
+	public void actualizaPedido() {
 		RespuestaEntity respuestaActualizacion = logica.actualizaSolicitud(1, this.productosSolicitud);
-		if(respuestaActualizacion.getCodigoRespuesta()==0){
-			this.enumer= enumer.ERROR;
-		}else{
-			this.enumer= enumer.SUCCESS;
+		if (respuestaActualizacion.getCodigoRespuesta() == 0) {
+			this.enumer = enumer.ERROR;
+		} else {
+			this.enumer = enumer.SUCCESS;
 		}
 		messageBean(respuestaActualizacion.getDescripcionRespuesta());
 	}
-	
+
 	/**
 	 * metodo que consulta las existencias por todas las sedes
+	 * 
 	 * @param idProducto
 	 */
-	public void consultaExistenciaSedes(Integer idProducto){
+	public void consultaExistenciaSedes(Integer idProducto) {
 		this.listaExistencia = logica.consultaExistenciasXId(idProducto);
 	}
 
@@ -160,8 +177,6 @@ public class SolicitudesBean implements GeneralBean {
 	public void setProductosSolicitud(List<SolicitudProdEntity> productosSolicitud) {
 		this.productosSolicitud = productosSolicitud;
 	}
-	
-	
 
 	public String getEstadoSolicitud() {
 		return estadoSolicitud;
@@ -206,8 +221,5 @@ public class SolicitudesBean implements GeneralBean {
 	public void setListaExistencia(List<ExistenciaXSedeEntity> listaExistencia) {
 		this.listaExistencia = listaExistencia;
 	}
-	
-	
-	
 
 }
