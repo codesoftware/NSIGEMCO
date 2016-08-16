@@ -19,6 +19,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="comentario" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="comentarioEntrega" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -35,6 +36,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "solicitudEntity", propOrder = {
     "comentario",
+    "comentarioEntrega",
     "estado",
     "fecha",
     "id",
@@ -44,6 +46,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class SolicitudEntity {
 
     protected String comentario;
+    protected String comentarioEntrega;
     protected String estado;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fecha;
@@ -73,6 +76,30 @@ public class SolicitudEntity {
      */
     public void setComentario(String value) {
         this.comentario = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad comentarioEntrega.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getComentarioEntrega() {
+        return comentarioEntrega;
+    }
+
+    /**
+     * Define el valor de la propiedad comentarioEntrega.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setComentarioEntrega(String value) {
+        this.comentarioEntrega = value;
     }
 
     /**
