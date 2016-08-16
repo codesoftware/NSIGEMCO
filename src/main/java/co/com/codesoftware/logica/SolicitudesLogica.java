@@ -5,37 +5,42 @@ import java.util.Date;
 import java.util.List;
 
 import co.com.codesoftware.servicio.producto.ExistenciaXSedeEntity;
+import co.com.codesoftware.servicio.producto.ProductoSimpleEntity;
 import co.com.codesoftware.servicio.producto.RespuestaEntity;
+import co.com.codesoftware.servicio.producto.SedeEntity;
 import co.com.codesoftware.servicio.producto.SolicitudEntity;
 import co.com.codesoftware.servicio.producto.SolicitudProdEntity;
 import co.com.codesoftware.utilities.Utilitites;
 import co.com.codesoftware.utilities.WSGeneralInterface;
 
 public class SolicitudesLogica implements WSGeneralInterface {
-	
+
 	/**
 	 * metodo que consulta las solicitudes mediante un filtro de fechas
+	 * 
 	 * @param fechaInicial
 	 * @param fechaFinal
 	 * @param estado
 	 * @return
 	 */
-	public List<SolicitudEntity> consultaSolicitudes(Date fechaInicial,Date fechaFinal, String estado){
-		 List<SolicitudEntity> respuesta = new ArrayList<>();
-		 try {
-			respuesta = conexionWSNewProd().getPortNewProductos().obtenerSolicitudesFiltros(Utilitites.dateToXMLGC(fechaInicial), Utilitites.dateToXMLGC(fechaFinal), 0, 0, estado);
+	public List<SolicitudEntity> consultaSolicitudes(Date fechaInicial, Date fechaFinal, String estado) {
+		List<SolicitudEntity> respuesta = new ArrayList<>();
+		try {
+			respuesta = conexionWSNewProd().getPortNewProductos().obtenerSolicitudesFiltros(
+					Utilitites.dateToXMLGC(fechaInicial), Utilitites.dateToXMLGC(fechaFinal), 0, 0, estado);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 return respuesta;
+		return respuesta;
 	}
-	
+
 	/**
 	 * metodo que consulta una solicitud por id
+	 * 
 	 * @param id
 	 * @return
 	 */
-	public SolicitudEntity consultaSolicitudXId(Integer id){
+	public SolicitudEntity consultaSolicitudXId(Integer id) {
 		SolicitudEntity rta = new SolicitudEntity();
 		try {
 			rta = conexionWSNewProd().getPortNewProductos().obtenerSolicitudXId(id);
@@ -44,12 +49,14 @@ public class SolicitudesLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+
 	/**
 	 * metodo que consulta los productos de la solicitud especificos
+	 * 
 	 * @param idSoliciud
 	 * @return
 	 */
-	public List<SolicitudProdEntity> consultaProductosEspecificos(Integer idSoliciud){
+	public List<SolicitudProdEntity> consultaProductosEspecificos(Integer idSoliciud) {
 		List<SolicitudProdEntity> rta = new ArrayList<>();
 		try {
 			rta = conexionWSNewProd().getPortNewProductos().obtenerProductosXSolicitud(idSoliciud);
@@ -58,17 +65,18 @@ public class SolicitudesLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
-	
+
 	/**
 	 * metodo que consulta las existencias de un producto por la sede
+	 * 
 	 * @param idSede
 	 * @return
 	 */
-	public ExistenciaXSedeEntity consultaExistenciasSede(Integer idSede,Integer idProducto){
+	public ExistenciaXSedeEntity consultaExistenciasSede(Integer idSede, Integer idProducto) {
 		ExistenciaXSedeEntity respuesta = new ExistenciaXSedeEntity();
 		try {
 			respuesta = conexionWSNewProd().getPortNewProductos().obtenerCantidadesXSede(idSede, idProducto);
-			if(respuesta==null){
+			if (respuesta == null) {
 				respuesta = new ExistenciaXSedeEntity();
 				respuesta.setExistencias(0);
 			}
@@ -79,36 +87,62 @@ public class SolicitudesLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
-	
+
 	/**
 	 * funcion que llama al servicio web de actualizacion de la solicitud
+	 * 
 	 * @param idUsuario
 	 * @param productos
 	 * @return
 	 */
-	public RespuestaEntity actualizaSolicitud(Integer idUsuario,List<SolicitudProdEntity> productos){
+	public RespuestaEntity actualizaSolicitud(Integer idUsuario, List<SolicitudProdEntity> productos) {
 		RespuestaEntity respuesta = new RespuestaEntity();
 		try {
 			respuesta = conexionWSNewProd().getPortNewProductos().actualizaSolicitud(idUsuario, productos);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 		return respuesta;
 	}
+
 	/**
 	 * metodo que consulta las cantidades totales por producto
+	 * 
 	 * @param idProducto
 	 * @return
 	 */
-	public List<ExistenciaXSedeEntity> consultaExistenciasXId(Integer idProducto){
-		 List<ExistenciaXSedeEntity> lista = new ArrayList<ExistenciaXSedeEntity>();
-		 try {
-			lista =conexionWSNewProd().getPortNewProductos().obtenerCantidadesXProducto(idProducto);
+	public List<ExistenciaXSedeEntity> consultaExistenciasXId(Integer idProducto) {
+		List<ExistenciaXSedeEntity> lista = new ArrayList<ExistenciaXSedeEntity>();
+		try {
+			lista = conexionWSNewProd().getPortNewProductos().obtenerCantidadesXProducto(idProducto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 return lista;
+		return lista;
 	}
 
+	/**
+	 * 
+	 * @param codigoExterno
+	 * @param cantidad
+	 * @return
+	 */
+	public SolicitudProdEntity consultaProducto(String codigoExterno, Integer cantidad,Integer idSede,SolicitudEntity solicitud) {
+		SolicitudProdEntity producto = new SolicitudProdEntity();
+		try {
+			ProductoSimpleEntity prod = new ProductoSimpleEntity();
+			prod = conexionWSNewProd().getPortNewProductos().consultaProdXcodExterno(codigoExterno);
+			producto.setProducto(prod);
+			producto.setCantidadSolicitada(cantidad);
+			producto.setCantidadEnvidada(cantidad);
+			producto.setSolicitud(solicitud);
+			SedeEntity sede = new SedeEntity();
+			sede.setId(idSede);
+			producto.setSedeProducto(sede);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return producto;
+	}
 }

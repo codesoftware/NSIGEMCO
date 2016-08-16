@@ -8,9 +8,10 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
-			<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
+
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<h:form id="formulario">
+				<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
 				<p:spacer></p:spacer>
 				<center>
 					<p:panel header="DATOS SOLICITUD" style="width:70%">
@@ -26,6 +27,12 @@
 									<p:outputLabel value="Descripción:#{detalleSolicitudBean.solicitud.comentario}" />
 								</div>
 							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-12">
+								<p:outputLabel value="Comentario entrega solicitud. :  "/>
+								<p:inputTextarea cols="50" id="desc" value="#{detalleSolicitudBean.solicitud.comentarioEntrega}" />
+								</div>
+							</div>
 						</div>
 					</p:panel>
 					<p:panel header="MODIFICAR SOLICITUD" style="width:70%">
@@ -33,11 +40,11 @@
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-4">
 									Codigo Ext:
-									<p:inputText value="#{detalleSolicitudBean.codigoExterno}" />
+									<p:inputText value="#{detalleSolicitudBean.codigoExterno}" id="codExt" />
 								</div>
 								<div class="ui-grid-col-4">
 									Cantidad:
-									<p:inputText value="#{detalleSolicitudBean.cantidad}" />
+									<p:inputText value="#{detalleSolicitudBean.cantidad}" id="cantidad" />
 								</div>
 								<div class="ui-grid-col-4">
 									<h:selectOneMenu value="#{detalleSolicitudBean.idSede}" styleClass="form-control" id="selectSede">
@@ -49,7 +56,7 @@
 							<br></br>
 							<div class="ui-grid-row">
 								<div class="ui-grid-col-12" align="right">
-									<p:commandButton value="INSERTAR" styleClass="OrangeButton" />
+									<p:commandButton value="INSERTAR" styleClass="OrangeButton" actionListener="#{detalleSolicitudBean.agregaProducto}" update="tablaProdSolicitud,codExt,cantidad" />
 								</div>
 							</div>
 						</div>
@@ -70,13 +77,33 @@
 								<p:outputLabel value="#{prod.cantidadEnvidada}" />
 							</p:column>
 							<p:column width="30%" headerText="Detalle">
-							<p:commandButton value="VER CANT" styleClass="GreenButton" />
-							<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" />
-							<p:commandButton value="BORRAR" styleClass="RedButton" />
+								<p:commandButton value="VER CANT" styleClass="GreenButton" actionListener="#{detalleSolicitudBean.consultaExistenciaSedes(prod)}" onclick="PF('existenciasSede').show()"
+									update=":formulario:existenciaSede,:formulario:selectSedeMostrar" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" actionListener="#{detalleSolicitudBean.actualizarProducto(prod)}" update=":formulario:codExt,:formulario:cantidad" />
+								<p:commandButton value="BORRAR" styleClass="RedButton" actionListener="#{detalleSolicitudBean.eliminaProducto(prod)}" update="tablaProdSolicitud" />
 							</p:column>
-
 						</p:dataTable>
+						<p:panel>
+							<p:commandButton value="ENVIAR PRODUCTOS" rendered="#{detalleSolicitudBean.solicitud.estado=='C'}" action="#{detalleSolicitudBean.actualizaPedido}" update=":formulario:messages" />
+						</p:panel>
 					</p:panel>
+					<p:dialog closeOnEscape="true" header="EXISTENCIAS POR SEDE" responsive="true" widgetVar="existenciasSede" modal="true">
+						Sede envio Productos
+						<h:selectOneMenu value="#{detalleSolicitudBean.idSedeMostrar}" styleClass="form-control" id="selectSedeMostrar" readonly="true">
+							<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
+							<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
+						</h:selectOneMenu>
+						<br></br>
+						<p:dataTable var="listExistencias" value="#{detalleSolicitudBean.listaExistencia}" reflow="true" rows="5" widgetVar="productosTable" paginator="true"
+							emptyMessage="No hay Existencias en ninguna sede" id="existenciaSede">
+							<p:column headerText="Nombre Sede">
+								<h:outputText value="#{listExistencias.sede.name}" />
+							</p:column>
+							<p:column headerText="Cantidades">
+								<h:outputText value="#{listExistencias.existencias}" />
+							</p:column>
+						</p:dataTable>
+					</p:dialog>
 				</center>
 			</h:form>
 		</ui:define>
