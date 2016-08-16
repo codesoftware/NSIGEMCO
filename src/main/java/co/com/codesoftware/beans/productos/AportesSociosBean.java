@@ -231,7 +231,7 @@ public class AportesSociosBean implements GeneralBean {
 					this.listaAportes = null;
 					consultaAportes();
 				}else{
-					messageBean("Error al generar el proceso de aporte", ErrorEnum.ERROR);
+					messageBean("Error al generar el proceso de aporte: " + valida, ErrorEnum.ERROR);
 				}
 			}
 		} catch (Exception e) {
