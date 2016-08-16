@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import co.com.codesoftware.logica.SolicitudesLogica;
 import co.com.codesoftware.servicio.producto.ExistenciaXSedeEntity;
 import co.com.codesoftware.servicio.producto.RespuestaEntity;
+import co.com.codesoftware.servicio.producto.SedeEntity;
 import co.com.codesoftware.servicio.producto.SolicitudEntity;
 import co.com.codesoftware.servicio.producto.SolicitudProdEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
@@ -64,6 +65,9 @@ public class DetalleSolicitudBean implements GeneralBean {
 							item.setCantidadSolicitada(this.cantidad);
 						}
 						item.setCantidadEnvidada(this.cantidad);
+						SedeEntity seden = new SedeEntity();
+						seden.setId(this.idSede);
+						item.setSedeProducto(seden);
 						bandera = 1;
 						break;
 					}
@@ -123,36 +127,48 @@ public class DetalleSolicitudBean implements GeneralBean {
 	 */
 	public String actualizaPedido() {
 		String rta = "";
-		if(solicitud.getComentarioEntrega()==null || solicitud.getComentario().equalsIgnoreCase("")){
+		if (solicitud.getComentarioEntrega() == null || solicitud.getComentarioEntrega().equalsIgnoreCase("")) {
 			messageBean("El campo comentario es obligatorio", ErrorEnum.ERROR);
-		}else{
-		RespuestaEntity respuestaActualizacion = logica.actualizaSolicitud(1, this.listaProductos);
-		if (respuestaActualizacion.getCodigoRespuesta() == 0) {
-			messageBean(respuestaActualizacion.getDescripcionRespuesta(), ErrorEnum.ERROR);
+		} else if (!validaLista()) {
+
 		} else {
-			messageBean(respuestaActualizacion.getDescripcionRespuesta(), ErrorEnum.SUCCESS);
-			rta = "/ACTION/SOLICITUDES/consultaSolicitudes.jsf";
+			this.listaProductos.get(0).setSolicitud(this.solicitud);
+			RespuestaEntity respuestaActualizacion = logica.actualizaSolicitud(1, this.listaProductos);
+			if (respuestaActualizacion.getCodigoRespuesta() == 0) {
+				messageBean(respuestaActualizacion.getDescripcionRespuesta(), ErrorEnum.ERROR);
+			} else {
+				messageBean(respuestaActualizacion.getDescripcionRespuesta(), ErrorEnum.SUCCESS);
+				rta = "/ACTION/SOLICITUDES/consultaSolicitudes.jsf";
+			}
 		}
-	}return rta;
+		return rta;
 	}
-	
+
 	/**
-	 * metodo que valida si hay algun producto sin cantidades o la lista esta vacia
+	 * metodo que valida si hay algun producto sin cantidades o la lista esta
+	 * vacia
+	 * 
 	 * @return
 	 */
-	public boolean validaLista(){
-		if(listaProductos.size()==0){
+	public boolean validaLista() {
+		int bandera = 0;
+		if (listaProductos.size() == 0) {
 			messageBean("Debe ingresar por lo menos un producto", ErrorEnum.ERROR);
 			return false;
 		}
-		for(SolicitudProdEntity item:listaProductos){
-			if(item.getCantidadEnvidada()==null || item.getCantidadEnvidada()<1){
-				messageBean("El producto con código "+item.getProducto().getCodigoExt()+" no tiene cantidades", ErrorEnum.ERROR);
-				break;				
+		for (SolicitudProdEntity item : listaProductos) {
+			if (item.getCantidadEnvidada() == null || item.getCantidadEnvidada() < 1) {
+				messageBean("El producto con código " + item.getProducto().getCodigoExt() + " no tiene cantidades enviadas",
+						ErrorEnum.ERROR);
+				bandera = 1;
+				break;
 			}
-			return false;
 		}
-		return true;
+		if (bandera != 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public String getCodigoExterno() {
