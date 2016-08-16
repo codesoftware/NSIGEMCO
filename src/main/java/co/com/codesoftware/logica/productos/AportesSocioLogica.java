@@ -59,5 +59,33 @@ public class AportesSocioLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con la cual borro los productos de un aporte
+	 * @param idAporte
+	 * @return
+	 */
+	public String borrarProdAporte(Integer idAporte){
+		String rta = "";
+		try {
+			rta = conexionWSNewProd().getPortNewProductos().eliminaProdAporte(idAporte);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
+	 * Funcion con la cual se envia al proceso de generacion de aportes
+	 * @param idAporte
+	 * @return
+	 */
+	public String generaProcesoAporte(Integer idAporte){
+		String rta = "";
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 
 }

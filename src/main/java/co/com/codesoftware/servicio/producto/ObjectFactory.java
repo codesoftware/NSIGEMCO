@@ -34,6 +34,7 @@ public class ObjectFactory {
     private final static QName _ObtenerProductosYRecetasXCriterio_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasXCriterio");
     private final static QName _ObtenerCantidadesTotalesXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesTotalesXSedeResponse");
     private final static QName _ObtenerProdcutoGeneriXCodExtResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProdcutoGeneriXCodExtResponse");
+    private final static QName _EliminaProdAporte_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "eliminaProdAporte");
     private final static QName _ObtieneRecetasXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtieneRecetasXSedeResponse");
     private final static QName _ObtieneRecetasXSede_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtieneRecetasXSede");
     private final static QName _ObtenerCantidadesXProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesXProducto");
@@ -62,6 +63,7 @@ public class ObjectFactory {
     private final static QName _InsertaSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaSolicitud");
     private final static QName _ObtenerProductoXCodBarrasResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodBarrasResponse");
     private final static QName _ActualizaSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "actualizaSolicitudResponse");
+    private final static QName _EliminaProdAporteResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "eliminaProdAporteResponse");
     private final static QName _ObtenerSolicitudesFiltrosResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudesFiltrosResponse");
     private final static QName _ConsultaPagosFactCompraResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagosFactCompraResponse");
     private final static QName _ObtenerCantidadesXProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesXProductoResponse");
@@ -285,6 +287,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EliminaProdAporte }
+     * 
+     */
+    public EliminaProdAporte createEliminaProdAporte() {
+        return new EliminaProdAporte();
+    }
+
+    /**
      * Create an instance of {@link ObtieneRecetasXSedeResponse }
      * 
      */
@@ -474,6 +484,14 @@ public class ObjectFactory {
      */
     public ObtenerSolicitudesFiltros createObtenerSolicitudesFiltros() {
         return new ObtenerSolicitudesFiltros();
+    }
+
+    /**
+     * Create an instance of {@link EliminaProdAporteResponse }
+     * 
+     */
+    public EliminaProdAporteResponse createEliminaProdAporteResponse() {
+        return new EliminaProdAporteResponse();
     }
 
     /**
@@ -751,6 +769,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminaProdAporte }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "eliminaProdAporte")
+    public JAXBElement<EliminaProdAporte> createEliminaProdAporte(EliminaProdAporte value) {
+        return new JAXBElement<EliminaProdAporte>(_EliminaProdAporte_QNAME, EliminaProdAporte.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneRecetasXSedeResponse }{@code >}}
      * 
      */
@@ -1000,6 +1027,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "actualizaSolicitudResponse")
     public JAXBElement<ActualizaSolicitudResponse> createActualizaSolicitudResponse(ActualizaSolicitudResponse value) {
         return new JAXBElement<ActualizaSolicitudResponse>(_ActualizaSolicitudResponse_QNAME, ActualizaSolicitudResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link EliminaProdAporteResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "eliminaProdAporteResponse")
+    public JAXBElement<EliminaProdAporteResponse> createEliminaProdAporteResponse(EliminaProdAporteResponse value) {
+        return new JAXBElement<EliminaProdAporteResponse>(_EliminaProdAporteResponse_QNAME, EliminaProdAporteResponse.class, null, value);
     }
 
     /**
