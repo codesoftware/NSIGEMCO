@@ -29,6 +29,21 @@ public interface ProductoWS {
 
     /**
      * 
+     * @param idAporte
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "eliminaProdAporte", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.EliminaProdAporte")
+    @ResponseWrapper(localName = "eliminaProdAporteResponse", targetNamespace = "http://producto.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.producto.EliminaProdAporteResponse")
+    @Action(input = "http://producto.servicio.codesoftware.com.co/ProductoWS/eliminaProdAporteRequest", output = "http://producto.servicio.codesoftware.com.co/ProductoWS/eliminaProdAporteResponse")
+    public String eliminaProdAporte(
+        @WebParam(name = "idAporte", targetNamespace = "")
+        Integer idAporte);
+
+    /**
+     * 
      * @param idSede
      * @return
      *     returns java.util.List<co.com.codesoftware.servicio.producto.PrecioRecetaEntity>

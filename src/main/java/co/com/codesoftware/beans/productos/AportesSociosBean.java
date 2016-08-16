@@ -18,6 +18,7 @@ import co.com.codesoftware.logica.productos.AportesSocioLogica;
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
 import co.com.codesoftware.server.nsigemco.ProductoAporte;
 import co.com.codesoftware.server.nsigemco.SocioEntity;
+import co.com.codesoftware.servicio.contabilidad.AuxContableEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
@@ -37,6 +38,7 @@ public class AportesSociosBean implements GeneralBean {
 	private Integer idAporte;
 	private Integer idSede;
 	private List<ProductoAporte> listaAporProdSelected;
+	private AuxContableEntity auxiliarContable;
 
 	/**
 	 * constructor donde se incializa las entidades que siempre se van a
@@ -45,7 +47,8 @@ public class AportesSociosBean implements GeneralBean {
 	public AportesSociosBean() {
 		this.aportes = new AporteSocioEntity();
 		this.logica = new AportesSocioLogica();
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 	}
 
 	/**
@@ -79,7 +82,8 @@ public class AportesSociosBean implements GeneralBean {
 				messageBean("Por favor seleccione un socio", ErrorEnum.ERROR);
 			} else if (this.idSede == -1) {
 				messageBean("Por favor seleccione una sede", ErrorEnum.ERROR);
-			} else if (this.aportes.getDescripcion() == null || "".equalsIgnoreCase(this.aportes.getDescripcion().trim())) {
+			} else if (this.aportes.getDescripcion() == null
+					|| "".equalsIgnoreCase(this.aportes.getDescripcion().trim())) {
 				messageBean("El campo descripcion no puede ser nulo", ErrorEnum.ERROR);
 			} else if (this.aportes.getCodigo() == null || "".equalsIgnoreCase(this.aportes.getCodigo().trim())) {
 				messageBean("El campo codigo no puede ser nulo", ErrorEnum.ERROR);
@@ -178,20 +182,57 @@ public class AportesSociosBean implements GeneralBean {
 	 */
 	public void cargueExcelProductos(FileUploadEvent event) {
 		try {
-			CargueProductoLogica objLogica= new CargueProductoLogica();
-			String valida = objLogica.cargaExcelAporte(event,this.objetoSesion.getId(),this.idAporte);
-			RequestContext requestContext = RequestContext.getCurrentInstance();  
+			CargueProductoLogica objLogica = new CargueProductoLogica();
+			String valida = objLogica.cargaExcelAporte(event, this.objetoSesion.getId(), this.idAporte);
+			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('datosProductosAporte').hide()");
 			requestContext.execute("PF('statusDialog').hide()");
-			if("Ok".equalsIgnoreCase(valida)){
+			if ("Ok".equalsIgnoreCase(valida)) {
 				messageBean("Cargue realizado correctamente", ErrorEnum.SUCCESS);
-			}else{
+			} else {
 				messageBean("Error al cargargar el excel: " + valida, ErrorEnum.ERROR);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Funcion con la cual borro todos los productos de un aporte
+	 */
+	public void borrarProductosAporte() {
+		try {
+			AportesSocioLogica objLogica = new AportesSocioLogica();
+			String valida = objLogica.borrarProdAporte(this.idAporte);
+			if ("Ok".equalsIgnoreCase(valida)) {
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('dialogProductos').hide()");
+				messageBean("Productos eliminados correctamente", ErrorEnum.SUCCESS);
+			} else {
+				messageBean("Error al eliminar los productos " + valida, ErrorEnum.ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Funcion con la cual genero el proceso de aporte en la cual afectara el inventario
+	 */
+	public void generaProcesoAporte(){
+		try {
+			AportesSocioLogica objLogica = new AportesSocioLogica();
+			String valida = objLogica.generaProcesoAporte(this.idAporte);
+			if("Ok".equalsIgnoreCase(valida)){
+				messageBean("Proceso Generado correctamente", ErrorEnum.SUCCESS);
+				this.listaAportes = null;
+				consultaAportes();
+			}else{
+				messageBean("Error al generar el proceso de aporte", ErrorEnum.ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public AporteSocioEntity getAportes() {
@@ -253,7 +294,8 @@ public class AportesSociosBean implements GeneralBean {
 
 	@PostConstruct
 	public void init() {
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		this.banderaboton = "I";
 	}
 
@@ -279,6 +321,14 @@ public class AportesSociosBean implements GeneralBean {
 
 	public void setListaAporProdSelected(List<ProductoAporte> listaAporProdSelected) {
 		this.listaAporProdSelected = listaAporProdSelected;
+	}
+
+	public AuxContableEntity getAuxiliarContable() {
+		return auxiliarContable;
+	}
+
+	public void setAuxiliarContable(AuxContableEntity auxiliarContable) {
+		this.auxiliarContable = auxiliarContable;
 	}
 
 }
