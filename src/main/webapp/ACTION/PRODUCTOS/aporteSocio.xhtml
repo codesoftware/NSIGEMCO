@@ -14,7 +14,8 @@
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
 					<p:panel style="width:80%">
-						<p:dataTable var="aporte" rows="20" widgetVar="waporte" id="tablaAportes" value="#{aportesSociosBean.listaAportes}" paginator="true" filteredValue="#{aportesSociosBean.listaAportesFiltro}" emptyMessage="No existen aportes registrados en el sistema">
+						<p:dataTable var="aporte" rows="20" widgetVar="waporte" id="tablaAportes" value="#{aportesSociosBean.listaAportes}" paginator="true" filteredValue="#{aportesSociosBean.listaAportesFiltro}"
+							emptyMessage="No existen aportes registrados en el sistema">
 							<f:facet name="header">
 								CONSULTA GENERAL DE APORTES
 							</f:facet>
@@ -32,7 +33,8 @@
 							</p:column>
 							<p:column headerText="DETALLE" priority="2">
 								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte" oncomplete="PF('datosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
-								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos" oncomplete="PF('datosProductosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
+								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos" oncomplete="PF('datosProductosAporte').show()"
+									rendered="#{aporte.estado == 'C'}"></p:commandButton>
 							</p:column>
 						</p:dataTable>
 						<br />
@@ -71,9 +73,17 @@
 						</p:panelGrid>
 					</p:dialog>
 					<p:dialog responsive="true" widgetVar="datosProductosAporte" modal="true" header="CARGUE PRODUCTOS" closeOnEscape="true">
+						<p:outputLabel value="El excel que se debe cargar para este proceso debe contener 3 columnas"></p:outputLabel>
+						<br />
+						<p:outputLabel value="1. Codigo externo (Debe existir en el sistema)"></p:outputLabel>
+						<br />
+						<p:outputLabel value="2. Cantidad (Solo numeros enteros)"></p:outputLabel>
+						<br />
+						<p:outputLabel value="3. Costo del producto por unidad"></p:outputLabel>
+						<br />	
 						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
-							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100" invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false"
-								fileUploadListener="#{aportesSociosBean.cargueExcelProductos}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{aportesSociosBean.cargueExcelProductos}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 						</p:panelGrid>
 					</p:dialog>
 					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
@@ -84,20 +94,20 @@
 			</h:form>
 			<p:dialog closeOnEscape="true" responsive="true" widgetVar="dialogProductos" modal="true" styleClass="modalResponsive" header="Consulta de productos del Aporte y Ejecucion del aporte">
 				<h:form>
-				<p:commandButton value="BORRAR DATOS" action="#{aportesSociosBean.borrarProductosAporte}" styleClass="RedButton"></p:commandButton>
-				<br />
-				<br />
-				<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;"></p:outputLabel>
-				<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
+					<p:commandButton value="BORRAR DATOS" action="#{aportesSociosBean.borrarProductosAporte}" styleClass="RedButton"></p:commandButton>
+					<br />
+					<br />
+					<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;"></p:outputLabel>
+					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
 							<p:column>
-						<h:outputText value="#{item.codigo}" />
-					</p:column>
-					<p:column>
-						<h:outputText value="#{item.nombre}" />
-					</p:column>
-				</p:autoComplete>
-				<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso"></p:commandButton>
-				<br />
+							<h:outputText value="#{item.codigo}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{item.nombre}" />
+						</p:column>
+					</p:autoComplete>
+					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso"></p:commandButton>
+					<br />
 				</h:form>
 				<h:form id="formDetalleProd">
 					<p:dataTable var="item" value="#{aportesSociosBean.listaAporProdSelected}" reflow="true" paginator="true" rows="5">
