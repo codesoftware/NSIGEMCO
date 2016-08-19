@@ -20,8 +20,7 @@
 								CONSULTA GENERAL DE APORTES
 							</f:facet>
 							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
-								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" rendered="#{aporte.estado == 'C'}" update=":formDetalleProd" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id)}"></p:commandLink>
-								<h:outputText value="#{aporte.codigo}" rendered="#{aporte.estado != 'C'}"></h:outputText>
+								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" update=":formDetalleProd" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id,aporte)}"></p:commandLink>
 							</p:column>
 							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
@@ -30,6 +29,7 @@
 							</p:column>
 							<p:column headerText="ESTADO" filterBy="#{aporte.estado}" priority="4" filterMatchMode="contains">
 								<h:outputText value="CREADO" rendered="#{aporte.estado == 'C'}"></h:outputText>
+								<h:outputText value="CERRADO" rendered="#{aporte.estado == 'X'}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="2">
 								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte" oncomplete="PF('datosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
@@ -94,11 +94,11 @@
 			</h:form>
 			<p:dialog closeOnEscape="true" responsive="true" widgetVar="dialogProductos" modal="true" styleClass="modalResponsive" header="Consulta de productos del Aporte y Ejecucion del aporte">
 				<h:form>
-					<p:commandButton value="BORRAR DATOS" action="#{aportesSociosBean.borrarProductosAporte}" styleClass="RedButton"></p:commandButton>
+					<p:commandButton value="BORRAR DATOS" action="#{aportesSociosBean.borrarProductosAporte}" styleClass="RedButton" rendered="#{aportesSociosBean.aportes.estado == 'C'}"></p:commandButton>
 					<br />
 					<br />
-					<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;"></p:outputLabel>
-					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter">`
+					<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;" rendered="#{aporte.estado == 'C'}"></p:outputLabel>
+					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter" rendered="#{aporte.estado == 'C'}">`
 							<p:column>
 							<h:outputText value="#{item.codigo}" />
 						</p:column>
@@ -106,7 +106,7 @@
 							<h:outputText value="#{item.nombre}" />
 						</p:column>
 					</p:autoComplete>
-					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso"></p:commandButton>
+					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso" rendered="#{aporte.estado == 'C'}"></p:commandButton>
 					<br />
 				</h:form>
 				<h:form id="formDetalleProd">

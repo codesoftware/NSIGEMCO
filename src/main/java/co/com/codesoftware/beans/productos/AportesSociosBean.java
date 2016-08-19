@@ -156,11 +156,12 @@ public class AportesSociosBean implements GeneralBean {
 	/**
 	 * Funcion con la cual consulto los productos que tiene un aporte
 	 */
-	public void consultaProdAportes(Integer idAporte) {
+	public void consultaProdAportes(Integer idAporte, AporteSocioEntity aporte) {
 		try {
 			AportesSocioLogica objLogica = new AportesSocioLogica();
 			this.listaAporProdSelected = objLogica.consultaProdAporte(idAporte);
 			this.idAporte = idAporte;
+			this.aportes = aporte;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
