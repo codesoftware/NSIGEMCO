@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import co.com.codesoftware.logica.admin.UbicacionLogica;
 import co.com.codesoftware.server.nsigemco.CategoriaEntity;
 import co.com.codesoftware.server.nsigemco.MarcaEntity;
 import co.com.codesoftware.server.nsigemco.ReteFuenteEntity;
@@ -212,6 +213,25 @@ public class CargaListasMapBean {
 						this.listaMapPerfiles = new HashMap<>();
 					}
 					this.listaMapPerfiles.put(perfil.getNombre().toUpperCase(), perfil.getId());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Funcion con la cual busco la ciudades asociadas a un departamento
+	 */
+	public void cargaCiudadDependienteDep(String idDepartamento){
+		try {
+			this.listaMapCiudades = new LinkedHashMap<>();
+			if (idDepartamento != null) {
+				UbicacionLogica logica = new UbicacionLogica();
+				List<CiudadEntity> ciudades = logica.obtieneListaCiudadesXDpto(Integer.parseInt(idDepartamento));
+				if (ciudades != null) {
+					for (CiudadEntity ciudad : ciudades) {
+						this.listaMapCiudades.put(ciudad.getNombre(), ciudad.getId());
+					}
 				}
 			}
 		} catch (Exception e) {

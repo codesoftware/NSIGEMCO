@@ -10,7 +10,6 @@
 		<ui:define name="content">
 			<p:growl id="messages" autoUpdate="true" life="30000" showDetail="true"></p:growl>
 			<f:event listener="#{cargaListasMapBean.cargaListaDepartamento}" type="preRenderView" />
-			<f:event listener="#{cargaListasMapBean.cargaListaCiudades}" type="preRenderView" />
 			<br></br>
 
 			<h:form id="formPrincipal">
@@ -35,6 +34,7 @@
 							<h:selectOneMenu value="#{parametrosGeneralesBean.parametros.departamento}" styleClass="form-control" id="selectDepartamento">
 								<f:selectItem itemLabel="SELECCIONE UN DEPARTAMENTO" itemValue="-1"></f:selectItem>
 								<f:selectItems value="#{cargaListasMapBean.listaMapDepartamentos}"></f:selectItems>
+								<p:ajax update="selectCiudad" listener="#{cargaListasMapBean.cargaCiudadDependienteDep(parametrosGeneralesBean.parametros.departamento)}"></p:ajax>
 							</h:selectOneMenu>
 							<p:outputLabel value="Ciudad:" />
 							<h:selectOneMenu value="#{parametrosGeneralesBean.parametros.ciudad}" styleClass="form-control" id="selectCiudad">
