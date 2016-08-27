@@ -715,6 +715,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ProductoAporte }
+     * 
+     */
+    public ProductoAporte createProductoAporte() {
+        return new ProductoAporte();
+    }
+
+    /**
      * Create an instance of {@link PagoFacCompraEntity }
      * 
      */

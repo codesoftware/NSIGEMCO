@@ -428,15 +428,13 @@ public class CargueProductoLogica implements WSGeneralInterface {
 	 * @param idTius
 	 * @return
 	 */
-	public ArrayList<ProductoAporte> cargaExcelAporte(FileUploadEvent event, Integer idTius, Integer idAporte) {
-		String respuesta = "";
+	public ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte> cargaExcelAporte(FileUploadEvent event, Integer idTius, Integer idAporte) {
 		String mensaje = "";
 		Row row = null;
 		Cell cell = null;
-		ArrayList<ProductoAporte> productos = null;
+		ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte> productos = null;
 		try {
 			file = event.getFile().getInputstream();
-			Integer iterador = 0;
 			workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -483,9 +481,9 @@ public class CargueProductoLogica implements WSGeneralInterface {
 							break;
 						}
 						if(productos == null){
-							productos = new ArrayList<ProductoAporte>();
+							productos = new ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte>();
 						}
-						ProductoAporte item = new ProductoAporte();
+						co.com.codesoftware.servicio.producto.ProductoAporte item = new co.com.codesoftware.servicio.producto.ProductoAporte();
 						item.setCantidad(cantidad);
 						item.setCodExterno(codigoExterno);
 						item.setCosto(costo);
@@ -494,10 +492,8 @@ public class CargueProductoLogica implements WSGeneralInterface {
 					}
 				}
 			}
-			respuesta = "Ok";
 		} catch (Exception e) {
 			e.printStackTrace();
-			respuesta = "Error " + e;
 			System.out.println("error en  Fila" + row.getRowNum());
 		}
 		return productos;

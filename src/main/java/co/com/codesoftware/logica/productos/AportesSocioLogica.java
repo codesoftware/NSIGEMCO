@@ -1,5 +1,6 @@
 package co.com.codesoftware.logica.productos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
@@ -95,10 +96,10 @@ public class AportesSocioLogica implements WSGeneralInterface {
 	 * @param producto
 	 * @return
 	 */
-	public String insertaRegistroAporte(Integer idAporte,Integer idTius,List<E> ){
+	public String insertaRegistroAporte(Integer idAporte,Integer idTius,ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte> productos ){
 		String rta = "";
 		try {
-			rta = conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, producto.getCodigoExt(), producto.getCantidad(), producto.getCosto(), idTius);
+			rta = conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, productos, idTius);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

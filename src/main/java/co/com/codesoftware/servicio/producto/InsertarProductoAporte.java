@@ -1,7 +1,8 @@
 
 package co.com.codesoftware.servicio.producto;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -18,9 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="idAporte" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="codigo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="cantidad" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="costo" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="productos" type="{http://producto.servicio.codesoftware.com.co/}productoAporte" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -33,17 +32,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "insertarProductoAporte", propOrder = {
     "idAporte",
-    "codigo",
-    "cantidad",
-    "costo",
+    "productos",
     "idTius"
 })
 public class InsertarProductoAporte {
 
     protected Integer idAporte;
-    protected String codigo;
-    protected Integer cantidad;
-    protected BigDecimal costo;
+    protected List<ProductoAporte> productos;
     protected Integer idTius;
 
     /**
@@ -71,75 +66,32 @@ public class InsertarProductoAporte {
     }
 
     /**
-     * Obtiene el valor de la propiedad codigo.
+     * Gets the value of the productos property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCodigo() {
-        return codigo;
-    }
-
-    /**
-     * Define el valor de la propiedad codigo.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the productos property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCodigo(String value) {
-        this.codigo = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad cantidad.
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getProductos().add(newItem);
+     * </pre>
      * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    /**
-     * Define el valor de la propiedad cantidad.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setCantidad(Integer value) {
-        this.cantidad = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad costo.
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ProductoAporte }
      * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getCosto() {
-        return costo;
-    }
-
-    /**
-     * Define el valor de la propiedad costo.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
      */
-    public void setCosto(BigDecimal value) {
-        this.costo = value;
+    public List<ProductoAporte> getProductos() {
+        if (productos == null) {
+            productos = new ArrayList<ProductoAporte>();
+        }
+        return this.productos;
     }
 
     /**

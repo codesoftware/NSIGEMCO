@@ -14,7 +14,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 
-import co.com.codesoftware.entity.ProductoAporteEntity;
 import co.com.codesoftware.logica.CargueProductoLogica;
 import co.com.codesoftware.logica.productos.AportesSocioLogica;
 import co.com.codesoftware.server.nsigemco.AporteSocioEntity;
@@ -185,26 +184,11 @@ public class AportesSociosBean implements GeneralBean {
 	public void cargueExcelProductos(FileUploadEvent event) {
 		try {
 			CargueProductoLogica objLogica = new CargueProductoLogica();
-			ArrayList<ProductoAporteEntity> productos = objLogica.cargaExcelAporte(event, this.objetoSesion.getId(), this.idAporte);
+			ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte> productos = objLogica.cargaExcelAporte(event, this.objetoSesion.getId(), this.idAporte);
 			String valida = "";
 			if(productos != null){
-				int total = productos.size();
-				int iterador = 0;
 				AportesSocioLogica objLogicaAp = new AportesSocioLogica();
-				for (ProductoAporteEntity item : productos) {
-					valida = objLogicaAp.insertaRegistroAporte(this.idAporte, this.objetoSesion.getId(), item);
-					if(!"Ok".equalsIgnoreCase(valida)){
-						break;
-					}
-					progress = (100*iterador)/total;
-					iterador++;
-					if(iterador % 10 == 0){
-						messageBean(progress + "% del proceso",ErrorEnum.WARNING);
-					}
-					System.out.println("Numero de registros " + iterador);
-				}
-				iterador++;
-				progress = (100*iterador)/total;
+				valida = objLogicaAp.insertaRegistroAporte(this.idAporte, this.objetoSesion.getId(), productos );
 			}
 			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('datosProductosAporte').hide()");
