@@ -102,12 +102,20 @@ public class ReporteLogica implements WSGeneralInterface{
 	 * Funcion con la cual realizo el llamado al reporte de comprados y vendidos
 	 * @return
 	 */
-	public String consultaRutaReporteCompVendidos() {
+	public String consultaRutaReporteCompVendidos(Date fechaInicial, Date fechaFinal) {
 		String extension = "pdf";
 		String ruta = "";
 		String reporte = "ProductosVendidos";
 		try {
 			List<MapaEntity> datos = new ArrayList<MapaEntity>();
+			MapaEntity fechaIni = new MapaEntity();
+			fechaIni.setClave("fechaInicial");
+			fechaIni.setValor(fechaInicial.getDate()+"/"+ (fechaInicial.getMonth()+1) + "/"+(fechaInicial.getYear()+1900) );
+			MapaEntity fechaFin = new MapaEntity();
+			fechaFin.setClave("fechaFinal");
+			fechaFin.setValor(fechaFinal.getDate() +"/"+(fechaFinal.getMonth()+1) + "/"+(fechaFinal.getYear()+1900) );
+			datos.add(fechaIni);
+			datos.add(fechaFin);
 			MapaEntity entity = new MapaEntity();
 			List<MapaEntity> parametros = new  ArrayList<MapaEntity>();
 			entity = new MapaEntity();
