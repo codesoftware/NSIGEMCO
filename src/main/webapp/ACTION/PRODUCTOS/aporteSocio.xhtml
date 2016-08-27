@@ -20,7 +20,7 @@
 								CONSULTA GENERAL DE APORTES
 							</f:facet>
 							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
-								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" update=":formDetalleProd" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id,aporte)}"></p:commandLink>
+								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" update=":formDetalleProd,:formEjecucion" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id,aporte)}"></p:commandLink>
 							</p:column>
 							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
@@ -93,12 +93,12 @@
 				</center>
 			</h:form>
 			<p:dialog closeOnEscape="true" responsive="true" widgetVar="dialogProductos" modal="true" styleClass="modalResponsive" header="Consulta de productos del Aporte y Ejecucion del aporte">
-				<h:form>
+				<h:form id="formEjecucion">
 					<p:commandButton value="BORRAR DATOS" action="#{aportesSociosBean.borrarProductosAporte}" styleClass="RedButton" rendered="#{aportesSociosBean.aportes.estado == 'C'}"></p:commandButton>
 					<br />
 					<br />
 					<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;" rendered="#{aporte.estado == 'C'}"></p:outputLabel>
-					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter" rendered="#{aporte.estado == 'C'}">`
+					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter" rendered="#{aportesSociosBean.aportes.estado == 'C'}">`
 							<p:column>
 							<h:outputText value="#{item.codigo}" />
 						</p:column>
@@ -106,7 +106,7 @@
 							<h:outputText value="#{item.nombre}" />
 						</p:column>
 					</p:autoComplete>
-					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso" rendered="#{aporte.estado == 'C'}"></p:commandButton>
+					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso" rendered="#{aportesSociosBean.aportes.estado == 'C'}"></p:commandButton>
 					<br />
 				</h:form>
 				<h:form id="formDetalleProd">
