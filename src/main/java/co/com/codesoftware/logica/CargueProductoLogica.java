@@ -434,6 +434,7 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		Cell cell = null;
 		try {
 			file = event.getFile().getInputstream();
+			Integer iterador = 0;
 			workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			Iterator<Row> rowIterator = sheet.iterator();
@@ -482,6 +483,8 @@ public class CargueProductoLogica implements WSGeneralInterface {
 						}
 						String valida = "";
 						valida= conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, codigoExterno, cantidad, costo, idTius);
+						System.out.println("Numero de registros: "+ iterador);
+						iterador = iterador + 1;
 						if(!"Ok".equalsIgnoreCase(valida)){
 							return valida; 
 						}
