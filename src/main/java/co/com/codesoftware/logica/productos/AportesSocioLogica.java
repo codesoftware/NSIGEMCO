@@ -88,5 +88,21 @@ public class AportesSocioLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * Funcion con la cual registro un producto en un aporte
+	 * @param idAporte
+	 * @param idTius
+	 * @param producto
+	 * @return
+	 */
+	public String insertaRegistroAporte(Integer idAporte,Integer idTius,List<E> ){
+		String rta = "";
+		try {
+			rta = conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, producto.getCodigoExt(), producto.getCantidad(), producto.getCosto(), idTius);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 
 }

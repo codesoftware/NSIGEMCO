@@ -17,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
+import co.com.codesoftware.server.nsigemco.ProductoAporte;
 import co.com.codesoftware.server.nsigemco.ProductoTmpEntity;
 import co.com.codesoftware.server.nsigemco.RespuestaEntity;
 import co.com.codesoftware.utilities.WSGeneralInterface;
@@ -427,18 +428,18 @@ public class CargueProductoLogica implements WSGeneralInterface {
 	 * @param idTius
 	 * @return
 	 */
-	public String cargaExcelAporte(FileUploadEvent event, Integer idTius, Integer idAporte) {
+	public ArrayList<ProductoAporte> cargaExcelAporte(FileUploadEvent event, Integer idTius, Integer idAporte) {
 		String respuesta = "";
 		String mensaje = "";
 		Row row = null;
 		Cell cell = null;
+		ArrayList<ProductoAporte> productos = null;
 		try {
 			file = event.getFile().getInputstream();
 			Integer iterador = 0;
 			workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 			Iterator<Row> rowIterator = sheet.iterator();
-			List<ProductoTmpEntity> listaProductos = new ArrayList<ProductoTmpEntity>();
 			rowIterator.next();
 			while (rowIterator.hasNext()) {
 				row = rowIterator.next();
@@ -481,13 +482,15 @@ public class CargueProductoLogica implements WSGeneralInterface {
 							mensaje += row.getRowNum();
 							break;
 						}
-						String valida = "";
-						valida= conexionWSNewProd().getPortNewProductos().insertarProductoAporte(idAporte, codigoExterno, cantidad, costo, idTius);
-						System.out.println("Numero de registros: "+ iterador);
-						iterador = iterador + 1;
-						if(!"Ok".equalsIgnoreCase(valida)){
-							return valida; 
+						if(productos == null){
+							productos = new ArrayList<ProductoAporte>();
 						}
+						ProductoAporte item = new ProductoAporte();
+						item.setCantidad(cantidad);
+						item.setCodExterno(codigoExterno);
+						item.setCosto(costo);
+						productos.add(item);
+						
 					}
 				}
 			}
@@ -497,7 +500,7 @@ public class CargueProductoLogica implements WSGeneralInterface {
 			respuesta = "Error " + e;
 			System.out.println("error en  Fila" + row.getRowNum());
 		}
-		return respuesta;
+		return productos;
 	}
 
 }
