@@ -1,0 +1,124 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/TEMPLATE/template.xhtml">
+		<ui:define name="content">
+			<br />
+			<f:event listener="#{prodParamBean.consultaProductosParametrizados}" type="preRenderView" />
+			<h:form id="formTable">
+				<p:remoteCommand name="codExt" update=":formTable:codigoProd,:formTable:nombreProd" actionListener="#{prodParamBean.busquedaProducto}" />
+
+				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
+				<center>
+					<p:panel style="width:80%">
+						<p:dataTable var="producto" rows="20" widgetVar="wproducto" id="tablaProductosI" value="#{prodParamBean.listaProductos}" paginator="true" filteredValue="#{prodParamBean.listaProductosFiltro}"
+							emptyMessage="No existen productos parametrizados en el sistema">
+							<f:facet name="header">
+								CONSULTA GENERAL DE PRODUCTOS NO INVENTARIABLES
+							</f:facet>
+							<p:column headerText="NOMBRE PRODUCTO" filterBy="#{producto.descripcionProducto}" priority="1" filterMatchMode="contains">
+								<h:outputText value="#{producto.descripcionProducto}"></h:outputText>
+							</p:column>
+							<p:column headerText="NOMBRE SUBCUENTA" filterBy="#{producto.auxiliar.nombre}" priority="2" filterMatchMode="contains">
+								<h:outputText value="#{producto.auxiliar.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="ESTADO" filterBy="#{producto.estado}" priority="3" filterMatchMode="contains">
+								<h:outputText value="#{producto.estado}"></h:outputText>
+							</p:column>
+							<p:column headerText="DETALLE" priority="4">
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" actionListener="#{prodParamBean.consultaProductoXId(producto.id)}"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton value="INSERTAR" styleClass="GreenButton" update="panelProducto" actionListener="#{prodParamBean.limpiaPanel}" oncomplete="PF('datosProducto').show()" />
+					</p:panel>
+					<p:dialog responsive="true" widgetVar="datosProducto" modal="true" header="DATOS PRODUCTO" closeOnEscape="true" style="width:80%">
+						<p:panelGrid columns="3" id="panelProducto" style="width:90%">
+							<p:column>
+							Seleccione producto
+							</p:column>
+							<p:column>
+							Codigo Ext:
+									<p:inputText value="#{prodParamBean.codigoExterno}" id="codExt" onkeypress="if (event.keyCode == 13){ codExt();}" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{prodParamBean.busquedaAvanzada}" update="tablaProductos"
+									onstart="PF('tablaProd').clearFilters()" />
+							</p:column>
+							<p:column>
+							Datos producto
+							</p:column>
+							<p:column>
+							Codigo:<p:outputLabel id="codigoProd" value="#{prodParamBean.codExterno}" />
+							</p:column>
+							<p:column>
+							Nombre:<p:outputLabel id="nombreProd" value="#{prodParamBean.nombrePrd}" />
+							</p:column>
+							<p:column>
+							Seleccione Subcuenta
+							</p:column>
+							<p:column colspan="2">
+								<p:autoComplete id="autoAuxiliarCont" value="#{prodParamBean.detAuxContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{prodParamBean.completaAuxContable}"
+									converter="auxiliarContableConverter">`
+							<p:column>
+										<h:outputText value="#{item.codigo}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{item.nombre}" />
+									</p:column>
+								</p:autoComplete>
+							</p:column>
+							<p:column>
+							</p:column>
+							<p:column>
+							Descripción
+							</p:column>
+							<p:column>
+								<p:inputText value="#{prodParamBean.producto.descripcion}" />
+							</p:column>
+						</p:panelGrid>
+					</p:dialog>
+
+					<p:dialog header="Consulta de productos" widgetVar="addProducto" minHeight="150" width="90%" modal="true" closeOnEscape="true">
+						<p:dataTable widgetVar="tablaProd" emptyMessage="No existen productos en la base de datos" id="tablaProductos" var="prod" paginator="true" value="#{prodParamBean.productosConsulta}"
+							filteredValue="#{prodParamBean.productosConsultaFiltered}" rows="20" rowsPerPageTemplate="10,15,20,50" scrollable="true" scrollHeight="330" reflow="true">
+							<f:facet name="header">
+								<p:outputLabel value="CONSULTA GENERAL DE PRODUCTOS" />
+								<p:inputText id="globalFilter" onkeyup="PF('tablaProd').filter()" />
+							</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{prod.codigo}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigo}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO EXTERNO" filterBy="#{prod.codigoExt}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigoExt}"></h:outputText>
+							</p:column>
+							<p:column headerText="DESCRIPCION" filterBy="#{prod.descripcion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.descripcion}"></h:outputText>
+							</p:column>
+							<p:column headerText="NOMBRE" filterBy="#{prod.nombre}" filterMatchMode="contains">
+								<h:outputText value="#{prod.nombre}"></h:outputText>
+							</p:column>
+							<p:column headerText="UBICACION" filterBy="#{prod.ubicacion}" filterMatchMode="contains">
+								<h:outputText value="#{prod.ubicacion}"></h:outputText>
+							</p:column>
+							<p:column headerText="CODIGO BARRAS" filterBy="#{prod.codigoBarras}" filterMatchMode="contains">
+								<h:outputText value="#{prod.codigoBarras}"></h:outputText>
+							</p:column>
+							<p:column headerText="ACCION">
+								<p:commandButton value="ADD" oncomplete="PF('addProducto').hide();"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:dialog>
+
+				</center>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>
