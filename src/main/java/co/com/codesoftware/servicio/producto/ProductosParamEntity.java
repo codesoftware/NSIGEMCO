@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idProducto" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idUsuario" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
     "descripcionProducto",
     "estado",
     "id",
-    "idProducto"
+    "idProducto",
+    "idUsuario"
 })
 public class ProductosParamEntity {
 
@@ -47,6 +49,7 @@ public class ProductosParamEntity {
     protected String estado;
     protected Integer id;
     protected Integer idProducto;
+    protected Integer idUsuario;
 
     /**
      * Obtiene el valor de la propiedad axiliar.
@@ -190,6 +193,30 @@ public class ProductosParamEntity {
      */
     public void setIdProducto(Integer value) {
         this.idProducto = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad idUsuario.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    /**
+     * Define el valor de la propiedad idUsuario.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdUsuario(Integer value) {
+        this.idUsuario = value;
     }
 
 }
