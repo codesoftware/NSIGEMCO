@@ -26,11 +26,14 @@ public class ObjectFactory {
 
     private final static QName _GeneraProcesoAporte_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "generaProcesoAporte");
     private final static QName _ConsultaPromPonderadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPromPonderadoResponse");
+    private final static QName _ActualizaProdParametrizado_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "actualizaProdParametrizado");
     private final static QName _ObtenerPromedioPonderadoProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerPromedioPonderadoProducto");
     private final static QName _ObtenerCantidadesTotalesResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerCantidadesTotalesResponse");
     private final static QName _ObtenerExistenciasProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerExistenciasProductoResponse");
     private final static QName _ObtenerSolicitudXIdResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXIdResponse");
+    private final static QName _ObtenerProductosParametrizadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosParametrizadoResponse");
     private final static QName _ConsultaPagoFactura_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagoFactura");
+    private final static QName _ObtenerProdParametrizadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProdParametrizadoResponse");
     private final static QName _ObtenerProductosYRecetas_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetas");
     private final static QName _ObtenerPromedioPonderadoProductoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerPromedioPonderadoProductoResponse");
     private final static QName _ObtenerProductosXSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSolicitudResponse");
@@ -54,6 +57,7 @@ public class ObjectFactory {
     private final static QName _ObtenerProductosYRecetasResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasResponse");
     private final static QName _ObtenerProductosYRecetasXCriterioResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosYRecetasXCriterioResponse");
     private final static QName _InsertarProductoAporteResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertarProductoAporteResponse");
+    private final static QName _InsertarProdParametrizado_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertarProdParametrizado");
     private final static QName _ObtenerProductoXCodExt_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodExt");
     private final static QName _InsertarProductoAporte_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertarProductoAporte");
     private final static QName _ConsultaFactCompraResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaFactCompraResponse");
@@ -63,12 +67,15 @@ public class ObjectFactory {
     private final static QName _ConsultaPagoFactRealResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagoFactRealResponse");
     private final static QName _InsertaProductosSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaProductosSolicitud");
     private final static QName _ObtenerSolicitudesFiltros_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudesFiltros");
+    private final static QName _InsertarProdParametrizadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertarProdParametrizadoResponse");
     private final static QName _ObtenerSolicitudXId_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXId");
     private final static QName _ObtenerSolicitudXfiltroResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerSolicitudXfiltroResponse");
+    private final static QName _ActualizaProdParametrizadoResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "actualizaProdParametrizadoResponse");
     private final static QName _GeneraProcesoAporteResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "generaProcesoAporteResponse");
     private final static QName _ObtenerRecetaXCodigo_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerRecetaXCodigo");
     private final static QName _ObtenerProductosXSedeResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSedeResponse");
     private final static QName _ObtenerProductosXSede_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosXSede");
+    private final static QName _ObtenerProductosParametrizado_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductosParametrizado");
     private final static QName _ConsultaPagoFactReal_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "consultaPagoFactReal");
     private final static QName _InsertaSolicitud_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaSolicitud");
     private final static QName _ObtenerProductoXCodBarrasResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodBarrasResponse");
@@ -89,6 +96,7 @@ public class ObjectFactory {
     private final static QName _ObtenerProductoXCodBarras_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProductoXCodBarras");
     private final static QName _InsertaSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaSolicitudResponse");
     private final static QName _ObtenerExistenciasProducto_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerExistenciasProducto");
+    private final static QName _ObtenerProdParametrizado_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "obtenerProdParametrizado");
     private final static QName _InsertaProductosSolicitudResponse_QNAME = new QName("http://producto.servicio.codesoftware.com.co/", "insertaProductosSolicitudResponse");
 
     /**
@@ -203,6 +211,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link InsertarProdParametrizado }
+     * 
+     */
+    public InsertarProdParametrizado createInsertarProdParametrizado() {
+        return new InsertarProdParametrizado();
+    }
+
+    /**
      * Create an instance of {@link ObtenerProductoXCodExt }
      * 
      */
@@ -267,6 +283,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerProdParametrizadoResponse }
+     * 
+     */
+    public ObtenerProdParametrizadoResponse createObtenerProdParametrizadoResponse() {
+        return new ObtenerProdParametrizadoResponse();
+    }
+
+    /**
      * Create an instance of {@link ObtenerProductosYRecetas }
      * 
      */
@@ -304,6 +328,22 @@ public class ObjectFactory {
      */
     public ObtenerSolicitudXIdResponse createObtenerSolicitudXIdResponse() {
         return new ObtenerSolicitudXIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtenerProductosParametrizadoResponse }
+     * 
+     */
+    public ObtenerProductosParametrizadoResponse createObtenerProductosParametrizadoResponse() {
+        return new ObtenerProductosParametrizadoResponse();
+    }
+
+    /**
+     * Create an instance of {@link ActualizaProdParametrizado }
+     * 
+     */
+    public ActualizaProdParametrizado createActualizaProdParametrizado() {
+        return new ActualizaProdParametrizado();
     }
 
     /**
@@ -459,6 +499,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerProdParametrizado }
+     * 
+     */
+    public ObtenerProdParametrizado createObtenerProdParametrizado() {
+        return new ObtenerProdParametrizado();
+    }
+
+    /**
      * Create an instance of {@link InsertaProductosSolicitudResponse }
      * 
      */
@@ -555,6 +603,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ActualizaProdParametrizadoResponse }
+     * 
+     */
+    public ActualizaProdParametrizadoResponse createActualizaProdParametrizadoResponse() {
+        return new ActualizaProdParametrizadoResponse();
+    }
+
+    /**
      * Create an instance of {@link GeneraProcesoAporteResponse }
      * 
      */
@@ -568,6 +624,14 @@ public class ObjectFactory {
      */
     public ObtenerSolicitudesFiltros createObtenerSolicitudesFiltros() {
         return new ObtenerSolicitudesFiltros();
+    }
+
+    /**
+     * Create an instance of {@link InsertarProdParametrizadoResponse }
+     * 
+     */
+    public InsertarProdParametrizadoResponse createInsertarProdParametrizadoResponse() {
+        return new InsertarProdParametrizadoResponse();
     }
 
     /**
@@ -627,6 +691,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtenerProductosParametrizado }
+     * 
+     */
+    public ObtenerProductosParametrizado createObtenerProductosParametrizado() {
+        return new ObtenerProductosParametrizado();
+    }
+
+    /**
      * Create an instance of {@link DepartamentoEntity }
      * 
      */
@@ -635,19 +707,83 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RecetaEntity }
-     * 
-     */
-    public RecetaEntity createRecetaEntity() {
-        return new RecetaEntity();
-    }
-
-    /**
      * Create an instance of {@link UsuarioEntity }
      * 
      */
     public UsuarioEntity createUsuarioEntity() {
         return new UsuarioEntity();
+    }
+
+    /**
+     * Create an instance of {@link PagoFacCompraEntity }
+     * 
+     */
+    public PagoFacCompraEntity createPagoFacCompraEntity() {
+        return new PagoFacCompraEntity();
+    }
+
+    /**
+     * Create an instance of {@link ProductoSimpleEntity }
+     * 
+     */
+    public ProductoSimpleEntity createProductoSimpleEntity() {
+        return new ProductoSimpleEntity();
+    }
+
+    /**
+     * Create an instance of {@link MarcaEntity }
+     * 
+     */
+    public MarcaEntity createMarcaEntity() {
+        return new MarcaEntity();
+    }
+
+    /**
+     * Create an instance of {@link PersonaEntity }
+     * 
+     */
+    public PersonaEntity createPersonaEntity() {
+        return new PersonaEntity();
+    }
+
+    /**
+     * Create an instance of {@link CiudadEntity }
+     * 
+     */
+    public CiudadEntity createCiudadEntity() {
+        return new CiudadEntity();
+    }
+
+    /**
+     * Create an instance of {@link ProveedoresEntity }
+     * 
+     */
+    public ProveedoresEntity createProveedoresEntity() {
+        return new ProveedoresEntity();
+    }
+
+    /**
+     * Create an instance of {@link ReteFuenteEntity }
+     * 
+     */
+    public ReteFuenteEntity createReteFuenteEntity() {
+        return new ReteFuenteEntity();
+    }
+
+    /**
+     * Create an instance of {@link SubCuentaEntity }
+     * 
+     */
+    public SubCuentaEntity createSubCuentaEntity() {
+        return new SubCuentaEntity();
+    }
+
+    /**
+     * Create an instance of {@link RecetaEntity }
+     * 
+     */
+    public RecetaEntity createRecetaEntity() {
+        return new RecetaEntity();
     }
 
     /**
@@ -715,19 +851,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PagoFacCompraEntity }
+     * Create an instance of {@link ProductosParamEntity }
      * 
      */
-    public PagoFacCompraEntity createPagoFacCompraEntity() {
-        return new PagoFacCompraEntity();
-    }
-
-    /**
-     * Create an instance of {@link ProductoSimpleEntity }
-     * 
-     */
-    public ProductoSimpleEntity createProductoSimpleEntity() {
-        return new ProductoSimpleEntity();
+    public ProductosParamEntity createProductosParamEntity() {
+        return new ProductosParamEntity();
     }
 
     /**
@@ -736,22 +864,6 @@ public class ObjectFactory {
      */
     public CategoriaEntity createCategoriaEntity() {
         return new CategoriaEntity();
-    }
-
-    /**
-     * Create an instance of {@link MarcaEntity }
-     * 
-     */
-    public MarcaEntity createMarcaEntity() {
-        return new MarcaEntity();
-    }
-
-    /**
-     * Create an instance of {@link PersonaEntity }
-     * 
-     */
-    public PersonaEntity createPersonaEntity() {
-        return new PersonaEntity();
     }
 
     /**
@@ -771,22 +883,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CiudadEntity }
-     * 
-     */
-    public CiudadEntity createCiudadEntity() {
-        return new CiudadEntity();
-    }
-
-    /**
-     * Create an instance of {@link ProveedoresEntity }
-     * 
-     */
-    public ProveedoresEntity createProveedoresEntity() {
-        return new ProveedoresEntity();
-    }
-
-    /**
      * Create an instance of {@link SedeEntity }
      * 
      */
@@ -803,19 +899,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReteFuenteEntity }
+     * Create an instance of {@link AuxContableEntity }
      * 
      */
-    public ReteFuenteEntity createReteFuenteEntity() {
-        return new ReteFuenteEntity();
-    }
-
-    /**
-     * Create an instance of {@link SubCuentaEntity }
-     * 
-     */
-    public SubCuentaEntity createSubCuentaEntity() {
-        return new SubCuentaEntity();
+    public AuxContableEntity createAuxContableEntity() {
+        return new AuxContableEntity();
     }
 
     /**
@@ -850,6 +938,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "consultaPromPonderadoResponse")
     public JAXBElement<ConsultaPromPonderadoResponse> createConsultaPromPonderadoResponse(ConsultaPromPonderadoResponse value) {
         return new JAXBElement<ConsultaPromPonderadoResponse>(_ConsultaPromPonderadoResponse_QNAME, ConsultaPromPonderadoResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ActualizaProdParametrizado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "actualizaProdParametrizado")
+    public JAXBElement<ActualizaProdParametrizado> createActualizaProdParametrizado(ActualizaProdParametrizado value) {
+        return new JAXBElement<ActualizaProdParametrizado>(_ActualizaProdParametrizado_QNAME, ActualizaProdParametrizado.class, null, value);
     }
 
     /**
@@ -889,12 +986,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosParametrizadoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProductosParametrizadoResponse")
+    public JAXBElement<ObtenerProductosParametrizadoResponse> createObtenerProductosParametrizadoResponse(ObtenerProductosParametrizadoResponse value) {
+        return new JAXBElement<ObtenerProductosParametrizadoResponse>(_ObtenerProductosParametrizadoResponse_QNAME, ObtenerProductosParametrizadoResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaPagoFactura }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "consultaPagoFactura")
     public JAXBElement<ConsultaPagoFactura> createConsultaPagoFactura(ConsultaPagoFactura value) {
         return new JAXBElement<ConsultaPagoFactura>(_ConsultaPagoFactura_QNAME, ConsultaPagoFactura.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdParametrizadoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProdParametrizadoResponse")
+    public JAXBElement<ObtenerProdParametrizadoResponse> createObtenerProdParametrizadoResponse(ObtenerProdParametrizadoResponse value) {
+        return new JAXBElement<ObtenerProdParametrizadoResponse>(_ObtenerProdParametrizadoResponse_QNAME, ObtenerProdParametrizadoResponse.class, null, value);
     }
 
     /**
@@ -1105,6 +1220,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertarProdParametrizado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "insertarProdParametrizado")
+    public JAXBElement<InsertarProdParametrizado> createInsertarProdParametrizado(InsertarProdParametrizado value) {
+        return new JAXBElement<InsertarProdParametrizado>(_InsertarProdParametrizado_QNAME, InsertarProdParametrizado.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductoXCodExt }{@code >}}
      * 
      */
@@ -1186,6 +1310,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsertarProdParametrizadoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "insertarProdParametrizadoResponse")
+    public JAXBElement<InsertarProdParametrizadoResponse> createInsertarProdParametrizadoResponse(InsertarProdParametrizadoResponse value) {
+        return new JAXBElement<InsertarProdParametrizadoResponse>(_InsertarProdParametrizadoResponse_QNAME, InsertarProdParametrizadoResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerSolicitudXId }{@code >}}
      * 
      */
@@ -1201,6 +1334,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerSolicitudXfiltroResponse")
     public JAXBElement<ObtenerSolicitudXfiltroResponse> createObtenerSolicitudXfiltroResponse(ObtenerSolicitudXfiltroResponse value) {
         return new JAXBElement<ObtenerSolicitudXfiltroResponse>(_ObtenerSolicitudXfiltroResponse_QNAME, ObtenerSolicitudXfiltroResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ActualizaProdParametrizadoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "actualizaProdParametrizadoResponse")
+    public JAXBElement<ActualizaProdParametrizadoResponse> createActualizaProdParametrizadoResponse(ActualizaProdParametrizadoResponse value) {
+        return new JAXBElement<ActualizaProdParametrizadoResponse>(_ActualizaProdParametrizadoResponse_QNAME, ActualizaProdParametrizadoResponse.class, null, value);
     }
 
     /**
@@ -1237,6 +1379,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProductosXSede")
     public JAXBElement<ObtenerProductosXSede> createObtenerProductosXSede(ObtenerProductosXSede value) {
         return new JAXBElement<ObtenerProductosXSede>(_ObtenerProductosXSede_QNAME, ObtenerProductosXSede.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProductosParametrizado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProductosParametrizado")
+    public JAXBElement<ObtenerProductosParametrizado> createObtenerProductosParametrizado(ObtenerProductosParametrizado value) {
+        return new JAXBElement<ObtenerProductosParametrizado>(_ObtenerProductosParametrizado_QNAME, ObtenerProductosParametrizado.class, null, value);
     }
 
     /**
@@ -1417,6 +1568,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerExistenciasProducto")
     public JAXBElement<ObtenerExistenciasProducto> createObtenerExistenciasProducto(ObtenerExistenciasProducto value) {
         return new JAXBElement<ObtenerExistenciasProducto>(_ObtenerExistenciasProducto_QNAME, ObtenerExistenciasProducto.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtenerProdParametrizado }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://producto.servicio.codesoftware.com.co/", name = "obtenerProdParametrizado")
+    public JAXBElement<ObtenerProdParametrizado> createObtenerProdParametrizado(ObtenerProdParametrizado value) {
+        return new JAXBElement<ObtenerProdParametrizado>(_ObtenerProdParametrizado_QNAME, ObtenerProdParametrizado.class, null, value);
     }
 
     /**
