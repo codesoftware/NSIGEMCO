@@ -44,6 +44,8 @@ public class PerfilesBean implements GeneralBean {
 				this.setPermisosAplicacion();
 				permisosAdm = this.perfilSelec.getPermisos().split("\\.");
 				permisosInv = this.perfilSelec.getPermisos().split("\\.");
+				permisosFact = this.perfilSelec.getPermisos().split("\\.");
+				permisosPara = this.perfilSelec.getPermisos().split("\\.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,8 +98,11 @@ public class PerfilesBean implements GeneralBean {
 			this.listFactura = new ArrayList<>();			
 		}
 		listFactura.add(new PerfilBean("NOTA CREDITO", "Fact1"));
-		listFactura.add(new PerfilBean("NOTA DEBITO", "Fact1"));
+		listFactura.add(new PerfilBean("NOTA DEBITO", "Fact2"));
 		listFactura.add(new PerfilBean("ACCESO FACTURACIÓN", "FcCr7"));
+		listFactura.add(new PerfilBean("REMISIONES", "Fact3"));
+		listFactura.add(new PerfilBean("PAGO REMISIONES", "Fact4"));
+		listFactura.add(new PerfilBean("CONSULTA FACTURAS", "Fact5"));
 	}
 
 	/**
@@ -124,6 +129,12 @@ public class PerfilesBean implements GeneralBean {
 				for (String item : this.permisosPara) {
 					perAdm += "." + item + ".";
 				}
+			}
+			if(this.permisosFact!=null){
+				for(String item : this.permisosFact){
+					perAdm += "." + item +".";
+				}
+				
 			}
 			UsuarioLogic objLogic = new UsuarioLogic();
 			this.perfilSelec.setPermisos(perAdm);

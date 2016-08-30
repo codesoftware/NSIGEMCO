@@ -63,7 +63,7 @@ public class MenuBean implements Serializable {
 	}
 
 	public DefaultSubMenu generaMenuParametros() {
-		DefaultSubMenu segundoPunto = new DefaultSubMenu();		
+		DefaultSubMenu segundoPunto = new DefaultSubMenu();
 		try {
 			// REPORTES
 			if (this.listaPermisos.contains(".Per1.") || this.listaPermisos.contains(".Per2.")) {
@@ -80,7 +80,7 @@ public class MenuBean implements Serializable {
 				if (this.listaPermisos.contains(".Per4.")) {
 					DefaultSubMenu segPunNivDos = new DefaultSubMenu();
 					segPunNivDos.setLabel("Precio Masivo");
-					
+
 					DefaultMenuItem segPunNvDosPrecMasiv = new DefaultMenuItem("Consulta Porcentajes");
 					segPunNvDosPrecMasiv.setCommand("/ACTION/PRECIOS/ConsPorcPrecioMasivo.jsf");
 
@@ -100,7 +100,7 @@ public class MenuBean implements Serializable {
 		}
 		return segundoPunto;
 	}
-	
+
 	/**
 	 * Funcion con la cual genero el menu de reportes
 	 * 
@@ -214,7 +214,7 @@ public class MenuBean implements Serializable {
 						cargues.addElement(cargueProd);
 					}
 				}
-				if(this.listaPermisos.contains(".Inv10.")){
+				if (this.listaPermisos.contains(".Inv10.")) {
 					DefaultSubMenu aportesSoci = new DefaultSubMenu();
 					aportesSoci.setLabel("Aporte Socio");
 					menuPrincipal.addElement(aportesSoci);
@@ -243,7 +243,7 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Adm3.") || this.listaPermisos.contains(".Adm4.")
 					|| this.listaPermisos.contains(".Adm5.") || this.listaPermisos.contains(".Adm6.")
 					|| this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")
-					|| this.listaPermisos.contains(".Adm9.")|| this.listaPermisos.contains(".Adm10.")) {
+					|| this.listaPermisos.contains(".Adm9.") || this.listaPermisos.contains(".Adm10.")) {
 				menuPrincipal.setLabel("ADMINISTRACION");
 				menuPrincipal.setIcon("fa fa-users");
 				// Se generan los submenus de segundo nivel
@@ -318,25 +318,44 @@ public class MenuBean implements Serializable {
 	public DefaultSubMenu generaMenuFacturacion() {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
-			menuPrincipal.setLabel("FACTURACION");
-			menuPrincipal.setIcon("fa fa-files-o");
-			// Se generan los submenus de segundo nivel
-			// Genero el segundo nivel del menu
-			DefaultMenuItem segundoNivel = new DefaultMenuItem("Consulta Facturas");
-			segundoNivel.setCommand("/ACTION/FACTURACION/consultaFacturas.jsf");
-			DefaultSubMenu segundoNivelDos = new DefaultSubMenu("Remisiones");
-
-			DefaultMenuItem consultaRemi = new DefaultMenuItem("Consulta Remisiones");
-			consultaRemi.setCommand("/ACTION/FACTURACION/remisionFacturacion.jsf");
-			DefaultMenuItem consultaPagos = new DefaultMenuItem("Registro Pagos");
-			consultaPagos.setCommand("/ACTION/FACTURACION/pagosRemision.jsf");
-
-			segundoNivelDos.addElement(consultaRemi);
-			segundoNivelDos.addElement(consultaPagos);
-
-			// Adiciono al punto de menu principal
-			menuPrincipal.addElement(segundoNivel);
-			menuPrincipal.addElement(segundoNivelDos);
+			if (this.listaPermisos.contains(".Fact1.") || this.listaPermisos.contains(".Fact2.")
+					|| this.listaPermisos.contains(".Fact3.") || this.listaPermisos.contains(".Fact4.")|| this.listaPermisos.contains(".Fact5.")) {
+				menuPrincipal.setLabel("FACTURACION");
+				menuPrincipal.setIcon("fa fa-files-o");
+				if (this.listaPermisos.contains(".Fact1.") || this.listaPermisos.contains(".Fact2.")) {
+					DefaultSubMenu item = new DefaultSubMenu("Notas");
+					if (this.listaPermisos.contains(".Fact1.")) {
+						DefaultMenuItem subItem = new DefaultMenuItem("Credito");
+						subItem.setCommand("/ACTION/FACTURACION/notaCredito.jsf");
+						item.addElement(subItem);
+					}
+					if (this.listaPermisos.contains(".Fact2.")) {
+						DefaultMenuItem subItem = new DefaultMenuItem("Debito");
+						item.addElement(subItem);
+					}
+					menuPrincipal.addElement(item);
+				}
+				if (this.listaPermisos.contains(".Fact3.") || this.listaPermisos.contains(".Fact4.")) {
+					DefaultSubMenu segundoNivelDos = new DefaultSubMenu("Remisiones");
+					if (this.listaPermisos.contains(".Fact3.")) {
+						DefaultMenuItem consultaRemi = new DefaultMenuItem("Consulta Remisiones");
+						consultaRemi.setCommand("/ACTION/FACTURACION/remisionFacturacion.jsf");
+						segundoNivelDos.addElement(consultaRemi);
+					}
+					if (this.listaPermisos.contains(".Fact4.")) {
+						DefaultMenuItem consultaPagos = new DefaultMenuItem("Registro Pagos");
+						consultaPagos.setCommand("/ACTION/FACTURACION/pagosRemision.jsf");
+						segundoNivelDos.addElement(consultaPagos);
+					}
+					menuPrincipal.addElement(segundoNivelDos);
+				}
+				if (this.listaPermisos.contains(".Fact5.")) {
+					DefaultMenuItem segundoNivel = new DefaultMenuItem("Consulta Facturas");
+					segundoNivel.setCommand("/ACTION/FACTURACION/consultaFacturas.jsf");
+					DefaultSubMenu segundoNivelDos = new DefaultSubMenu("Remisiones");
+					menuPrincipal.addElement(segundoNivel);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
