@@ -1,5 +1,5 @@
 
-package co.com.codesoftware.server.nsigemco;
+package co.com.codesoftware.servicio.producto;
 
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;

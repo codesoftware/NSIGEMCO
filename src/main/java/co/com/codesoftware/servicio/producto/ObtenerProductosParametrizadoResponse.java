@@ -1,5 +1,5 @@
 
-package co.com.codesoftware.server.nsigemco;
+package co.com.codesoftware.servicio.producto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para obtenerAportesResponse complex type.
+ * <p>Clase Java para obtenerProductosParametrizadoResponse complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="obtenerAportesResponse">
+ * &lt;complexType name="obtenerProductosParametrizadoResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://nsigemco.server.codesoftware.com.co/}aporteSocioEntity" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://producto.servicio.codesoftware.com.co/}productosParamEntity" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,13 +29,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "obtenerAportesResponse", propOrder = {
+@XmlType(name = "obtenerProductosParametrizadoResponse", propOrder = {
     "_return"
 })
-public class ObtenerAportesResponse {
+public class ObtenerProductosParametrizadoResponse {
 
     @XmlElement(name = "return")
-    protected List<AporteSocioEntity> _return;
+    protected List<ProductosParamEntity> _return;
 
     /**
      * Gets the value of the return property.
@@ -55,13 +55,13 @@ public class ObtenerAportesResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link AporteSocioEntity }
+     * {@link ProductosParamEntity }
      * 
      * 
      */
-    public List<AporteSocioEntity> getReturn() {
+    public List<ProductosParamEntity> getReturn() {
         if (_return == null) {
-            _return = new ArrayList<AporteSocioEntity>();
+            _return = new ArrayList<ProductosParamEntity>();
         }
         return this._return;
     }

@@ -7,19 +7,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para departamentoEntity complex type.
+ * <p>Clase Java para auxContableEntity complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="departamentoEntity">
+ * &lt;complexType name="auxContableEntity">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="codigo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="idPais" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idSbcu" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -30,19 +30,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "departamentoEntity", propOrder = {
+@XmlType(name = "auxContableEntity", propOrder = {
     "codigo",
     "descripcion",
     "id",
-    "idPais",
+    "idSbcu",
     "nombre"
 })
-public class DepartamentoEntity {
+public class AuxContableEntity {
 
     protected String codigo;
     protected String descripcion;
     protected Integer id;
-    protected Integer idPais;
+    protected Integer idSbcu;
     protected String nombre;
 
     /**
@@ -118,27 +118,27 @@ public class DepartamentoEntity {
     }
 
     /**
-     * Obtiene el valor de la propiedad idPais.
+     * Obtiene el valor de la propiedad idSbcu.
      * 
      * @return
      *     possible object is
      *     {@link Integer }
      *     
      */
-    public Integer getIdPais() {
-        return idPais;
+    public Integer getIdSbcu() {
+        return idSbcu;
     }
 
     /**
-     * Define el valor de la propiedad idPais.
+     * Define el valor de la propiedad idSbcu.
      * 
      * @param value
      *     allowed object is
      *     {@link Integer }
      *     
      */
-    public void setIdPais(Integer value) {
-        this.idPais = value;
+    public void setIdSbcu(Integer value) {
+        this.idSbcu = value;
     }
 
     /**

@@ -67,6 +67,7 @@ public class PerfilesBean implements GeneralBean {
 		listPermAdm.add(new PerfilBean("CLIENTES", "Adm7"));
 		listPermAdm.add(new PerfilBean("PERFILES", "Adm8"));
 		listPermAdm.add(new PerfilBean("SOCIOS", "Adm9"));
+		listPermAdm.add(new PerfilBean("PARAM PRODUCTOS", "Adm10"));
 		// Permisos de Inventario
 		if (listPermInv == null) {
 			this.listPermInv = new ArrayList<>();

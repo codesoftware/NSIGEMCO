@@ -1,5 +1,5 @@
 
-package co.com.codesoftware.server.nsigemco;
+package co.com.codesoftware.servicio.producto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para actualizarAportesResponse complex type.
+ * <p>Clase Java para obtenerProdParametrizadoResponse complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="actualizarAportesResponse">
+ * &lt;complexType name="obtenerProdParametrizadoResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://producto.servicio.codesoftware.com.co/}productosParamEntity" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,23 +27,23 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "actualizarAportesResponse", propOrder = {
+@XmlType(name = "obtenerProdParametrizadoResponse", propOrder = {
     "_return"
 })
-public class ActualizarAportesResponse {
+public class ObtenerProdParametrizadoResponse {
 
     @XmlElement(name = "return")
-    protected String _return;
+    protected ProductosParamEntity _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link ProductosParamEntity }
      *     
      */
-    public String getReturn() {
+    public ProductosParamEntity getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class ActualizarAportesResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link ProductosParamEntity }
      *     
      */
-    public void setReturn(String value) {
+    public void setReturn(ProductosParamEntity value) {
         this._return = value;
     }
 

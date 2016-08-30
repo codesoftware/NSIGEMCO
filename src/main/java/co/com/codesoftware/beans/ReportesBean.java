@@ -62,7 +62,7 @@ public class ReportesBean implements GeneralBean {
 		try {
 			if ("pdf".equalsIgnoreCase(this.tipo)) {
 				String ruta = "";
-				documento = reporte.consultaRutaReporteCompVendidos();
+				documento = reporte.consultaRutaReporteCompVendidos(fechaInicial,fechaFinal);
 				RemisionLogica objLogica = new RemisionLogica();
 				String valida = objLogica.materializaImagenCarpeta(documento, "reportes", "ComprasVentas.pdf",
 						"relativa");

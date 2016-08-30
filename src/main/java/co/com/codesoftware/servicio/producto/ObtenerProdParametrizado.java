@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para consultaPagoFactura complex type.
+ * <p>Clase Java para obtenerProdParametrizado complex type.
  * 
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="consultaPagoFactura">
+ * &lt;complexType name="obtenerProdParametrizado">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idProd" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "consultaPagoFactura", propOrder = {
-    "id"
+@XmlType(name = "obtenerProdParametrizado", propOrder = {
+    "idProd"
 })
-public class ConsultaPagoFactura {
+public class ObtenerProdParametrizado {
 
-    protected Integer id;
+    protected Integer idProd;
 
     /**
-     * Obtiene el valor de la propiedad id.
+     * Obtiene el valor de la propiedad idProd.
      * 
      * @return
      *     possible object is
      *     {@link Integer }
      *     
      */
-    public Integer getId() {
-        return id;
+    public Integer getIdProd() {
+        return idProd;
     }
 
     /**
-     * Define el valor de la propiedad id.
+     * Define el valor de la propiedad idProd.
      * 
      * @param value
      *     allowed object is
      *     {@link Integer }
      *     
      */
-    public void setId(Integer value) {
-        this.id = value;
+    public void setIdProd(Integer value) {
+        this.idProd = value;
     }
 
 }
