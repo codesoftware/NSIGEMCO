@@ -25,9 +25,11 @@ public class PerfilesBean implements GeneralBean {
 	private String[] permisosAdm;
 	private String[] permisosInv;
 	private String[] permisosPara;
+	private String[] permisosFact;
 	private List<PerfilBean> listPermAdm;
 	private List<PerfilBean> listPermInv;
 	private List<PerfilBean> listPermPara;
+	private List<PerfilBean> listFactura;
 
 	@PostConstruct
 	public void init() {
@@ -88,7 +90,13 @@ public class PerfilesBean implements GeneralBean {
 		listPermPara.add(new PerfilBean("ADM. PRECIOS MASIVOS", "Per2"));
 		listPermPara.add(new PerfilBean("REPORTE BASICO", "Per3"));
 		listPermPara.add(new PerfilBean("COMPRAS Y VENTAS", "Per4"));
-
+		// Permisos de facturacion
+		if(listFactura == null){
+			this.listFactura = new ArrayList<>();			
+		}
+		listFactura.add(new PerfilBean("NOTA CREDITO", "Fact1"));
+		listFactura.add(new PerfilBean("NOTA DEBITO", "Fact1"));
+		listFactura.add(new PerfilBean("ACCESO FACTURACIÓN", "FcCr7"));
 	}
 
 	/**
@@ -97,7 +105,8 @@ public class PerfilesBean implements GeneralBean {
 	public void enviarPermisos() {
 		String perAdm = "";
 		if ((this.permisosAdm == null || this.permisosAdm.length == 0)
-				&& (this.permisosInv == null || this.permisosInv.length == 0) && (this.permisosPara == null || this.permisosPara.length == 0)) {
+				&& (this.permisosInv == null || this.permisosInv.length == 0)
+				&& (this.permisosPara == null || this.permisosPara.length == 0)) {
 			this.messageBean("Por Favor seleccione un permiso al menos", ErrorEnum.ERROR);
 		} else {
 			if (this.permisosAdm != null) {
@@ -211,5 +220,22 @@ public class PerfilesBean implements GeneralBean {
 	public void setListPermPara(List<PerfilBean> listPermPara) {
 		this.listPermPara = listPermPara;
 	}
+
+	public List<PerfilBean> getListFactura() {
+		return listFactura;
+	}
+
+	public void setListFactura(List<PerfilBean> listFactura) {
+		this.listFactura = listFactura;
+	}
+
+	public String[] getPermisosFact() {
+		return permisosFact;
+	}
+
+	public void setPermisosFact(String[] permisosFact) {
+		this.permisosFact = permisosFact;
+	}
+	
 
 }

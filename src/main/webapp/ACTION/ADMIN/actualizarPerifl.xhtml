@@ -1,5 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
@@ -48,7 +53,8 @@
 	line-height: 18px;
 }
 </style>
-			<p:growl id="mensaje" life="30000" autoUpdate="true" showDetail="true"></p:growl>
+			<p:growl id="mensaje" life="30000" autoUpdate="true"
+				showDetail="true"></p:growl>
 			<br />
 			<div class="row">
 				<div class="col-md-4 col-xs-0 col-sm-0"></div>
@@ -64,8 +70,10 @@
 							<p:outputLabel value="ESTADO: "></p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Activo" rendered="#{perfilesBean.perfilSelec.estado == 'A'}"></p:outputLabel>
-							<p:outputLabel value="Inactivo" rendered="#{perfilesBean.perfilSelec.estado == 'I'}"></p:outputLabel>
+							<p:outputLabel value="Activo"
+								rendered="#{perfilesBean.perfilSelec.estado == 'A'}"></p:outputLabel>
+							<p:outputLabel value="Inactivo"
+								rendered="#{perfilesBean.perfilSelec.estado == 'I'}"></p:outputLabel>
 						</p:column>
 					</p:panelGrid>
 
@@ -78,29 +86,44 @@
 				<div class="col-md-2 col-xs-0 col-sm-0"></div>
 				<div class="col-md-8 col-xs-12 col-sm-12">
 					<h:form id="formPermisos">
-						<br />
-						<h3>ADMINISTRACION</h3>
+						<h3>FACTURACIÓN</h3>
 						<h:panelGroup layout="block" styleClass="selection">
-							<h:selectManyCheckbox id="gridAdm" value="#{perfilesBean.permisosAdm}" styleClass="checkbox" layout="pageDirection">
-								<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							<h:selectManyCheckbox id="gridFact"
+								value="#{perfilesBean.permisosFact}" styleClass="checkbox"
+								layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listFactura}" var="perf"
+									itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+							<br />
+							<h3>ADMINISTRACION</h3>
+							<h:selectManyCheckbox id="gridAdm"
+								value="#{perfilesBean.permisosAdm}" styleClass="checkbox"
+								layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermAdm}" var="perf"
+									itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+							<br />
+							<h3>INVENTARIOS</h3>
+							<h:selectManyCheckbox id="gridInv"
+								value="#{perfilesBean.permisosInv}" styleClass="checkbox"
+								layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermInv}" var="perf"
+									itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
+							</h:selectManyCheckbox>
+							<br />
+							<h3>PARAMETROS Y REPORTES</h3>
+							<h:selectManyCheckbox id="gridPar"
+								value="#{perfilesBean.permisosPara}" styleClass="checkbox"
+								layout="pageDirection">
+								<f:selectItems value="#{perfilesBean.listPermPara}" var="perf"
+									itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
 							</h:selectManyCheckbox>
 						</h:panelGroup>
 						<br />
-						<h3>INVENTARIOS</h3>
-						<h:panelGroup layout="block" styleClass="selection">
-							<h:selectManyCheckbox id="gridInv" value="#{perfilesBean.permisosInv}" styleClass="checkbox" layout="pageDirection">
-								<f:selectItems value="#{perfilesBean.listPermInv}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
-							</h:selectManyCheckbox>
-						</h:panelGroup>
-						<br />
-						<h3>PARAMETROS Y REPORTES</h3>
-						<h:panelGroup layout="block" styleClass="selection">
-							<h:selectManyCheckbox id="gridPar" value="#{perfilesBean.permisosPara}" styleClass="checkbox" layout="pageDirection">
-								<f:selectItems value="#{perfilesBean.listPermPara}" var="perf" itemLabel="#{perf.valor}" itemValue="#{perf.llave}"></f:selectItems>
-							</h:selectManyCheckbox>
-						</h:panelGroup>
-						<br />
-						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check" styleClass="RedButton" actionListener="#{perfilesBean.enviarPermisos}" />
+
+						<p:commandButton value="ACTUALIZAR" icon="ui-icon-check"
+							styleClass="RedButton"
+							actionListener="#{perfilesBean.enviarPermisos}" />
 					</h:form>
 				</div>
 				<div class="col-md-2 col-xs-0 col-sm-0"></div>
