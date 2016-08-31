@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="axiliar" type="{http://producto.servicio.codesoftware.com.co/}auxContableEntity" minOccurs="0"/>
+ *         &lt;element name="codigoExterno" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcionProducto" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "productosParamEntity", propOrder = {
     "axiliar",
+    "codigoExterno",
     "descripcion",
     "descripcionProducto",
     "estado",
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlType;
 public class ProductosParamEntity {
 
     protected AuxContableEntity axiliar;
+    protected String codigoExterno;
     protected String descripcion;
     protected String descripcionProducto;
     protected String estado;
@@ -73,6 +76,30 @@ public class ProductosParamEntity {
      */
     public void setAxiliar(AuxContableEntity value) {
         this.axiliar = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad codigoExterno.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCodigoExterno() {
+        return codigoExterno;
+    }
+
+    /**
+     * Define el valor de la propiedad codigoExterno.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCodigoExterno(String value) {
+        this.codigoExterno = value;
     }
 
     /**

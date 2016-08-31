@@ -24,14 +24,14 @@
 							<p:column headerText="NOMBRE PRODUCTO" filterBy="#{producto.descripcionProducto}" priority="1" filterMatchMode="contains">
 								<h:outputText value="#{producto.descripcionProducto}"></h:outputText>
 							</p:column>
-							<p:column headerText="NOMBRE SUBCUENTA" filterBy="#{producto.auxiliar.nombre}" priority="2" filterMatchMode="contains">
-								<h:outputText value="#{producto.auxiliar.nombre}"></h:outputText>
+							<p:column headerText="NOMBRE SUBCUENTA" filterBy="#{producto.axiliar.nombre}" priority="2" filterMatchMode="contains">
+								<h:outputText value="#{producto.axiliar.nombre}"></h:outputText>
 							</p:column>
 							<p:column headerText="ESTADO" filterBy="#{producto.estado}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{producto.estado}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="4">
-								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" actionListener="#{prodParamBean.consultaProductoXId(producto.id)}"></p:commandButton>
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" actionListener="#{prodParamBean.consultaProductoXId(producto.id)}" update=":formTable:panelProducto" oncomplete="PF('datosProducto').show()"></p:commandButton>
 							</p:column>
 						</p:dataTable>
 						<br />
@@ -74,12 +74,12 @@
 								</p:autoComplete>
 							</p:column>
 							<p:column>
-							</p:column>
-							<p:column>
 							Descripción
+								<p:inputText value="#{prodParamBean.producto.descripcion}" />
 							</p:column>
 							<p:column>
-								<p:inputText value="#{prodParamBean.producto.descripcion}" />
+								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{prodParamBean.banderaBoton=='I'}" actionListener="#{prodParamBean.insertaProducto}" update=":formTable:tablaProductosI" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{prodParamBean.banderaBoton=='U'}" actionListener="#{socioBean.actualizaSocio}" update=":formTable:tablaProductosI" />
 							</p:column>
 						</p:panelGrid>
 					</p:dialog>
@@ -110,11 +110,10 @@
 								<h:outputText value="#{prod.codigoBarras}"></h:outputText>
 							</p:column>
 							<p:column headerText="ACCION">
-								<p:commandButton value="ADD" oncomplete="PF('addProducto').hide();"></p:commandButton>
+								<p:commandButton value="ADD" oncomplete="PF('addProducto').hide();" actionListener="#{prodParamBean.seleccionaProducto(prod.codigoExt)}" update=":formTable:codExt"></p:commandButton>
 							</p:column>
 						</p:dataTable>
 					</p:dialog>
-
 				</center>
 			</h:form>
 		</ui:define>

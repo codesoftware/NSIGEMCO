@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.logica.facturacion.FacturaCompraTmpLogica;
 import co.com.codesoftware.logica.productos.ProductoParamLogica;
@@ -33,6 +35,7 @@ public class ProdParamBean implements GeneralBean {
 	private String nombrePrd;
 	private String codExterno;
 	private AuxContableEntity detAuxContable;
+	private String banderaBoton;
 
 	/**
 	 * constructor
@@ -40,6 +43,7 @@ public class ProdParamBean implements GeneralBean {
 	public ProdParamBean() {
 		this.logica = new ProductoParamLogica();
 		this.objetoSesion = traeDatosSesion();
+		this.producto = new ProductosParamEntity();
 	}
 
 	/**
@@ -61,7 +65,19 @@ public class ProdParamBean implements GeneralBean {
 	 */
 	public void consultaProductoXId(Integer id) {
 		try {
+			if(this.detAuxContable==null){
+				this.detAuxContable = new AuxContableEntity();
+			}
+			if(this.productoBusqueda==null){
+				this.productoBusqueda = new ProdFacCompraTmpEntity(); 
+			}
 			this.producto = this.logica.consultaUnicoProd(id);
+			this.detAuxContable.setId(this.producto.getAxiliar().getId());
+			this.detAuxContable.setDescripcion(this.producto.getAxiliar().getDescripcion());
+			this.detAuxContable.setCodigo(this.producto.getAxiliar().getCodigo());
+			this.detAuxContable.setIdSbcu(this.producto.getAxiliar().getIdSbcu());
+			this.detAuxContable.setNombre(this.producto.getAxiliar().getNombre());
+			this.banderaBoton = "U";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +117,14 @@ public class ProdParamBean implements GeneralBean {
 		}
 
 	}
+	
+	/**
+	 * metodo que selecciona un producto de la lista
+	 * @param codigoExt
+	 */
+	public void seleccionaProducto(String codigoExt){
+		this.codigoExterno = codigoExt;
+	}
 
 	/**
 	 * metodo que consulta el auxiliar contable
@@ -119,12 +143,62 @@ public class ProdParamBean implements GeneralBean {
 		return rta;
 	}
 
+	/**
+	 * metodo que prepara el formulario para limpiar el panel
+	 */
 	public void limpiaPanel() {
 		this.producto = new ProductosParamEntity();
+		this.producto.setDescripcion("");
+		this.banderaBoton = "I";
+		
 		this.codigoExterno = "";
 	}
 
-	@Override
+	/**
+	 * metodo que valida los productos
+	 * @return
+	 */
+	public boolean validaDatos(){
+		if(this.productoBusqueda==null || this.productoBusqueda.getProducto()==null || this.productoBusqueda.getProducto().getId()==null){
+			messageBean("Debe seleccionar algún producto", ErrorEnum.ERROR);
+			return false;
+		}
+		if(this.detAuxContable==null || this.getDetAuxContable().getId()==null){
+			messageBean("Debe seleccionar alguna subcuenta", ErrorEnum.ERROR);
+			return false;
+		}
+		if(this.producto.getDescripcion()==null || this.producto.getDescripcion().equalsIgnoreCase("")){
+			messageBean("Debe escribir la descripcion", ErrorEnum.ERROR);
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * metodo que inserta un producto
+	 */
+	public void insertaProducto(){
+		try {
+			if(validaDatos()){
+				co.com.codesoftware.servicio.producto.AuxContableEntity auxiliar = new co.com.codesoftware.servicio.producto.AuxContableEntity();
+				auxiliar.setId(this.detAuxContable.getId());
+				this.producto.setAxiliar(auxiliar);
+				this.producto.setEstado("A");
+				this.producto.setIdProducto(this.productoBusqueda.getProducto().getId());
+				this.producto.setIdUsuario(this.objetoSesion.getId());
+				if(this.logica.insertaProducto(this.producto)){
+					messageBean("Inserto Correctamente",ErrorEnum.SUCCESS);
+				}else{
+					messageBean("Error al insertar el ",ErrorEnum.ERROR);
+				}
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('datosProducto').hide();");
+				consultaProductosParametrizados();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setObjetoSesion(UsuarioEntity objetoSesion) {
 		// TODO Auto-generated method stub
 
@@ -219,5 +293,15 @@ public class ProdParamBean implements GeneralBean {
 	public void setDetAuxContable(AuxContableEntity detAuxContable) {
 		this.detAuxContable = detAuxContable;
 	}
+
+	public String getBanderaBoton() {
+		return banderaBoton;
+	}
+
+	public void setBanderaBoton(String banderaBoton) {
+		this.banderaBoton = banderaBoton;
+	}
+	
+	
 
 }
