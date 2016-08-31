@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 </h:head>
 <body>
@@ -9,32 +9,116 @@
 		<ui:define name="content">
 			<f:event listener="#{cargaListasMapBean.cargaListaResolucion}" type="preRenderView" />
 			<br />
-			<div class="row">
-				<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
-				<div class="col-xs-0 col-sm-0 col-md-8 col-lg-8">
-					<h:form id="formPrinc">
-						<p:panel id="panelInfoBasic" header="INFORMACIÓN BASICA NOTA CREDITO" toggleable="true" toggleSpeed="500">
-							<p:panelGrid layout="grid" columns="4">
-								<p:outputLabel value="Tipo Documento Asociado:"></p:outputLabel>
-								<h:selectOneMenu value="#{notaCreditoBean.tipoDocAso}" styleClass="form-control">
-									<f:selectItem itemValue="-1" itemLabel="SELECCIONE TIPO DOCUMENTO" />
-									<f:selectItem itemValue="factura" itemLabel="FACTURA" />
-								</h:selectOneMenu>
-								<p:outputLabel value="RESOLUCION DE FACTURACION: "></p:outputLabel>
-								<h:selectOneMenu value="#{remisionFacturaBean.idResolucion}" styleClass="form-control" id="selectResoluciones">
-									<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
-									<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
-									<f:ajax render="textoResolucion" event="change" listener="#{notaCreditoBean.buscaMaxResolucion}"></f:ajax>
-								</h:selectOneMenu>
-								<p:outputLabel value="CONSECUTIVO DE FACTURACION"></p:outputLabel>
-								<pe:inputNumber decimalPlaces="0" value="#{notaCreditoBean.idConsecutivo}"></pe:inputNumber>
-								<p:outputLabel value="#{notaCreditoBean.textResolucion}" id="textoResolucion"></p:outputLabel>
-							</p:panelGrid>
-
-						</p:panel>
-					</h:form>
+			<p:growl id="mensaje" life="30000" autoUpdate="true" showDetail="true"></p:growl>
+			<div id="contenedor">
+				<div class="row">
+					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						<h:form id="formPrinc">
+							<p:panel id="panelInfoBasic" header="INFORMACIÓN BASICA FACTURA A AFECTAR" toggleable="true" toggleSpeed="500">
+								<p:panelGrid layout="grid" columns="4">
+									<p:outputLabel value="Tipo Documento Asociado:"></p:outputLabel>
+									<h:selectOneMenu value="#{notaCreditoBean.tipoDocAso}" styleClass="form-control">
+										<f:selectItem itemValue="-1" itemLabel="SELECCIONE TIPO DOCUMENTO" />
+										<f:selectItem itemValue="factura" itemLabel="FACTURA" />
+									</h:selectOneMenu>
+									<p:outputLabel value="RESOLUCION DE FACTURACION: "></p:outputLabel>
+									<h:selectOneMenu value="#{notaCreditoBean.idResolucion}" styleClass="form-control" id="selectResoluciones">
+										<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
+										<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
+										<f:ajax render="textoResolucion" event="change" listener="#{notaCreditoBean.buscaMaxResolucion}"></f:ajax>
+									</h:selectOneMenu>
+									<p:outputLabel value="CONSECUTIVO DE FACTURACION"></p:outputLabel>
+									<pe:inputNumber decimalPlaces="0" value="#{notaCreditoBean.idConsecutivo}">
+										<p:ajax event="blur" listener="#{notaCreditoBean.buscarFactura}" update=":formFactura,:tablaProductos"></p:ajax>
+									</pe:inputNumber>
+									<p:outputLabel value="#{notaCreditoBean.textResolucion}" id="textoResolucion"></p:outputLabel>
+								</p:panelGrid>
+							</p:panel>
+						</h:form>
+					</div>
+					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
 				</div>
-				<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+			</div>
+			<br />
+			<div class="contenedor">
+				<div class="row">
+					<div class="col-xs-0 col-sm-2 col-md-2 col-lg-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						<h:form id="formFactura">
+							<p:panel id="panelFactura" header="Datos basicos factura" toggleable="true" toggleSpeed="500">
+								<p:panelGrid layout="grid" columns="4">
+									<f:facet name="header">
+										<p:outputLabel value="Datos del cliente"></p:outputLabel>
+									</f:facet>
+									<p:outputLabel value="Nombres:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.cliente.apellidos.concat(notaCreditoBean.factura.cliente.nombres)}"></p:outputLabel>
+									<p:outputLabel value="Nit:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.cliente.cedula}"></p:outputLabel>
+								</p:panelGrid>
+								<p:panelGrid layout="grid" columns="6">
+									<f:facet name="header">
+										<p:outputLabel value="Datos Factura"></p:outputLabel>
+									</f:facet>
+									<p:outputLabel value="Sede:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.idSede.name}"></p:outputLabel>
+									<p:outputLabel value="Fecha:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.fecha}" converter="xmlDatetoDateConverter"></p:outputLabel>
+									<p:outputLabel value="Valor:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.valor}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+									<p:outputLabel value="Valor Iva:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.vlrIva}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+									<p:outputLabel value="Valor Retefuente:"></p:outputLabel>
+									<p:outputLabel value="#{notaCreditoBean.factura.vlrReteFu}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</p:outputLabel>
+								</p:panelGrid>
+							</p:panel>
+						</h:form>
+					</div>
+					<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class="contenedor">
+				<div class="row">
+					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
+					<div class="col-xs-0 col-sm-0 col-md-10 col-lg-10">
+						<h:form id="tablaProductos">
+							<p:panel id="panelProductos" header="Productos vendidos Factura" toggleable="true" toggleSpeed="500">
+								<p:dataTable id="tablaRemisones"  var="item" value="#{notaCreditoBean.factura.detalleProductos}" reflow="true" paginator="true" rows="5">
+									<p:column headerText="Cod. Ext.">
+										<p:outputLabel value="#{item.producto.codigoExt}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="Cantidad">
+										<p:outputLabel value="#{item.cantidad}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="Valor Unidad">
+										<p:outputLabel value="#{item.valorUnidad}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+									</p:column>
+									<p:column headerText="Valor Iva">
+										<p:outputLabel value="#{item.valorIvaUnidad}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+									</p:column>
+									<p:column headerText="Valor Total">
+										<p:outputLabel value="#{item.valorVentaTotal}">
+											<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+										</p:outputLabel>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</h:form>
+					</div>
+					<div class="col-xs-0 col-sm-0 col-md-1 col-lg-1"></div>
+				</div>
 			</div>
 		</ui:define>
 	</ui:composition>
