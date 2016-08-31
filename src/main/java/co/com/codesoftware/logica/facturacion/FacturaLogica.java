@@ -30,5 +30,20 @@ public class FacturaLogica implements WSGeneralInterface {
 		}
 		return valorFa;
 	}
+	/**
+	 * F
+	 * @param idResolucion
+	 * @return
+	 */
+	public Integer obtenerMaxConsec(Integer idResolucion){
+		Integer rta = null;
+		try {
+			rta = conexionWSFacturacion().getPortFact().consultaMaxFacturacion(idResolucion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+		
+	}
 
 }

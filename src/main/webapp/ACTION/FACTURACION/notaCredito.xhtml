@@ -1,13 +1,41 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 </h:head>
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
-			aqui va la nota credito
+			<f:event listener="#{cargaListasMapBean.cargaListaResolucion}" type="preRenderView" />
+			<br />
+			<div class="row">
+				<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+				<div class="col-xs-0 col-sm-0 col-md-8 col-lg-8">
+					<h:form id="formPrinc">
+						<p:panel id="panelInfoBasic" header="INFORMACIÓN BASICA NOTA CREDITO" toggleable="true" toggleSpeed="500">
+							<p:panelGrid layout="grid" columns="4">
+								<p:outputLabel value="Tipo Documento Asociado:"></p:outputLabel>
+								<h:selectOneMenu value="#{notaCreditoBean.tipoDocAso}" styleClass="form-control">
+									<f:selectItem itemValue="-1" itemLabel="SELECCIONE TIPO DOCUMENTO" />
+									<f:selectItem itemValue="factura" itemLabel="FACTURA" />
+								</h:selectOneMenu>
+								<p:outputLabel value="RESOLUCION DE FACTURACION: "></p:outputLabel>
+								<h:selectOneMenu value="#{remisionFacturaBean.idResolucion}" styleClass="form-control" id="selectResoluciones">
+									<f:selectItem itemLabel="SELECCIONE UNA RESOLUCION" itemValue="-1"></f:selectItem>
+									<f:selectItems value="#{cargaListasMapBean.listaResolucion}"></f:selectItems>
+									<f:ajax render="textoResolucion" event="change" listener="#{notaCreditoBean.buscaMaxResolucion}"></f:ajax>
+								</h:selectOneMenu>
+								<p:outputLabel value="CONSECUTIVO DE FACTURACION"></p:outputLabel>
+								<pe:inputNumber decimalPlaces="0" value="#{notaCreditoBean.idConsecutivo}"></pe:inputNumber>
+								<p:outputLabel value="#{notaCreditoBean.textResolucion}" id="textoResolucion"></p:outputLabel>
+							</p:panelGrid>
+
+						</p:panel>
+					</h:form>
+				</div>
+				<div class="col-xs-0 col-sm-0 col-md-2 col-lg-2"></div>
+			</div>
 		</ui:define>
 	</ui:composition>
 </body>
