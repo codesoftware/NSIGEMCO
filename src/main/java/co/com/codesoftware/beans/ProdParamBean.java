@@ -65,11 +65,12 @@ public class ProdParamBean implements GeneralBean {
 	 */
 	public void consultaProductoXId(Integer id) {
 		try {
-			if(this.detAuxContable==null){
+			if (this.detAuxContable == null) {
 				this.detAuxContable = new AuxContableEntity();
 			}
-			if(this.productoBusqueda==null){
-				this.productoBusqueda = new ProdFacCompraTmpEntity(); 
+			if (this.productoBusqueda == null) {
+				this.productoBusqueda = new ProdFacCompraTmpEntity();
+
 			}
 			this.producto = this.logica.consultaUnicoProd(id);
 			this.detAuxContable.setId(this.producto.getAxiliar().getId());
@@ -78,6 +79,8 @@ public class ProdParamBean implements GeneralBean {
 			this.detAuxContable.setIdSbcu(this.producto.getAxiliar().getIdSbcu());
 			this.detAuxContable.setNombre(this.producto.getAxiliar().getNombre());
 			this.banderaBoton = "U";
+			this.codigoExterno = this.producto.getCodigoExterno();
+			busquedaProducto();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,19 +113,20 @@ public class ProdParamBean implements GeneralBean {
 				} else {
 					this.nombrePrd = this.productoBusqueda.getProducto().getDescripcion();
 					this.codExterno = this.productoBusqueda.getProducto().getCodigoExt();
-				}
+				}	
 			}
 		} catch (Exception e) {
 			messageBean("Producto inexistente", ErrorEnum.ERROR);
 		}
 
 	}
-	
+
 	/**
 	 * metodo que selecciona un producto de la lista
+	 * 
 	 * @param codigoExt
 	 */
-	public void seleccionaProducto(String codigoExt){
+	public void seleccionaProducto(String codigoExt) {
 		this.codigoExterno = codigoExt;
 	}
 
@@ -150,45 +154,51 @@ public class ProdParamBean implements GeneralBean {
 		this.producto = new ProductosParamEntity();
 		this.producto.setDescripcion("");
 		this.banderaBoton = "I";
-		
+		this.productoBusqueda = new ProdFacCompraTmpEntity();
 		this.codigoExterno = "";
+		this.codExterno ="";
+		this.nombrePrd="";
+		this.detAuxContable = new AuxContableEntity();
 	}
 
 	/**
 	 * metodo que valida los productos
+	 * 
 	 * @return
 	 */
-	public boolean validaDatos(){
-		if(this.productoBusqueda==null || this.productoBusqueda.getProducto()==null || this.productoBusqueda.getProducto().getId()==null){
+	public boolean validaDatos() {
+		if (this.productoBusqueda == null || this.productoBusqueda.getProducto() == null
+				|| this.productoBusqueda.getProducto().getId() == null) {
 			messageBean("Debe seleccionar algún producto", ErrorEnum.ERROR);
 			return false;
 		}
-		if(this.detAuxContable==null || this.getDetAuxContable().getId()==null){
+		if (this.detAuxContable == null || this.getDetAuxContable().getId() == null) {
 			messageBean("Debe seleccionar alguna subcuenta", ErrorEnum.ERROR);
 			return false;
 		}
-		if(this.producto.getDescripcion()==null || this.producto.getDescripcion().equalsIgnoreCase("")){
+		if (this.producto.getDescripcion() == null || this.producto.getDescripcion().equalsIgnoreCase("")) {
 			messageBean("Debe escribir la descripcion", ErrorEnum.ERROR);
 			return false;
 		}
 		return true;
 	}
+
 	/**
 	 * metodo que inserta un producto
 	 */
-	public void insertaProducto(){
+	public void insertaProducto() {
 		try {
-			if(validaDatos()){
+			if (validaDatos()) {
 				co.com.codesoftware.servicio.producto.AuxContableEntity auxiliar = new co.com.codesoftware.servicio.producto.AuxContableEntity();
 				auxiliar.setId(this.detAuxContable.getId());
 				this.producto.setAxiliar(auxiliar);
 				this.producto.setEstado("A");
 				this.producto.setIdProducto(this.productoBusqueda.getProducto().getId());
 				this.producto.setIdUsuario(this.objetoSesion.getId());
-				if(this.logica.insertaProducto(this.producto)){
-					messageBean("Inserto Correctamente",ErrorEnum.SUCCESS);
-				}else{
-					messageBean("Error al insertar el ",ErrorEnum.ERROR);
+				if (this.logica.insertaProducto(this.producto)) {
+					messageBean("Inserto Correctamente", ErrorEnum.SUCCESS);
+				} else {
+					messageBean("Error al insertar el ", ErrorEnum.ERROR);
 				}
 				RequestContext requestContext = RequestContext.getCurrentInstance();
 				requestContext.execute("PF('datosProducto').hide();");
@@ -198,7 +208,34 @@ public class ProdParamBean implements GeneralBean {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * metodo que actualiza el producto
+	 */
+	public void actualizaProducto() {
+		try {
+			if (validaDatos()) {
+				co.com.codesoftware.servicio.producto.AuxContableEntity auxiliar = new co.com.codesoftware.servicio.producto.AuxContableEntity();
+				auxiliar.setId(this.detAuxContable.getId());
+				this.producto.setAxiliar(auxiliar);
+				this.producto.setEstado("A");
+				this.producto.setIdProducto(this.productoBusqueda.getProducto().getId());
+				this.producto.setIdUsuario(this.objetoSesion.getId());
+				if (this.logica.actualizaProducto(this.producto)) {
+					messageBean("Actualizo Correctamente", ErrorEnum.SUCCESS);
+				} else {
+					messageBean("Error al Actualizar el producto ", ErrorEnum.ERROR);
+				}
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('datosProducto').hide();");
+				consultaProductosParametrizados();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public void setObjetoSesion(UsuarioEntity objetoSesion) {
 		// TODO Auto-generated method stub
 
@@ -301,7 +338,5 @@ public class ProdParamBean implements GeneralBean {
 	public void setBanderaBoton(String banderaBoton) {
 		this.banderaBoton = banderaBoton;
 	}
-	
-	
 
 }

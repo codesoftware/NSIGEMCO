@@ -11,7 +11,7 @@
 			<br />
 			<f:event listener="#{prodParamBean.consultaProductosParametrizados}" type="preRenderView" />
 			<h:form id="formTable">
-				<p:remoteCommand name="codExt" update=":formTable:codigoProd,:formTable:nombreProd" actionListener="#{prodParamBean.busquedaProducto}" />
+				<p:remoteCommand name="codExt" async="true" update=":formTable:codigoProd,:formTable:nombreProd" actionListener="#{prodParamBean.busquedaProducto}" />
 
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
@@ -21,6 +21,9 @@
 							<f:facet name="header">
 								CONSULTA GENERAL DE PRODUCTOS NO INVENTARIABLES
 							</f:facet>
+							<p:column headerText="CODIGO" filterBy="#{producto.codigoExterno}" priority="4" filterMatchMode="contains">
+								<h:outputText value="#{producto.codigoExterno}"></h:outputText>
+							</p:column>
 							<p:column headerText="NOMBRE PRODUCTO" filterBy="#{producto.descripcionProducto}" priority="1" filterMatchMode="contains">
 								<h:outputText value="#{producto.descripcionProducto}"></h:outputText>
 							</p:column>
@@ -79,7 +82,7 @@
 							</p:column>
 							<p:column>
 								<p:commandButton value="INSERTAR" styleClass="OrangeButton" rendered="#{prodParamBean.banderaBoton=='I'}" actionListener="#{prodParamBean.insertaProducto}" update=":formTable:tablaProductosI" />
-								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{prodParamBean.banderaBoton=='U'}" actionListener="#{socioBean.actualizaSocio}" update=":formTable:tablaProductosI" />
+								<p:commandButton value="ACTUALIZAR" styleClass="BlueButton" rendered="#{prodParamBean.banderaBoton=='U'}" actionListener="#{prodParamBean.actualizaProducto}" update=":formTable:tablaProductosI" />
 							</p:column>
 						</p:panelGrid>
 					</p:dialog>
