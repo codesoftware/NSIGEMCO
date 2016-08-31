@@ -26,9 +26,12 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="idPedido" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idSede" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idTius" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="idVoucher" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="pagoTarjeta" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="productos" type="{http://facturacion.servicio.codesoftware.com.co/}temporalProdTable" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="recetas" type="{http://facturacion.servicio.codesoftware.com.co/}temporalRecTable" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="reteFuente" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="tipoPago" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,9 +48,12 @@ import javax.xml.bind.annotation.XmlType;
     "idPedido",
     "idSede",
     "idTius",
+    "idVoucher",
+    "pagoTarjeta",
     "productos",
     "recetas",
-    "reteFuente"
+    "reteFuente",
+    "tipoPago"
 })
 public class FacturacionGenEntity {
 
@@ -57,11 +63,14 @@ public class FacturacionGenEntity {
     protected Integer idPedido;
     protected Integer idSede;
     protected Integer idTius;
+    protected String idVoucher;
+    protected BigDecimal pagoTarjeta;
     @XmlElement(nillable = true)
     protected List<TemporalProdTable> productos;
     @XmlElement(nillable = true)
     protected List<TemporalRecTable> recetas;
     protected String reteFuente;
+    protected String tipoPago;
 
     /**
      * Obtiene el valor de la propiedad descuento.
@@ -200,6 +209,54 @@ public class FacturacionGenEntity {
     }
 
     /**
+     * Obtiene el valor de la propiedad idVoucher.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdVoucher() {
+        return idVoucher;
+    }
+
+    /**
+     * Define el valor de la propiedad idVoucher.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdVoucher(String value) {
+        this.idVoucher = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad pagoTarjeta.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getPagoTarjeta() {
+        return pagoTarjeta;
+    }
+
+    /**
+     * Define el valor de la propiedad pagoTarjeta.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setPagoTarjeta(BigDecimal value) {
+        this.pagoTarjeta = value;
+    }
+
+    /**
      * Gets the value of the productos property.
      * 
      * <p>
@@ -279,6 +336,30 @@ public class FacturacionGenEntity {
      */
     public void setReteFuente(String value) {
         this.reteFuente = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tipoPago.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTipoPago() {
+        return tipoPago;
+    }
+
+    /**
+     * Define el valor de la propiedad tipoPago.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTipoPago(String value) {
+        this.tipoPago = value;
     }
 
 }

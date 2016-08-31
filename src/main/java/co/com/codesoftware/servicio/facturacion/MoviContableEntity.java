@@ -4,7 +4,9 @@ package co.com.codesoftware.servicio.facturacion;
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -18,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="auxiliar" type="{http://facturacion.servicio.codesoftware.com.co/}auxContableEntity" minOccurs="0"/>
+ *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idLlave" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idMovimiento" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -37,6 +40,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "moviContableEntity", propOrder = {
     "auxiliar",
+    "fecha",
     "id",
     "idLlave",
     "idMovimiento",
@@ -49,6 +53,8 @@ import javax.xml.bind.annotation.XmlType;
 public class MoviContableEntity {
 
     protected AuxContableEntity auxiliar;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar fecha;
     protected Integer id;
     protected Integer idLlave;
     protected Integer idMovimiento;
@@ -80,6 +86,30 @@ public class MoviContableEntity {
      */
     public void setAuxiliar(AuxContableEntity value) {
         this.auxiliar = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad fecha.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getFecha() {
+        return fecha;
+    }
+
+    /**
+     * Define el valor de la propiedad fecha.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setFecha(XMLGregorianCalendar value) {
+        this.fecha = value;
     }
 
     /**

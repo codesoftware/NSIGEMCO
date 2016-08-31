@@ -24,6 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ConsultaMaxFacturacion_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "consultaMaxFacturacion");
     private final static QName _InsertaImagenCancelacion_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertaImagenCancelacion");
     private final static QName _InsertarProdFacturasCompraTmp_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertarProdFacturasCompraTmp");
     private final static QName _ObtenerFacturaXId_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturaXId");
@@ -44,6 +45,7 @@ public class ObjectFactory {
     private final static QName _CancelaFactura_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "cancelaFactura");
     private final static QName _InsertaImagenCancelacionResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertaImagenCancelacionResponse");
     private final static QName _LlamaProcedimientoFacturaTMPResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "llamaProcedimientoFacturaTMPResponse");
+    private final static QName _ConsultaMaxFacturacionResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "consultaMaxFacturacionResponse");
     private final static QName _ObtenerFacturaXIdResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFacturaXIdResponse");
     private final static QName _InsertarFacturaCompraTmpResponse_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "insertarFacturaCompraTmpResponse");
     private final static QName _ObtenerFactTempCompraXId_QNAME = new QName("http://facturacion.servicio.codesoftware.com.co/", "obtenerFactTempCompraXId");
@@ -251,6 +253,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ConsultaMaxFacturacionResponse }
+     * 
+     */
+    public ConsultaMaxFacturacionResponse createConsultaMaxFacturacionResponse() {
+        return new ConsultaMaxFacturacionResponse();
+    }
+
+    /**
      * Create an instance of {@link LlamaProcedimientoFacturaTMPResponse }
      * 
      */
@@ -392,6 +402,14 @@ public class ObjectFactory {
      */
     public ConsutaImagenFacturas createConsutaImagenFacturas() {
         return new ConsutaImagenFacturas();
+    }
+
+    /**
+     * Create an instance of {@link ConsultaMaxFacturacion }
+     * 
+     */
+    public ConsultaMaxFacturacion createConsultaMaxFacturacion() {
+        return new ConsultaMaxFacturacion();
     }
 
     /**
@@ -651,6 +669,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaMaxFacturacion }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "consultaMaxFacturacion")
+    public JAXBElement<ConsultaMaxFacturacion> createConsultaMaxFacturacion(ConsultaMaxFacturacion value) {
+        return new JAXBElement<ConsultaMaxFacturacion>(_ConsultaMaxFacturacion_QNAME, ConsultaMaxFacturacion.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertaImagenCancelacion }{@code >}}
      * 
      */
@@ -828,6 +855,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "llamaProcedimientoFacturaTMPResponse")
     public JAXBElement<LlamaProcedimientoFacturaTMPResponse> createLlamaProcedimientoFacturaTMPResponse(LlamaProcedimientoFacturaTMPResponse value) {
         return new JAXBElement<LlamaProcedimientoFacturaTMPResponse>(_LlamaProcedimientoFacturaTMPResponse_QNAME, LlamaProcedimientoFacturaTMPResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ConsultaMaxFacturacionResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://facturacion.servicio.codesoftware.com.co/", name = "consultaMaxFacturacionResponse")
+    public JAXBElement<ConsultaMaxFacturacionResponse> createConsultaMaxFacturacionResponse(ConsultaMaxFacturacionResponse value) {
+        return new JAXBElement<ConsultaMaxFacturacionResponse>(_ConsultaMaxFacturacionResponse_QNAME, ConsultaMaxFacturacionResponse.class, null, value);
     }
 
     /**
