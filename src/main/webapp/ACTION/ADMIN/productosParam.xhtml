@@ -11,8 +11,6 @@
 			<br />
 			<f:event listener="#{prodParamBean.consultaProductosParametrizados}" type="preRenderView" />
 			<h:form id="formTable">
-				<p:remoteCommand name="codExt" async="true" update=":formTable:codigoProd,:formTable:nombreProd" actionListener="#{prodParamBean.busquedaProducto}" />
-
 				<p:growl id="mensajes" showDetail="true" autoUpdate="true"></p:growl>
 				<center>
 					<p:panel style="width:80%">
@@ -47,7 +45,8 @@
 							</p:column>
 							<p:column>
 							Codigo Ext:
-									<p:inputText value="#{prodParamBean.codigoExterno}" id="codExt" onkeypress="if (event.keyCode == 13){ codExt();}" />
+									<p:inputText value="#{prodParamBean.codigoExterno}" id="codExt" onkeypress="if (event.keyCode == 13){ return false;}" />
+									<p:commandButton  icon="fa fa-plus" styleClass="GreenButton" update=":formTable:codigoProd,:formTable:nombreProd" actionListener="#{prodParamBean.busquedaProducto}"></p:commandButton>
 							</p:column>
 							<p:column>
 								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{prodParamBean.busquedaAvanzada}" update="tablaProductos"
