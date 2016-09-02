@@ -51,6 +51,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	private BigDecimal valorProducto;
 	private Integer idFacturaConsulta;
 	private UsuarioEntity objetoSesion;
+	private String inventareable;
+	private Integer cantidadInventariable;
 
 	private List<ProveedoresEntity> listaProveedores;
 	private List<ProveedoresEntity> listaProveedoresFiltered;

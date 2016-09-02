@@ -20,10 +20,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="cantidad" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="cantidadInventariable" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fecha" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idFacturaCompra" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="inventariable" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="iva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="porcentajeIva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="producto" type="{http://facturacion.servicio.codesoftware.com.co/}productoEntity" minOccurs="0"/>
@@ -40,10 +42,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "prodFacCompraTmpEntity", propOrder = {
     "cantidad",
+    "cantidadInventariable",
     "estado",
     "fecha",
     "id",
     "idFacturaCompra",
+    "inventariable",
     "iva",
     "porcentajeIva",
     "producto",
@@ -53,11 +57,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class ProdFacCompraTmpEntity {
 
     protected Integer cantidad;
+    protected Integer cantidadInventariable;
     protected String estado;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fecha;
     protected Integer id;
     protected Integer idFacturaCompra;
+    protected String inventariable;
     protected BigDecimal iva;
     protected BigDecimal porcentajeIva;
     protected ProductoEntity producto;
@@ -86,6 +92,30 @@ public class ProdFacCompraTmpEntity {
      */
     public void setCantidad(Integer value) {
         this.cantidad = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad cantidadInventariable.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getCantidadInventariable() {
+        return cantidadInventariable;
+    }
+
+    /**
+     * Define el valor de la propiedad cantidadInventariable.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setCantidadInventariable(Integer value) {
+        this.cantidadInventariable = value;
     }
 
     /**
@@ -182,6 +212,30 @@ public class ProdFacCompraTmpEntity {
      */
     public void setIdFacturaCompra(Integer value) {
         this.idFacturaCompra = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad inventariable.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInventariable() {
+        return inventariable;
+    }
+
+    /**
+     * Define el valor de la propiedad inventariable.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInventariable(String value) {
+        this.inventariable = value;
     }
 
     /**
