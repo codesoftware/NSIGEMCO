@@ -1,11 +1,14 @@
 package co.com.codesoftware.beans.facturacion;
 
+import java.math.BigDecimal;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import co.com.codesoftware.logica.facturacion.FacturaLogica;
+import co.com.codesoftware.servicio.facturacion.DetProduFacturaEntity;
 import co.com.codesoftware.servicio.facturacion.FacturaEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
@@ -21,6 +24,10 @@ public class NotaCreditoBean implements GeneralBean {
 	private Integer idConsecutivo;
 	private String textResolucion;
 	private FacturaEntity factura;
+	// Datos para editar los productos
+	private String codigoExternoAux;
+	private BigDecimal precioAux;
+	private Integer cantidad;
 
 	@PostConstruct
 	public void init() {
@@ -53,15 +60,34 @@ public class NotaCreditoBean implements GeneralBean {
 	public void buscarFactura() {
 		try {
 			FacturaLogica objLogica = new FacturaLogica();
-			if(this.idResolucion == null || this.idResolucion == -1){
+			if (this.idResolucion == null || this.idResolucion == -1) {
 				messageBean("Por favor seleccione una resolucion de facturacion", ErrorEnum.ERROR);
-			}else if(this.idConsecutivo == null){
+			} else if (this.idConsecutivo == null) {
 				messageBean("El consecutivo de facturacion no puede ser nulo", ErrorEnum.ERROR);
-			}else{
+			} else {
 				this.factura = objLogica.buscaFacturaPorConsec(this.idResolucion, this.idConsecutivo);
-				if(this.factura == null){
+				if (this.factura == null) {
 					messageBean("La consulta con los parametros dados no arrojo ningun resultado", ErrorEnum.ERROR);
 				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Funcion con la cual selecciono un producto
+	 * @param idProducto
+	 */
+	public void seleccionaProducto(Integer idProducto){
+		try {
+			if(this.factura.getDetalleProductos() != null){
+				for(DetProduFacturaEntity item : factura.getDetalleProductos()){
+					if(item.getId() == idProducto){
+						this.codigoExternoAux = item.getProducto().getCodigoExt();
+						this.cantidad = item.getCantidad();
+						this.precioAux = item.getValorIvaTotal();
+					}
+				}				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,6 +140,30 @@ public class NotaCreditoBean implements GeneralBean {
 
 	public void setFactura(FacturaEntity factura) {
 		this.factura = factura;
+	}
+
+	public String getCodigoExternoAux() {
+		return codigoExternoAux;
+	}
+
+	public void setCodigoExternoAux(String codigoExternoAux) {
+		this.codigoExternoAux = codigoExternoAux;
+	}
+
+	public BigDecimal getPrecioAux() {
+		return precioAux;
+	}
+
+	public void setPrecioAux(BigDecimal precioAux) {
+		this.precioAux = precioAux;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }
