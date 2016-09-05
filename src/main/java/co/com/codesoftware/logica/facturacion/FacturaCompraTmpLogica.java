@@ -230,4 +230,14 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 		}
 		return respuesta;
 	}
+	
+	public String  validaProductoInventareable(Integer idProducto){
+		String rta ="Error al consultar el producto";
+		try {
+			rta = conexionWSNewProd().getPortNewProductos().verificaProductoParametrizado(idProducto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 }

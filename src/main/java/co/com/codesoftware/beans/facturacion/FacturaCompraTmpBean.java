@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.context.RequestContext;
 
@@ -60,12 +61,14 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	@PostConstruct
 	public void init() {
 		this.proveedor = new ProveedoresEntity();
-		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
+		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("dataSession");
 		this.maxDate = new Date();
 		facturaCompra = new FacturaCompraTmpEntity();
 		facturaCompraTmp = new FacturaCompraTmpEntity();
 		this.logica = new FacturaCompraTmpLogica();
-		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("facturaCompra");
+		this.idFacturaConsulta = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get("facturaCompra");
 		if (this.idFacturaConsulta != null && this.idFacturaConsulta != 0) {
 			this.facturaCompra = logica.consultaFacturaID(this.idFacturaConsulta);
 			seteaProveedor(this.facturaCompra.getProveedor());
@@ -138,7 +141,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void insertaProductos() {
 		if (listaProductos != null && listaProductos.size() != 0) {
 			if (this.facturaCompra.getId() != 0 && this.facturaCompra.getId() != null) {
-				this.listaProductos = logica.insertaProductosFactCompra(this.listaProductos, this.facturaCompra.getId());
+				this.listaProductos = logica.insertaProductosFactCompra(this.listaProductos,
+						this.facturaCompra.getId());
 			}
 		}
 	}
@@ -214,15 +218,38 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	 * metodo que adiciona un producto a la lista
 	 */
 	public void adicionaProductoLista() {
+		String mensajeInventareable = "";
 		if (this.productoBusqueda.getProducto() != null) {
 			if (this.listaProductos == null) {
 				this.listaProductos = new ArrayList<>();
 			}
-			this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto);
-			this.cantidad = 0;
-			this.porcentajeIva = new BigDecimal("0");
-			this.valorProducto = new BigDecimal("0");
-			this.codConExterno = "";
+			if ("N".equalsIgnoreCase(this.inventareable)) {
+				mensajeInventareable = logica.validaProductoInventareable(this.productoBusqueda.getProducto().getId());
+				this.productoBusqueda.setCantidadInventariable(this.cantidadInventariable);
+				this.productoBusqueda.setInventariable("N");
+				
+			}else{
+				this.productoBusqueda.setCantidadInventariable(0);
+				this.productoBusqueda.setInventariable("S");
+				
+			}
+			 if (mensajeInventareable.startsWith("Error")) {
+				messageBean(mensajeInventareable, ErrorEnum.ERROR);
+			} else if(this.cantidadInventariable> this.cantidad){
+				messageBean("Error, la cantidad no inventareable no puede superar la cantidad total del producto", ErrorEnum.ERROR);
+			}else {
+				this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad,
+						porcentajeIva, valorProducto);
+				this.cantidad = 0;
+				this.porcentajeIva = new BigDecimal("0");
+				this.valorProducto = new BigDecimal("0");
+				this.codConExterno = "";
+				this.inventareable="S";
+				this.cantidadInventariable=0;
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("ocultaPanel();");
+			
+			}
 		} else {
 			this.setEnumer(ErrorEnum.ERROR);
 			messageBean("Producto inexistente", ErrorEnum.ERROR);
@@ -346,7 +373,8 @@ public class FacturaCompraTmpBean implements GeneralBean {
 			messageBean("debe añadir por lo menos un producto ", ErrorEnum.ERROR);
 			return false;
 		}
-		if (this.facturaCompra.getNumeroFactura() == null || "".equalsIgnoreCase(this.facturaCompra.getNumeroFactura())) {
+		if (this.facturaCompra.getNumeroFactura() == null
+				|| "".equalsIgnoreCase(this.facturaCompra.getNumeroFactura())) {
 			messageBean("debe ingresar el número de factura ", ErrorEnum.ERROR);
 			return false;
 		}
@@ -362,7 +390,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	}
 
 	/**
-	 * Funcion con la cual obtengo
+	 * Funcion con la cual obtengo la lista de proveedores
 	 */
 	public void consultaProveedores() {
 		try {
@@ -371,6 +399,10 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void cambiaCombo(AjaxBehaviorEvent event) {
+		this.cantidadInventariable = 0;
 	}
 
 	@Override
@@ -540,6 +572,22 @@ public class FacturaCompraTmpBean implements GeneralBean {
 
 	public void setListaProveedoresFiltered(List<ProveedoresEntity> listaProveedoresFiltered) {
 		this.listaProveedoresFiltered = listaProveedoresFiltered;
+	}
+
+	public String getInventareable() {
+		return inventareable;
+	}
+
+	public void setInventareable(String inventareable) {
+		this.inventareable = inventareable;
+	}
+
+	public Integer getCantidadInventariable() {
+		return cantidadInventariable;
+	}
+
+	public void setCantidadInventariable(Integer cantidadInventariable) {
+		this.cantidadInventariable = cantidadInventariable;
 	}
 
 }

@@ -8,6 +8,13 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
+			<script>
+				function ocultaPanel() {
+					if (document.getElementById("datosFactura:selectInv").value = "S") {
+						document.getElementById("datosFactura:panelInv").style.display = "none";
+					}
+				}
+			</script>
 			<f:event listener="#{cargaListasMapBean.cargaListaSedes}" type="preRenderView" />
 			<p:growl id="mensajes" showDetail="true" autoUpdate="true" life="30000"></p:growl>
 			<h:form id="formconsProv">
@@ -20,7 +27,8 @@
 							<div class="panel-heading text-center">
 								<h4>
 									DATOS DEL PROVEEDOR&nbsp;&nbsp;
-									<p:commandButton value="PROVEEDORES" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()" onstart="PF('tablaProveedores').clearFilters()"></p:commandButton>
+									<p:commandButton value="PROVEEDORES" styleClass="GreenButton" actionListener="#{facturaCompraTmpBean.consultaProveedores}" update=":formTableProv" onsuccess="PF('dialogProveedor').show()"
+										onstart="PF('tablaProveedores').clearFilters()"></p:commandButton>
 								</h4>
 							</div>
 							<div class="panel-body">
@@ -58,7 +66,8 @@
 			<h:form id="datosFactura">
 				<br />
 				<p:remoteCommand name="codExt" update="panelDetProducto" actionListener="#{facturaCompraTmpBean.busquedaProducto}" />
-				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" oncomplete="document.getElementById('datosFactura:codAplicCons').focus();"/>
+				<p:remoteCommand name="adicionaProd" update="tablaConsultaProdPrin,valorUnidad,porIva,cantidad,codAplicCons,selectInv,panelInv" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}"
+					oncomplete="document.getElementById('datosFactura:codAplicCons').focus();" />
 				<center>
 					<p:commandButton value="GUARDAR" title="GUARDAR" icon="ui-icon-disk" id="tb" actionListener="#{facturaCompraTmpBean.autoGuardado}" update="fechaGuardado" />
 					<p:outputLabel id="fechaGuardado" value="&nbsp;&nbsp;Guardado: #{facturaCompraTmpBean.fechaGuardado}" />
@@ -105,14 +114,28 @@
 
 					</p:panelGrid>
 					<br />
-					<p:panelGrid columns="4" layout="grid" id="panelProductos">
+					<p:panelGrid columns="6" layout="grid" id="panelProductos">
 						<f:facet name="header">
 							<p:outputLabel value="ADICIÓN DE  PRODUCTOS" style="color:black" />
 						</f:facet>
 						<p:column>
-							<p:outputLabel value="Cod. Ext:&nbsp;&nbsp;" style="color:black" styleClass="width:18%;"/>
+							<p:outputLabel value="Cod. Ext:&nbsp;&nbsp;" style="color:black" styleClass="width:18%;" />
 							<p:inputText id="codAplicCons" value="#{facturaCompraTmpBean.codConExterno}" onblur="codExt()" style="width:80%;" styleClass="codigoExterno"
 								onkeypress="if (event.keyCode == 13){ return false;}" />
+						</p:column>
+						<p:column>
+						Inventareable
+							<h:selectOneMenu value="#{facturaCompraTmpBean.inventareable}" styleClass="form-control" id="selectInv">
+								<f:selectItem itemLabel="SI" itemValue="S"></f:selectItem>
+								<f:selectItem itemLabel="NO" itemValue="N"></f:selectItem>
+								<f:ajax render="panelProductos" listener="#{facturaCompraTmpBean.cambiaCombo}"></f:ajax>
+							</h:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:panel id="panelInv" widgetVar="wpanelInv" rendered="#{facturaCompraTmpBean.inventareable == 'N'}">
+							Cantidad No Inventareable
+								<pe:inputNumber id="cantidadInv" value="#{facturaCompraTmpBean.cantidadInventariable}" decimalPlaces="0" style="width:100%" />
+							</p:panel>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Cantidad :" style="color:black" />
@@ -128,7 +151,8 @@
 						</p:column>
 						<f:facet name="footer">
 							<p:panel id="panelDetProducto">
-								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"  onstart="PF('tablaProd').clearFilters()"/>
+								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"
+									onstart="PF('tablaProd').clearFilters()" />
 								<p:outputLabel value="Codigo Externo:#{facturaCompraTmpBean.productoBusqueda.producto.codigoExt}---Nombre :#{facturaCompraTmpBean.productoBusqueda.producto.descripcion}" />
 							</p:panel>
 						</f:facet>
@@ -146,6 +170,9 @@
 						</p:column>
 						<p:column headerText="cantidad">
 							<p:outputLabel value="#{producto.cantidad}" />
+						</p:column>
+						<p:column headerText="cantidad no Inv">
+							<p:outputLabel value="#{producto.cantidadInventariable}" />
 						</p:column>
 						<p:column headerText="porcentaje Iva">
 							<p:outputLabel value="#{producto.porcentajeIva}" />
@@ -247,8 +274,9 @@
 			</h:form>
 			<p:dialog closeOnEscape="true" header="CONSULTA PROVEEDORES" widgetVar="dialogProveedor" styleClass="modalResponsive" modal="true">
 				<h:form id="formTableProv">
-					<p:dataTable var="item" widgetVar="tablaProveedores" paginator="true" rows="5" reflow="true" value="#{facturaCompraTmpBean.listaProveedores}" filteredValue="#{facturaCompraTmpBean.listaProveedoresFiltered}" >
-						<p:column headerText="Id" >
+					<p:dataTable var="item" widgetVar="tablaProveedores" paginator="true" rows="5" reflow="true" value="#{facturaCompraTmpBean.listaProveedores}"
+						filteredValue="#{facturaCompraTmpBean.listaProveedoresFiltered}">
+						<p:column headerText="Id">
 							<p:outputLabel value="#{item.id}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="NOMBRE" filterBy="#{item.nombre}" filterMatchMode="contains">
@@ -269,4 +297,4 @@
 		</ui:define>
 	</ui:composition>
 </body>
-</html> 
+</html>
