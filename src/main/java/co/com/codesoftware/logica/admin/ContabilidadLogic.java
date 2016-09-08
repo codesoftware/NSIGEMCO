@@ -170,4 +170,16 @@ public class ContabilidadLogic implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	
+	public List<MoviContableEntity> obtenerMoviContXCuenta(Date fechaIni, Date fechaFin, String cuenta){
+		List<MoviContableEntity> rta = null;
+		try {
+			XMLGregorianCalendar fechaI = Utilitites.dateToXMLGC(fechaIni);
+			XMLGregorianCalendar fechaF = Utilitites.dateToXMLGC(fechaFin);
+			rta = conexionWSContabilidad().getPortContabilidad().obtenerMoviContCuenta(fechaI, fechaF, cuenta); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 }
