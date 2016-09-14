@@ -8,6 +8,16 @@
 <body>
 	<ui:composition template="/TEMPLATE/template.xhtml">
 		<ui:define name="content">
+			<style>
+.item {
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background: #3299BB;
+	color: white;
+	width: 70%;
+	text-align: center;
+}
+</style>
 			<h:form>
 				<div class="row">
 					<br /> <br />
@@ -51,73 +61,82 @@
 				</div>
 			</h:form>
 			<h:form id="formListaMv">
-				<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20"
-				paginatorAlwaysVisible="true" currentPageReportTemplate="{TotalRecords}">
-					<f:facet name="header">
-						<h:commandLink>
-							<p:graphicImage name="/images/excel.png" width="24" />
-							<p:dataExporter type="xls" target="tableDatos" fileName="tablaProductos" />
-						</h:commandLink>
-						<p:outputLabel value="LISTA DE MOVIMIENTOS" />
-					</f:facet>
-					<p:column headerText="ID">
-						<p:outputLabel value="#{item.idMovimiento}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="FECHA">
-						<p:outputLabel value="#{item.fecha.toGregorianCalendar().time}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</p:column>
-					<p:column headerText="CODIGO">
-						<p:commandLink value="#{item.subcuenta.codigo}" onsuccess="PF('dialogAsienCont').show()" actionListener="#{consTipoDocumentoBean.consultarAsientoContable(item.idMovimiento)}"></p:commandLink>
-					</p:column>
-					<p:column headerText="NOMBRE">
-						<p:outputLabel value="#{item.subcuenta.nombre}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="TIPO DOCUMENTO">
-						<p:outputLabel value="FACTURA DE VENTA" rendered="#{item.llave == 'fact'}"></p:outputLabel>
-						<p:outputLabel value="FACTURA DE COMPRA" rendered="#{item.llave == 'fctc'}"></p:outputLabel>
-						<p:outputLabel value="IMPORTACION" rendered="#{item.llave == 'impo'}"></p:outputLabel>
-						<p:outputLabel value="GASTO IMPORTACION" rendered="#{item.llave == 'gaim'}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="Id relacionado">
-						<p:outputLabel value="#{item.idLlave}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="NATURALEZA">
-						<p:outputLabel value="#{item.naturaleza}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="CREDITO">
-						<p:outputLabel value="$ "></p:outputLabel>
-						<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'CREDITO'}">
-							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-						</p:outputLabel>
-						<p:outputLabel value=" 0" rendered="#{item.naturaleza == 'DEBITO'}">
-						</p:outputLabel>
-					</p:column>
-					<p:column headerText="DEBITO">
-						<p:outputLabel value="$ "></p:outputLabel>
-						<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'DEBITO'}">
-							<f:convertNumber pattern="#,##0.00"></f:convertNumber>
-						</p:outputLabel>
-						<p:outputLabel value=" 0" rendered="#{item.naturaleza == 'CREDITO'}">
-						</p:outputLabel>
-					</p:column>
-					
-					<p:columnGroup type="footer">
-						<p:row>
-							<p:column colspan="2" style="text-align:right" footerText="Creditos: " />
-							<p:column footerText="$#{consCuentaContBean.creditos}" />
-							<p:column  style="text-align:right" footerText="Debitos: " />
-							<p:column footerText="$#{consCuentaContBean.debitos}" />
-							<p:column style="text-align:right" footerText="Totales: " />
-							<p:column footerText="$#{consCuentaContBean.total}" />
-							<p:column footerText="Numero de Registros:"></p:column>
-							<p:column footerText="#{consCuentaContBean.listaMovimientos.size()}"></p:column>
-						</p:row>
-					</p:columnGroup>
-				</p:dataTable>
-			</h:form>
+				<br />
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true" currentPageReportTemplate="{TotalRecords}">
+							<f:facet name="header">
+								<div id="items row">
+									<ui:repeat var="item" value="#{consCuentaContBean.cuentasCons}">
+										<div class="col-md-2 col-sm-2 col-xs-2">
+											#{item}
+										</div>
+									</ui:repeat>
+								</div><br/>
+								<h:commandLink>
+									<p:graphicImage name="/images/excel.png" width="24" />
+									<p:dataExporter type="xls" target="tableDatos" fileName="tablaProductos" />
+								</h:commandLink>
+							</f:facet>
+							<p:column headerText="ID">
+								<p:outputLabel value="#{item.idMovimiento}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="FECHA">
+								<p:outputLabel value="#{item.fecha.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="CODIGO">
+								<p:commandLink value="#{item.subcuenta.codigo}" onsuccess="PF('dialogAsienCont').show()" actionListener="#{consTipoDocumentoBean.consultarAsientoContable(item.idMovimiento)}"></p:commandLink>
+							</p:column>
+							<p:column headerText="NOMBRE">
+								<p:outputLabel value="#{item.subcuenta.nombre}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="TIPO DOCUMENTO">
+								<p:outputLabel value="FACTURA DE VENTA" rendered="#{item.llave == 'fact'}"></p:outputLabel>
+								<p:outputLabel value="FACTURA DE COMPRA" rendered="#{item.llave == 'fctc'}"></p:outputLabel>
+								<p:outputLabel value="IMPORTACION" rendered="#{item.llave == 'impo'}"></p:outputLabel>
+								<p:outputLabel value="GASTO IMPORTACION" rendered="#{item.llave == 'gaim'}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Id relacionado">
+								<p:outputLabel value="#{item.idLlave}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="NATURALEZA">
+								<p:outputLabel value="#{item.naturaleza}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="CREDITO">
+								<p:outputLabel value="$ "></p:outputLabel>
+								<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'CREDITO'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value=" 0" rendered="#{item.naturaleza == 'DEBITO'}">
+								</p:outputLabel>
+							</p:column>
+							<p:column headerText="DEBITO">
+								<p:outputLabel value="$ "></p:outputLabel>
+								<p:outputLabel value="#{item.valor}" rendered="#{item.naturaleza == 'DEBITO'}">
+									<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+								</p:outputLabel>
+								<p:outputLabel value=" 0" rendered="#{item.naturaleza == 'CREDITO'}">
+								</p:outputLabel>
+							</p:column>
 
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="2" style="text-align:right" footerText="Creditos: " />
+									<p:column footerText="#{consCuentaContBean.creditos}" />
+									<p:column style="text-align:right" footerText="Debitos: " />
+									<p:column footerText="$#{consCuentaContBean.debitos}" />
+									<p:column style="text-align:right" footerText="Totales: " />
+									<p:column footerText="$#{consCuentaContBean.total}" />
+									<p:column footerText="Numero de Registros:"></p:column>
+									<p:column footerText="#{consCuentaContBean.listaMovimientos.size()}"></p:column>
+								</p:row>
+							</p:columnGroup>
+						</p:dataTable>
+					</div>
+				</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </body>

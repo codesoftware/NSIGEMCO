@@ -37,9 +37,11 @@ public class ObjectFactory {
     private final static QName _ObtenerAporteResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerAporteResponse");
     private final static QName _InsertaSocioResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaSocioResponse");
     private final static QName _ObtieneReferenciasXIdCate_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneReferenciasXIdCate");
+    private final static QName _ObtieneRepetidosTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneRepetidosTemporalResponse");
     private final static QName _InsertaFacturaCompraResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaFacturaCompraResponse");
     private final static QName _ActualizarProveedor_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "actualizarProveedor");
     private final static QName _InsertaPedidosProducto_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaPedidosProducto");
+    private final static QName _ObtieneRepetidosSistemaTemporal_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneRepetidosSistemaTemporal");
     private final static QName _ObtenerSocioResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerSocioResponse");
     private final static QName _ObtieneMarcasXCateResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneMarcasXCateResponse");
     private final static QName _ConsultaTablasRetencionResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaTablasRetencionResponse");
@@ -84,6 +86,7 @@ public class ObjectFactory {
     private final static QName _ObtieneSubCuentasFiltros_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneSubCuentasFiltros");
     private final static QName _InsertaRegistroProducto_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaRegistroProducto");
     private final static QName _ObtenerSociosResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerSociosResponse");
+    private final static QName _ObtieneRepetidosTemporal_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneRepetidosTemporal");
     private final static QName _ObtieneSubCuentasFiltroResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneSubCuentasFiltroResponse");
     private final static QName _ObtieneProveedores_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProveedores");
     private final static QName _ConsultaProductoCodigoExternoResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductoCodigoExternoResponse");
@@ -97,6 +100,7 @@ public class ObjectFactory {
     private final static QName _LoginUsuario_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "loginUsuario");
     private final static QName _ObtieneProductosCategoriaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProductosCategoriaResponse");
     private final static QName _ObtieneProductosResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProductosResponse");
+    private final static QName _ObtieneRepetidosSistemaTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneRepetidosSistemaTemporalResponse");
     private final static QName _ObtieneProductosCategoria_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneProductosCategoria");
 
     /**
@@ -299,6 +303,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtieneRepetidosSistemaTemporal }
+     * 
+     */
+    public ObtieneRepetidosSistemaTemporal createObtieneRepetidosSistemaTemporal() {
+        return new ObtieneRepetidosSistemaTemporal();
+    }
+
+    /**
      * Create an instance of {@link ObtenerSocio }
      * 
      */
@@ -451,6 +463,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ObtieneRepetidosTemporalResponse }
+     * 
+     */
+    public ObtieneRepetidosTemporalResponse createObtieneRepetidosTemporalResponse() {
+        return new ObtieneRepetidosTemporalResponse();
+    }
+
+    /**
      * Create an instance of {@link CambioPrecioProducto }
      * 
      */
@@ -488,6 +508,14 @@ public class ObjectFactory {
      */
     public CambioPrecioProductoResponse createCambioPrecioProductoResponse() {
         return new CambioPrecioProductoResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtieneRepetidosSistemaTemporalResponse }
+     * 
+     */
+    public ObtieneRepetidosSistemaTemporalResponse createObtieneRepetidosSistemaTemporalResponse() {
+        return new ObtieneRepetidosSistemaTemporalResponse();
     }
 
     /**
@@ -568,6 +596,14 @@ public class ObjectFactory {
      */
     public ObtenerSociosResponse createObtenerSociosResponse() {
         return new ObtenerSociosResponse();
+    }
+
+    /**
+     * Create an instance of {@link ObtieneRepetidosTemporal }
+     * 
+     */
+    public ObtieneRepetidosTemporal createObtieneRepetidosTemporal() {
+        return new ObtieneRepetidosTemporal();
     }
 
     /**
@@ -1008,6 +1044,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneRepetidosTemporalResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneRepetidosTemporalResponse")
+    public JAXBElement<ObtieneRepetidosTemporalResponse> createObtieneRepetidosTemporalResponse(ObtieneRepetidosTemporalResponse value) {
+        return new JAXBElement<ObtieneRepetidosTemporalResponse>(_ObtieneRepetidosTemporalResponse_QNAME, ObtieneRepetidosTemporalResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertaFacturaCompraResponse }{@code >}}
      * 
      */
@@ -1032,6 +1077,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertaPedidosProducto")
     public JAXBElement<InsertaPedidosProducto> createInsertaPedidosProducto(InsertaPedidosProducto value) {
         return new JAXBElement<InsertaPedidosProducto>(_InsertaPedidosProducto_QNAME, InsertaPedidosProducto.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneRepetidosSistemaTemporal }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneRepetidosSistemaTemporal")
+    public JAXBElement<ObtieneRepetidosSistemaTemporal> createObtieneRepetidosSistemaTemporal(ObtieneRepetidosSistemaTemporal value) {
+        return new JAXBElement<ObtieneRepetidosSistemaTemporal>(_ObtieneRepetidosSistemaTemporal_QNAME, ObtieneRepetidosSistemaTemporal.class, null, value);
     }
 
     /**
@@ -1431,6 +1485,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneRepetidosTemporal }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneRepetidosTemporal")
+    public JAXBElement<ObtieneRepetidosTemporal> createObtieneRepetidosTemporal(ObtieneRepetidosTemporal value) {
+        return new JAXBElement<ObtieneRepetidosTemporal>(_ObtieneRepetidosTemporal_QNAME, ObtieneRepetidosTemporal.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneSubCuentasFiltroResponse }{@code >}}
      * 
      */
@@ -1545,6 +1608,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneProductosResponse")
     public JAXBElement<ObtieneProductosResponse> createObtieneProductosResponse(ObtieneProductosResponse value) {
         return new JAXBElement<ObtieneProductosResponse>(_ObtieneProductosResponse_QNAME, ObtieneProductosResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ObtieneRepetidosSistemaTemporalResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "obtieneRepetidosSistemaTemporalResponse")
+    public JAXBElement<ObtieneRepetidosSistemaTemporalResponse> createObtieneRepetidosSistemaTemporalResponse(ObtieneRepetidosSistemaTemporalResponse value) {
+        return new JAXBElement<ObtieneRepetidosSistemaTemporalResponse>(_ObtieneRepetidosSistemaTemporalResponse_QNAME, ObtieneRepetidosSistemaTemporalResponse.class, null, value);
     }
 
     /**

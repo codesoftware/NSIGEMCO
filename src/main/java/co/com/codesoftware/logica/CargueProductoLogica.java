@@ -17,7 +17,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
-import co.com.codesoftware.server.nsigemco.ProductoAporte;
 import co.com.codesoftware.server.nsigemco.ProductoTmpEntity;
 import co.com.codesoftware.server.nsigemco.RespuestaEntity;
 import co.com.codesoftware.utilities.WSGeneralInterface;
@@ -497,6 +496,32 @@ public class CargueProductoLogica implements WSGeneralInterface {
 			System.out.println("error en  Fila" + row.getRowNum());
 		}
 		return productos;
+	}
+	/**
+	 * Funcion con el cual busco los productos repetidos en el excel proporcionado con el usuario
+	 * @return
+	 */
+	public List<String> buscaRepetidosExcel(){
+		List<String> rta = null;
+		try {
+			rta = conexionWSAdmin().getPortAdm().obtieneRepetidosTemporal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
+	/**
+	 * Funcion con la cual cruzo los datos del excel y del sistema
+	 * @return
+	 */
+	public List<String> buscaRepetidosExcelSistema(){
+		List<String> rta = null;
+		try {
+			rta = conexionWSAdmin().getPortAdm().obtieneRepetidosSistemaTemporal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
 	}
 
 }

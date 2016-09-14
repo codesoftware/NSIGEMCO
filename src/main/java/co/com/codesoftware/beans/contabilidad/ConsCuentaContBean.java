@@ -2,6 +2,7 @@ package co.com.codesoftware.beans.contabilidad;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class ConsCuentaContBean implements GeneralBean {
 	private List<MoviContableEntity> listaMovimientos;
 	private List<MoviContableEntity> obtenerAsiento;
 
+	private ArrayList<String> cuentasCons;
+
+	private BigDecimal total;
+	private BigDecimal debito;
+	private BigDecimal credito;
+	
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
 	}
@@ -52,9 +59,27 @@ public class ConsCuentaContBean implements GeneralBean {
 	public void generarConsulta() {
 		try {
 			ContabilidadLogic objLogic = new ContabilidadLogic();
+			this.cuentasCons = null;
 			this.listaMovimientos = objLogic.obtenerMoviContXCuenta(fechaInicial, fechaFinal, cuenta);
-			if (this.listaMovimientos == null) {
+			if (this.listaMovimientos == null || this.listaMovimientos.size() == 0) {
 				this.messageBean("La consulta no arrojo ningun resultado", ErrorEnum.ERROR);
+			} else {
+				this.cuentasCons = null;
+				this.total = new BigDecimal(0);
+				this.debito = new BigDecimal(0);
+				this.credito = new BigDecimal(0);
+				if (this.listaMovimientos != null) {
+					for (MoviContableEntity item : this.listaMovimientos) {
+						this.armoListaCuenta(item.getSubcuenta().getCodigo());
+						if ("DEBITO".equalsIgnoreCase(item.getNaturaleza())) {
+							debito = debito.add(item.getValor());
+						} else {
+							credito = credito.add(item.getValor());
+						}
+
+					}
+					total = debito.subtract(credito);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,66 +87,100 @@ public class ConsCuentaContBean implements GeneralBean {
 	}
 
 	/**
-	 * Funcion que totaliza 
+	 * Funcion con la cual creo una lista para realizar visualizar las cuentas
+	 * implicadas
+	 * 
+	 * @param cuenta
+	 */
+	public void armoListaCuenta(String cuenta) {
+		boolean valida = true;
+		try {
+			if (this.cuentasCons == null) {
+				this.cuentasCons = new ArrayList<>();
+			}
+			for (String item : this.cuentasCons) {
+				if (cuenta.equalsIgnoreCase(item)) {
+					valida = false;
+					break;
+				}
+			}
+			if (valida) {
+				this.cuentasCons.add(cuenta);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Funcion que totaliza
 	 * 
 	 * @return
 	 */
 	public String getTotal() {
-		BigDecimal total = new BigDecimal(0);
-		BigDecimal debito = new BigDecimal(0);
-		BigDecimal credito = new BigDecimal(0);
+		this.total = new BigDecimal(0);
+		this.debito = new BigDecimal(0);
+		this.credito = new BigDecimal(0);
 		if (this.listaMovimientos != null) {
 			for (MoviContableEntity item : this.listaMovimientos) {
-				if("DEBITO".equalsIgnoreCase(item.getNaturaleza())){
+				this.armoListaCuenta(item.getSubcuenta().getCodigo());
+				if ("DEBITO".equalsIgnoreCase(item.getNaturaleza())) {
 					debito = debito.add(item.getValor());
-				}else{
+				} else {
 					credito = credito.add(item.getValor());
 				}
-				
+
 			}
 			total = debito.subtract(credito);
 		}
+		//return new DecimalFormat("###,###.##").format(total);
 		return new DecimalFormat("###,###.##").format(total);
 	}
+
 	/**
 	 * Funcion que totaliza los creditos
 	 * 
 	 * @return
 	 */
 	public String getCreditos() {
-		BigDecimal total = new BigDecimal(0);
-		BigDecimal creditos = new BigDecimal(0);
+		this.total = new BigDecimal(0);
+		this.debito = new BigDecimal(0);
+		this.credito = new BigDecimal(0);
 		if (this.listaMovimientos != null) {
 			for (MoviContableEntity item : this.listaMovimientos) {
-				if("CREDITO".equalsIgnoreCase(item.getNaturaleza())){
-					creditos = creditos.add(item.getValor());
+				this.armoListaCuenta(item.getSubcuenta().getCodigo());
+				if ("DEBITO".equalsIgnoreCase(item.getNaturaleza())) {
+					debito = debito.add(item.getValor());
+				} else {
+					credito = credito.add(item.getValor());
 				}
-				
+
 			}
-			total = creditos;
 		}
-		return new DecimalFormat("###,###.##").format(total);
+		return new DecimalFormat("###,###.##").format(this.credito);
 	}
-	
+
 	/**
 	 * Funcion que totaliza los debitos
 	 * 
 	 * @return
 	 */
 	public String getDebitos() {
-		BigDecimal total = new BigDecimal(0);
-		BigDecimal debito = new BigDecimal(0);
+		this.total = new BigDecimal(0);
+		this.debito = new BigDecimal(0);
+		this.credito = new BigDecimal(0);
 		if (this.listaMovimientos != null) {
 			for (MoviContableEntity item : this.listaMovimientos) {
-				if("DEBITO".equalsIgnoreCase(item.getNaturaleza())){
+				this.armoListaCuenta(item.getSubcuenta().getCodigo());
+				if ("DEBITO".equalsIgnoreCase(item.getNaturaleza())) {
 					debito = debito.add(item.getValor());
-				}else{
+				} else {
+					credito = credito.add(item.getValor());
 				}
-				
+
 			}
-			total = debito;
 		}
-		return new DecimalFormat("###,###.##").format(total);
+		return new DecimalFormat("###,###.##").format(this.debito);
 	}
 
 	public Date getFechaInicial() {
@@ -162,6 +221,14 @@ public class ConsCuentaContBean implements GeneralBean {
 
 	public void setObtenerAsiento(List<MoviContableEntity> obtenerAsiento) {
 		this.obtenerAsiento = obtenerAsiento;
+	}
+
+	public ArrayList<String> getCuentasCons() {
+		return cuentasCons;
+	}
+
+	public void setCuentasCons(ArrayList<String> cuentasCons) {
+		this.cuentasCons = cuentasCons;
 	}
 
 }
