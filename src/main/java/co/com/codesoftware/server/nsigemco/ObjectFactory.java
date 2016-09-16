@@ -25,6 +25,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _ObtenerPoductosAporteResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtenerPoductosAporteResponse");
+    private final static QName _BorraTablaTemporal_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "borraTablaTemporal");
     private final static QName _InsertaMarcaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaMarcaResponse");
     private final static QName _ObtieneCategoriasResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneCategoriasResponse");
     private final static QName _ActualizaReferenciaResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "actualizaReferenciaResponse");
@@ -55,6 +56,7 @@ public class ObjectFactory {
     private final static QName _InsertarProductoExcel_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertarProductoExcel");
     private final static QName _InsertaAporteResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertaAporteResponse");
     private final static QName _InsertarProductoExcelResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "insertarProductoExcelResponse");
+    private final static QName _BorraTablaTemporalResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "borraTablaTemporalResponse");
     private final static QName _ObtieneReferenciasXIdCateResponse_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "obtieneReferenciasXIdCateResponse");
     private final static QName _ConsultaSubcuentas_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaSubcuentas");
     private final static QName _ConsultaProductoCodigoExterno_QNAME = new QName("http://nsigemco.server.codesoftware.com.co/", "consultaProductoCodigoExterno");
@@ -204,6 +206,14 @@ public class ObjectFactory {
      */
     public ActualizarPerfiles createActualizarPerfiles() {
         return new ActualizarPerfiles();
+    }
+
+    /**
+     * Create an instance of {@link BorraTablaTemporalResponse }
+     * 
+     */
+    public BorraTablaTemporalResponse createBorraTablaTemporalResponse() {
+        return new BorraTablaTemporalResponse();
     }
 
     /**
@@ -420,6 +430,14 @@ public class ObjectFactory {
      */
     public ObtieneReferenciasResponse createObtieneReferenciasResponse() {
         return new ObtieneReferenciasResponse();
+    }
+
+    /**
+     * Create an instance of {@link BorraTablaTemporal }
+     * 
+     */
+    public BorraTablaTemporal createBorraTablaTemporal() {
+        return new BorraTablaTemporal();
     }
 
     /**
@@ -936,6 +954,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BorraTablaTemporal }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "borraTablaTemporal")
+    public JAXBElement<BorraTablaTemporal> createBorraTablaTemporal(BorraTablaTemporal value) {
+        return new JAXBElement<BorraTablaTemporal>(_BorraTablaTemporal_QNAME, BorraTablaTemporal.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertaMarcaResponse }{@code >}}
      * 
      */
@@ -1203,6 +1230,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "insertarProductoExcelResponse")
     public JAXBElement<InsertarProductoExcelResponse> createInsertarProductoExcelResponse(InsertarProductoExcelResponse value) {
         return new JAXBElement<InsertarProductoExcelResponse>(_InsertarProductoExcelResponse_QNAME, InsertarProductoExcelResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BorraTablaTemporalResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://nsigemco.server.codesoftware.com.co/", name = "borraTablaTemporalResponse")
+    public JAXBElement<BorraTablaTemporalResponse> createBorraTablaTemporalResponse(BorraTablaTemporalResponse value) {
+        return new JAXBElement<BorraTablaTemporalResponse>(_BorraTablaTemporalResponse_QNAME, BorraTablaTemporalResponse.class, null, value);
     }
 
     /**

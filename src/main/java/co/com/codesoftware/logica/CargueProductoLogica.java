@@ -523,5 +523,15 @@ public class CargueProductoLogica implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	
+	public String borrarTemporalProducto(){
+		String rta = "";
+		try {
+			rta = conexionWSAdmin().getPortAdm().borraTablaTemporal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rta;
+	}
 
 }

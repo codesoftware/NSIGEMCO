@@ -29,6 +29,171 @@ public interface AdministrationEndPoint {
     /**
      * 
      * @return
+     *     returns java.util.List<co.com.codesoftware.server.nsigemco.MarcaEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaMarcas", targetNamespace = "")
+    @RequestWrapper(localName = "obtieneMarcas", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneMarcas")
+    @ResponseWrapper(localName = "obtieneMarcasResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneMarcasResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneMarcasRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneMarcasResponse")
+    public List<MarcaEntity> obtieneMarcas();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns co.com.codesoftware.server.nsigemco.RespuestaEntity
+     */
+    @WebMethod
+    @WebResult(name = "RespuestaEntity", targetNamespace = "")
+    @RequestWrapper(localName = "insertaMarca", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaMarca")
+    @ResponseWrapper(localName = "insertaMarcaResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaMarcaResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaMarcaRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaMarcaResponse")
+    public RespuestaEntity insertaMarca(
+        @WebParam(name = "arg0", targetNamespace = "")
+        MarcaEntity arg0);
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.util.List<co.com.codesoftware.server.nsigemco.ProductoEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtieneProductos", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneProductos")
+    @ResponseWrapper(localName = "obtieneProductosResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneProductosResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneProductosRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneProductosResponse")
+    public List<ProductoEntity> obtieneProductos(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2);
+
+    /**
+     * 
+     * @param usuario
+     * @param contrasena
+     * @return
+     *     returns java.util.List<java.lang.Object>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "loginUsuario", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.LoginUsuario")
+    @ResponseWrapper(localName = "loginUsuarioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.LoginUsuarioResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/loginUsuarioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/loginUsuarioResponse")
+    public List<Object> loginUsuario(
+        @WebParam(name = "usuario", targetNamespace = "")
+        String usuario,
+        @WebParam(name = "contrasena", targetNamespace = "")
+        String contrasena);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.server.nsigemco.SocioEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerSocios", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocios")
+    @ResponseWrapper(localName = "obtenerSociosResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSociosResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSociosRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSociosResponse")
+    public List<SocioEntity> obtenerSocios();
+
+    /**
+     * 
+     * @param idSocio
+     * @return
+     *     returns co.com.codesoftware.server.nsigemco.SocioEntity
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocio")
+    @ResponseWrapper(localName = "obtenerSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocioResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSocioResponse")
+    public SocioEntity obtenerSocio(
+        @WebParam(name = "idSocio", targetNamespace = "")
+        Integer idSocio);
+
+    /**
+     * 
+     * @param socio
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "actualizaSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ActualizaSocio")
+    @ResponseWrapper(localName = "actualizaSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ActualizaSocioResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/actualizaSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/actualizaSocioResponse")
+    public String actualizaSocio(
+        @WebParam(name = "socio", targetNamespace = "")
+        SocioEntity socio);
+
+    /**
+     * 
+     * @param socio
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "insertaSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaSocio")
+    @ResponseWrapper(localName = "insertaSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaSocioResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaSocioResponse")
+    public String insertaSocio(
+        @WebParam(name = "socio", targetNamespace = "")
+        SocioEntity socio);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "insertaAporte", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaAporte")
+    @ResponseWrapper(localName = "insertaAporteResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaAporteResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaAporteRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaAporteResponse")
+    public String insertaAporte(
+        @WebParam(name = "arg0", targetNamespace = "")
+        AporteSocioEntity arg0);
+
+    /**
+     * 
+     * @param id
+     * @return
+     *     returns co.com.codesoftware.server.nsigemco.AporteSocioEntity
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAporte", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAporte")
+    @ResponseWrapper(localName = "obtenerAporteResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAporteResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAporteRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAporteResponse")
+    public AporteSocioEntity obtenerAporte(
+        @WebParam(name = "id", targetNamespace = "")
+        Integer id);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.server.nsigemco.AporteSocioEntity>
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "obtenerAportes", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAportes")
+    @ResponseWrapper(localName = "obtenerAportesResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAportesResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAportesRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAportesResponse")
+    public List<AporteSocioEntity> obtenerAportes();
+
+    /**
+     * 
+     * @return
      *     returns java.util.List<co.com.codesoftware.server.nsigemco.ProveedoresEntity>
      */
     @WebMethod
@@ -454,167 +619,14 @@ public interface AdministrationEndPoint {
 
     /**
      * 
-     * @param usuario
-     * @param contrasena
-     * @return
-     *     returns java.util.List<java.lang.Object>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "loginUsuario", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.LoginUsuario")
-    @ResponseWrapper(localName = "loginUsuarioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.LoginUsuarioResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/loginUsuarioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/loginUsuarioResponse")
-    public List<Object> loginUsuario(
-        @WebParam(name = "usuario", targetNamespace = "")
-        String usuario,
-        @WebParam(name = "contrasena", targetNamespace = "")
-        String contrasena);
-
-    /**
-     * 
-     * @param socio
      * @return
      *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "actualizaSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ActualizaSocio")
-    @ResponseWrapper(localName = "actualizaSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ActualizaSocioResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/actualizaSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/actualizaSocioResponse")
-    public String actualizaSocio(
-        @WebParam(name = "socio", targetNamespace = "")
-        SocioEntity socio);
-
-    /**
-     * 
-     * @param socio
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "insertaSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaSocio")
-    @ResponseWrapper(localName = "insertaSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaSocioResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaSocioResponse")
-    public String insertaSocio(
-        @WebParam(name = "socio", targetNamespace = "")
-        SocioEntity socio);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "insertaAporte", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaAporte")
-    @ResponseWrapper(localName = "insertaAporteResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaAporteResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaAporteRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaAporteResponse")
-    public String insertaAporte(
-        @WebParam(name = "arg0", targetNamespace = "")
-        AporteSocioEntity arg0);
-
-    /**
-     * 
-     * @param id
-     * @return
-     *     returns co.com.codesoftware.server.nsigemco.AporteSocioEntity
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAporte", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAporte")
-    @ResponseWrapper(localName = "obtenerAporteResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAporteResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAporteRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAporteResponse")
-    public AporteSocioEntity obtenerAporte(
-        @WebParam(name = "id", targetNamespace = "")
-        Integer id);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.server.nsigemco.AporteSocioEntity>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerAportes", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAportes")
-    @ResponseWrapper(localName = "obtenerAportesResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerAportesResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAportesRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerAportesResponse")
-    public List<AporteSocioEntity> obtenerAportes();
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.server.nsigemco.SocioEntity>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerSocios", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocios")
-    @ResponseWrapper(localName = "obtenerSociosResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSociosResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSociosRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSociosResponse")
-    public List<SocioEntity> obtenerSocios();
-
-    /**
-     * 
-     * @param idSocio
-     * @return
-     *     returns co.com.codesoftware.server.nsigemco.SocioEntity
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtenerSocio", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocio")
-    @ResponseWrapper(localName = "obtenerSocioResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtenerSocioResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSocioRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtenerSocioResponse")
-    public SocioEntity obtenerSocio(
-        @WebParam(name = "idSocio", targetNamespace = "")
-        Integer idSocio);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.server.nsigemco.MarcaEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaMarcas", targetNamespace = "")
-    @RequestWrapper(localName = "obtieneMarcas", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneMarcas")
-    @ResponseWrapper(localName = "obtieneMarcasResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneMarcasResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneMarcasRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneMarcasResponse")
-    public List<MarcaEntity> obtieneMarcas();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns co.com.codesoftware.server.nsigemco.RespuestaEntity
-     */
-    @WebMethod
-    @WebResult(name = "RespuestaEntity", targetNamespace = "")
-    @RequestWrapper(localName = "insertaMarca", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaMarca")
-    @ResponseWrapper(localName = "insertaMarcaResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.InsertaMarcaResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaMarcaRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/insertaMarcaResponse")
-    public RespuestaEntity insertaMarca(
-        @WebParam(name = "arg0", targetNamespace = "")
-        MarcaEntity arg0);
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns java.util.List<co.com.codesoftware.server.nsigemco.ProductoEntity>
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "obtieneProductos", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneProductos")
-    @ResponseWrapper(localName = "obtieneProductosResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.ObtieneProductosResponse")
-    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneProductosRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/obtieneProductosResponse")
-    public List<ProductoEntity> obtieneProductos(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1,
-        @WebParam(name = "arg2", targetNamespace = "")
-        String arg2);
+    @RequestWrapper(localName = "borraTablaTemporal", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.BorraTablaTemporal")
+    @ResponseWrapper(localName = "borraTablaTemporalResponse", targetNamespace = "http://nsigemco.server.codesoftware.com.co/", className = "co.com.codesoftware.server.nsigemco.BorraTablaTemporalResponse")
+    @Action(input = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/borraTablaTemporalRequest", output = "http://nsigemco.server.codesoftware.com.co/AdministrationEndPoint/borraTablaTemporalResponse")
+    public String borraTablaTemporal();
 
 }
