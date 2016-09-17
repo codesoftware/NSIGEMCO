@@ -542,4 +542,21 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		this.listaProveedoresFiltered = listaProveedoresFiltered;
 	}
 
+	public String getInventareable() {
+		return inventareable;
+	}
+
+	public void setInventareable(String inventareable) {
+		this.inventareable = inventareable;
+	}
+
+	public Integer getCantidadInventariable() {
+		return cantidadInventariable;
+	}
+
+	public void setCantidadInventariable(Integer cantidadInventariable) {
+		this.cantidadInventariable = cantidadInventariable;
+	}
+	
+
 }
