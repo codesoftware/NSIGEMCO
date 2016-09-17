@@ -10,6 +10,7 @@
 				<div class="col-md-2 col-sm-0 col-xs-0"></div>
 				<div class="col-md-8 col-sm-12 col-xs-12">
 					<br /> <br />
+					<p:growl id="msnGrowl" life="30000" autoUpdate="true" showDetail="true"></p:growl>
 					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 					<p:panel header="Cargar Excel de productos" styleClass="table table-bordered">
 						<p:column colspan="2">
@@ -31,9 +32,9 @@
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				<div class="col-md-10 col-sm-12 col-xs-12">
 					<h:form id="formTable">
-						<p:dataTable var="productos" id="productos" value="#{cargueProductoBean.listaProductos}" rows="10" paginator="true"
+						<p:dataTable var="productos" id="productos" value="#{cargueProductoBean.listaProductos}" filteredValue="#{cargueProductoBean.listaProductosFiltered}" rows="10" paginator="true"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
-							<p:column headerText="Codigo Externo">
+							<p:column headerText="Codigo Externo" filterBy="#{productos.codigoExterno}" filterMatchMode="contains">
 								<h:outputText value="#{productos.codigoExterno}" />
 							</p:column>
 
@@ -54,14 +55,32 @@
 							<p:column headerText="Tipo">
 								<h:outputText value="#{productos.tipo}" />
 							</p:column>
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column footerText="Numero de Registros:" colspan="5"></p:column>
+									<p:column footerText="#{cargueProductoBean.listaProductos.size()}"></p:column>
+								</p:row>
+							</p:columnGroup>
 						</p:dataTable>
 					</h:form>
 					<br />
 					<p:commandButton value="REGISTRO" actionListener="#{cargueProductoBean.registroProductos}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"></p:commandButton>
+					<p:commandButton value="CONSULTAR" styleClass="RedButton" actionListener="#{cargueProductoBean.consultaProductosTemporal}" update=":formTable,:formRepetidos"></p:commandButton>
+					<p:commandButton value="REPETIDOS EXCEL" styleClass="GreenButton" actionListener="#{cargueProductoBean.consultaRepetidosExcel}" update=":formRepetidos"></p:commandButton>
+					<p:commandButton value="REPETIDOS SISTEMA" styleClass="BlueButton" actionListener="#{cargueProductoBean.consultaRepetidosSistemaExcel}" update=":formRepetidos"></p:commandButton>
+					<p:commandButton value="BORRAR DATOS TEMP" styleClass="RedButton" actionListener="#{cargueProductoBean.borrarTemporal}" ></p:commandButton>
 					<br />
 				</div>
 				<div class="col-md-1 col-sm-0 col-xs-0"></div>
 			</div>
+			<h:form id="formRepetidos">
+				<br />
+				Numero de Registros encontrados: #{cargueProductoBean.codigosRepetidos.size()}
+				<br />
+				<ui:repeat var="item" value="#{cargueProductoBean.codigosRepetidos}">
+					<div class="col-md-2 col-sm-2 col-xs-2">#{item},</div>
+				</ui:repeat>
+			</h:form>
 			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
 			Realizacion de proceso:
