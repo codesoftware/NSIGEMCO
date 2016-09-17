@@ -207,6 +207,14 @@ public class RemisionFacturaBean implements GeneralBean {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Funcion con la cual voy a realizar un pago 
+	 */
+	public String generarPagoFactura(Integer idRemision){
+		String ruta ="/ACTION/FACTURACION/pagosRemision.jsf";
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idRemisionPago", idRemision);
+		return ruta;
+	}
 
 	/**
 	 * Funcion con la cual imprimo la factura generica del sistema

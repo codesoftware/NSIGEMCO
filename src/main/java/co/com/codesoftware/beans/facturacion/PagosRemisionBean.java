@@ -189,7 +189,14 @@ public class PagosRemisionBean implements GeneralBean {
 	@PostConstruct
 	public void init() {
 		this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
-
+		this.idDocumento = (Integer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idRemisionPago");
+		if(this.idDocumento != null){
+			this.tipoDocumento = "RE";
+			this.buscarDocumento();
+			this.confirmaPagoRemision();
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idRemisionPago", null);
+		}
+		System.out.println("Id Remision: " + this.idDocumento);
 	}
 
 	public UsuarioEntity getObjetoSesion() {
