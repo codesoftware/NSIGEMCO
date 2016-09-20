@@ -117,6 +117,9 @@
 					<p:column width="8%" headerText="Factura">
 						<p:commandButton value="GENERAR FACTURA" styleClass="RedButton" actionListener="#{remisionFacturaBean.obtenerPdfFactura(tRemisiones)}" update=":detalleRemisionForm:Visor"></p:commandButton>
 					</p:column>
+					<p:column width="8%" headerText="Pagos">
+						<p:commandButton value="PAGO" icon="fa fa-money" styleClass="GreenButton" action="#{remisionFacturaBean.generarPagoFactura(tRemisiones.id)}" update=":detalleRemisionForm:Visor"></p:commandButton>
+					</p:column>
 				</p:dataTable>
 			</h:form>
 			<h:form id="searchClients">
