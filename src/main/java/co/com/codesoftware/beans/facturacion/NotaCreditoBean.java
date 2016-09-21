@@ -102,6 +102,7 @@ public class NotaCreditoBean implements GeneralBean {
 			for(DetProduFacturaEntity item : this.factura.getDetalleProductos()){
 				if(this.codigoExternoAux.equalsIgnoreCase(item.getProducto().getCodigoExt())){
 					item.setCantidad(this.cantidad);
+					//item.set
 				}
 			}
 		} catch (Exception e) {
