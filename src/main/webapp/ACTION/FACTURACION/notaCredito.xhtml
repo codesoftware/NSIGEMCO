@@ -98,7 +98,7 @@
 									<p:inputText value="#{notaCreditoBean.cantidad}"></p:inputText>
 									<p:outputLabel value="Precio:"></p:outputLabel>
 									<pe:inputNumber value="#{notaCreditoBean.precioAux}" decimalPlaces="2" symbol="$"></pe:inputNumber>
-									<p:commandButton value="CAMBIAR" ></p:commandButton>
+									<p:commandButton value="CAMBIAR" actionListener="#{notaCreditoBean.cambioValoresFactura}" ></p:commandButton>
 								</p:panelGrid>
 								<br/>
 								<p:dataTable id="tablaRemisones"  var="item" value="#{notaCreditoBean.factura.detalleProductos}" reflow="true" paginator="true" rows="5">
