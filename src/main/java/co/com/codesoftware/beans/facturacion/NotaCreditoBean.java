@@ -93,6 +93,22 @@ public class NotaCreditoBean implements GeneralBean {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Funcion con la cual cambio los valores de la cuenta
+	 */
+	public void cambioValoresFactura(){
+		try{
+			System.out.println("Paso por aqui:  " + this.codigoExternoAux + " Precio Auxiliar: " + this.precioAux+ " Cantidad: " + this.cantidad  );
+			for(DetProduFacturaEntity item : this.factura.getDetalleProductos()){
+				if(this.codigoExternoAux.equalsIgnoreCase(item.getProducto().getCodigoExt())){
+					item.setCantidad(this.cantidad);
+					//item.set
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
