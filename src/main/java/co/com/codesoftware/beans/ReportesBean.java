@@ -73,8 +73,14 @@ public class ReportesBean implements GeneralBean {
 					requestContext.execute("PF('abrirVisor').show()");
 				}
 			} else {
-				documento = reporte.generarExcelSql(
-						"SELECT dska_cod_ext codigo_externo ,dska_desc descripcion_producto, coalesce((select sum(dtpr_cant) from fa_tdtpr where dtpr_dska = dska_dska), 0 ) productos_vendidos, (select coalesce(sum(fcprd_cant),0) from fa_tfacom, fa_tfcprd where upper(facom_estad) = 'F' and fcprd_facom = facom_facom and fcprd_dska = dska_dska) productos_comprados FROM IN_TDSKA order by dska_dska ");
+				String sql = "SELECT dska_cod_ext codigo_externo ,dska_desc descripcion_producto, ";
+				sql += "  coalesce((select sum(dtpr_cant) from fa_tdtpr where dtpr_dska = dska_dska), 0 ) productos_vendidos,";
+				sql += " (select coalesce(sum(fcprd_cant),0) from fa_tfacom, fa_tfcprd where upper(facom_estad) = 'F' and fcprd_facom = facom_facom and fcprd_dska = dska_dska) productos_comprados, ";
+				sql += " (SELECT coalesce(sum(prap_cant),0) FROM IN_TPRAP, em_tapor where apor_apor = prap_apor AND PRAP_DSKA = DSKA_DSKA) APORTES ";
+				sql += " ,cepr_promedio_uni promedioProducto ";
+				sql += "  FROM IN_TDSKA, in_tcepr WHERE DSKA_DSKA = CEPR_DSKA order by dska_dska";
+				System.out.println(sql);
+				documento = reporte.generarExcelSql(sql);
 				RemisionLogica objLogica = new RemisionLogica();
 				String valida = objLogica.materializaImagenCarpeta(documento, "reportes", "ComprasVentas.xls",
 						"relativa");

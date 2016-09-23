@@ -110,8 +110,8 @@
 					<br />
 				</h:form>
 				<h:form id="formDetalleProd">
-					<p:dataTable var="item" value="#{aportesSociosBean.listaAporProdSelected}" reflow="true" paginator="true" rows="5">
-						<p:column headerText="CODIGO EXTERNO">
+					<p:dataTable var="item" value="#{aportesSociosBean.listaAporProdSelected}" filteredValue="#{aportesSociosBean.listaAporProdSelectedFiltered}" reflow="true" paginator="true" rows="5">
+						<p:column headerText="CODIGO EXTERNO" filterBy="#{item.codExterno}"  filterMatchMode="contains">
 							<p:outputLabel value="#{item.codExterno}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="CANTIDAD">
@@ -123,6 +123,12 @@
 								<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 							</p:outputLabel>
 						</p:column>
+						<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="2" footerText="Numero de Registros:"></p:column>
+									<p:column footerText="#{aportesSociosBean.listaAporProdSelected.size()}"></p:column>
+								</p:row>
+							</p:columnGroup>
 					</p:dataTable>
 				</h:form>
 			</p:dialog>
