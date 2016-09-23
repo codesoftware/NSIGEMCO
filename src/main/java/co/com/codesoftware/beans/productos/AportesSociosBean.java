@@ -39,6 +39,7 @@ public class AportesSociosBean implements GeneralBean {
 	private Integer idAporte;
 	private Integer idSede;
 	private List<ProductoAporte> listaAporProdSelected;
+	private List<ProductoAporte> listaAporProdSelectedFiltered;
 	private AuxContableEntity auxiliarContable;
 	private Integer progress = 0;
 
@@ -186,9 +187,9 @@ public class AportesSociosBean implements GeneralBean {
 			CargueProductoLogica objLogica = new CargueProductoLogica();
 			ArrayList<co.com.codesoftware.servicio.producto.ProductoAporte> productos = objLogica.cargaExcelAporte(event, this.objetoSesion.getId(), this.idAporte);
 			String valida = "";
-			if(productos != null){
+			if (productos != null) {
 				AportesSocioLogica objLogicaAp = new AportesSocioLogica();
-				valida = objLogicaAp.insertaRegistroAporte(this.idAporte, this.objetoSesion.getId(), productos );
+				valida = objLogicaAp.insertaRegistroAporte(this.idAporte, this.objetoSesion.getId(), productos);
 			}
 			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('datosProductosAporte').hide()");
@@ -198,15 +199,16 @@ public class AportesSociosBean implements GeneralBean {
 			} else {
 				messageBean("Error al cargargar el excel: " + valida, ErrorEnum.ERROR);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
+
 	public void onComplete() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
-    }
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Progress Completed"));
+	}
 
 	/**
 	 * Funcion con la cual borro todos los productos de un aporte
@@ -352,6 +354,14 @@ public class AportesSociosBean implements GeneralBean {
 
 	public void setProgress(Integer progress) {
 		this.progress = progress;
+	}
+
+	public List<ProductoAporte> getListaAporProdSelectedFiltered() {
+		return listaAporProdSelectedFiltered;
+	}
+
+	public void setListaAporProdSelectedFiltered(List<ProductoAporte> listaAporProdSelectedFiltered) {
+		this.listaAporProdSelectedFiltered = listaAporProdSelectedFiltered;
 	}
 
 }
