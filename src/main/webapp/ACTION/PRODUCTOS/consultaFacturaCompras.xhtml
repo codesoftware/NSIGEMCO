@@ -8,6 +8,7 @@
 				<h:form>
 					<p:spacer></p:spacer>
 					<center>
+					<p:growl showDetail="true" autoUpdate="true" life="30000" ></p:growl>
 						<p:panel header="CONSULTA FACTURAS DE COMPRA" style="width:80%">
 							<div class="ui-grid ui-grid-responsive">
 								<div class="ui-grid-row">
@@ -44,6 +45,7 @@
 								</div>
 							</div>
 						</p:panel>
+						<br/>
 						<p:dataTable id="tablaFactCompra" var="factura" widgetVar="factCompraTable" value="#{consultaFacCompraBean.listaFacturas}" paginator="true" rows="15" rowsPerPageTemplate="15,20,25"
 							styleClass="table table-bordered" filteredValue="#{consultaFacCompraBean.listaFacturasFiltro}">
 							<p:column headerText="Id Factura" priority="1" filterBy="#{factura.id}">

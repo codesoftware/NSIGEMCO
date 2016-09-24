@@ -79,8 +79,10 @@ public class ConsultaFacCompraBean implements GeneralBean {
 		} catch (Exception e) {
 			this.proveedor.setId(-1);
 		}
-
 		this.listaFacturas = this.logica.consultaFacturaFiltros(this.proveedor.getId(), this.fechaInicial, this.fechaFinal, this.estado, this.imagen,this.digitalizado);
+		if(this.listaFacturas == null || this.listaFacturas.size() == 0){
+			this.messageBean("La consulta no arrojo ningun resultado", ErrorEnum.ERROR);
+		}
 	}
 
 	/**
