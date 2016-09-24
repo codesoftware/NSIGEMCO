@@ -77,27 +77,30 @@
 							<p:outputLabel value="DATOS FACTURA" style="color:black" />
 						</f:facet>
 						<p:column>
-					Fecha Factura
-						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaFact}" id="fechaFact" navigator="true" style="width:100%;"
+							<p:outputLabel value="Fecha Factura"></p:outputLabel>
+							<br />
+							<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaFact}" id="fechaFact" navigator="true" style="width:100%;"
 								maxdate="#{facturaCompraTmpBean.maxDate}">
 								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
 							</p:calendar>
 						</p:column>
 						<p:column>
-					Fecha Recepción
-						<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaRec}" id="fechaRecep" navigator="true" style="width:100%;"
+							<p:outputLabel value="Fecha Recepción"></p:outputLabel>
+							<br />
+							<p:calendar pattern="dd/MM/yyyy" locale="es_ES" readonlyInput="true" value="#{facturaCompraTmpBean.fechaRec}" id="fechaRecep" navigator="true" style="width:100%;"
 								maxdate="#{facturaCompraTmpBean.maxDate}">
 								<p:ajax event="dateSelect" listener="#{facturaCompraTmpBean.ajaxCarga}" />
 							</p:calendar>
-
 						</p:column>
 						<p:column>
-					Numero de factura
-					<p:inputText value="#{facturaCompraTmpBean.facturaCompra.numeroFactura}"></p:inputText>
+							<p:outputLabel value="Numero de factura"></p:outputLabel>
+							<br />
+							<p:inputText value="#{facturaCompraTmpBean.facturaCompra.numeroFactura}"></p:inputText>
 						</p:column>
 						<p:column>
-					Valor Factura
-					<pe:inputNumber id="valorPago" value="#{facturaCompraTmpBean.facturaCompra.valorFacura}" decimalPlaces="2" symbol="$" style="width:100%" />
+							<p:outputLabel value="Valor Factura"></p:outputLabel>
+							<br />
+							<pe:inputNumber id="valorPago" value="#{facturaCompraTmpBean.facturaCompra.valorFacura}" decimalPlaces="2" symbol="$" style="width:100%" />
 						</p:column>
 						<p:column>
 							<h:selectOneMenu value="#{facturaCompraTmpBean.idSede}" styleClass="form-control" id="selecRete">
@@ -119,12 +122,14 @@
 							<p:outputLabel value="ADICIÓN DE  PRODUCTOS" style="color:black" />
 						</f:facet>
 						<p:column>
-							<p:outputLabel value="Cod. Ext:&nbsp;&nbsp;" style="color:black" styleClass="width:18%;" />
+							<p:outputLabel value="Cod. Ext:&nbsp;&nbsp;" />
+							<br />
 							<p:inputText id="codAplicCons" value="#{facturaCompraTmpBean.codConExterno}" onblur="codExt()" style="width:80%;" styleClass="codigoExterno"
 								onkeypress="if (event.keyCode == 13){ return false;}" />
 						</p:column>
 						<p:column>
-						Inventareable
+							<p:outputLabel value="Inventareable" />
+							<br />
 							<h:selectOneMenu value="#{facturaCompraTmpBean.inventareable}" styleClass="form-control" id="selectInv">
 								<f:selectItem itemLabel="SI" itemValue="S"></f:selectItem>
 								<f:selectItem itemLabel="NO" itemValue="N"></f:selectItem>
@@ -133,20 +138,21 @@
 						</p:column>
 						<p:column>
 							<p:panel id="panelInv" widgetVar="wpanelInv" rendered="#{facturaCompraTmpBean.inventareable == 'N'}">
-							Cantidad No Inventareable
+								<p:outputLabel value="Cantidad No Inventareable" />
+								<br />
 								<pe:inputNumber id="cantidadInv" value="#{facturaCompraTmpBean.cantidadInventariable}" decimalPlaces="0" style="width:100%" />
 							</p:panel>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Cantidad :" style="color:black" />
+							<p:outputLabel value="Cantidad :" style="color:black" /><br/>
 							<pe:inputNumber id="cantidad" value="#{facturaCompraTmpBean.cantidad}" decimalPlaces="0" style="width:100%" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Porcentaje Iva :" style="color:black" />
+							<p:outputLabel value="Porcentaje Iva :" style="color:black" /><br/>
 							<pe:inputNumber id="porIva" value="#{facturaCompraTmpBean.porcentajeIva}" style="width:100%" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Valor unidad :" style="color:black" />
+							<p:outputLabel value="Valor unidad :" style="color:black" /><br/>
 							<pe:inputNumber id="valorUnidad" value="#{facturaCompraTmpBean.valorProducto}" decimalPlaces="2" symbol="$" style="width:100%" onblur="adicionaProd()" />
 						</p:column>
 						<f:facet name="footer">
@@ -154,6 +160,7 @@
 								<p:commandButton value="BUSQUEDA AVANZADA" styleClass="OrangeButton" onclick="PF('addProducto').show()" actionListener="#{facturaCompraTmpBean.busquedaAvanzada}" update="tablaProductos"
 									onstart="PF('tablaProd').clearFilters()" />
 								<p:outputLabel value="Codigo Externo:#{facturaCompraTmpBean.productoBusqueda.producto.codigoExt}---Nombre :#{facturaCompraTmpBean.productoBusqueda.producto.descripcion}" />
+								<p:commandButton value="ADICIONAR PRODUCTO" actionListener="#{facturaCompraTmpBean.adicionaProductoLista}" styleClass="GreenButton"></p:commandButton>
 							</p:panel>
 						</f:facet>
 					</p:panelGrid>
