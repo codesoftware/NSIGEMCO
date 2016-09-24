@@ -1,7 +1,8 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cd="http://java.sun.com/jsf/composite/componentes">
 <h:head>
 
 </h:head>
@@ -103,10 +104,7 @@
 							<pe:inputNumber id="valorPago" value="#{facturaCompraTmpBean.facturaCompra.valorFacura}" decimalPlaces="2" symbol="$" style="width:100%" />
 						</p:column>
 						<p:column>
-							<h:selectOneMenu value="#{facturaCompraTmpBean.idSede}" styleClass="form-control" id="selecRete">
-								<f:selectItem itemLabel="SELECCIONE UNA SEDE" itemValue="-1"></f:selectItem>
-								<f:selectItems value="#{cargaListasMapBean.listaMapSedes}"></f:selectItems>
-							</h:selectOneMenu>
+						<cd:comboSedes listaSede="#{cargaListasMapBean.listaMapSedes}" estilo="form-control"  valor="#{facturaCompraTmpBean.idSede}" id="selecRete"/>
 						</p:column>
 						<p:column>
 							<h:selectOneMenu value="#{facturaCompraTmpBean.facturaCompra.cobraRete}" styleClass="form-control" id="selectSede">
