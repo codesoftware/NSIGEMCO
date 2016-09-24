@@ -589,9 +589,6 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void setCantidadInventariable(Integer cantidadInventariable) {
 		this.cantidadInventariable = cantidadInventariable;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> 2fca07c98c6470ea37edddedc1c6daabf8ead8a6
+
 
 }
