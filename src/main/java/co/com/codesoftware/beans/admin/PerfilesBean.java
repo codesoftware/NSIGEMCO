@@ -103,6 +103,7 @@ public class PerfilesBean implements GeneralBean {
 		listFactura.add(new PerfilBean("CAMBIO PRECIO PEDIDO", "FcCr8"));
 		listFactura.add(new PerfilBean("ACCESO FACTURACIÓN", "FcCr1"));
 		listFactura.add(new PerfilBean("GENERAR REMISION SAFC", "FcCr13"));
+		listFactura.add(new PerfilBean("COTIZACIONES", "FcCr12"));
 		listFactura.add(new PerfilBean("REMISIONAR SAFC", "FcCr14"));
 		listFactura.add(new PerfilBean("REMISIONES", "Fact3"));
 		listFactura.add(new PerfilBean("PAGO REMISIONES", "Fact4"));
