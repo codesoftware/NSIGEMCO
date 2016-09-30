@@ -141,31 +141,38 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Inv11")) {
 				menuPrincipal.setLabel("INVENTARIOS");
 				menuPrincipal.setIcon("fa fa-bank");
-				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv2.")
-						|| this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv5.")
+				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv2.")){
+					DefaultSubMenu compras = new DefaultSubMenu();
+					compras.setLabel("Compras");
+					menuPrincipal.addElement(compras);
+					if (this.listaPermisos.contains(".Inv1.")) {
+						DefaultMenuItem tercerNivel = new DefaultMenuItem("Registro Tem");
+						tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
+						compras.addElement(tercerNivel);
+					}
+					if (this.listaPermisos.contains(".Inv3.")) {
+						DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Temporales");
+						tercerNivelFacturaCompraTmp
+								.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
+						compras.addElement(tercerNivelFacturaCompraTmp);
+					}
+					if (this.listaPermisos.contains(".Inv2.")) {
+						DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta");
+						tercerNivelFacturaCompra
+								.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
+						compras.addElement(tercerNivelFacturaCompra);
+					}
+				}
+				if (     this.listaPermisos.contains(".Inv5.")
 						|| this.listaPermisos.contains(".Adm5.") || this.listaPermisos.contains(".Inv6.")
 						|| this.listaPermisos.contains(".Inv7.")) {
 					// Segundo Nivel
 					DefaultSubMenu productos = new DefaultSubMenu();
 					productos.setLabel("Productos ");
 					menuPrincipal.addElement(productos);
-					if (this.listaPermisos.contains(".Inv1.")) {
-						DefaultMenuItem tercerNivel = new DefaultMenuItem("Factura de Compra");
-						tercerNivel.setCommand("/ACTION/FACTURACION/facturaCompraTmp.jsf?faces-redirect=false");
-						productos.addElement(tercerNivel);
-					}
-					if (this.listaPermisos.contains(".Inv2.")) {
-						DefaultMenuItem tercerNivelFacturaCompra = new DefaultMenuItem("Consulta Fac Compra");
-						tercerNivelFacturaCompra
-								.setCommand("/ACTION/PRODUCTOS/consultaFacturaCompras.jsf?faces-redirect=false");
-						productos.addElement(tercerNivelFacturaCompra);
-					}
-					if (this.listaPermisos.contains(".Inv3.")) {
-						DefaultMenuItem tercerNivelFacturaCompraTmp = new DefaultMenuItem("Consulta Fac Compra tmp");
-						tercerNivelFacturaCompraTmp
-								.setCommand("/ACTION/FACTURACION/consultaFacCompraTmp.jsf?faces-redirect=false");
-						productos.addElement(tercerNivelFacturaCompraTmp);
-					}
+					
+					
+					
 					if (this.listaPermisos.contains(".Inv4.")) {
 						DefaultMenuItem tercerNivelPrueba = new DefaultMenuItem("Insertar Productos");
 						tercerNivelPrueba.setCommand("/ACTION/PRODUCTOS/insertaProductos.jsf?faces-redirect=false");
