@@ -11,7 +11,8 @@
 		<ui:define name="content">
 			<script>
 				function ocultaPanel() {
-					if (document.getElementById("datosFactura:selectInv").value = "S") {
+					
+					if (document.getElementById("datosFactura:selectInv").value == "N") {
 						document.getElementById("datosFactura:panelInv").style.display = "none";
 					}
 				}

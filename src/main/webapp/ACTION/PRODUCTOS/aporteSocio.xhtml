@@ -20,7 +20,8 @@
 								CONSULTA GENERAL DE APORTES
 							</f:facet>
 							<p:column headerText="CODIGO" filterBy="#{aporte.codigo}" priority="1" filterMatchMode="contains">
-								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" update=":formDetalleProd,:formEjecucion" actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id,aporte)}"></p:commandLink>
+								<p:commandLink onsuccess="PF('dialogProductos').show()" value="#{aporte.codigo}" update=":formDetalleProd,:formEjecucion"
+									actionListener="#{aportesSociosBean.consultaProdAportes(aporte.id,aporte)}"></p:commandLink>
 							</p:column>
 							<p:column headerText="FECHA" filterBy="#{aporte.fecha.toGregorianCalendar().time}" priority="3" filterMatchMode="contains">
 								<h:outputText value="#{aporte.fecha.toGregorianCalendar().time}">
@@ -32,9 +33,10 @@
 								<h:outputText value="CERRADO" rendered="#{aporte.estado == 'X'}"></h:outputText>
 							</p:column>
 							<p:column headerText="DETALLE" priority="2">
-								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte" oncomplete="PF('datosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
-								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos" oncomplete="PF('datosProductosAporte').show()"
-									rendered="#{aporte.estado == 'C'}"></p:commandButton>
+								<p:commandButton value="abrir" icon="fa fa-plus" styleClass="GreenButton" action="#{aportesSociosBean.consultaAporte(aporte.id)}" update=":formTable:panelAporte"
+									oncomplete="PF('datosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
+								<p:commandButton value="subir prod" icon="fa fa-cloud-upload" styleClass="BlueButton" action="#{aportesSociosBean.cargaIdAporte(aporte.id)}" update=":formTable:panelCargaArchivos"
+									oncomplete="PF('datosProductosAporte').show()" rendered="#{aporte.estado == 'C'}"></p:commandButton>
 							</p:column>
 						</p:dataTable>
 						<br />
@@ -80,10 +82,11 @@
 						<p:outputLabel value="2. Cantidad (Solo numeros enteros)"></p:outputLabel>
 						<br />
 						<p:outputLabel value="3. Costo del producto por unidad"></p:outputLabel>
-						<br />	
+						<br />
 						<p:panelGrid id="panelCargaArchivos" columns="2" styleClass="table table-bordered">
 							<p:fileUpload label="Cargar Archivo" mode="advanced" skinSimple="true" dragDropSupport="true" uploadLabel="Subir" cancelLabel="cancelar" allowTypes="/(\.|\/)(xlsx)$/" previewWidth="100"
-								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{aportesSociosBean.cargueExcelProductos}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+								invalidFileMessage="Solo se puede subir archivos con extensión  xslx" multiple="false" fileUploadListener="#{aportesSociosBean.cargueExcelProductos}" onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
 						</p:panelGrid>
 					</p:dialog>
 					<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
@@ -98,7 +101,8 @@
 					<br />
 					<br />
 					<p:outputLabel value="Auxiliar Contable:&nbsp;&nbsp;&nbsp;" rendered="#{aporte.estado == 'C'}"></p:outputLabel>
-					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}" completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter" rendered="#{aportesSociosBean.aportes.estado == 'C'}">`
+					<p:autoComplete id="autoAuxiliarCont" value="#{aportesSociosBean.auxiliarContable}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"
+						completeMethod="#{registroGastosBean.completaAuxContable}" converter="auxiliarContableConverter" rendered="#{aportesSociosBean.aportes.estado == 'C'}">`
 							<p:column>
 							<h:outputText value="#{item.codigo}" />
 						</p:column>
@@ -106,12 +110,13 @@
 							<h:outputText value="#{item.nombre}" />
 						</p:column>
 					</p:autoComplete>
-					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso" rendered="#{aportesSociosBean.aportes.estado == 'C'}"></p:commandButton>
+					<p:commandButton styleClass="GreenButton" actionListener="#{aportesSociosBean.generaProcesoAporte}" update=":formTable" value="Generar Proceso"
+						rendered="#{aportesSociosBean.aportes.estado == 'C'}"></p:commandButton>
 					<br />
 				</h:form>
 				<h:form id="formDetalleProd">
 					<p:dataTable var="item" value="#{aportesSociosBean.listaAporProdSelected}" filteredValue="#{aportesSociosBean.listaAporProdSelectedFiltered}" reflow="true" paginator="true" rows="5">
-						<p:column headerText="CODIGO EXTERNO" filterBy="#{item.codExterno}"  filterMatchMode="contains">
+						<p:column headerText="CODIGO EXTERNO" filterBy="#{item.codExterno}" filterMatchMode="contains">
 							<p:outputLabel value="#{item.codExterno}"></p:outputLabel>
 						</p:column>
 						<p:column headerText="CANTIDAD">
@@ -124,13 +129,18 @@
 							</p:outputLabel>
 						</p:column>
 						<p:columnGroup type="footer">
-								<p:row>
-									<p:column colspan="2" footerText="Numero de Registros:"></p:column>
-									<p:column footerText="#{aportesSociosBean.listaAporProdSelected.size()}"></p:column>
-								</p:row>
-							</p:columnGroup>
+							<p:row>
+								<p:column colspan="2" footerText="Numero de Registros:"></p:column>
+								<p:column footerText="#{aportesSociosBean.listaAporProdSelected.size()}"></p:column>
+							</p:row>
+						</p:columnGroup>
 					</p:dataTable>
 				</h:form>
+			</p:dialog>
+			<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false">
+			Realizacion de proceso:
+			<p:graphicImage library="IMAGESAJAX" name="ajax-loader.gif" />
 			</p:dialog>
 		</ui:define>
 	</ui:composition>

@@ -102,7 +102,7 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 	 * @return
 	 */
 	public List<ProdFacCompraTmpEntity> adicionaProductoLista(List<ProdFacCompraTmpEntity> lista,
-			ProdFacCompraTmpEntity idProducto, Integer cantidad, BigDecimal porcentajeIva, BigDecimal precioUnidad) {
+			ProdFacCompraTmpEntity idProducto, Integer cantidad, BigDecimal porcentajeIva, BigDecimal precioUnidad,Integer cantidadInv) {
 		List<ProdFacCompraTmpEntity> respuesta = new ArrayList<>();
 		try {
 			if (idProducto != null && idProducto.getProducto() != null) {
@@ -117,6 +117,7 @@ public class FacturaCompraTmpLogica implements WSGeneralInterface {
 				idProducto.setCantidad(cantidad);
 				idProducto.setPorcentajeIva(porcentajeIva);
 				idProducto.setSubtotal(precioUnidad);
+				idProducto.setCantidadInventariable(cantidadInv);
 				BigDecimal iva = (porcentajeIva.divide(new BigDecimal(100)).add(new BigDecimal(1)));
 				BigDecimal valorIva = precioUnidad.multiply(iva);
 				idProducto.setTotal(valorIva.multiply(new BigDecimal(cantidad)));

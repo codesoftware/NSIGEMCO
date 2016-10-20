@@ -244,7 +244,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 				} else if (this.cantidadInventariable > this.cantidad) {
 					messageBean("Error, la cantidad no inventareable no puede superar la cantidad total del producto", ErrorEnum.ERROR);
 				} else {
-					this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto);
+					this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto,this.cantidadInventariable);
 					this.cantidad = 0;
 					this.porcentajeIva = new BigDecimal("0");
 					this.valorProducto = new BigDecimal("0");
