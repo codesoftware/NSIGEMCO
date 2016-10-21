@@ -417,7 +417,8 @@ public class MenuBean implements Serializable {
 			tercerNivelConsultaDos.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaMoviContable.jsf");
 			
 			DefaultMenuItem tercerNivelConsultaTres= new DefaultMenuItem("POR CUENTA");
-			tercerNivelConsultaTres.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaCuentaTotal.jsf");
+			//tercerNivelConsultaTres.setCommand("/ACTION/CONTABILIDAD/CONSULTAS/consultaCuentaTotal.jsf");
+			tercerNivelConsultaTres.setOutcome("/ACTION/CONTABILIDAD/CONSULTAS/consultaCuentaTotal.jsf");
 
 			// Adiciono al punto de menu principal
 			menuPrincipal.addElement(segundoNivel);

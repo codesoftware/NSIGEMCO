@@ -25,6 +25,7 @@ public class ConsCuentaContBean implements GeneralBean {
 	private Date fechaInicial;
 	private Date fechaFinal;
 	private String cuenta;
+	private String tipoTercero;
 
 	private List<MoviContableEntity> listaMovimientos;
 	private List<MoviContableEntity> obtenerAsiento;
@@ -34,7 +35,7 @@ public class ConsCuentaContBean implements GeneralBean {
 	private BigDecimal total;
 	private BigDecimal debito;
 	private BigDecimal credito;
-	
+
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
 	}
@@ -46,8 +47,7 @@ public class ConsCuentaContBean implements GeneralBean {
 	@PostConstruct
 	public void init() {
 		try {
-			this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-					.get("dataSession");
+			this.objetoSesion = (UsuarioEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("dataSession");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,7 +133,7 @@ public class ConsCuentaContBean implements GeneralBean {
 			}
 			total = debito.subtract(credito);
 		}
-		//return new DecimalFormat("###,###.##").format(total);
+		// return new DecimalFormat("###,###.##").format(total);
 		return new DecimalFormat("###,###.##").format(total);
 	}
 
@@ -229,6 +229,14 @@ public class ConsCuentaContBean implements GeneralBean {
 
 	public void setCuentasCons(ArrayList<String> cuentasCons) {
 		this.cuentasCons = cuentasCons;
+	}
+
+	public String getTipoTercero() {
+		return tipoTercero;
+	}
+
+	public void setTipoTercero(String tipoTercero) {
+		this.tipoTercero = tipoTercero;
 	}
 
 }

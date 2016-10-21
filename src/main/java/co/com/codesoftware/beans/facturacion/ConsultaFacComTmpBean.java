@@ -1,5 +1,6 @@
 package co.com.codesoftware.beans.facturacion;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class ConsultaFacComTmpBean implements GeneralBean {
 	@Override
 	@PostConstruct
 	public void init() {
-		this.maxDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		this.maxDate = calendar.getTime();
 		this.logica = new FacturaCompraTmpLogica();
 
 	}

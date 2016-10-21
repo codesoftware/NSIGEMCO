@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -21,58 +21,81 @@
 			<h:form>
 				<div class="row">
 					<br /> <br />
-					<div class="col-md-2 col-sm-0 col-xs-0"></div>
-					<div class="col-md-8 col-sm-12 col-xs-12">
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
+					<div class="col-md-10 col-sm-12 col-xs-12">
 						<p:growl id="messages" autoUpdate="true" showDetail="true" life="30000"></p:growl>
-						<p:panelGrid>
-							<p:panelGrid styleClass="table table-bordered">
-								<p:row styleClass="alert alert-success" style="text-align: center;">
-									<p:column colspan="6">CONSULTA DE MOVIMIENTOS CONTABLES POR TIPO DE DOCUMENTO</p:column>
-								</p:row>
-								<p:row>
-									<p:column>
-										<p:outputLabel value="FECHA INICIAL: " />
-									</p:column>
-									<p:column>
-										<p:calendar value="#{consCuentaContBean.fechaInicial}"></p:calendar>
-									</p:column>
-									<p:column>
-										<p:outputLabel value="FECHA FINAL: " />
-									</p:column>
-									<p:column>
-										<p:calendar value="#{consCuentaContBean.fechaFinal}"></p:calendar>
-									</p:column>
-									<p:column>
-										<p:outputLabel value="CUENTA: "></p:outputLabel>
-									</p:column>
-									<p:column>
-										<p:inputText value="#{consCuentaContBean.cuenta}"></p:inputText>
-									</p:column>
-								</p:row>
-								<p:row>
-									<p:column colspan="6" style="text-align: right;">
-										<p:commandButton actionListener="#{consCuentaContBean.generarConsulta}" value="CONSULTAR" styleClass="OrangeButton" update=":formListaMv"></p:commandButton>
-									</p:column>
-								</p:row>
-							</p:panelGrid>
+						<p:panelGrid styleClass="table table-bordered">
+							<p:row styleClass="alert alert-success" style="text-align: center;">
+								<p:column colspan="8">CONSULTA DE MOVIMIENTOS CONTABLES POR TIPO DE DOCUMENTO</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="FECHA INICIAL: " />
+								</p:column>
+								<p:column>
+									<p:calendar value="#{consCuentaContBean.fechaInicial}"></p:calendar>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="FECHA FINAL: " />
+								</p:column>
+								<p:column>
+									<p:calendar value="#{consCuentaContBean.fechaFinal}"></p:calendar>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="CUENTA: "></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:inputText value="#{consCuentaContBean.cuenta}"></p:inputText>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="TIPO DE TERCERO: "></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:selectOneMenu value="#{consCuentaContBean.tipoTercero}">
+										<f:selectItem itemValue="-1" itemLabel="..."></f:selectItem>
+										<f:selectItem itemValue="1" itemLabel="CLIENTE"></f:selectItem>
+										<f:selectItem itemValue="2" itemLabel="PROVEEDOR"></f:selectItem>
+										<f:selectItem itemValue="3" itemLabel="PROVEEDOR INTERNACIONAL"></f:selectItem>
+										<f:selectItem itemValue="4" itemLabel="SOCIO"></f:selectItem>
+										<f:ajax render="@form" ></f:ajax>
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Cliente:" rendered="#{consCuentaContBean.tipoTercero == '1'}"></p:outputLabel>
+									<p:outputLabel value="Proveedor:" rendered="#{consCuentaContBean.tipoTercero == '2'}"></p:outputLabel>
+									<p:outputLabel value="Proveedor Internacional:" rendered="#{consCuentaContBean.tipoTercero == '3'}"></p:outputLabel>
+									<p:outputLabel value="Socio:" rendered="#{consCuentaContBean.tipoTercero == '4'}"></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:graphicImage value="/resources/images/cliente.png" width="30" height="30"></p:graphicImage>
+									<p:graphicImage value="/resources/images/proveedor.jpg" width="30" height="30"></p:graphicImage>
+									<p:graphicImage value="/resources/images/internacional.jpg" width="30" height="30"></p:graphicImage>
+									<p:graphicImage value="/resources/images/socio.jpg" width="30" height="30"></p:graphicImage>
+								</p:column>
+								<p:column colspan="6" style="text-align: right;">
+									<p:commandButton actionListener="#{consCuentaContBean.generarConsulta}" value="CONSULTAR" styleClass="OrangeButton" update=":formListaMv"></p:commandButton>
+								</p:column>
+							</p:row>
 						</p:panelGrid>
 					</div>
-					<div class="col-md-2 col-sm-0 col-xs-0"></div>
+					<div class="col-md-1 col-sm-0 col-xs-0"></div>
 				</div>
 			</h:form>
 			<h:form id="formListaMv">
 				<br />
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true" currentPageReportTemplate="{TotalRecords}">
+						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true"
+							currentPageReportTemplate="{TotalRecords}">
 							<f:facet name="header">
 								<div id="items row">
 									<ui:repeat var="item" value="#{consCuentaContBean.cuentasCons}">
-										<div class="col-md-2 col-sm-2 col-xs-2">
-											#{item}
-										</div>
+										<div class="col-md-2 col-sm-2 col-xs-2">#{item}</div>
 									</ui:repeat>
-								</div><br/>
+								</div>
+								<br />
 								<h:commandLink>
 									<p:graphicImage name="/images/excel.png" width="24" />
 									<p:dataExporter type="xls" target="tableDatos" fileName="tablaProductos" />
@@ -135,6 +158,7 @@
 							</p:columnGroup>
 						</p:dataTable>
 					</div>
+					
 				</div>
 			</h:form>
 		</ui:define>

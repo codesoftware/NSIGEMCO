@@ -6,12 +6,10 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.EnumType;
 
 import org.primefaces.context.RequestContext;
 
 import co.com.codesoftware.logica.admin.ClienteLogica;
-import co.com.codesoftware.server.nsigemco.ProveedoresEntity;
 import co.com.codesoftware.servicio.usuario.ClienteEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
 import co.com.codesoftware.utilities.ErrorEnum;
