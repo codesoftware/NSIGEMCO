@@ -8,9 +8,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import co.com.codesoftware.beans.admin.ClienteBean;
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.servicio.contabilidad.MoviContableEntity;
 import co.com.codesoftware.servicio.usuario.UsuarioEntity;
@@ -35,6 +37,9 @@ public class ConsCuentaContBean implements GeneralBean {
 	private BigDecimal total;
 	private BigDecimal debito;
 	private BigDecimal credito;
+	//Objetos inyectados
+	@ManagedProperty(value="#{clienteBean}")
+	private ClienteBean clienteBean;
 
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
@@ -237,6 +242,10 @@ public class ConsCuentaContBean implements GeneralBean {
 
 	public void setTipoTercero(String tipoTercero) {
 		this.tipoTercero = tipoTercero;
+	}
+
+	public void setClienteBean(ClienteBean clienteBean) {
+		this.clienteBean = clienteBean;
 	}
 
 }

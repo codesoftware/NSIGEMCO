@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 
 </h:head>
@@ -18,7 +18,7 @@
 	text-align: center;
 }
 </style>
-			<h:form>
+			<h:form id="formFiltros">
 				<div class="row">
 					<br /> <br />
 					<div class="col-md-1 col-sm-0 col-xs-0"></div>
@@ -57,7 +57,7 @@
 										<f:selectItem itemValue="2" itemLabel="PROVEEDOR"></f:selectItem>
 										<f:selectItem itemValue="3" itemLabel="PROVEEDOR INTERNACIONAL"></f:selectItem>
 										<f:selectItem itemValue="4" itemLabel="SOCIO"></f:selectItem>
-										<f:ajax render="@form" ></f:ajax>
+										<f:ajax render="@form"></f:ajax>
 									</p:selectOneMenu>
 								</p:column>
 							</p:row>
@@ -69,12 +69,18 @@
 									<p:outputLabel value="Socio:" rendered="#{consCuentaContBean.tipoTercero == '4'}"></p:outputLabel>
 								</p:column>
 								<p:column>
-									<p:graphicImage value="/resources/images/cliente.png" width="30" height="30"></p:graphicImage>
-									<p:graphicImage value="/resources/images/proveedor.jpg" width="30" height="30"></p:graphicImage>
-									<p:graphicImage value="/resources/images/internacional.jpg" width="30" height="30"></p:graphicImage>
-									<p:graphicImage value="/resources/images/socio.jpg" width="30" height="30"></p:graphicImage>
+									<p:commandLink ajax="true" actionListener="#{clienteBean.buscaClientes()}" update=":formClientes:tablaClientes" >
+										<p:graphicImage onclick="PF('dialogCli').show()" value="/resources/images/cliente.png" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '1'}" >
+										</p:graphicImage>
+									</p:commandLink>
+									<p:graphicImage value="/resources/images/proveedor.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '2'}"></p:graphicImage>
+									<p:graphicImage value="/resources/images/internacional.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '3'}"></p:graphicImage>
+									<p:graphicImage value="/resources/images/socio.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '4'}"></p:graphicImage>
 								</p:column>
-								<p:column colspan="6" style="text-align: right;">
+								<p:column colspan="2">
+									<p:outputLabel value="#{clienteBean.cliente.nombres}" rendered="#{consCuentaContBean.tipoTercero == '1'}"></p:outputLabel>
+								</p:column>
+								<p:column colspan="4" style="text-align: right;">
 									<p:commandButton actionListener="#{consCuentaContBean.generarConsulta}" value="CONSULTAR" styleClass="OrangeButton" update=":formListaMv"></p:commandButton>
 								</p:column>
 							</p:row>
@@ -87,8 +93,7 @@
 				<br />
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true"
-							currentPageReportTemplate="{TotalRecords}">
+						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true" currentPageReportTemplate="{TotalRecords}">
 							<f:facet name="header">
 								<div id="items row">
 									<ui:repeat var="item" value="#{consCuentaContBean.cuentasCons}">
@@ -158,8 +163,29 @@
 							</p:columnGroup>
 						</p:dataTable>
 					</div>
-					
+
 				</div>
+			</h:form>
+			<h:form id="formClientes">
+				<p:dialog id="dialogCliente" widgetVar="dialogCli" closeOnEscape="true" closable="true" styleClass="modalResponsiveMedium" modal="true">
+					<p:dataTable var="cliente" widgetVar="wcliente" id="tablaClientes" value="#{clienteBean.clientes}" paginator="true" rows="20" filteredValue="#{clienteBean.clientesFilter}" emptyMessage="No existen proveedores parametrizados en el sistema">
+						<f:facet name="header">
+								CONSULTA GENERAL DE CLIENTES
+							</f:facet>
+						<p:column headerText="CEDULA /NIT" filterBy="#{cliente.cedula}" priority="1" filterMatchMode="contains">
+							<h:outputText value="#{cliente.cedula}"></h:outputText>
+						</p:column>
+						<p:column headerText="NOMBRES" filterBy="#{cliente.nombres}" priority="3" filterMatchMode="contains">
+							<h:outputText value="#{cliente.nombres}"></h:outputText>
+						</p:column>
+						<p:column headerText="DIRECCIÒN" filterBy="#{cliente.direccion}" priority="4" filterMatchMode="contains">
+							<h:outputText value="#{cliente.direccion}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:commandButton actionListener="#{clienteBean.consultaCliente(cliente)}" value="SELECCIONAR" onsuccess="PF('dialogCli').hide()" update=":formFiltros" ajax="true"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
 			</h:form>
 		</ui:define>
 	</ui:composition>
