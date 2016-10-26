@@ -113,6 +113,11 @@
 										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
 									</h:outputText>
 								</p:column>
+								<p:column headerText="Costo Mercancia" width="30%" priority="3">
+									<h:outputText value="#{factura.vlrCostoProd}">
+										<f:convertNumber pattern="#,##0.00"></f:convertNumber>
+									</h:outputText>
+								</p:column>
 								<p:column headerText="Detalle" width="10%" priority="2" exportable="false">
 									<p:commandButton icon="ui-icon-search" action="#{consultaFacturacionBean.consultaEspecifico(factura.id)}" />
 								</p:column>
@@ -121,7 +126,7 @@
 										<p:column colspan="5" style="text-align:right" footerText="Totales: " />
 										<p:column footerText="$#{consultaFacturacionBean.totalIva}" />
 										<p:column footerText="$#{consultaFacturacionBean.subTotalFacturas}" />
-										<p:column colspan="2"  footerText="$#{consultaFacturacionBean.totalFacturas}" />
+										<p:column colspan="3"  footerText="$#{consultaFacturacionBean.totalFacturas}" />
 									</p:row>
 								</p:columnGroup>
 							</p:dataTable>

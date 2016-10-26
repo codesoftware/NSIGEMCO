@@ -45,6 +45,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="tipoPago" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="valorCobrar" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="vlrCostoProd" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="vlrIva" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="vlrReteFu" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
@@ -80,6 +81,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "tipoPago",
     "valor",
     "valorCobrar",
+    "vlrCostoProd",
     "vlrIva",
     "vlrReteFu"
 })
@@ -112,6 +114,7 @@ public class FacturaEntity {
     protected String tipoPago;
     protected BigDecimal valor;
     protected BigDecimal valorCobrar;
+    protected BigDecimal vlrCostoProd;
     protected BigDecimal vlrIva;
     protected BigDecimal vlrReteFu;
 
@@ -675,6 +678,30 @@ public class FacturaEntity {
      */
     public void setValorCobrar(BigDecimal value) {
         this.valorCobrar = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad vlrCostoProd.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getVlrCostoProd() {
+        return vlrCostoProd;
+    }
+
+    /**
+     * Define el valor de la propiedad vlrCostoProd.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setVlrCostoProd(BigDecimal value) {
+        this.vlrCostoProd = value;
     }
 
     /**
