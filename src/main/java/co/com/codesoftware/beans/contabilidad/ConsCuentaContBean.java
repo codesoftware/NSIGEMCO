@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import co.com.codesoftware.beans.ProvedorBean;
 import co.com.codesoftware.beans.admin.ClienteBean;
 import co.com.codesoftware.logica.admin.ContabilidadLogic;
 import co.com.codesoftware.servicio.contabilidad.MoviContableEntity;
@@ -21,6 +22,13 @@ import co.com.codesoftware.utilities.GeneralBean;
 
 @ManagedBean
 @ViewScoped
+/*
+ * MO-001 Consulta movimientos contables terceros: se modifica la consulta para
+ * que reciba el id del tercero y el tipo jmorenor1986 07/11/2016
+ * ----------------
+ * --------------------------------------------------------------
+ * -------------------------
+ */
 public class ConsCuentaContBean implements GeneralBean {
 
 	private UsuarioEntity objetoSesion;
@@ -37,9 +45,11 @@ public class ConsCuentaContBean implements GeneralBean {
 	private BigDecimal total;
 	private BigDecimal debito;
 	private BigDecimal credito;
-	//Objetos inyectados
-	@ManagedProperty(value="#{clienteBean}")
+	// Objetos inyectados
+	@ManagedProperty(value = "#{clienteBean}")
 	private ClienteBean clienteBean;
+	@ManagedProperty(value = "#{provedorBean}")
+	private ProvedorBean provedorBean;
 
 	public UsuarioEntity getObjetoSesion() {
 		return objetoSesion;
@@ -63,9 +73,12 @@ public class ConsCuentaContBean implements GeneralBean {
 	 */
 	public void generarConsulta() {
 		try {
+
 			ContabilidadLogic objLogic = new ContabilidadLogic();
 			this.cuentasCons = null;
-			this.listaMovimientos = objLogic.obtenerMoviContXCuenta(fechaInicial, fechaFinal, cuenta);
+			// MO-001		
+			this.listaMovimientos = objLogic.obtenerMoviContXCuenta(fechaInicial, fechaFinal, cuenta,this.tipoTercero,verificaTercero());
+			// MO-001
 			if (this.listaMovimientos == null || this.listaMovimientos.size() == 0) {
 				this.messageBean("La consulta no arrojo ningun resultado", ErrorEnum.ERROR);
 			} else {
@@ -188,6 +201,31 @@ public class ConsCuentaContBean implements GeneralBean {
 		return new DecimalFormat("###,###.##").format(this.debito);
 	}
 
+	/**
+	 * metodo que verifica el tercero mediante el tipo
+	 * 1 = Cliente
+	 * 2 = Proveedor
+	 * MO-001
+	 * @return
+	 */
+	public Integer verificaTercero() {
+		try {
+			switch (this.tipoTercero) {
+			case "1":
+				return this.clienteBean.getCliente().getId();
+			case "2":
+				return this.provedorBean.getProveedor().getId();
+
+			default:
+				return -1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 	public Date getFechaInicial() {
 		return fechaInicial;
 	}
@@ -246,6 +284,10 @@ public class ConsCuentaContBean implements GeneralBean {
 
 	public void setClienteBean(ClienteBean clienteBean) {
 		this.clienteBean = clienteBean;
+	}
+
+	public void setProvedorBean(ProvedorBean provedorBean) {
+		this.provedorBean = provedorBean;
 	}
 
 }

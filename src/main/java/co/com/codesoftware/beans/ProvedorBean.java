@@ -41,7 +41,7 @@ public class ProvedorBean {
 
 	/**
 	 * Constructor en el cual se inicializaran los objetos necesarios para el
-	 * buen funcionamientos
+	 * buen funcionamiento
 	 */
 	public ProvedorBean() {
 		this.proveedor = new ProveedoresEntity();

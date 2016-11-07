@@ -27,6 +27,12 @@ import co.com.codesoftware.utilities.ErrorEnum;
 import co.com.codesoftware.utilities.GeneralBean;
 import co.com.codesoftware.utilities.Utilitites;
 
+/*
+ * M-001: se valida los campos obligatorios antes de ver los totales y se hace el autoguardado
+ * jmorenor1986
+ * 07/11/2016
+ * ------------------------------------------------------------------------------------------ 
+ */
 @ManagedBean
 @ViewScoped
 public class FacturaCompraTmpBean implements GeneralBean {
@@ -218,10 +224,10 @@ public class FacturaCompraTmpBean implements GeneralBean {
 		String mensajeInventareable = "";
 		try {
 			boolean validacion = true;
-			if(this.codConExterno == null || "".equalsIgnoreCase(this.codConExterno)){
+			if (this.codConExterno == null || "".equalsIgnoreCase(this.codConExterno)) {
 				this.messageBean("El codigo externo no puede ser nulo", ErrorEnum.ERROR);
 				validacion = false;
-			}else if(this.cantidad == null || this.cantidad == 0){
+			} else if (this.cantidad == null || this.cantidad == 0) {
 				this.messageBean("La cantidad no es valida", ErrorEnum.ERROR);
 				validacion = false;
 			}
@@ -244,7 +250,7 @@ public class FacturaCompraTmpBean implements GeneralBean {
 				} else if (this.cantidadInventariable > this.cantidad) {
 					messageBean("Error, la cantidad no inventareable no puede superar la cantidad total del producto", ErrorEnum.ERROR);
 				} else {
-					this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto,this.cantidadInventariable);
+					this.listaProductos = logica.adicionaProductoLista(this.listaProductos, this.productoBusqueda, cantidad, porcentajeIva, valorProducto, this.cantidadInventariable);
 					this.cantidad = 0;
 					this.porcentajeIva = new BigDecimal("0");
 					this.valorProducto = new BigDecimal("0");
@@ -344,14 +350,18 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	 * metodo que actualiza los datos de pago y luego los consulta
 	 */
 	public void consultaPagos() {
-		String mensaje = logica.ejecutaProcedimientoVerTotal(this.facturaCompra.getId());
-		if (mensaje.startsWith("Error")) {
-			messageBean(mensaje, ErrorEnum.ERROR);
-		} else {
-			this.facturaCompraTmp = logica.consultaFacturaID(this.facturaCompra.getId());
-			RequestContext requestContext = RequestContext.getCurrentInstance();
-			requestContext.execute("PF('datosPago').show();");
+		// M-001
+		if (validaDatos()) {
+			String mensaje = logica.ejecutaProcedimientoVerTotal(this.facturaCompra.getId());
+			if (mensaje.startsWith("Error")) {
+				messageBean(mensaje, ErrorEnum.ERROR);
+			} else {
+				this.facturaCompraTmp = logica.consultaFacturaID(this.facturaCompra.getId());
+				RequestContext requestContext = RequestContext.getCurrentInstance();
+				requestContext.execute("PF('datosPago').show();");
+			}
 		}
+		// M-001
 	}
 
 	/**
@@ -597,6 +607,5 @@ public class FacturaCompraTmpBean implements GeneralBean {
 	public void setCantidadInventariable(Integer cantidadInventariable) {
 		this.cantidadInventariable = cantidadInventariable;
 	}
-
 
 }
