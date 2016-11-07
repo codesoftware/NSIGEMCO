@@ -27,6 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="llave" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="naturaleza" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="subcuenta" type="{http://contabilidad.servicio.codesoftware.com.co/}subCuentaEntity" minOccurs="0"/>
+ *         &lt;element name="tercero" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="tipoDocumento" type="{http://contabilidad.servicio.codesoftware.com.co/}tipoDocumentoEntity" minOccurs="0"/>
  *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *       &lt;/sequence>
@@ -47,6 +48,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "llave",
     "naturaleza",
     "subcuenta",
+    "tercero",
     "tipoDocumento",
     "valor"
 })
@@ -61,6 +63,7 @@ public class MoviContableEntity {
     protected String llave;
     protected String naturaleza;
     protected SubCuentaEntity subcuenta;
+    protected Integer tercero;
     protected TipoDocumentoEntity tipoDocumento;
     protected BigDecimal valor;
 
@@ -254,6 +257,30 @@ public class MoviContableEntity {
      */
     public void setSubcuenta(SubCuentaEntity value) {
         this.subcuenta = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tercero.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getTercero() {
+        return tercero;
+    }
+
+    /**
+     * Define el valor de la propiedad tercero.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setTercero(Integer value) {
+        this.tercero = value;
     }
 
     /**

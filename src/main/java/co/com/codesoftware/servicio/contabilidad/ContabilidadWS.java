@@ -169,6 +169,8 @@ public interface ContabilidadWS {
 
     /**
      * 
+     * @param tercero
+     * @param tipo
      * @param fechaFi
      * @param cuenta
      * @param fechaIn
@@ -186,19 +188,11 @@ public interface ContabilidadWS {
         @WebParam(name = "fechaFi", targetNamespace = "")
         XMLGregorianCalendar fechaFi,
         @WebParam(name = "cuenta", targetNamespace = "")
-        String cuenta);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.ClaseEntity>
-     */
-    @WebMethod
-    @WebResult(name = "listaClases", targetNamespace = "")
-    @RequestWrapper(localName = "obtenerClases", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerClases")
-    @ResponseWrapper(localName = "obtenerClasesResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerClasesResponse")
-    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerClasesRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerClasesResponse")
-    public List<ClaseEntity> obtenerClases();
+        String cuenta,
+        @WebParam(name = "tipo", targetNamespace = "")
+        String tipo,
+        @WebParam(name = "tercero", targetNamespace = "")
+        int tercero);
 
     /**
      * 
@@ -214,5 +208,17 @@ public interface ContabilidadWS {
     public String insertaSubCuenta(
         @WebParam(name = "arg0", targetNamespace = "")
         SubCuentaEntity arg0);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<co.com.codesoftware.servicio.contabilidad.ClaseEntity>
+     */
+    @WebMethod
+    @WebResult(name = "listaClases", targetNamespace = "")
+    @RequestWrapper(localName = "obtenerClases", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerClases")
+    @ResponseWrapper(localName = "obtenerClasesResponse", targetNamespace = "http://contabilidad.servicio.codesoftware.com.co/", className = "co.com.codesoftware.servicio.contabilidad.ObtenerClasesResponse")
+    @Action(input = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerClasesRequest", output = "http://contabilidad.servicio.codesoftware.com.co/ContabilidadWS/obtenerClasesResponse")
+    public List<ClaseEntity> obtenerClases();
 
 }

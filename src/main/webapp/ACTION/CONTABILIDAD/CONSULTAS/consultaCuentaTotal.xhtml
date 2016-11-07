@@ -1,7 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:b="http://butterfaces.larmic.de/components"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://butterfaces.larmic.de/components" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:cd="http://java.sun.com/jsf/composite/componentes">
 <h:head>
 
 </h:head>
@@ -69,16 +69,18 @@
 									<p:outputLabel value="Socio:" rendered="#{consCuentaContBean.tipoTercero == '4'}"></p:outputLabel>
 								</p:column>
 								<p:column>
-									<p:commandLink ajax="true" actionListener="#{clienteBean.buscaClientes()}" update=":formClientes:tablaClientes" >
-										<p:graphicImage onclick="PF('dialogCli').show()" value="/resources/images/cliente.png" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '1'}" >
+									<p:commandLink ajax="true" actionListener="#{clienteBean.buscaClientes()}" update=":formClientes:tablaClientes">
+										<p:graphicImage onclick="PF('dialogCli').show()" value="/resources/images/cliente.png" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '1'}">
 										</p:graphicImage>
 									</p:commandLink>
-									<p:graphicImage value="/resources/images/proveedor.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '2'}"></p:graphicImage>
+									<p:graphicImage onclick="PF('dialogProv').show()" value="/resources/images/proveedor.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '2'}">
+									</p:graphicImage>
 									<p:graphicImage value="/resources/images/internacional.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '3'}"></p:graphicImage>
 									<p:graphicImage value="/resources/images/socio.jpg" width="30" height="30" rendered="#{consCuentaContBean.tipoTercero == '4'}"></p:graphicImage>
 								</p:column>
 								<p:column colspan="2">
 									<p:outputLabel value="#{clienteBean.cliente.nombres}" rendered="#{consCuentaContBean.tipoTercero == '1'}"></p:outputLabel>
+									<p:outputLabel value="#{provedorBean.proveedor.nombre}" rendered="#{consCuentaContBean.tipoTercero == '2'}"></p:outputLabel>
 								</p:column>
 								<p:column colspan="4" style="text-align: right;">
 									<p:commandButton actionListener="#{consCuentaContBean.generarConsulta}" value="CONSULTAR" styleClass="OrangeButton" update=":formListaMv"></p:commandButton>
@@ -93,7 +95,8 @@
 				<br />
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true" currentPageReportTemplate="{TotalRecords}">
+						<p:dataTable value="#{consCuentaContBean.listaMovimientos}" var="item" reflow="true" paginator="true" id="tableDatos" rows="20" paginatorAlwaysVisible="true"
+							currentPageReportTemplate="{TotalRecords}">
 							<f:facet name="header">
 								<div id="items row">
 									<ui:repeat var="item" value="#{consCuentaContBean.cuentasCons}">
@@ -168,7 +171,8 @@
 			</h:form>
 			<h:form id="formClientes">
 				<p:dialog id="dialogCliente" widgetVar="dialogCli" closeOnEscape="true" closable="true" styleClass="modalResponsiveMedium" modal="true">
-					<p:dataTable var="cliente" widgetVar="wcliente" id="tablaClientes" value="#{clienteBean.clientes}" paginator="true" rows="20" filteredValue="#{clienteBean.clientesFilter}" emptyMessage="No existen proveedores parametrizados en el sistema">
+					<p:dataTable var="cliente" widgetVar="wcliente" id="tablaClientes" value="#{clienteBean.clientes}" paginator="true" rows="20" filteredValue="#{clienteBean.clientesFilter}"
+						emptyMessage="No existen proveedores parametrizados en el sistema">
 						<f:facet name="header">
 								CONSULTA GENERAL DE CLIENTES
 							</f:facet>
@@ -187,6 +191,10 @@
 					</p:dataTable>
 				</p:dialog>
 			</h:form>
+			<h:form id="formProveedores">
+				<cd:formProveedores idDialog="dialogProveedores" update=":formFiltros" widgetVar="dialogProv" />
+			</h:form>
+
 		</ui:define>
 	</ui:composition>
 </body>

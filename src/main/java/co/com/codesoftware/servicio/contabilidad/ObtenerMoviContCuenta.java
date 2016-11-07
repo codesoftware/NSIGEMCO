@@ -22,6 +22,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fechaIn" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="fechaFi" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="cuenta" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="tipo" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="tercero" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +36,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "obtenerMoviContCuenta", propOrder = {
     "fechaIn",
     "fechaFi",
-    "cuenta"
+    "cuenta",
+    "tipo",
+    "tercero"
 })
 public class ObtenerMoviContCuenta {
 
@@ -46,6 +50,9 @@ public class ObtenerMoviContCuenta {
     protected XMLGregorianCalendar fechaFi;
     @XmlElement(required = true)
     protected String cuenta;
+    @XmlElement(required = true)
+    protected String tipo;
+    protected int tercero;
 
     /**
      * Obtiene el valor de la propiedad fechaIn.
@@ -117,6 +124,46 @@ public class ObtenerMoviContCuenta {
      */
     public void setCuenta(String value) {
         this.cuenta = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tipo.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * Define el valor de la propiedad tipo.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTipo(String value) {
+        this.tipo = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad tercero.
+     * 
+     */
+    public int getTercero() {
+        return tercero;
+    }
+
+    /**
+     * Define el valor de la propiedad tercero.
+     * 
+     */
+    public void setTercero(int value) {
+        this.tercero = value;
     }
 
 }

@@ -14,6 +14,12 @@ import co.com.codesoftware.servicio.contabilidad.SubCuentaEntity;
 import co.com.codesoftware.utilities.Utilitites;
 import co.com.codesoftware.utilities.WSGeneralInterface;
 
+/*
+ * MO-001 Consulta movimientos contables terceros: se modifica la consulta para que reciba el id del tercero y el tipo
+ * jmorenor1986
+ * 07/11/2016
+ * -------------------------------------------------------------------------------------------------------
+ */
 public class ContabilidadLogic implements WSGeneralInterface {
 	/**
 	 * Funcion con la cual obtengo las clases que tiene parametrizada en el sistema
@@ -170,13 +176,27 @@ public class ContabilidadLogic implements WSGeneralInterface {
 		}
 		return rta;
 	}
+	/**
+	 * metodo que consulta la lista de movimientos contables por los filtros
+	 * @param fechaIni
+	 * @param fechaFin
+	 * @param cuenta
+	 * @param tipo
+	 * @param tercero
+	 * @return
+	 */
 	
-	public List<MoviContableEntity> obtenerMoviContXCuenta(Date fechaIni, Date fechaFin, String cuenta){
+	public List<MoviContableEntity> obtenerMoviContXCuenta(Date fechaIni, Date fechaFin, String cuenta,String tipo,Integer tercero){
 		List<MoviContableEntity> rta = null;
 		try {
 			XMLGregorianCalendar fechaI = Utilitites.dateToXMLGC(fechaIni);
 			XMLGregorianCalendar fechaF = Utilitites.dateToXMLGC(fechaFin);
-			rta = conexionWSContabilidad().getPortContabilidad().obtenerMoviContCuenta(fechaI, fechaF, cuenta); 
+			//MO-001
+			if(tercero==null){
+				tercero = -1;
+			}
+			rta = conexionWSContabilidad().getPortContabilidad().obtenerMoviContCuenta(fechaI, fechaF, cuenta,tipo,tercero); 
+			//MO-001
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
