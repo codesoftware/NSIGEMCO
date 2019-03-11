@@ -117,7 +117,7 @@
 														</p:autoComplete>
 													</div>
 													<div class="ui-grid-col-4">
-														<p:commandButton value="Nuevo Proveedor" onclick="PF('addProv').show();" />
+														<p:commandButton value="Nuevo Proveedor" onclick="PF('addProv').initPosition();PF('addProv').show(); return false;" />
 													</div>
 												</div>
 											</div>
@@ -356,7 +356,7 @@
 				<div class="col-md-2 col-sm-0 col-xs-0"></div>
 			</div>
 			<!-- Dialogo para la insercion de un proveedor -->
-			<p:dialog header="Insercion de un Proveedor" widgetVar="addProv" minHeight="180" responsive="true" showEffect="fade" hideEffect="fade" modal="true">
+			<p:dialog header="Insercion de un Proveedor" widgetVar="addProv" minHeight="180"  responsive="true" showEffect="fade" hideEffect="fade" modal="true" onShow="PF('addProv').initPosition()" position="top" >
 				<div class="panel panel-info">
 					<div class="panel-heading">DATOS BASICOS PROVEEDOR</div>
 					<div class="panel-body">

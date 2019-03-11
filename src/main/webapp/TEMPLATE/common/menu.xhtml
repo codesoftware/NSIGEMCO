@@ -4,13 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
 <h:head>
+	<h:outputStylesheet library="css" name="style1.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style2.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style3.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style5.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="style6.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
 </h:head>
 <body>
 	<ui:composition>
 		<h:form id="formMenu">
-			<p:menubar model="#{menuBean.menuDinamico}" autoDisplay="true" id="menuGeneral">				
+			<p:menubar model="#{menuBean.menuDinamico}"  id="menuGeneral">				
 			</p:menubar>
-			<p:sticky target="menuGeneral" />
+			
 		</h:form>
 	</ui:composition>
 </body>

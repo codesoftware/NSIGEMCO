@@ -45,7 +45,6 @@ public class MenuBean implements Serializable {
 			this.menuDinamico = new DefaultMenuModel();
 		}
 		DefaultMenuItem tercerPunto = new DefaultMenuItem("Cerrar Sesion");
-		tercerPunto.setIcon("fa fa-close");
 		tercerPunto.setCommand("#{loginBean.cerrarSesion}");
 		// Cuarto punto de menu
 		// DefaultSubMenu tercerPunto = new DefaultSubMenu();
@@ -68,7 +67,6 @@ public class MenuBean implements Serializable {
 			// REPORTES
 			if (this.listaPermisos.contains(".Per1.") || this.listaPermisos.contains(".Per2.")) {
 				segundoPunto.setLabel("PARAMETROS");
-				segundoPunto.setIcon("fa fa-archive");
 				if (this.listaPermisos.contains(".Per3.")) {
 					DefaultSubMenu segPunNivUno = new DefaultSubMenu();
 					segPunNivUno.setLabel("Categoria");
@@ -112,7 +110,6 @@ public class MenuBean implements Serializable {
 			// REPORTES
 			if (this.listaPermisos.contains(".Per3.") || this.listaPermisos.contains(".Per4.")) {
 				menuPrincipal.setLabel("REPORTES");
-				menuPrincipal.setIcon("fa fa-file-excel-o");
 				if (this.listaPermisos.contains(".Per3.")) {
 					DefaultMenuItem basico = new DefaultMenuItem("Basico");
 					basico.setCommand("/ACTION/REPORTES/reportes.jsf");
@@ -140,7 +137,6 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Inv9.") || this.listaPermisos.contains(".Inv10.")
 					|| this.listaPermisos.contains(".Inv11")) {
 				menuPrincipal.setLabel("INVENTARIOS");
-				menuPrincipal.setIcon("fa fa-bank");
 				if (this.listaPermisos.contains(".Inv1.") || this.listaPermisos.contains(".Inv3.") || this.listaPermisos.contains(".Inv2.")){
 					DefaultSubMenu compras = new DefaultSubMenu();
 					compras.setLabel("Compras");
@@ -252,7 +248,6 @@ public class MenuBean implements Serializable {
 					|| this.listaPermisos.contains(".Adm7.") || this.listaPermisos.contains(".Adm8.")
 					|| this.listaPermisos.contains(".Adm9.") || this.listaPermisos.contains(".Adm10.")) {
 				menuPrincipal.setLabel("ADMINISTRACION");
-				menuPrincipal.setIcon("fa fa-users");
 				// Se generan los submenus de segundo nivel
 				// Genero el segundo nivel del menu
 				if (this.listaPermisos.contains(".Adm1.")) {
@@ -328,7 +323,6 @@ public class MenuBean implements Serializable {
 			if (this.listaPermisos.contains(".Fact1.") || this.listaPermisos.contains(".Fact2.")
 					|| this.listaPermisos.contains(".Fact3.") || this.listaPermisos.contains(".Fact4.")|| this.listaPermisos.contains(".Fact5.")) {
 				menuPrincipal.setLabel("FACTURACION");
-				menuPrincipal.setIcon("fa fa-files-o");
 				if (this.listaPermisos.contains(".Fact1.") || this.listaPermisos.contains(".Fact2.")) {
 					DefaultSubMenu item = new DefaultSubMenu("Notas");
 					if (this.listaPermisos.contains(".Fact1.")) {
@@ -378,7 +372,6 @@ public class MenuBean implements Serializable {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
 			menuPrincipal.setLabel("IMPORTACIONES");
-			menuPrincipal.setIcon("fa fa-briefcase");
 			// Se generan los submenus de segundo nivel
 			// Genero el segundo nivel del menu
 			DefaultMenuItem segundoNivel = new DefaultMenuItem("Info Principal");
@@ -404,7 +397,6 @@ public class MenuBean implements Serializable {
 		DefaultSubMenu menuPrincipal = new DefaultSubMenu();
 		try {
 			menuPrincipal.setLabel("CONTABILIDAD");
-			menuPrincipal.setIcon("fa fa-calculator");
 			// Se generan los submenus de segundo nivel
 			// Genero el segundo nivel del menu
 			DefaultSubMenu segundoNivel = new DefaultSubMenu("PUC");
